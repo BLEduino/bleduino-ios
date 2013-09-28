@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "UARTServiceClass.h"
+#import "UARTService.h"
 
-@implementation UARTServiceClass
+@implementation UARTService
 
 @end
