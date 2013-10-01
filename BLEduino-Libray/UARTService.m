@@ -29,12 +29,14 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     CBUUID              *txCharacteristicUUID;
     
     id <UARTServiceDelegate> delegate;
+    
+    BOOL longTransmission;
 }
 @end
 
 
 @implementation UARTService
-@synthesize sentMessage, receivedMessage;
+@synthesize messageSent, messageReceived;
 @synthesize peripheral = servicePeripheral;
 
 #pragma mark -
@@ -48,7 +50,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 {
     self = [super init];
     if (self) {
-        servicePeripheral = aPeripheral;
+        servicePeripheral = [aPeripheral copy];
         servicePeripheral.delegate = self;
 		delegate = aController;
         
@@ -76,20 +78,53 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 //
 - (void) writeMessage:(NSString *)message withAck:(BOOL)enabled
 {
-    NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+    int dataLength = message.length;
+    NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
     
-    if(enabled)
+    if(dataLength > 20)
     {
-        [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
+        BOOL lastPacket = false;
+        int dataIndex = 0;
+        int totalPackets = ceil(dataLength / 20);
+        
+        for (int packetIndex = 0; packetIndex <= totalPackets; packetIndex++)
+        {
+            lastPacket = (packetIndex == totalPackets);
+            int rangeLength = (lastPacket)?(dataLength - dataIndex):20;
+            
+            NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
+            NSData *data = [messageData subdataWithRange:dataRange];
+            longTransmission = lastPacket;
+            if(enabled)
+            {
+                [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
+            }
+            else
+            {
+                [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            }
+            
+            //Move dataIndex to the start of next packet.
+            dataIndex += 20;
+        }
     }
     else
     {
-        [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        if(enabled)
+        {
+            [servicePeripheral writeValue:messageData forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
+        }
+        else
+        {
+            [servicePeripheral writeValue:messageData forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+
     }
-    
 }
 - (void) writeMessage:(NSString *)message
 {
+    self.messageSent = message;
+    
     [self writeMessage:message withAck:NO];
 }
 
@@ -129,12 +164,12 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    [delegate uartService:self didWriteMessage:self.sentMessage error:error];
+    [delegate uartService:self didWriteMessage:self.messageSent error:error];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    [delegate uartService:self didReceiveMessage:self.receivedMessage error:error];
+    [delegate uartService:self didReceiveMessage:self.messageReceived error:error];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error

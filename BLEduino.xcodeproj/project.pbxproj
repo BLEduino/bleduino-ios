@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B76B0C2317F9097300004B06 /* DispatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B76B0C2217F9097300004B06 /* DispatchManager.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
 		B7B73BF617F256B3008E6769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF517F256B3008E6769 /* UIKit.framework */; };
@@ -24,7 +25,6 @@
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
 		B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* UARTService.m */; };
-		B7B73C3017F25BBA008E6769 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2F17F25BBA008E6769 /* Constants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B76B0C2117F9097300004B06 /* DispatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchManager.h; sourceTree = "<group>"; };
+		B76B0C2217F9097300004B06 /* DispatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchManager.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B73BF117F256B3008E6769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7B73BF317F256B3008E6769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,8 +63,6 @@
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* UARTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTService.h; sourceTree = "<group>"; };
 		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARTService.m; sourceTree = "<group>"; };
-		B7B73C2E17F25BBA008E6769 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		B7B73C2F17F25BBA008E6769 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +172,8 @@
 			children = (
 				B7B73C2B17F25A58008E6769 /* UARTService.h */,
 				B7B73C2C17F25A58008E6769 /* UARTService.m */,
-				B7B73C2E17F25BBA008E6769 /* Constants.h */,
-				B7B73C2F17F25BBA008E6769 /* Constants.m */,
+				B76B0C2117F9097300004B06 /* DispatchManager.h */,
+				B76B0C2217F9097300004B06 /* DispatchManager.m */,
 			);
 			path = "BLEduino-Libray";
 			sourceTree = "<group>";
@@ -275,10 +275,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7B73C3017F25BBA008E6769 /* Constants.m in Sources */,
 				B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */,
 				B7B73C0817F256B3008E6769 /* ViewController.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
+				B76B0C2317F9097300004B06 /* DispatchManager.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

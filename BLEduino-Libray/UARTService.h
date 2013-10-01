@@ -49,7 +49,7 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 - (void) subscribeToStartReceivingMessages;
 - (void) unsubscribeToStopReiceivingMessages;
 
-@property (nonatomic, strong) NSMutableString *sentMessage;
-@property (nonatomic, strong) NSMutableString *receivedMessage;
+@property (nonatomic, strong) NSString *messageSent;
+@property (nonatomic, strong) NSString *messageReceived;
 @property (readonly) CBPeripheral *peripheral;
 @end
