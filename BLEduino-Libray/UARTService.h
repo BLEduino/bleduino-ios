@@ -22,13 +22,18 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 /****************************************************************************/
 @class UARTService;
 @protocol UARTServiceDelegate <NSObject>
-@required
+@optional
+- (void)uartService:(UARTService *)service didReceiveData:(NSData *)data error:(NSError *)error;
 - (void)uartService:(UARTService *)service didReceiveMessage:(NSString *)message error:(NSError *)error;
 
-@optional
+- (void)uartService:(UARTService *)service didWriteData:(NSData *)data error:(NSError *)error;
 - (void)uartService:(UARTService *)service didWriteMessage:(NSString *)message error:(NSError *)error;
-- (void)didSubscribeToReceiveMessagesFor:(UARTService *)service;
-- (void)didUnsubscribeToReceiveMessagesFor:(UARTService *)service;
+
+- (void)didSubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
+
+- (void)didSubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;;
+- (void)didUnsubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;;
 @end
 
 
@@ -37,6 +42,14 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 /****************************************************************************/
 @interface UARTService : NSObject <CBPeripheralDelegate>
 
+@property (nonatomic, strong) NSString *messageSent;
+@property (nonatomic, strong) NSString *messageReceived;
+
+@property (nonatomic, strong) NSString *dataSent;
+@property (nonatomic, strong) NSString *dataReceived;
+
+@property (readonly) CBPeripheral *peripheral;
+
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<UARTServiceDelegate>)aController;
 - (void) dismissPeripheral;
 
@@ -44,12 +57,18 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 - (void) writeMessage:(NSString *)message withAck:(BOOL)enabled;
 - (void) writeMessage:(NSString *)message;
 
+// Writing data to BLEduino.
+- (void) writeData:(NSData *)data withAck:(BOOL)enabled;
+- (void) writeData:(NSData *)data;
+
 // Read/Receiving messages from BLEduino.
 - (void) readMessage;
 - (void) subscribeToStartReceivingMessages;
 - (void) unsubscribeToStopReiceivingMessages;
 
-@property (nonatomic, strong) NSString *messageSent;
-@property (nonatomic, strong) NSString *messageReceived;
-@property (readonly) CBPeripheral *peripheral;
+// Read/Receiving data from BLEduino.
+- (void) readData;
+- (void) subscribeToStartReceivingData;
+- (void) unsubscribeToStopReiceivingData;
+
 @end

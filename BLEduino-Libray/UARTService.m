@@ -31,6 +31,8 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     id <UARTServiceDelegate> delegate;
     
     BOOL longTransmission;
+    BOOL textTransmission;
+    BOOL textSubscription;
 }
 @end
 
@@ -73,13 +75,12 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 #pragma mark -
 #pragma mark Write Messages
 /****************************************************************************/
-/*				      Write messages to BLEduino                            */
+/*				      Write messages/data to BLEduino                       */
 /****************************************************************************/
-//
-- (void) writeMessage:(NSString *)message withAck:(BOOL)enabled
+
+- (void) writeData:(NSData *)data withAck:(BOOL)enabled
 {
-    int dataLength = message.length;
-    NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
+    int dataLength = data.length;
     
     if(dataLength > 20)
     {
@@ -93,15 +94,16 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
             int rangeLength = (lastPacket)?(dataLength - dataIndex):20;
             
             NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
-            NSData *data = [messageData subdataWithRange:dataRange];
+            NSData *dataSubset = [data subdataWithRange:dataRange];
             longTransmission = lastPacket;
+            
             if(enabled)
             {
-                [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
+                [servicePeripheral writeValue:dataSubset forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
             }
             else
             {
-                [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+                [servicePeripheral writeValue:dataSubset forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
             }
             
             //Move dataIndex to the start of next packet.
@@ -112,19 +114,32 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     {
         if(enabled)
         {
-            [servicePeripheral writeValue:messageData forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
+            [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithResponse];
         }
         else
         {
-            [servicePeripheral writeValue:messageData forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
         }
 
     }
 }
+
+- (void) writeData:(NSData *)data
+{
+    [self writeData:data withAck:NO];
+}
+
+- (void) writeMessage:(NSString *)message withAck:(BOOL)enabled
+{
+    textTransmission = YES;
+    
+    NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
+    [self writeData:messageData withAck:enabled];
+}
+
 - (void) writeMessage:(NSString *)message
 {
     self.messageSent = message;
-    
     [self writeMessage:message withAck:NO];
 }
 
@@ -132,20 +147,40 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 #pragma mark -
 #pragma mark Read Messages
 /****************************************************************************/
-/*				      Read messages from BLEduino                           */
+/*				      Read messages / data from BLEduino                    */
 /****************************************************************************/
-- (void) readMessage
+
+- (void) readData
 {
     [servicePeripheral readValueForCharacteristic:txCharacteristic];
 }
-- (void) subscribeToStartReceivingMessages
+
+- (void)readMessage
+{
+    textTransmission = YES;
+    [self readData];
+}
+
+- (void) subscribeToStartReceivingData
 {
     [servicePeripheral setNotifyValue:YES forCharacteristic:txCharacteristic];
 }
 
-- (void) unsubscribeToStopReiceivingMessages
+- (void) unsubscribeToStopReiceivingData
 {
     [servicePeripheral setNotifyValue:NO forCharacteristic:txCharacteristic];
+}
+
+- (void) subscribeToStartReceivingMessages
+{
+    textSubscription = YES;
+    [self subscribeToStartReceivingData];
+}
+
+- (void) unsubscribeToStopReiceivingMessages
+{
+    textSubscription = NO;
+    [self unsubscribeToStopReiceivingData];
 }
 
 - (void) dismissPeripheral
@@ -164,23 +199,45 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    [delegate uartService:self didWriteMessage:self.messageSent error:error];
+    if(!longTransmission)
+    {
+        [delegate uartService:self didWriteMessage:self.messageSent error:error];
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    [delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+    if(!longTransmission)
+    {
+        [delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     if(characteristic.isNotifying)
     {
-        [delegate didSubscribeToReceiveMessagesFor:self];
+        if(textSubscription)
+        {
+            [delegate didSubscribeToReceiveMessagesFor:self error:error];
+            textSubscription = NO;
+        }
+        else
+        {
+            [delegate didSubscribeToReceiveDataFor:self error:error];
+        }
     }
     else
     {
-        [delegate didUnsubscribeToReceiveMessagesFor:self];
+        if(textSubscription)
+        {
+            [delegate didUnsubscribeToReceiveMessagesFor:self error:error];
+            textSubscription = NO;
+        }
+        else
+        {
+            [delegate didSubscribeToReceiveDataFor:self error:error];
+        }
     }
 }
 
