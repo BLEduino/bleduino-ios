@@ -30,6 +30,9 @@
 
     UIBarButtonItem *dissmissButton = [[UIBarButtonItem alloc] initWithTitle:@"Modules" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModule:)];
     self.navigationItem.leftBarButtonItem = dissmissButton;
+    
+    self.messageView.delegate = self;
+    [self.messageView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,17 +43,6 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return 1;
-}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
