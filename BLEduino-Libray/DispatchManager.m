@@ -10,9 +10,4 @@
 
 @implementation DispatchManager
 
-//yes yes yes yes
-
-
-//dfdkfhkjdhfkjdsfh fjdshhfjkdshf kjdshf dshfkjdshf kjdshfkj dsfhkjshdfkjfkjdshfkjsdhfkjsdhfkjsdhfkjdshfkjsdhfkj
-
 @end

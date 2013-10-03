@@ -6,8 +6,15 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "ConnectionManager.h"
+#import "LeDiscoveryManager.h"
 
-@implementation ConnectionManager
+@interface LeDiscoveryManager()
+@end
+
+@implementation LeDiscoveryManager
+{
+    NSString *scanOnlyForBLEduino;
+    
+}
 
 @end

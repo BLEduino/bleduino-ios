@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B75EC50917FA85EE000309FF /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* ConnectionManager.m */; };
+		B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
 		B75EC51817FB49D8000309FF /* Module.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51717FB49D8000309FF /* Module.m */; };
@@ -62,8 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B75EC50717FA85EE000309FF /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
-		B75EC50817FA85EE000309FF /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
+		B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryManager.h; sourceTree = "<group>"; };
+		B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryManager.m; sourceTree = "<group>"; };
 		B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModulesCollectionViewController.h; sourceTree = "<group>"; };
 		B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModulesCollectionViewController.m; sourceTree = "<group>"; };
 		B75EC51217FB3F6D000309FF /* ModuleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleCollectionViewCell.h; sourceTree = "<group>"; };
@@ -286,8 +286,8 @@
 				B7B73C2C17F25A58008E6769 /* UARTService.m */,
 				B76B0C2117F9097300004B06 /* DispatchManager.h */,
 				B76B0C2217F9097300004B06 /* DispatchManager.m */,
-				B75EC50717FA85EE000309FF /* ConnectionManager.h */,
-				B75EC50817FA85EE000309FF /* ConnectionManager.m */,
+				B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */,
+				B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */,
 			);
 			name = "BLEduino-Library";
 			path = "BLEduino-Libray";
@@ -415,7 +415,7 @@
 				B75EC51817FB49D8000309FF /* Module.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
-				B75EC50917FA85EE000309FF /* ConnectionManager.m in Sources */,
+				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B76B0C2317F9097300004B06 /* DispatchManager.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,

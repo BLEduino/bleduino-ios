@@ -11,4 +11,5 @@
 
 @interface DispatchManager : NSObject <CBPeripheralDelegate>
 
+
 @end
