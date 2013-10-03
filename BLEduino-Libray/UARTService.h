@@ -17,6 +17,8 @@ extern NSString *kRxCharacteristicUUIDString;       //8C6BABCD-A312-681D-025B-00
 extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-0032C0D16A2D  Write(Tx) Message Characteristic
 
 
+#pragma mark -
+#pragma mark UART Service Protocol
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
@@ -53,6 +55,8 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<UARTServiceDelegate>)aController;
 - (void) dismissPeripheral;
 
+#pragma mark -
+#pragma mark Writing to BLEduino
 // Writing messages to BLEduino.
 - (void) writeMessage:(NSString *)message withAck:(BOOL)enabled;
 - (void) writeMessage:(NSString *)message;
@@ -61,6 +65,8 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 - (void) writeData:(NSData *)data withAck:(BOOL)enabled;
 - (void) writeData:(NSData *)data;
 
+#pragma mark -
+#pragma mark Reading from BLEduino
 // Read/Receiving messages from BLEduino.
 - (void) readMessage;
 - (void) subscribeToStartReceivingMessages;

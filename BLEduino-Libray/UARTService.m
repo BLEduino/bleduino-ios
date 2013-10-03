@@ -80,7 +80,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
 - (void) writeData:(NSData *)data withAck:(BOOL)enabled
 {
-    int dataLength = data.length;
+    int dataLength = (int)data.length;
     
     if(dataLength > 20)
     {

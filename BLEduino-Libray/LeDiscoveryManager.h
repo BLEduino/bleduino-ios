@@ -31,9 +31,9 @@
 @end
 
 
-@interface LeDiscoveryManager : NSObject
+@interface LeDiscoveryManager : NSObject <CBCentralManagerDelegate>
 
-@property (nonatomic, assign) id<LeDiscoveryManagerDelegate>    delegate;
+@property (nonatomic, weak) id <LeDiscoveryManagerDelegate> delegate;
 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
@@ -42,33 +42,40 @@
 @property (retain, nonatomic) NSMutableArray    *connectedBleduinos;
 @property (retain, nonatomic) NSMutableArray	*connectedServices;
 
+/****************************************************************************/
+/*					 Central Manager Settings                               */
+/****************************************************************************/
+@property BOOL scanOnlyForBLEduinos;
+@property BOOL notifyConnect;
+@property BOOL notifyDisconnect;
 
 /****************************************************************************/
 /*								Actions										*/
 /****************************************************************************/
 - (void) startScanningForBleduinos;
-- (void) startScanningForBleduinoWithServiceUUIDString:(NSString *)uuidString;
-- (void) startScanningForBleduinoWithServicesUUIDStringList:(NSArray *)uuidStringList;
-- (void) startScanningForBleduinoWithServiceUUID:(NSUUID *)uuid;
-- (void) startScanningForBleduinoWithServicesUUID:(NSArray *)uuidList;
+//- (void) startScanningForBleduinoWithServiceUUIDString:(NSString *)uuidString;
+//- (void) startScanningForBleduinoWithServicesUUIDStringList:(NSArray *)uuidStringList;
+//- (void) startScanningForBleduinoWithServiceUUID:(NSUUID *)uuid;
+//- (void) startScanningForBleduinoWithServicesUUID:(NSArray *)uuidList;
 
-- (void) startScanningForUUIDString:(NSString *)uuidString;
-- (void) startScanningForUUID:(NSUUID *)uuid;
+//- (void) startScanningForUUIDString:(NSString *)uuidString;
+//- (void) startScanningForUUID:(NSUUID *)uuid;
 
 - (void) stopScanning;
 
 - (void) connectBleduino:(CBPeripheral *)bleduino;
-- (void) connectBleduinos:(NSArray *)bleduinoList;
+//- (void) connectBleduinos:(NSArray *)bleduinoList;
 
-- (void) disconnectBleduino:(CBPeripheral *)peripheral;
-- (void) disconnectBleduinos:(NSArray *)bleduinoList;
+- (void) disconnectBleduino:(CBPeripheral *)bleduino;
+//- (void) disconnectBleduinos:(NSArray *)bleduinoList;
 
 
 /****************************************************************************/
 /*				       Access to LeDiscovery instance			     	    */
 /****************************************************************************/
 
-+ (id)sharedBleduino;
++ (id)sharedLeManager;
+- (void)dismiss;
 //+ (id)sharedBleDevice;
 //+ (id)sharedBleduino:(id)identifier;
 //+ (id)sharedBleDevice:(id)identifier;
