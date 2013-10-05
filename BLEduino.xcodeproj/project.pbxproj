@@ -11,28 +11,28 @@
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
 		B75EC51817FB49D8000309FF /* Module.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51717FB49D8000309FF /* Module.m */; };
-		B75EC53017FB63EF000309FF /* notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51A17FB63EF000309FF /* notifications.png */; };
-		B75EC53117FB63EF000309FF /* notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51B17FB63EF000309FF /* notifications@2x.png */; };
-		B75EC53217FB63EF000309FF /* ble-bridge-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51C17FB63EF000309FF /* ble-bridge-2.png */; };
-		B75EC53317FB63EF000309FF /* ble-bridge-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51D17FB63EF000309FF /* ble-bridge-2@2x.png */; };
-		B75EC53417FB63EF000309FF /* rc-car.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51E17FB63EF000309FF /* rc-car.png */; };
-		B75EC53517FB63EF000309FF /* rc-car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC51F17FB63EF000309FF /* rc-car@2x.png */; };
-		B75EC53617FB63EF000309FF /* power-relay.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52017FB63EF000309FF /* power-relay.png */; };
-		B75EC53717FB63EF000309FF /* power-relay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52117FB63EF000309FF /* power-relay@2x.png */; };
-		B75EC53817FB63EF000309FF /* ble-bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52217FB63EF000309FF /* ble-bridge.png */; };
-		B75EC53917FB63EF000309FF /* ble-bridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52317FB63EF000309FF /* ble-bridge@2x.png */; };
-		B75EC53A17FB63EF000309FF /* lcd.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52417FB63EF000309FF /* lcd.png */; };
-		B75EC53B17FB63EF000309FF /* lcd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52517FB63EF000309FF /* lcd@2x.png */; };
-		B75EC53C17FB63EF000309FF /* game-controller-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52617FB63EF000309FF /* game-controller-2.png */; };
-		B75EC53D17FB63EF000309FF /* game-controller-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52717FB63EF000309FF /* game-controller-2@2x.png */; };
-		B75EC53E17FB63EF000309FF /* led.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52817FB63EF000309FF /* led.png */; };
-		B75EC53F17FB63EF000309FF /* led@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52917FB63EF000309FF /* led@2x.png */; };
-		B75EC54017FB63EF000309FF /* game-controller.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52A17FB63EF000309FF /* game-controller.png */; };
-		B75EC54117FB63EF000309FF /* game-controller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52B17FB63EF000309FF /* game-controller@2x.png */; };
-		B75EC54217FB63EF000309FF /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52C17FB63EF000309FF /* keyboard.png */; };
-		B75EC54317FB63EF000309FF /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75EC52D17FB63EF000309FF /* keyboard@2x.png */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
-		B76B0C2317F9097300004B06 /* DispatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B76B0C2217F9097300004B06 /* DispatchManager.m */; };
+		B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */; };
+		B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */; };
+		B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */; };
+		B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */; };
+		B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */; };
+		B7B3F81617FDFF7200DCDAF5 /* game-controller-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */; };
+		B7B3F81717FDFF7200DCDAF5 /* game-controller-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */; };
+		B7B3F81817FDFF7200DCDAF5 /* game-controller.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80417FDFF7200DCDAF5 /* game-controller.png */; };
+		B7B3F81917FDFF7200DCDAF5 /* game-controller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */; };
+		B7B3F81A17FDFF7200DCDAF5 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80617FDFF7200DCDAF5 /* keyboard.png */; };
+		B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */; };
+		B7B3F81C17FDFF7200DCDAF5 /* lcd.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80817FDFF7200DCDAF5 /* lcd.png */; };
+		B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */; };
+		B7B3F81E17FDFF7200DCDAF5 /* led.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80A17FDFF7200DCDAF5 /* led.png */; };
+		B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */; };
+		B7B3F82017FDFF7200DCDAF5 /* notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80C17FDFF7200DCDAF5 /* notifications.png */; };
+		B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */; };
+		B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */; };
+		B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */; };
+		B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81017FDFF7200DCDAF5 /* rc-car.png */; };
+		B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
 		B7B73BF617F256B3008E6769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF517F256B3008E6769 /* UIKit.framework */; };
@@ -70,30 +70,30 @@
 		B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleCollectionViewCell.m; sourceTree = "<group>"; };
 		B75EC51617FB49D8000309FF /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Module.h; sourceTree = "<group>"; };
 		B75EC51717FB49D8000309FF /* Module.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Module.m; sourceTree = "<group>"; };
-		B75EC51A17FB63EF000309FF /* notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notifications.png; sourceTree = "<group>"; };
-		B75EC51B17FB63EF000309FF /* notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications@2x.png"; sourceTree = "<group>"; };
-		B75EC51C17FB63EF000309FF /* ble-bridge-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-bridge-2.png"; sourceTree = "<group>"; };
-		B75EC51D17FB63EF000309FF /* ble-bridge-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-bridge-2@2x.png"; sourceTree = "<group>"; };
-		B75EC51E17FB63EF000309FF /* rc-car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rc-car.png"; sourceTree = "<group>"; };
-		B75EC51F17FB63EF000309FF /* rc-car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rc-car@2x.png"; sourceTree = "<group>"; };
-		B75EC52017FB63EF000309FF /* power-relay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power-relay.png"; sourceTree = "<group>"; };
-		B75EC52117FB63EF000309FF /* power-relay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power-relay@2x.png"; sourceTree = "<group>"; };
-		B75EC52217FB63EF000309FF /* ble-bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-bridge.png"; sourceTree = "<group>"; };
-		B75EC52317FB63EF000309FF /* ble-bridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-bridge@2x.png"; sourceTree = "<group>"; };
-		B75EC52417FB63EF000309FF /* lcd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lcd.png; sourceTree = "<group>"; };
-		B75EC52517FB63EF000309FF /* lcd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lcd@2x.png"; sourceTree = "<group>"; };
-		B75EC52617FB63EF000309FF /* game-controller-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-controller-2.png"; sourceTree = "<group>"; };
-		B75EC52717FB63EF000309FF /* game-controller-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-controller-2@2x.png"; sourceTree = "<group>"; };
-		B75EC52817FB63EF000309FF /* led.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led.png; sourceTree = "<group>"; };
-		B75EC52917FB63EF000309FF /* led@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led@2x.png"; sourceTree = "<group>"; };
-		B75EC52A17FB63EF000309FF /* game-controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-controller.png"; sourceTree = "<group>"; };
-		B75EC52B17FB63EF000309FF /* game-controller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-controller@2x.png"; sourceTree = "<group>"; };
-		B75EC52C17FB63EF000309FF /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
-		B75EC52D17FB63EF000309FF /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard@2x.png"; sourceTree = "<group>"; };
 		B75EC54717FB7AF7000309FF /* KeyboardModuleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardModuleTableViewController.h; sourceTree = "<group>"; };
 		B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardModuleTableViewController.m; sourceTree = "<group>"; };
-		B76B0C2117F9097300004B06 /* DispatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchManager.h; sourceTree = "<group>"; };
-		B76B0C2217F9097300004B06 /* DispatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchManager.m; sourceTree = "<group>"; };
+		B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryTableViewController.h; sourceTree = "<group>"; };
+		B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryTableViewController.m; sourceTree = "<group>"; };
+		B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2.png"; path = "Images/ble-bridge-2.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2@2x.png"; path = "Images/ble-bridge-2@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge.png"; path = "Images/ble-bridge.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge@2x.png"; path = "Images/ble-bridge@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller-2.png"; path = "Images/game-controller-2.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller-2@2x.png"; path = "Images/game-controller-2@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80417FDFF7200DCDAF5 /* game-controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller.png"; path = "Images/game-controller.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller@2x.png"; path = "Images/game-controller@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80617FDFF7200DCDAF5 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard.png; path = Images/keyboard.png; sourceTree = SOURCE_ROOT; };
+		B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "keyboard@2x.png"; path = "Images/keyboard@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80817FDFF7200DCDAF5 /* lcd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lcd.png; path = Images/lcd.png; sourceTree = SOURCE_ROOT; };
+		B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lcd@2x.png"; path = "Images/lcd@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80A17FDFF7200DCDAF5 /* led.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = led.png; path = Images/led.png; sourceTree = SOURCE_ROOT; };
+		B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led@2x.png"; path = "Images/led@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80C17FDFF7200DCDAF5 /* notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = notifications.png; path = Images/notifications.png; sourceTree = SOURCE_ROOT; };
+		B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "notifications@2x.png"; path = "Images/notifications@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "power-relay.png"; path = "Images/power-relay.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "power-relay@2x.png"; path = "Images/power-relay@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F81017FDFF7200DCDAF5 /* rc-car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car.png"; path = "Images/rc-car.png"; sourceTree = SOURCE_ROOT; };
+		B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car@2x.png"; path = "Images/rc-car@2x.png"; sourceTree = SOURCE_ROOT; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B73BF117F256B3008E6769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7B73BF317F256B3008E6769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -157,33 +157,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		B75EC51917FB4C0F000309FF /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				B75EC51A17FB63EF000309FF /* notifications.png */,
-				B75EC51B17FB63EF000309FF /* notifications@2x.png */,
-				B75EC51C17FB63EF000309FF /* ble-bridge-2.png */,
-				B75EC51D17FB63EF000309FF /* ble-bridge-2@2x.png */,
-				B75EC51E17FB63EF000309FF /* rc-car.png */,
-				B75EC51F17FB63EF000309FF /* rc-car@2x.png */,
-				B75EC52017FB63EF000309FF /* power-relay.png */,
-				B75EC52117FB63EF000309FF /* power-relay@2x.png */,
-				B75EC52217FB63EF000309FF /* ble-bridge.png */,
-				B75EC52317FB63EF000309FF /* ble-bridge@2x.png */,
-				B75EC52417FB63EF000309FF /* lcd.png */,
-				B75EC52517FB63EF000309FF /* lcd@2x.png */,
-				B75EC52617FB63EF000309FF /* game-controller-2.png */,
-				B75EC52717FB63EF000309FF /* game-controller-2@2x.png */,
-				B75EC52817FB63EF000309FF /* led.png */,
-				B75EC52917FB63EF000309FF /* led@2x.png */,
-				B75EC52A17FB63EF000309FF /* game-controller.png */,
-				B75EC52B17FB63EF000309FF /* game-controller@2x.png */,
-				B75EC52C17FB63EF000309FF /* keyboard.png */,
-				B75EC52D17FB63EF000309FF /* keyboard@2x.png */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
 		B75EC54A17FB7B0D000309FF /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +175,53 @@
 			name = Modules;
 			sourceTree = "<group>";
 		};
+		B7851D4517FDFE4400181C53 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */,
+				B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */,
+				B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */,
+				B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */,
+				B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */,
+				B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */,
+				B7B3F80417FDFF7200DCDAF5 /* game-controller.png */,
+				B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */,
+				B7B3F80617FDFF7200DCDAF5 /* keyboard.png */,
+				B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */,
+				B7B3F80817FDFF7200DCDAF5 /* lcd.png */,
+				B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */,
+				B7B3F80A17FDFF7200DCDAF5 /* led.png */,
+				B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */,
+				B7B3F80C17FDFF7200DCDAF5 /* notifications.png */,
+				B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */,
+				B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */,
+				B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */,
+				B7B3F81017FDFF7200DCDAF5 /* rc-car.png */,
+				B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */,
+			);
+			name = Images;
+			path = "../Images/Images-2";
+			sourceTree = "<group>";
+		};
+		B7B3F82617FF5FAC00DCDAF5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B7B73C2B17F25A58008E6769 /* UARTService.h */,
+				B7B73C2C17F25A58008E6769 /* UARTService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		B7B3F82C17FF701100DCDAF5 /* ConnectionController */ = {
+			isa = PBXGroup;
+			children = (
+				B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */,
+				B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */,
+			);
+			name = ConnectionController;
+			path = "BLEduino-Libray";
+			sourceTree = SOURCE_ROOT;
+		};
 		B7B73BE517F256B3008E6769 = {
 			isa = PBXGroup;
 			children = (
@@ -210,7 +230,6 @@
 				B7B73C1617F256B3008E6769 /* BLEduinoTests */,
 				B7B73BF017F256B3008E6769 /* Frameworks */,
 				B7B73BEF17F256B3008E6769 /* Products */,
-				B75EC51917FB4C0F000309FF /* Images */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,10 +261,12 @@
 				B7B73C0017F256B3008E6769 /* AppDelegate.h */,
 				B7B73C0117F256B3008E6769 /* AppDelegate.m */,
 				B7B73C0317F256B3008E6769 /* Main.storyboard */,
+				B7B3F82C17FF701100DCDAF5 /* ConnectionController */,
 				B75EC51517FB415F000309FF /* ModulesConrtoller */,
 				B75EC54B17FB7B27000309FF /* Modules */,
 				B7B73C0917F256B3008E6769 /* Images.xcassets */,
 				B7B73BF817F256B3008E6769 /* Supporting Files */,
+				B7851D4517FDFE4400181C53 /* Images */,
 			);
 			path = BLEduino;
 			sourceTree = "<group>";
@@ -282,10 +303,7 @@
 		B7B73C2A17F259C6008E6769 /* BLEduino-Library */ = {
 			isa = PBXGroup;
 			children = (
-				B7B73C2B17F25A58008E6769 /* UARTService.h */,
-				B7B73C2C17F25A58008E6769 /* UARTService.m */,
-				B76B0C2117F9097300004B06 /* DispatchManager.h */,
-				B76B0C2217F9097300004B06 /* DispatchManager.m */,
+				B7B3F82617FF5FAC00DCDAF5 /* Services */,
 				B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */,
 				B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */,
 			);
@@ -369,29 +387,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B75EC53B17FB63EF000309FF /* lcd@2x.png in Resources */,
-				B75EC53D17FB63EF000309FF /* game-controller-2@2x.png in Resources */,
-				B75EC53117FB63EF000309FF /* notifications@2x.png in Resources */,
-				B75EC53917FB63EF000309FF /* ble-bridge@2x.png in Resources */,
-				B75EC53517FB63EF000309FF /* rc-car@2x.png in Resources */,
+				B7B3F81E17FDFF7200DCDAF5 /* led.png in Resources */,
+				B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */,
+				B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */,
 				B7B73C0A17F256B3008E6769 /* Images.xcassets in Resources */,
-				B75EC53317FB63EF000309FF /* ble-bridge-2@2x.png in Resources */,
+				B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */,
+				B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */,
+				B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */,
+				B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */,
+				B7B3F81917FDFF7200DCDAF5 /* game-controller@2x.png in Resources */,
+				B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */,
+				B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */,
+				B7B3F81617FDFF7200DCDAF5 /* game-controller-2.png in Resources */,
+				B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */,
+				B7B3F81717FDFF7200DCDAF5 /* game-controller-2@2x.png in Resources */,
 				B7B73BFC17F256B3008E6769 /* InfoPlist.strings in Resources */,
-				B75EC53F17FB63EF000309FF /* led@2x.png in Resources */,
+				B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
-				B75EC53A17FB63EF000309FF /* lcd.png in Resources */,
-				B75EC53E17FB63EF000309FF /* led.png in Resources */,
-				B75EC53C17FB63EF000309FF /* game-controller-2.png in Resources */,
-				B75EC53417FB63EF000309FF /* rc-car.png in Resources */,
-				B75EC53217FB63EF000309FF /* ble-bridge-2.png in Resources */,
-				B75EC54217FB63EF000309FF /* keyboard.png in Resources */,
-				B75EC54017FB63EF000309FF /* game-controller.png in Resources */,
-				B75EC53717FB63EF000309FF /* power-relay@2x.png in Resources */,
-				B75EC53617FB63EF000309FF /* power-relay.png in Resources */,
-				B75EC54117FB63EF000309FF /* game-controller@2x.png in Resources */,
-				B75EC54317FB63EF000309FF /* keyboard@2x.png in Resources */,
-				B75EC53017FB63EF000309FF /* notifications.png in Resources */,
-				B75EC53817FB63EF000309FF /* ble-bridge.png in Resources */,
+				B7B3F81A17FDFF7200DCDAF5 /* keyboard.png in Resources */,
+				B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */,
+				B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */,
+				B7B3F81817FDFF7200DCDAF5 /* game-controller.png in Resources */,
+				B7B3F81C17FDFF7200DCDAF5 /* lcd.png in Resources */,
+				B7B3F82017FDFF7200DCDAF5 /* notifications.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,13 +429,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */,
+				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
 				B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */,
 				B75EC51817FB49D8000309FF /* Module.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
-				B76B0C2317F9097300004B06 /* DispatchManager.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

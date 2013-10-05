@@ -8,6 +8,7 @@
 
 #import "KeyboardModuleTableViewController.h"
 #import "UARTService.h"
+#import "LeDiscoveryManager.h"
 
 @interface KeyboardModuleTableViewController ()
 
@@ -48,8 +49,11 @@
 {
     if([text isEqualToString:@"\n"])
     {
+        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
+        
         NSString *message = self.messageView.text;
-        UARTService *messageService = [[UARTService alloc] initWithPeripheral:nil controller:self];
+        UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
         [messageService writeMessage:message];
     }
     return YES;

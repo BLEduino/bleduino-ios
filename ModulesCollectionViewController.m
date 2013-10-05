@@ -33,6 +33,10 @@
     
     self.modules = @[@"LCD",@"Keyboard",@"Game Controller",@"R/C Car",@"Power Relay",@"LED",@"Notifications",@"BLE Bridge"];
     self.modulesImages = @[@"lcd.png",@"keyboard.png",@"game-controller.png", @"rc-car.png",@"power-relay.png", @"led.png", @"notifications.png",@"ble-bridge.png"];
+    
+    //Set BLE navigation.
+    [self.navigationItem.leftBarButtonItem setTarget:self];
+    [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,13 +69,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    int module = indexPath.item;
+    NSInteger module = indexPath.item;
     
     switch (module) {
         case 0:
             [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
             break;
     }
+}
+
+- (void)presentConnectionManager:(id)sender
+{
+    [self performSegueWithIdentifier:@"ConnectionManagerSegue" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -81,6 +90,10 @@
         UINavigationController *navigationController = segue.destinationViewController;
         KeyboardModuleTableViewController *keyboardController = [[navigationController viewControllers] objectAtIndex:0];
         keyboardController.delegate = self;
+    }
+    else if ([segue.identifier isEqualToString:@"ConnectionManagerSegue"])
+    {
+        //Nothing for now.
     }
 }
 

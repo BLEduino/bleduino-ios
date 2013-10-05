@@ -4,6 +4,54 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
+        <!--Le Discovery Table View Controller - Connection Manager-->
+        <scene sceneID="GaQ-hY-tCj">
+            <objects>
+                <tableViewController id="lrn-Ad-314" customClass="LeDiscoveryTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dcR-bw-2Q7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="BlePeripheralCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="TWO-C6-ovc" detailTextLabel="E3F-0P-hJD" style="IBUITableViewCellStyleSubtitle" id="gCz-7r-XpI">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gCz-7r-XpI" id="T5r-Ie-Ngv">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TWO-C6-ovc">
+                                            <rect key="frame" x="15" y="3" width="34" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E3F-0P-hJD">
+                                            <rect key="frame" x="15" y="25" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="lrn-Ad-314" id="AeD-x4-lpm"/>
+                            <outlet property="delegate" destination="lrn-Ad-314" id="aFO-ef-PTw"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Connection Manager" id="uMh-6T-kyW">
+                        <barButtonItem key="leftBarButtonItem" title="Modules" id="Wgo-rp-5DI"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Dy-Gf-mxL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1381" y="162"/>
+        </scene>
         <!--Modules Collection View Controller - BLEduino-->
         <scene sceneID="wNA-8O-17A">
             <objects>
@@ -54,10 +102,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="BLEduino" id="UyA-gr-z0j">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="reply" id="2tj-Ns-zsg"/>
+                        <barButtonItem key="leftBarButtonItem" title="BLE" id="2tj-Ns-zsg"/>
                     </navigationItem>
                     <connections>
                         <segue destination="Zl0-67-8rR" kind="modal" identifier="KeyboardModuleSegue" modalTransitionStyle="flipHorizontal" id="jeM-hS-QhI"/>
+                        <segue destination="DNS-it-7hn" kind="modal" identifier="ConnectionManagerSegue" id="wTO-O8-VHl"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OcM-qo-dPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -100,7 +149,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Keyboard" id="LhR-u8-9hE">
-                        <barButtonItem key="leftBarButtonItem" title="Modules" style="plain" id="nJ2-4U-5Y0"/>
+                        <barButtonItem key="leftBarButtonItem" title="Modules" id="nJ2-4U-5Y0"/>
                     </navigationItem>
                     <connections>
                         <outlet property="messageView" destination="sy8-pI-fPh" id="ZFb-ho-d3d"/>
@@ -145,6 +194,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXa-DR-Kkg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1440" y="900"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="U5u-0i-1S8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DNS-it-7hn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lbt-su-rfR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lrn-Ad-314" kind="relationship" relationship="rootViewController" id="GHz-Pj-AEv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FJw-MN-4Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="855" y="162"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -75,7 +75,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
 
 - (void) connectBleduino:(CBPeripheral *)bleduino
 {
-
     NSDictionary *connectBleOptions =
     @{@"CBConnectPeripheralOptionNotifyOnConnectionKey" : (self.notifyConnect)?@YES:@NO,
       @"CBConnectPeripheralOptionNotifyOnDisconnectionKey" : (self.notifyDisconnect)?@YES:@NO};
@@ -89,7 +88,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
     [centralManager cancelPeripheralConnection:bleduino];
 }
 
-
 //Central Manager Delegate
 #pragma mark -
 #pragma mark CM - Connection Delegate
@@ -99,23 +97,22 @@ static LeDiscoveryManager *sharedInstance = NULL;
 - (void)centralManager:(CBCentralManager *)central
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    
+    [self.delegate didCconnectToBleduino:peripheral];
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didDisconnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
-    
+    [self.delegate didDisconnectFromBleduino:peripheral error:error];
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didFailToConnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
-    
+    [self.delegate didFailToConnectToBleduino:peripheral error:error];
 }
-
 
 #pragma mark -
 #pragma mark CM - Discovery Delegate.
@@ -127,7 +124,21 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    if(leManager.scanOnlyForBLEduinos)
+    {
+        //PENDING: Confirm peripheral is BLEduino with `advertisementData`.
+        if(@YES)
+        {
+            [self.foundBleduinos insertObject:peripheral atIndex:0];
+            [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+        }
+    }
+    else
+    {
+        [self.foundBleduinos insertObject:peripheral atIndex:0];
+        [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+    }
 }
 
 #pragma mark -
@@ -138,13 +149,13 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)centralManager:(CBCentralManager *)central
 didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
-    
+    //PENDING.
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didRetrievePeripherals:(NSArray *)peripherals
 {
-    
+    //PENDING.
 }
 
 /****************************************************************************/
@@ -152,12 +163,9 @@ didRetrievePeripherals:(NSArray *)peripherals
 /****************************************************************************/
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
+    //PENDING.
     NSLog(@"Central manager state was updated.");
-
 }
-
-
-
 
 
 @end

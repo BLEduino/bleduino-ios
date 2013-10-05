@@ -7,12 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "LeDiscoveryManager.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    leManager.scanOnlyForBLEduinos = YES;
+
     return YES;
 }
 							

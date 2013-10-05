@@ -12,16 +12,20 @@
 @protocol LeDiscoveryManagerDelegate <NSObject>
 @optional
 //Discovering BLEduino and BLE devices.
-- (void) didDiscoverBleduino:(CBPeripheral *)bleduino;
+- (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI;
 - (void) didDiscoverBleduinos:(NSArray *)bleduinosList;
-- (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice;
+- (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI;
 - (void) didDiscoverBleDevices:(NSArray *)devicesList;
 
 //Connecting to BLEduino and BLE devices.
-- (void) didCconnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
-- (void) didCconnectToBleduinos:(NSArray *)bleduinosList error:(NSError *)error;
-- (void) didCconnectToBleDevice:(CBPeripheral *)bleDevice error:(NSError *)error;
-- (void) didCconnectToDevices:(NSArray *)devicesList error:(NSError *)error;
+//PENDING: Perhaps all of these should be handled individually.
+- (void) didCconnectToBleduino:(CBPeripheral *)bleduino;
+- (void) didCconnectToBleduinos:(NSArray *)bleduinosList;
+- (void) didCconnectToBleDevice:(CBPeripheral *)bleDevice;
+- (void) didCconnectToDevices:(NSArray *)devicesList;
+
+
+- (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
 
 //Disconnecting from BLEduino and BLE devices.
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
