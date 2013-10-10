@@ -18,4 +18,5 @@
 
 @interface LeDiscoveryTableViewController : UITableViewController <LeDiscoveryManagerDelegate>
 @property (weak, nonatomic) id <LeDiscoveryTableViewControllerDelegate> delegate;
+- (IBAction)dismissConnectionController:(id)sender;
 @end

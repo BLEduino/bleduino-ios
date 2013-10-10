@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="BlePeripheralCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="TWO-C6-ovc" detailTextLabel="E3F-0P-hJD" style="IBUITableViewCellStyleSubtitle" id="gCz-7r-XpI">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="BlePeripheralCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BlePeripheralCell" textLabel="TWO-C6-ovc" detailTextLabel="E3F-0P-hJD" style="IBUITableViewCellStyleSubtitle" id="gCz-7r-XpI">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gCz-7r-XpI" id="T5r-Ie-Ngv">
@@ -45,7 +45,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Connection Manager" id="uMh-6T-kyW">
-                        <barButtonItem key="leftBarButtonItem" title="Modules" id="Wgo-rp-5DI"/>
+                        <barButtonItem key="leftBarButtonItem" title="Modules" id="Wgo-rp-5DI">
+                            <connections>
+                                <action selector="dismissConnectionController:" destination="lrn-Ad-314" id="Q8g-7e-ylX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Dy-Gf-mxL" userLabel="First Responder" sceneMemberID="firstResponder"/>

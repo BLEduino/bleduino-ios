@@ -29,8 +29,8 @@ static LeDiscoveryManager *sharedInstance = NULL;
                                                               queue:bleQueue
                                                             options:options];
                           
-        self.foundBleduinos = [[NSMutableArray alloc] init];
-        self.connectedBleduinos = [[NSMutableArray alloc] init];
+        self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
+        self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedServices = [[NSMutableArray alloc] init];
     }
     return self;
@@ -49,7 +49,8 @@ static LeDiscoveryManager *sharedInstance = NULL;
     sharedInstance = nil; //Destroy central manager.
     
     //Destroy all stored devices and services.
-    self.foundBleduinos = self.connectedBleduinos = self.connectedServices = nil;
+    self.foundBleduinos = self.connectedBleduinos = nil;
+    self.connectedServices = nil;
     //PENDING: Add support to destroy persisted information.
 }
 
@@ -63,17 +64,27 @@ static LeDiscoveryManager *sharedInstance = NULL;
 {
     self.scanOnlyForBLEduinos = YES;
     
-    NSArray *services = [NSArray arrayWithObject:[CBUUID UUIDWithString:@"180A"]];
+    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    uartNordic = [uartNordic uppercaseString];
+    NSArray *services = @[[CBUUID UUIDWithString:uartNordic],[CBUUID UUIDWithString:@"180A"]];
     
     [centralManager scanForPeripheralsWithServices:services options:nil];
 }
+
+- (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout
+{
+    [self startScanningForBleduinos];
+    
+    [self performSelector:@selector(stopScanning) withObject:self afterDelay:timeout];
+}
+
 
 - (void) stopScanning
 {
     [centralManager stopScan];
 }
 
-- (void) connectBleduino:(CBPeripheral *)bleduino
+- (void)connectBleduino:(CBPeripheral *)bleduino
 {
     NSDictionary *connectBleOptions =
     @{@"CBConnectPeripheralOptionNotifyOnConnectionKey" : (self.notifyConnect)?@YES:@NO,
@@ -85,6 +96,7 @@ static LeDiscoveryManager *sharedInstance = NULL;
 
 - (void) disconnectBleduino:(CBPeripheral *)bleduino
 {
+    NSLog(@"CACA");
     [centralManager cancelPeripheralConnection:bleduino];
 }
 
@@ -97,13 +109,30 @@ static LeDiscoveryManager *sharedInstance = NULL;
 - (void)centralManager:(CBCentralManager *)central
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    [self.delegate didCconnectToBleduino:peripheral];
+    //Move peripheral to connected devices.
+    [self.foundBleduinos removeObject:peripheral];
+    [self.connectedBleduinos insertObject:peripheral atIndex:0];
+    
+    
+    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    uartNordic = [uartNordic uppercaseString];
+    CBUUID *uuidUartService = [CBUUID UUIDWithString:uartNordic];
+
+    peripheral.delegate = self;
+    [peripheral discoverServices:@[uuidUartService]];
+    
+    [self.delegate didConnectToBleduino:peripheral];
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didDisconnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
+    
+    //Move peripheral to connected devices.
+    [self.connectedBleduinos removeObject:peripheral];
+    [self.foundBleduinos insertObject:peripheral atIndex:0];
+    
     [self.delegate didDisconnectFromBleduino:peripheral error:error];
 }
 
@@ -130,14 +159,20 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         //PENDING: Confirm peripheral is BLEduino with `advertisementData`.
         if(@YES)
         {
-            [self.foundBleduinos insertObject:peripheral atIndex:0];
-            [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+            if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
+            {
+                [self.foundBleduinos insertObject:peripheral atIndex:0];
+                [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+            }
         }
     }
     else
     {
-        [self.foundBleduinos insertObject:peripheral atIndex:0];
-        [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+        if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
+        {
+            [self.foundBleduinos insertObject:peripheral atIndex:0];
+            [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+        }
     }
 }
 
@@ -165,6 +200,52 @@ didRetrievePeripherals:(NSArray *)peripherals
 {
     //PENDING.
     NSLog(@"Central manager state was updated.");
+}
+
+/****************************************************************************/
+/*				         Peripheral Delegate               				    */
+/****************************************************************************/
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
+{
+    peripheral.delegate = self;
+    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    CBUUID *uuidService = [CBUUID UUIDWithString:uartNordic];
+    
+    for(CBService *service in peripheral.services)
+    {
+        if([service.UUID isEqual:uuidService])
+        {
+            CBUUID *uuidRX = [CBUUID UUIDWithString:@"6e400002-b5a3-f393-e0a9-e50e24dcca9e"];
+            [peripheral discoverCharacteristics:@[uuidRX] forService:service];
+            NSLog(@"Found Service");
+        }
+
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service
+             error:(NSError *)error
+{
+    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    CBUUID *uuidService = [CBUUID UUIDWithString:uartNordic];
+    
+    CBUUID *uuidRX = [CBUUID UUIDWithString:@"6e400002-b5a3-f393-e0a9-e50e24dcca9e"];
+    
+    for(CBService *service in peripheral.services)
+    {
+        if([service.UUID isEqual:uuidService])
+        {
+            for(CBCharacteristic *bleChar in service.characteristics)
+            {
+                if([bleChar.UUID isEqual:uuidRX])
+                {
+                    self.uartRXChar = bleChar;
+                    NSLog(@"Found Characteristic");
+                }
+            }
+        }
+    }
 }
 
 

@@ -9,6 +9,7 @@
 #import "ModulesCollectionViewController.h"
 #import "ModuleCollectionViewCell.h"
 #import "KeyboardModuleTableViewController.h"
+#import "LeDiscoveryTableViewController.h"
 
 @interface ModulesCollectionViewController ()
 
@@ -93,12 +94,23 @@
     }
     else if ([segue.identifier isEqualToString:@"ConnectionManagerSegue"])
     {
-        //Nothing for now.
+        UINavigationController *navigationController = segue.destinationViewController;
+        LeDiscoveryTableViewController *connectionController = [[navigationController viewControllers] objectAtIndex:0];
+        connectionController.delegate = self;
     }
 }
 
-//Delegates
+#pragma mark -
+#pragma mark - Modules Dismiss Delegates
+/****************************************************************************/
+/*                         Modules Dismiss' Delegate                        */
+/****************************************************************************/
 - (void) keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) leDiscoveryTableViewControllerDismissed:(LeDiscoveryTableViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }

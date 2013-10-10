@@ -19,10 +19,10 @@
 
 //Connecting to BLEduino and BLE devices.
 //PENDING: Perhaps all of these should be handled individually.
-- (void) didCconnectToBleduino:(CBPeripheral *)bleduino;
-- (void) didCconnectToBleduinos:(NSArray *)bleduinosList;
-- (void) didCconnectToBleDevice:(CBPeripheral *)bleDevice;
-- (void) didCconnectToDevices:(NSArray *)devicesList;
+- (void) didConnectToBleduino:(CBPeripheral *)bleduino;
+- (void) didConnectToBleduinos:(NSArray *)bleduinosList;
+- (void) didConnectToBleDevice:(CBPeripheral *)bleDevice;
+- (void) didConnectToDevices:(NSArray *)devicesList;
 
 
 - (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
@@ -35,16 +35,20 @@
 @end
 
 
-@interface LeDiscoveryManager : NSObject <CBCentralManagerDelegate>
+@interface LeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property (nonatomic, weak) id <LeDiscoveryManagerDelegate> delegate;
 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/
-@property (retain, nonatomic) NSMutableArray    *foundBleduinos;
-@property (retain, nonatomic) NSMutableArray    *connectedBleduinos;
+@property (retain, nonatomic) NSMutableOrderedSet    *foundBleduinos;
+@property (retain, nonatomic) NSMutableOrderedSet    *connectedBleduinos;
 @property (retain, nonatomic) NSMutableArray	*connectedServices;
+
+//PENDING
+@property (retain, nonatomic) CBCharacteristic *uartRXChar;
+
 
 /****************************************************************************/
 /*					 Central Manager Settings                               */
@@ -57,6 +61,7 @@
 /*								Actions										*/
 /****************************************************************************/
 - (void) startScanningForBleduinos;
+- (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout;
 //- (void) startScanningForBleduinoWithServiceUUIDString:(NSString *)uuidString;
 //- (void) startScanningForBleduinoWithServicesUUIDStringList:(NSArray *)uuidStringList;
 //- (void) startScanningForBleduinoWithServiceUUID:(NSUUID *)uuid;

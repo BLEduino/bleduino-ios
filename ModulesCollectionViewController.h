@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "KeyboardModuleTableViewController.h"
+#import "LeDiscoveryTableViewController.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-KeyboardModuleTableViewControllerDelegate
+KeyboardModuleTableViewControllerDelegate,
+LeDiscoveryTableViewControllerDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;

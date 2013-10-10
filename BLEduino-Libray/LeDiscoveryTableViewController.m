@@ -28,11 +28,40 @@
 {
     [super viewDidLoad];
     
-    //Setup LeDiscovery manager and start
+    //Setup LeDiscovery manager.
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
     
+//    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
+//    self.refreshControl = [UIRefreshControl new];
+//	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
+//	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
+    
+    //Start scanning for BLE devices.
     [leManager startScanningForBleduinos];
+//  [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:15];
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+//    [self.refreshControl beginRefreshing];
+}
+
+- (void)scanForBleDevices:(id)sender
+{
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    [leManager startScanningForBleduinos];
+    
+    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:15];
+}
+
+- (void)stopScanForBleDevices:(id)sender
+{
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    [leManager stopScanning];
+    
+    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,17 +124,25 @@
     {
         CBPeripheral *foundBleduino = [leManager.foundBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = foundBleduino.name;
+        cell.detailTextLabel.text = [foundBleduino.RSSI stringValue];
     }
     
     return cell;
 }
 
 /****************************************************************************/
-/*                          Disconnect BLEduinos                            */
+/*                        Connect/Disconnect BLEduinos                      */
 /****************************************************************************/
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (indexPath.section > 0)?YES:NO;
+    return (indexPath.section > 0)?NO:YES;
 }
 
 - (void)tableView:(UITableView *)tableView
@@ -127,7 +164,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 /*                            LeManager Delegate                            */
 /****************************************************************************/
 
-- (void) didDiscoverBleduino:(CBPeripheral *)bleduino
+- (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationTop];
@@ -136,9 +173,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 //Connecting to BLEduino and BLE devices.
-- (void) didCconnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+- (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
     //PENDING: Handled by Apple with disconnect key. Verify. If not move row to top section.
+    //ONLY HANDLED IN BACKGROUND APPARENTLY
+    
+//    [self.tableView reloadData];
     NSLog(@"Connected to peripheral: %@", bleduino.name);
 }
 
@@ -146,9 +186,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
 {
     //PENDING: Handled by Apple with disconnect key. Verify. If not push local notification.
+    //ONLY HANDLED IN BACKGROUND APPARENTLY
+//    [self.tableView reloadData];
     NSLog(@"Disconnected from peripheral: %@", bleduino.name);
+    NSLog(@"Code: %i, Domain: %@, Description: %@, Failure: %@", error.code, error.domain, error.localizedDescription, error.localizedFailureReason);
+    NSLog(@"User info: %@, Recovery Suggestion: %@", [error.userInfo description], error.localizedRecoverySuggestion);
+    
 }
 
 
+/****************************************************************************/
+/*                     Dismiss Connection Controller                        */
+/****************************************************************************/
+- (IBAction)dismissConnectionController:(id)sender
+{
+    [self.delegate leDiscoveryTableViewControllerDismissed:self];
+}
 
 @end

@@ -7,13 +7,18 @@
 //
 
 #import "UARTService.h"
+#import "LeDiscoveryManager.h"
 
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
 NSString *kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D";
-NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B0032C0D16A2D";
-NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
+//NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B0032C0D16A2D";
+NSString *kRxCharacteristicUUIDString = @"6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+
+//NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
+NSString *kTxCharacteristicUUIDString = @"3355";
+
 
 @interface UARTService() <CBPeripheralDelegate>
 {
@@ -118,7 +123,8 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
         }
         else
         {
-            [servicePeripheral writeValue:data forCharacteristic:rxCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+            [servicePeripheral writeValue:data forCharacteristic:leManager.uartRXChar type:CBCharacteristicWriteWithoutResponse];
         }
 
     }
