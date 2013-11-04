@@ -42,13 +42,8 @@
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/
-@property (retain, nonatomic) NSMutableOrderedSet    *foundBleduinos;
-@property (retain, nonatomic) NSMutableOrderedSet    *connectedBleduinos;
-@property (retain, nonatomic) NSMutableArray	*connectedServices;
-
-//PENDING
-@property (retain, nonatomic) CBCharacteristic *uartRXChar;
-
+@property (retain, nonatomic) NSMutableOrderedSet *foundBleduinos;
+@property (retain, nonatomic) NSMutableOrderedSet *connectedBleduinos;
 
 /****************************************************************************/
 /*					 Central Manager Settings                               */

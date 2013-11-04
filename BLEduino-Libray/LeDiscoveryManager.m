@@ -7,6 +7,12 @@
 //
 
 #import "LeDiscoveryManager.h"
+#import "UARTService.h"
+#import "VehicleMotionService.h"
+#import "NotificationService.h"
+#import "FirmataService.h"
+#import "ControllerService.h"
+#import "BleBridgeService.h"
 
 @implementation LeDiscoveryManager
 {
@@ -31,7 +37,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
                           
         self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
-        self.connectedServices = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -50,7 +55,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
     
     //Destroy all stored devices and services.
     self.foundBleduinos = self.connectedBleduinos = nil;
-    self.connectedServices = nil;
     //PENDING: Add support to destroy persisted information.
 }
 
@@ -96,7 +100,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
 
 - (void) disconnectBleduino:(CBPeripheral *)bleduino
 {
-    NSLog(@"CACA");
     [centralManager cancelPeripheralConnection:bleduino];
 }
 
@@ -112,7 +115,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
     //Move peripheral to connected devices.
     [self.foundBleduinos removeObject:peripheral];
     [self.connectedBleduinos insertObject:peripheral atIndex:0];
-    
     
     NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
     uartNordic = [uartNordic uppercaseString];
@@ -162,7 +164,10 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
             if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
             {
                 [self.foundBleduinos insertObject:peripheral atIndex:0];
-                [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+                });
             }
         }
     }
@@ -171,7 +176,10 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
         if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
         {
             [self.foundBleduinos insertObject:peripheral atIndex:0];
-            [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+            });
         }
     }
 }
@@ -209,39 +217,178 @@ didRetrievePeripherals:(NSArray *)peripherals
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
     peripheral.delegate = self;
-    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-    CBUUID *uuidService = [CBUUID UUIDWithString:uartNordic];
     
     for(CBService *service in peripheral.services)
     {
-        if([service.UUID isEqual:uuidService])
+        //Service: UART
+        if([service.UUID isEqual:[CBUUID UUIDWithString:kUARTServiceUUIDString]])
         {
-            CBUUID *uuidRX = [CBUUID UUIDWithString:@"6e400002-b5a3-f393-e0a9-e50e24dcca9e"];
-            [peripheral discoverCharacteristics:@[uuidRX] forService:service];
-            NSLog(@"Found Service");
-        }
+            NSLog(@"Discovered UART service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *rxCharacteristicUUID = [CBUUID UUIDWithString:kRxCharacteristicUUIDString];
+            CBUUID *txCharacteristicUUID = [CBUUID UUIDWithString:kTxCharacteristicUUIDString];
 
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[rxCharacteristicUUID,txCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: Vehicle Motion
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kVehicleMotionServiceUUIDString]])
+        {
+            NSLog(@"Discovered Vehicle Motion service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *throttleYawRollPitchCharacteristicUUID = [CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString];
+            
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[throttleYawRollPitchCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: Notification
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kNotificationServiceUUIDString]])
+        {
+            NSLog(@"Discovered Notification service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
+            
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[notificationAttributesCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: Firmata
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kFirmataServiceUUIDString]])
+        {
+            NSLog(@"Discovered Firmata service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *firmataCommandCharacteristicUUID = [CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString];
+            
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[firmataCommandCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: BleBridge
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kBleBridgeServiceUUIDString]])
+        {
+            NSLog(@"Discovered BleBridge service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *bridgeRxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
+            CBUUID *bridgeTxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString];
+            CBUUID *deviceIDCharacteristicUUID = [CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString];
+
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[bridgeRxCharacteristicUUID,bridgeTxCharacteristicUUID, deviceIDCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: Controller
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kControllerServiceUUIDString]])
+        {
+            NSLog(@"Discovered Controller service for peripheral: %@", peripheral.identifier.UUIDString);
+            CBUUID *buttonActionCharacteristicUUID = [CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString];
+            
+            //Discover Characteristics
+            [peripheral discoverCharacteristics:@[buttonActionCharacteristicUUID]
+                                     forService:service];
+        }
+        
+        //Service: Unkown
+        else
+        {
+            NSString* uuidString = CFBridgingRelease(CFUUIDCreateString(nil, (__bridge CFUUIDRef)(service.UUID)));
+            NSLog(@"Discovered unknonw service. This service is not supported by the BLEduino iOS library. Service:%@", uuidString);
+        }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service
              error:(NSError *)error
 {
-    NSString *uartNordic = @"6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-    CBUUID *uuidService = [CBUUID UUIDWithString:uartNordic];
-    
-    CBUUID *uuidRX = [CBUUID UUIDWithString:@"6e400002-b5a3-f393-e0a9-e50e24dcca9e"];
-    
     for(CBService *service in peripheral.services)
     {
-        if([service.UUID isEqual:uuidService])
+        //Service: UART
+        if([service.UUID isEqual:[CBUUID UUIDWithString:kUARTServiceUUIDString]])
         {
-            for(CBCharacteristic *bleChar in service.characteristics)
+            NSLog(@"Discovered the following characteristics for UART srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
             {
-                if([bleChar.UUID isEqual:uuidRX])
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kRxCharacteristicUUIDString]])
                 {
-                    self.uartRXChar = bleChar;
-                    NSLog(@"Found Characteristic");
+                    NSLog(@"Read (Rx) Characteristic");
+                }
+                else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString]])
+                {
+                    NSLog(@"Write (Tx) Characteristic");
+                }
+            }
+        }
+        
+        //Service: Vehicle Motion
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kVehicleMotionServiceUUIDString]])
+        {
+            NSLog(@"Discovered the following characteristics for Vehicle Motion srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
+            {
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
+                {
+                    NSLog(@"Throttle-Yaw-Roll-Pitch Characteristic");
+                }
+            }
+        }
+        
+        //Service: Notification
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kNotificationServiceUUIDString]])
+        {
+            NSLog(@"Discovered the following characteristics for Notification srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
+            {
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+                {
+                    NSLog(@"Notification Attributes Characteristic");
+                }
+            }
+        }
+    
+        //Service: Firmata
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kFirmataServiceUUIDString]])
+        {
+            NSLog(@"Discovered the following characteristics for Firmata srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
+            {
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
+                {
+                    NSLog(@"Firmata Command Characteristic");
+                }
+            }
+        }
+        
+        //Service: BleBridge
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kBleBridgeServiceUUIDString]])
+        {
+            NSLog(@"Discovered the following characteristics for BleBridge srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
+            {
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString]])
+                {
+                    NSLog(@"Bridge Read (Rx) Characteristic");
+                }
+                else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
+                {
+                    NSLog(@"Bridge Write (Tx) Characteristic");
+                }
+                else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]])
+                {
+                    NSLog(@"DeviceID Characteristic");
+                }
+            }
+        }
+        
+        //Service: Controller
+        else if([service.UUID isEqual:[CBUUID UUIDWithString:kControllerServiceUUIDString]])
+        {
+            NSLog(@"Discovered the following characteristics for Controller srvice, for peripheral: %@", peripheral.identifier.UUIDString);
+            for(CBCharacteristic *characteristic in service.characteristics)
+            {
+                if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString]])
+                {
+                    NSLog(@"Button Action Characteristic");
                 }
             }
         }

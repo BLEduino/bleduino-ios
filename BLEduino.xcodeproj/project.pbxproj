@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B72D18591826FBBF00BD1A2D /* VehicleMotionService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18581826FBBF00BD1A2D /* VehicleMotionService.m */; };
+		B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185B1826FC4F00BD1A2D /* NotificationService.m */; };
+		B72D185F1826FE8100BD1A2D /* FirmataService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185E1826FE8100BD1A2D /* FirmataService.m */; };
+		B72D18621826FEA600BD1A2D /* BleBridgeService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BleBridgeService.m */; };
+		B72D18651826FED500BD1A2D /* ControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* ControllerService.m */; };
+		B72E580118104B8F00745BD8 /* BleService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BleService.m */; };
 		B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
@@ -62,6 +68,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B72D18571826FBBF00BD1A2D /* VehicleMotionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VehicleMotionService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D18581826FBBF00BD1A2D /* VehicleMotionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = VehicleMotionService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D185A1826FC4F00BD1A2D /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NotificationService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D185B1826FC4F00BD1A2D /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NotificationService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D185D1826FE8100BD1A2D /* FirmataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FirmataService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D185E1826FE8100BD1A2D /* FirmataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FirmataService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D18601826FEA600BD1A2D /* BleBridgeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleBridgeService.h; sourceTree = "<group>"; };
+		B72D18611826FEA600BD1A2D /* BleBridgeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BleBridgeService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D18631826FED500BD1A2D /* ControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ControllerService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D18641826FED500BD1A2D /* ControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ControllerService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72E57FF18104B8F00745BD8 /* BleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleService.h; sourceTree = "<group>"; };
+		B72E580018104B8F00745BD8 /* BleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleService.m; sourceTree = "<group>"; };
 		B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryManager.h; sourceTree = "<group>"; };
 		B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryManager.m; sourceTree = "<group>"; };
 		B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModulesCollectionViewController.h; sourceTree = "<group>"; };
@@ -114,7 +132,7 @@
 		B7B73C2617F25920008E6769 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* UARTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTService.h; sourceTree = "<group>"; };
-		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARTService.m; sourceTree = "<group>"; };
+		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UARTService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,8 +224,20 @@
 		B7B3F82617FF5FAC00DCDAF5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B72E57FF18104B8F00745BD8 /* BleService.h */,
+				B72E580018104B8F00745BD8 /* BleService.m */,
 				B7B73C2B17F25A58008E6769 /* UARTService.h */,
 				B7B73C2C17F25A58008E6769 /* UARTService.m */,
+				B72D18571826FBBF00BD1A2D /* VehicleMotionService.h */,
+				B72D18581826FBBF00BD1A2D /* VehicleMotionService.m */,
+				B72D185A1826FC4F00BD1A2D /* NotificationService.h */,
+				B72D185B1826FC4F00BD1A2D /* NotificationService.m */,
+				B72D185D1826FE8100BD1A2D /* FirmataService.h */,
+				B72D185E1826FE8100BD1A2D /* FirmataService.m */,
+				B72D18601826FEA600BD1A2D /* BleBridgeService.h */,
+				B72D18611826FEA600BD1A2D /* BleBridgeService.m */,
+				B72D18631826FED500BD1A2D /* ControllerService.h */,
+				B72D18641826FED500BD1A2D /* ControllerService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -430,13 +460,19 @@
 			files = (
 				B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
+				B72D18591826FBBF00BD1A2D /* VehicleMotionService.m in Sources */,
+				B72D18651826FED500BD1A2D /* ControllerService.m in Sources */,
 				B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */,
 				B75EC51817FB49D8000309FF /* Module.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
+				B72E580118104B8F00745BD8 /* BleService.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
+				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
+				B72D18621826FEA600BD1A2D /* BleBridgeService.m in Sources */,
+				B72D185F1826FE8100BD1A2D /* FirmataService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

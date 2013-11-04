@@ -18,5 +18,7 @@
 
 @interface LeDiscoveryTableViewController : UITableViewController <LeDiscoveryManagerDelegate>
 @property (weak, nonatomic) id <LeDiscoveryTableViewControllerDelegate> delegate;
+@property (strong, nonatomic) NSArray *connectedBleduinos;
+@property (strong, nonatomic) NSArray *foundBleduinos;
 - (IBAction)dismissConnectionController:(id)sender;
 @end

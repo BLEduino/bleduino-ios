@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BleService.h"
 
 /****************************************************************************/
 /*						Service & Characteristics							*/
@@ -42,7 +43,7 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 /****************************************************************************/
 /*						UART service.                                       */
 /****************************************************************************/
-@interface UARTService : NSObject <CBPeripheralDelegate>
+@interface UARTService : BleService <CBPeripheralDelegate>
 
 @property (nonatomic, strong) NSString *messageSent;
 @property (nonatomic, strong) NSString *messageReceived;
