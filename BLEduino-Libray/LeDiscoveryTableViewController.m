@@ -39,7 +39,6 @@
     
     //Start scanning for BLE devices.
     [leManager startScanningForBleduinos];
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -170,7 +169,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     
 //    [self.tableView reloadData];
     
-    NSLog(@"Caca: %@", bleduino.name);
     NSLog(@"Discovered peripheral: %@", bleduino.name);
 }
 
@@ -180,7 +178,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //PENDING: Handled by Apple with disconnect key. Verify. If not move row to top section.
     //ONLY HANDLED IN BACKGROUND APPARENTLY
     
-//    [self.tableView reloadData];
+    [self.tableView reloadData];
     NSLog(@"Connected to peripheral: %@", bleduino.name);
 }
 

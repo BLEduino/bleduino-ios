@@ -39,6 +39,7 @@
 		B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */; };
 		B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81017FDFF7200DCDAF5 /* rc-car.png */; };
 		B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */; };
+		B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
 		B7B73BF617F256B3008E6769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF517F256B3008E6769 /* UIKit.framework */; };
@@ -112,6 +113,8 @@
 		B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "power-relay@2x.png"; path = "Images/power-relay@2x.png"; sourceTree = SOURCE_ROOT; };
 		B7B3F81017FDFF7200DCDAF5 /* rc-car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car.png"; path = "Images/rc-car.png"; sourceTree = SOURCE_ROOT; };
 		B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car@2x.png"; path = "Images/rc-car@2x.png"; sourceTree = SOURCE_ROOT; };
+		B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrottleYawRollPitchCharacteristic.h; sourceTree = "<group>"; };
+		B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrottleYawRollPitchCharacteristic.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B73BF117F256B3008E6769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7B73BF317F256B3008E6769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -226,6 +229,7 @@
 			children = (
 				B72E57FF18104B8F00745BD8 /* BleService.h */,
 				B72E580018104B8F00745BD8 /* BleService.m */,
+				B7B562F418289D8F0056C6EE /* Characteristics */,
 				B7B73C2B17F25A58008E6769 /* UARTService.h */,
 				B7B73C2C17F25A58008E6769 /* UARTService.m */,
 				B72D18571826FBBF00BD1A2D /* VehicleMotionService.h */,
@@ -251,6 +255,15 @@
 			name = ConnectionController;
 			path = "BLEduino-Libray";
 			sourceTree = SOURCE_ROOT;
+		};
+		B7B562F418289D8F0056C6EE /* Characteristics */ = {
+			isa = PBXGroup;
+			children = (
+				B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */,
+				B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */,
+			);
+			name = Characteristics;
+			sourceTree = "<group>";
 		};
 		B7B73BE517F256B3008E6769 = {
 			isa = PBXGroup;
@@ -467,6 +480,7 @@
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B72E580118104B8F00745BD8 /* BleService.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
+				B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,

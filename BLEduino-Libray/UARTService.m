@@ -16,8 +16,7 @@ NSString *kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D";
 NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B0032C0D16A2D";
 NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
-
-@interface UARTService() <CBPeripheralDelegate>
+@implementation UARTService
 {
     @private
     CBPeripheral		*_servicePeripheral;
@@ -32,11 +31,6 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     BOOL _textTransmission;
     BOOL _textSubscription;
 }
-@end
-
-
-@implementation UARTService
-@synthesize messageSent, messageReceived;
 @synthesize peripheral = _servicePeripheral;
 
 #pragma mark -
@@ -60,6 +54,13 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     }
     
     return self;
+}
+
+- (void) dismissPeripheral
+{
+	if (_servicePeripheral) {
+		_servicePeripheral = nil;
+	}
 }
 
 - (id) uartServiceWithController:(id<UARTServiceDelegate>)aController
@@ -118,6 +119,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
 - (void) writeData:(NSData *)data
 {
+    self.dataSent = data;
     [self writeData:data withAck:NO];
 }
 
@@ -183,24 +185,26 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     [self unsubscribeToStopReiceivingData];
 }
 
-- (void) dismissPeripheral
-{
-	if (_servicePeripheral) {
-		_servicePeripheral = nil;
-        _servicePeripheral.delegate = nil;
-	}
-}
-
 #pragma mark -
 #pragma mark Peripheral Delegate
 /****************************************************************************/
-/*				            Peripheral Delegate                             */
+/*				            Peripheral Delegate     `                        */
 /****************************************************************************/
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     if(!_longTransmission)
     {
+        if(_textTransmission)
+        {
+            _textTransmission = NO;
+            self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
+        }
+        else
+        {
+            self.dataSent = characteristic.value;
+        }
+        
         if([_delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
         {
             [_delegate uartService:self didWriteMessage:self.messageSent error:error];
@@ -212,12 +216,20 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 {
     if(!_longTransmission)
     {
+        if(_textTransmission)
+        {
+            _textTransmission = NO;
+            self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
+        }
+        else
+        {
+            self.dataReceived = characteristic.value;
+        }
         
         if([_delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
         {
             [_delegate uartService:self didReceiveMessage:self.messageReceived error:error];
         }
-        
     }
 }
 

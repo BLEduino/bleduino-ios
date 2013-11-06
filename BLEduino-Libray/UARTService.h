@@ -35,21 +35,21 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 - (void)didSubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
 - (void)didUnsubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
 
-- (void)didSubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;;
-- (void)didUnsubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;;
+- (void)didSubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;
 @end
 
 
 /****************************************************************************/
-/*						UART service.                                       */
+/*						 UART Service                                       */
 /****************************************************************************/
 @interface UARTService : BleService <CBPeripheralDelegate>
 
 @property (nonatomic, strong) NSString *messageSent;
 @property (nonatomic, strong) NSString *messageReceived;
 
-@property (nonatomic, strong) NSString *dataSent;
-@property (nonatomic, strong) NSString *dataReceived;
+@property (nonatomic, strong) NSData *dataSent;
+@property (nonatomic, strong) NSData *dataReceived;
 
 @property (readonly) CBPeripheral *peripheral;
 
