@@ -36,8 +36,8 @@ extern NSString *kThrottleYawRollPitchCharacteristicUUIDString;
               didWriteMotino:(ThrottleYawRollPitchCharacteristic *)motionUpdate
                        error:(NSError *)error;
 
-- (void)didSubscribeToReceiveMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
@@ -45,10 +45,8 @@ extern NSString *kThrottleYawRollPitchCharacteristicUUIDString;
 /****************************************************************************/
 @interface VehicleMotionService : BleService <CBPeripheralDelegate>
 @property (nonatomic, strong) ThrottleYawRollPitchCharacteristic *lastMotionUpdate;
-@property (readonly) CBPeripheral *peripheral;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<VehicleMotionServiceDelegate>)aController;
-- (void) dismissPeripheral;
 
 #pragma mark -
 #pragma mark Writing to BLEduino

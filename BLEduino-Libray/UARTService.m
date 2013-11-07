@@ -18,9 +18,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
 
 @implementation UARTService
 {
-    @private
-    CBPeripheral		*_servicePeripheral;
-    
+    @private    
     CBUUID              *_uartServiceUUID;
     CBUUID              *_rxCharacteristicUUID;
     CBUUID              *_txCharacteristicUUID;
@@ -31,7 +29,6 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     BOOL _textTransmission;
     BOOL _textSubscription;
 }
-@synthesize peripheral = _servicePeripheral;
 
 #pragma mark -
 #pragma mark Init
@@ -55,21 +52,6 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
     
     return self;
 }
-
-- (void) dismissPeripheral
-{
-	if (_servicePeripheral) {
-		_servicePeripheral = nil;
-	}
-}
-
-- (id) uartServiceWithController:(id<UARTServiceDelegate>)aController
-{
-    //PENDING
-    //selects peripheral automatically and abstracts the need to handle the peripheral completely.
-    return nil;
-}
-
 
 #pragma mark -
 #pragma mark Write Messages

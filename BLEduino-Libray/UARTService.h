@@ -51,10 +51,7 @@ extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-00
 @property (nonatomic, strong) NSData *dataSent;
 @property (nonatomic, strong) NSData *dataReceived;
 
-@property (readonly) CBPeripheral *peripheral;
-
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<UARTServiceDelegate>)aController;
-- (void) dismissPeripheral;
 
 #pragma mark -
 #pragma mark Writing to BLEduino

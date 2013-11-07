@@ -56,6 +56,7 @@
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
 		B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* UARTService.m */; };
+		B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,8 @@
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* UARTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTService.h; sourceTree = "<group>"; };
 		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UARTService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B7FAC244182AEA7E00F33CE8 /* FirmataCommandCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataCommandCharacteristic.h; sourceTree = "<group>"; };
+		B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataCommandCharacteristic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,14 +237,14 @@
 				B7B73C2C17F25A58008E6769 /* UARTService.m */,
 				B72D18571826FBBF00BD1A2D /* VehicleMotionService.h */,
 				B72D18581826FBBF00BD1A2D /* VehicleMotionService.m */,
-				B72D185A1826FC4F00BD1A2D /* NotificationService.h */,
-				B72D185B1826FC4F00BD1A2D /* NotificationService.m */,
 				B72D185D1826FE8100BD1A2D /* FirmataService.h */,
 				B72D185E1826FE8100BD1A2D /* FirmataService.m */,
-				B72D18601826FEA600BD1A2D /* BleBridgeService.h */,
-				B72D18611826FEA600BD1A2D /* BleBridgeService.m */,
 				B72D18631826FED500BD1A2D /* ControllerService.h */,
 				B72D18641826FED500BD1A2D /* ControllerService.m */,
+				B72D18601826FEA600BD1A2D /* BleBridgeService.h */,
+				B72D18611826FEA600BD1A2D /* BleBridgeService.m */,
+				B72D185A1826FC4F00BD1A2D /* NotificationService.h */,
+				B72D185B1826FC4F00BD1A2D /* NotificationService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -261,6 +264,8 @@
 			children = (
 				B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */,
 				B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */,
+				B7FAC244182AEA7E00F33CE8 /* FirmataCommandCharacteristic.h */,
+				B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */,
 			);
 			name = Characteristics;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 				B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
+				B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BleBridgeService.m in Sources */,

@@ -8,8 +8,6 @@
 
 #import "BleService.h"
 
-@interface NotificationService : BleService
-
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
@@ -18,4 +16,8 @@ extern NSString *kNotificationServiceUUIDString;
 
 extern NSString *kNotificationAttributesCharacteristicUUIDString;
 //8C6B1618-A312-681D-025B-0032C0D16A2D  Notification Attributes Characteristic
+
+@interface NotificationService : BleService
+
+
 @end

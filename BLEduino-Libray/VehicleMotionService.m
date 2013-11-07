@@ -16,9 +16,7 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
 
 @implementation VehicleMotionService
 {
-    @private
-    CBPeripheral		*_servicePeripheral;
-    
+    @private    
     CBUUID              *_vehicleMotionServiceUUID;
     CBUUID              *_throttleYawRollPitchCharacteristicUUID;
     
@@ -26,7 +24,6 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
     
     ThrottleYawRollPitchCharacteristic *_lastMotion;
 }
-@synthesize peripheral = _servicePeripheral;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<VehicleMotionServiceDelegate>)aController
 {
@@ -41,13 +38,6 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
     }
     
     return self;
-}
-
-- (void) dismissPeripheral
-{
-	if (_servicePeripheral) {
-		_servicePeripheral = nil;
-	}
 }
 
 #pragma mark -
@@ -68,6 +58,7 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
 
 - (void) writeMotionUpdate:(ThrottleYawRollPitchCharacteristic *)motion
 {
+    self.lastMotionUpdate = motion;
     [self writeMotionUpdate:motion withAck:NO];
 }
 
@@ -131,16 +122,16 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
 {
     if(characteristic.isNotifying)
     {
-        if([_delegate respondsToSelector:@selector(didSubscribeToReceiveMotionUpdatesFor:error:)])
+        if([_delegate respondsToSelector:@selector(didSubscribeToStartReceivingMotionUpdatesFor:error:)])
         {
-            [_delegate didSubscribeToReceiveMotionUpdatesFor:self error:error];
+            [_delegate didSubscribeToStartReceivingMotionUpdatesFor:self error:error];
         }
     }
     else
     {
-        if([_delegate respondsToSelector:@selector(didSubscribeToReceiveMotionUpdatesFor:error:)])
+        if([_delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingMotionUpdatesFor:error:)])
         {
-            [_delegate didUnsubscribeToReceiveMotionUpdatesFor:self error:error];
+            [_delegate didUnsubscribeToStopRecivingMotionUpdatesFor:self error:error];
         }
     }
 }

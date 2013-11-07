@@ -10,6 +10,18 @@
 
 @implementation BleService
 
+@synthesize peripheral = _servicePeripheral;
+
+/*
+ * Destroy reference to peripheral device.
+ */
+- (void) dismissPeripheral
+{
+	if (_servicePeripheral) {
+		_servicePeripheral = nil;
+	}
+}
+
 /*
  *  @method                 writeCharacteristic:serviceUUID:characteristicUUID:data:
  *
@@ -41,11 +53,11 @@
                     //Send with Acknowledgement?
                     if(enabled)
                     {
-                        [bleduino writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+                        [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
                     }
                     else
                     {
-                        [bleduino writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
+                        [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
                     }
                 }
             }

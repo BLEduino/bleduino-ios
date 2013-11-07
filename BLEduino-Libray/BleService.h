@@ -10,6 +10,17 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 
 @interface BleService : NSObject
+{
+    @protected CBPeripheral *_servicePeripheral;
+}
+
+@property (readonly) CBPeripheral *peripheral;
+
+/*
+ * Destroy reference to peripheral device.
+ */
+- (void) dismissPeripheral;
+
 
 /*
  *  @method                 writeCharacteristic:serviceUUID:characteristicUUID:data:
