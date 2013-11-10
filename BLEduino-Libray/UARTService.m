@@ -13,8 +13,8 @@
 /*						Service & Characteristics							*/
 /****************************************************************************/
 NSString *kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D";
-NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B0032C0D16A2D";
-NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B0032C0D16A2D";
+NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B-0032C0D16A2D";
+NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 
 @implementation UARTService
 {

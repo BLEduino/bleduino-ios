@@ -29,6 +29,8 @@
 
 - (void)viewDidLoad
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -38,7 +40,15 @@
     //Set BLE navigation.
     [self.navigationItem.leftBarButtonItem setTarget:self];
     [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
+
+    //Set appareance.
+    UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.barTintColor = darkBlue;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
 }
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -32,26 +32,44 @@
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
     
-    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
-    self.refreshControl = [UIRefreshControl new];
-	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
-	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
-    
     //Start scanning for BLE devices.
-    [leManager startScanningForBleduinos];
+    [self scanForBleDevices:self];
+    
+    //Set appareance.
+    UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.barTintColor = darkBlue;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
-
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+    
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
+	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)scanForBleDevices:(id)sender
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    [leManager startScanningForBleduinos];
     
-    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:15];
+    if(leManager.scanOnlyForBLEduinos)
+    {
+        [leManager startScanningForBleduinos];
+    }
+    else
+    {
+        //PENDING.
+    }
+    
+    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
 }
 
 - (void)stopScanForBleDevices:(id)sender
@@ -60,6 +78,9 @@
     [leManager stopScanning];
     
     [self.refreshControl endRefreshing];
+    
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,11 +106,13 @@
     
     if(section == 0)
     {//Connected Peripherals
-        rows = self.connectedBleduinos.count;
+        LeDiscoveryManager *manager = [LeDiscoveryManager sharedLeManager];
+        rows = manager.connectedBleduinos.count;
     }
     else
     {//Found Peripherals
-        rows = self.foundBleduinos.count;
+        LeDiscoveryManager *manager = [LeDiscoveryManager sharedLeManager];
+        rows = manager.foundBleduinos.count;
     }
     return rows;
 }
@@ -109,16 +132,18 @@
     static NSString *CellIdentifier = @"BlePeripheralCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
     //Connected Peripherals
     if(indexPath.section == 0)
     {
-        CBPeripheral *connectedBleduino = [self.connectedBleduinos objectAtIndex:indexPath.row];
+        CBPeripheral *connectedBleduino = [leManager.connectedBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = connectedBleduino.name;
     }
     //Found Peripherals
     else
     {
-        CBPeripheral *foundBleduino = [self.foundBleduinos objectAtIndex:indexPath.row];
+        CBPeripheral *foundBleduino = [leManager.foundBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = foundBleduino.name;
     }
     
@@ -131,8 +156,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    [leManager connectBleduino:self.foundBleduinos[indexPath.row]];
+    if(indexPath.section == 0)
+    {
+        //PENDING.
+    }
+
+    else
+    {
+        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,7 +182,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
         [leManager disconnectBleduino:leManager.connectedBleduinos[indexPath.row]];
         
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
@@ -161,14 +194,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
-    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
-    NSArray *array = [NSArray arrayWithObject:indexpath];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
-    
-//    [self.tableView reloadData];
-    
+//    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
+//    NSArray *array = [NSArray arrayWithObject:indexpath];
+//    [self.tableView beginUpdates];
+//    [self.tableView insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView endUpdates];
+
+    [self.tableView reloadData];
     NSLog(@"Discovered peripheral: %@", bleduino.name);
 }
 
@@ -178,6 +210,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //PENDING: Handled by Apple with disconnect key. Verify. If not move row to top section.
     //ONLY HANDLED IN BACKGROUND APPARENTLY
     
+//    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    NSArray *array = [NSArray arrayWithObject:indexpath];
+//    [self.tableView beginUpdates];
+//    [self.tableView insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView endUpdates];
+
     [self.tableView reloadData];
     NSLog(@"Connected to peripheral: %@", bleduino.name);
 }
@@ -187,7 +225,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //PENDING: Handled by Apple with disconnect key. Verify. If not push local notification.
     //ONLY HANDLED IN BACKGROUND APPARENTLY
+    
     [self.tableView reloadData];
+    NSLog(@"Disconnected from peripheral: %@", bleduino.name);
+
 }
 
 

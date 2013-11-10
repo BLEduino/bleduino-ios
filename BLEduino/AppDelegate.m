@@ -11,6 +11,7 @@
 
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];

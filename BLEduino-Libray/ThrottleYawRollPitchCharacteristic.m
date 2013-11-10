@@ -19,32 +19,27 @@
     NSRange throttleRange = NSMakeRange(0, 1);
     [motionData getBytes:throttleByte range:throttleRange];
     NSData *throttleData = [[NSData alloc] initWithBytes:throttleByte length:1];
-    int throttleValue = *(int*)([throttleData bytes]);
-    self.throttle = [NSNumber numberWithInt:throttleValue];
+    self.throttle = *(int*)([throttleData bytes]);
     
     Byte *yawByte = (Byte*)malloc(1);
     NSRange yawRange = NSMakeRange(1, 1);
     [motionData getBytes:yawByte range:yawRange];
     NSData *yawData = [[NSData alloc] initWithBytes:yawByte length:1];
-    int yawValue = *(int*)([yawData bytes]);
-    self.yaw = [NSNumber numberWithInt:yawValue];
+    self.yaw = *(int*)([yawData bytes]);
     
     Byte *rollByte = (Byte*)malloc(1);
     NSRange rollRange = NSMakeRange(2, 1);
     [motionData getBytes:rollByte range:rollRange];
     NSData *rollData = [[NSData alloc] initWithBytes:rollByte length:1];
-    int rollValue = *(int*)([rollData bytes]);
-    self.roll = [NSNumber numberWithInt:rollValue];
+    self.roll = *(int*)([rollData bytes]);
     
     Byte *pitchByte = (Byte*)malloc(1);
     NSRange pitchRange = NSMakeRange(3, 1);
     [motionData getBytes:pitchByte range:pitchRange];
     NSData *pitchData = [[NSData alloc] initWithBytes:pitchByte length:1];
-    int pitchValue = *(int*)([pitchData bytes]);
-    self.pitch = [NSNumber numberWithInt:pitchValue];
+    self.pitch = *(int*)([pitchData bytes]);
     
     return self;
-    
 }
 
 /*
@@ -54,21 +49,21 @@
 {
     NSMutableData *motionData = [[NSMutableData alloc] initWithCapacity:4];
     
-    float throttle = [self.throttle floatValue];
-    NSData *dataThrottle = [NSData dataWithBytes:&throttle length:sizeof(throttle)];
-    [motionData appendData:dataThrottle];
+    Byte throttleByte = (self.throttle >> (0)) & 0xff;
+    NSMutableData *throttleData = [NSMutableData dataWithBytes:&throttleByte length:sizeof(throttleByte)];
+    [motionData appendData:throttleData];
     
-    float yaw = [self.yaw floatValue];
-    NSData *dataYaw = [NSData dataWithBytes:&yaw length:sizeof(yaw)];
-    [motionData appendData:dataYaw];
+    Byte yawByte = (self.yaw >> (0)) & 0xff;
+    NSMutableData *yawData = [NSMutableData dataWithBytes:&yawByte length:sizeof(yawByte)];
+    [motionData appendData:yawData];
     
-    float roll = [self.roll floatValue];
-    NSData *dataRoll = [NSData dataWithBytes:&roll length:sizeof(roll)];
-    [motionData appendData:dataRoll];
-
-    float pitch = [self.pitch floatValue];
-    NSData *dataPitch = [NSData dataWithBytes:&pitch length:sizeof(pitch)];
-    [motionData appendData:dataPitch];
+    Byte rollByte = (self.roll >> (0)) & 0xff;
+    NSMutableData *rollData = [NSMutableData dataWithBytes:&rollByte length:sizeof(rollByte)];
+    [motionData appendData:rollData];
+    
+    Byte pitchByte = (self.pitch >> (0)) & 0xff;
+    NSMutableData *pitchData = [NSMutableData dataWithBytes:&pitchByte length:sizeof(pitchByte)];
+    [motionData appendData:pitchData];
     
     return motionData;
 }

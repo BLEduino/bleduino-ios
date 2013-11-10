@@ -8,6 +8,12 @@
 
 #import "BleService.h"
 
+/****************************************************************************/
+/*                            BLEduino Service				     			*/
+/****************************************************************************/
+NSString *kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D16A2D";
+
+
 @implementation BleService
 
 @synthesize peripheral = _servicePeripheral;
