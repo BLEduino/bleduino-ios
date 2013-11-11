@@ -19,5 +19,4 @@ extern NSString *kNotificationAttributesCharacteristicUUIDString;
 
 @interface NotificationService : BleService
 
-
 @end

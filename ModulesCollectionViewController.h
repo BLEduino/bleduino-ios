@@ -12,8 +12,7 @@
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
-UICollectionViewDataSource,
-UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout,
 KeyboardModuleTableViewControllerDelegate,
 LeDiscoveryTableViewControllerDelegate
 >

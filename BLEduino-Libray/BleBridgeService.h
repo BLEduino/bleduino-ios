@@ -8,7 +8,8 @@
 
 #import "BleService.h"
 
-@interface BleBridgeService : BleService
+#pragma mark -
+#pragma mark BLE Bridge Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
@@ -23,4 +24,26 @@ extern NSString *kBridgeTxCharacteristicUUIDString;
 
 extern NSString *kDeviceIDCharacteristicUUIDString;
 //8C6BD1D0-A312-681D-025B-0032C0D16A2D  Device ID Characteristic
+
+@interface BleBridgeService : BleService <CBPeripheralDelegate>
+
+/*
+ *  @method                 openBridge
+ *
+ *  @discussion             This method subscribes the iOS device to the BLE Bridge service for
+ *                          all connected BLEduinos. Then listens to incoming data, upon reciving
+ *                          data the iOS device then relays the data to the corresponsing BLEduino.
+ *
+ */
++ (void)openBridge;
+
+/*
+ *  @method                 closeBridge
+ *
+ *  @discussion             This method unsubscribes the iOS device from the BLE Bridge service for
+ *                          all connected BLEduinos. That is, stops listening altogether.
+ *
+ */
++ (void)closeBridge;
+
 @end

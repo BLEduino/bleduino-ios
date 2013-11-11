@@ -10,6 +10,8 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BleService.h"
 
+#pragma mark -
+#pragma mark UART Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/

@@ -10,6 +10,8 @@
 #import "BleService.h"
 #import "ThrottleYawRollPitchCharacteristic.h"
 
+#pragma mark -
+#pragma mark Vehicle Motion Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
@@ -33,7 +35,7 @@ extern NSString *kThrottleYawRollPitchCharacteristicUUIDString;
                        error:(NSError *)error;
 
 - (void)vehicleMotionService:(VehicleMotionService *)service
-              didWriteMotino:(ThrottleYawRollPitchCharacteristic *)motionUpdate
+              didWriteMotion:(ThrottleYawRollPitchCharacteristic *)motionUpdate
                        error:(NSError *)error;
 
 - (void)didSubscribeToStartReceivingMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;

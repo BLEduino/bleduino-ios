@@ -8,12 +8,19 @@
 
 #import "VehicleMotionService.h"
 
+#pragma mark -
+#pragma mark - Vehicle Motion Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
 NSString *kVehicleMotionServiceUUIDString = @"8C6B1125-A312-681D-025B-0032C0D16A2D";
 NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-025B-0032C0D16A2D";
 
+#pragma mark -
+#pragma mark - Setup
+/****************************************************************************/
+/*								Setup										*/
+/****************************************************************************/
 @implementation VehicleMotionService
 {
     @private    
@@ -99,10 +106,10 @@ NSString *kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312-681D-0
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     self.lastMotionUpdate = _lastMotion;
-    if([_delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotino:error:)])
+    if([_delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
     {
         [_delegate vehicleMotionService:self
-                         didWriteMotino:self.lastMotionUpdate
+                         didWriteMotion:self.lastMotionUpdate
                                   error:error];
     }
 }

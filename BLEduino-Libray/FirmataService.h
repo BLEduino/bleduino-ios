@@ -9,6 +9,8 @@
 #import "BleService.h"
 #import "FirmataCommandCharacteristic.h"
 
+#pragma mark -
+#pragma mark Firmata Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/

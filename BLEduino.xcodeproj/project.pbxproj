@@ -13,6 +13,7 @@
 		B72D18621826FEA600BD1A2D /* BleBridgeService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BleBridgeService.m */; };
 		B72D18651826FED500BD1A2D /* ControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* ControllerService.m */; };
 		B72E580118104B8F00745BD8 /* BleService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BleService.m */; };
+		B73447C318305596006F76C2 /* ButtonActionCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B73447C218305596006F76C2 /* ButtonActionCharacteristic.m */; };
 		B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
@@ -56,6 +57,15 @@
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
 		B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* UARTService.m */; };
+		B7EB1CE3183080810060441E /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDB183080810060441E /* 4.png */; };
+		B7EB1CE4183080810060441E /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDC183080810060441E /* 0.png */; };
+		B7EB1CE5183080810060441E /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDD183080810060441E /* 5.png */; };
+		B7EB1CE6183080810060441E /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDE183080810060441E /* 3.png */; };
+		B7EB1CE7183080810060441E /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDF183080810060441E /* 2.png */; };
+		B7EB1CE8183080810060441E /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE0183080810060441E /* 7.png */; };
+		B7EB1CE9183080810060441E /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE1183080810060441E /* 1.png */; };
+		B7EB1CEA183080810060441E /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE2183080810060441E /* 6.png */; };
+		B7EB1CED1830972A0060441E /* BLEduinoPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */; };
 		B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +92,8 @@
 		B72D18641826FED500BD1A2D /* ControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ControllerService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B72E57FF18104B8F00745BD8 /* BleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleService.h; sourceTree = "<group>"; };
 		B72E580018104B8F00745BD8 /* BleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleService.m; sourceTree = "<group>"; };
+		B73447C118305596006F76C2 /* ButtonActionCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonActionCharacteristic.h; sourceTree = "<group>"; };
+		B73447C218305596006F76C2 /* ButtonActionCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonActionCharacteristic.m; sourceTree = "<group>"; };
 		B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryManager.h; sourceTree = "<group>"; };
 		B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryManager.m; sourceTree = "<group>"; };
 		B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModulesCollectionViewController.h; sourceTree = "<group>"; };
@@ -137,6 +149,16 @@
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* UARTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTService.h; sourceTree = "<group>"; };
 		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UARTService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B7EB1CDB183080810060441E /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		B7EB1CDC183080810060441E /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
+		B7EB1CDD183080810060441E /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		B7EB1CDE183080810060441E /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		B7EB1CDF183080810060441E /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		B7EB1CE0183080810060441E /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
+		B7EB1CE1183080810060441E /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		B7EB1CE2183080810060441E /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		B7EB1CEB1830972A0060441E /* BLEduinoPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEduinoPeripheral.h; sourceTree = "<group>"; };
+		B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEduinoPeripheral.m; sourceTree = "<group>"; };
 		B7FAC244182AEA7E00F33CE8 /* FirmataCommandCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataCommandCharacteristic.h; sourceTree = "<group>"; };
 		B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataCommandCharacteristic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,6 +288,8 @@
 				B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */,
 				B7FAC244182AEA7E00F33CE8 /* FirmataCommandCharacteristic.h */,
 				B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */,
+				B73447C118305596006F76C2 /* ButtonActionCharacteristic.h */,
+				B73447C218305596006F76C2 /* ButtonActionCharacteristic.m */,
 			);
 			name = Characteristics;
 			sourceTree = "<group>";
@@ -273,6 +297,14 @@
 		B7B73BE517F256B3008E6769 = {
 			isa = PBXGroup;
 			children = (
+				B7EB1CDB183080810060441E /* 4.png */,
+				B7EB1CDC183080810060441E /* 0.png */,
+				B7EB1CDD183080810060441E /* 5.png */,
+				B7EB1CDE183080810060441E /* 3.png */,
+				B7EB1CDF183080810060441E /* 2.png */,
+				B7EB1CE0183080810060441E /* 7.png */,
+				B7EB1CE1183080810060441E /* 1.png */,
+				B7EB1CE2183080810060441E /* 6.png */,
 				B7B73C2A17F259C6008E6769 /* BLEduino-Library */,
 				B7B73BF717F256B3008E6769 /* BLEduino */,
 				B7B73C1617F256B3008E6769 /* BLEduinoTests */,
@@ -354,6 +386,8 @@
 				B7B3F82617FF5FAC00DCDAF5 /* Services */,
 				B75EC50717FA85EE000309FF /* LeDiscoveryManager.h */,
 				B75EC50817FA85EE000309FF /* LeDiscoveryManager.m */,
+				B7EB1CEB1830972A0060441E /* BLEduinoPeripheral.h */,
+				B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */,
 			);
 			name = "BLEduino-Library";
 			path = "BLEduino-Libray";
@@ -437,24 +471,32 @@
 			files = (
 				B7B3F81E17FDFF7200DCDAF5 /* led.png in Resources */,
 				B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */,
+				B7EB1CE7183080810060441E /* 2.png in Resources */,
 				B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */,
 				B7B73C0A17F256B3008E6769 /* Images.xcassets in Resources */,
 				B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */,
 				B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */,
 				B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */,
 				B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */,
+				B7EB1CE9183080810060441E /* 1.png in Resources */,
 				B7B3F81917FDFF7200DCDAF5 /* game-controller@2x.png in Resources */,
 				B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */,
 				B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */,
+				B7EB1CEA183080810060441E /* 6.png in Resources */,
+				B7EB1CE5183080810060441E /* 5.png in Resources */,
+				B7EB1CE6183080810060441E /* 3.png in Resources */,
 				B7B3F81617FDFF7200DCDAF5 /* game-controller-2.png in Resources */,
+				B7EB1CE3183080810060441E /* 4.png in Resources */,
 				B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */,
 				B7B3F81717FDFF7200DCDAF5 /* game-controller-2@2x.png in Resources */,
+				B7EB1CE8183080810060441E /* 7.png in Resources */,
 				B7B73BFC17F256B3008E6769 /* InfoPlist.strings in Resources */,
 				B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B7B3F81A17FDFF7200DCDAF5 /* keyboard.png in Resources */,
 				B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */,
 				B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */,
+				B7EB1CE4183080810060441E /* 0.png in Resources */,
 				B7B3F81817FDFF7200DCDAF5 /* game-controller.png in Resources */,
 				B7B3F81C17FDFF7200DCDAF5 /* lcd.png in Resources */,
 				B7B3F82017FDFF7200DCDAF5 /* notifications.png in Resources */,
@@ -488,6 +530,8 @@
 				B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
+				B73447C318305596006F76C2 /* ButtonActionCharacteristic.m in Sources */,
+				B7EB1CED1830972A0060441E /* BLEduinoPeripheral.m in Sources */,
 				B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,

@@ -44,6 +44,7 @@
 /****************************************************************************/
 @property (retain, nonatomic) NSMutableOrderedSet *foundBleduinos;
 @property (retain, nonatomic) NSMutableOrderedSet *connectedBleduinos;
+@property (retain, nonatomic) NSMutableOrderedSet *bleduinos;
 
 /****************************************************************************/
 /*					 Central Manager Settings                               */

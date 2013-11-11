@@ -11,12 +11,14 @@
 #import "KeyboardModuleTableViewController.h"
 #import "LeDiscoveryTableViewController.h"
 
-@interface ModulesCollectionViewController ()
 
-@end
-    
 @implementation ModulesCollectionViewController
-@synthesize modules;
+
+#pragma mark -
+#pragma mark - Setup
+/****************************************************************************/
+/*                Module CollectionViewController Setup                     */
+/****************************************************************************/
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,21 +31,28 @@
 
 - (void)viewDidLoad
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    self.modules = @[@"LCD",@"Keyboard",@"Game Controller",@"R/C Car",@"Power Relay",@"LED",@"Notifications",@"BLE Bridge"];
-    self.modulesImages = @[@"lcd.png",@"keyboard.png",@"game-controller.png", @"rc-car.png",@"power-relay.png", @"led.png", @"notifications.png",@"ble-bridge.png"];
+    //Set modules' data.
+    self.modules = @[@"LCD",@"Keyboard",@"Game Controller",@"R/C Car",@"Power Relay",@"LED",
+                     @"Notifications",@"BLE Bridge"];
+    
+//    self.modulesImages = @[@"lcd.png",@"keyboard.png",@"game-controller.png",
+//                           @"rc-car.png",@"power-relay.png", @"led.png",
+//                           @"notifications.png",@"ble-bridge.png"];
+    
+    self.modulesImages = @[@"0.png",@"1.png",@"2.png",
+                           @"3",@"4.png", @"5.png",
+                           @"6.png",@"7.png"];
     
     //Set BLE navigation.
     [self.navigationItem.leftBarButtonItem setTarget:self];
     [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
 
     //Set appareance.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = darkBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
@@ -55,6 +64,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark -
+#pragma mark - Collection View Data Source
+/****************************************************************************/
+/*                        UICollectionview Data Source                      */
+/****************************************************************************/
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -78,6 +93,12 @@
     return moduleCell;
 }
 
+#pragma mark -
+#pragma mark - Collection View Delegate
+/****************************************************************************/
+/*                        UICollectionview Delegate                         */
+/****************************************************************************/
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger module = indexPath.item;
@@ -88,6 +109,47 @@
             break;
     }
 }
+
+#pragma mark -
+#pragma mark - Collection Cell Details - Flow Layout Delegate
+/****************************************************************************/
+/*                          Flow Layour Delegate                            */
+/****************************************************************************/
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(120, 120);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout*)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+    
+    return UIEdgeInsetsMake(15, 25, 15, 25);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(10, -20);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(10, 10);
+}
+
+#pragma mark -
+#pragma mark - Modules Segues
+/****************************************************************************/
+/*                              Modules Segues                              */
+/****************************************************************************/
 
 - (void)presentConnectionManager:(id)sender
 {

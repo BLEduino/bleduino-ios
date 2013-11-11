@@ -8,6 +8,8 @@
 
 #import "FirmataService.h"
 
+#pragma mark -
+#pragma mark - Firmata Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/

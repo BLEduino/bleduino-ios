@@ -9,6 +9,8 @@
 #import "UARTService.h"
 #import "LeDiscoveryManager.h"
 
+#pragma mark -
+#pragma mark - UART Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
@@ -16,6 +18,11 @@ NSString *kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D";
 NSString *kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B-0032C0D16A2D";
 NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 
+#pragma mark -
+#pragma mark - Setup
+/****************************************************************************/
+/*								Setup										*/
+/****************************************************************************/
 @implementation UARTService
 {
     @private    
@@ -29,12 +36,6 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
     BOOL _textTransmission;
     BOOL _textSubscription;
 }
-
-#pragma mark -
-#pragma mark Init
-/****************************************************************************/
-/*								Init										*/
-/****************************************************************************/
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                controller:(id<UARTServiceDelegate>)aController
@@ -54,7 +55,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 }
 
 #pragma mark -
-#pragma mark Write Messages
+#pragma mark - Write Messages
 /****************************************************************************/
 /*				      Write messages/data to BLEduino                       */
 /****************************************************************************/
@@ -121,7 +122,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 
 
 #pragma mark -
-#pragma mark Read Messages
+#pragma mark - Read Messages
 /****************************************************************************/
 /*				      Read messages / data from BLEduino                    */
 /****************************************************************************/
@@ -168,7 +169,7 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 }
 
 #pragma mark -
-#pragma mark Peripheral Delegate
+#pragma mark - Peripheral Delegate
 /****************************************************************************/
 /*				            Peripheral Delegate     `                        */
 /****************************************************************************/
