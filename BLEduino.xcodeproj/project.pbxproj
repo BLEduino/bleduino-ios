@@ -66,6 +66,7 @@
 		B7EB1CE9183080810060441E /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE1183080810060441E /* 1.png */; };
 		B7EB1CEA183080810060441E /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE2183080810060441E /* 6.png */; };
 		B7EB1CED1830972A0060441E /* BLEduinoPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */; };
+		B7EB1CF01830D6010060441E /* NotificationAttributesCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* NotificationAttributesCharacteristic.m */; };
 		B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */; };
 /* End PBXBuildFile section */
 
@@ -159,6 +160,8 @@
 		B7EB1CE2183080810060441E /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		B7EB1CEB1830972A0060441E /* BLEduinoPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEduinoPeripheral.h; sourceTree = "<group>"; };
 		B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEduinoPeripheral.m; sourceTree = "<group>"; };
+		B7EB1CEE1830D6010060441E /* NotificationAttributesCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationAttributesCharacteristic.h; sourceTree = "<group>"; };
+		B7EB1CEF1830D6010060441E /* NotificationAttributesCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationAttributesCharacteristic.m; sourceTree = "<group>"; };
 		B7FAC244182AEA7E00F33CE8 /* FirmataCommandCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataCommandCharacteristic.h; sourceTree = "<group>"; };
 		B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataCommandCharacteristic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +293,8 @@
 				B7FAC245182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m */,
 				B73447C118305596006F76C2 /* ButtonActionCharacteristic.h */,
 				B73447C218305596006F76C2 /* ButtonActionCharacteristic.m */,
+				B7EB1CEE1830D6010060441E /* NotificationAttributesCharacteristic.h */,
+				B7EB1CEF1830D6010060441E /* NotificationAttributesCharacteristic.m */,
 			);
 			name = Characteristics;
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				B75EC51817FB49D8000309FF /* Module.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B72E580118104B8F00745BD8 /* BleService.m in Sources */,
+				B7EB1CF01830D6010060441E /* NotificationAttributesCharacteristic.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
 				B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,

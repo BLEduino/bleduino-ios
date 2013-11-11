@@ -186,6 +186,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Disconnect";
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
 #pragma mark -
 #pragma mark - LeManager Delegate
 /****************************************************************************/

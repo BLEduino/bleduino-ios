@@ -45,6 +45,9 @@
                            @"3",@"4.png", @"5.png",
                            @"6.png",@"7.png"];
     
+    //Set services that run in the background.
+    self.bleBridge = [[BleBridgeService alloc] init];
+    
     //Set BLE navigation.
     [self.navigationItem.leftBarButtonItem setTarget:self];
     [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
@@ -105,6 +108,62 @@
     
     switch (module) {
         case 0:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 1:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 2:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 3:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 4:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 5:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 6:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 7:
+            //Toggle BLE bridge.
+            if(self.bleBridge.isOpen)
+            {
+                [self.bleBridge closeBridge];
+            }
+            else
+            {
+                [self.bleBridge openBridge];
+            }
+            break;
+            
+        case 8:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 9:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 10:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 11:
+            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            break;
+            
+        case 12:
             [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
             break;
     }

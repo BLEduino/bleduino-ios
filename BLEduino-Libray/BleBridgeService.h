@@ -26,6 +26,7 @@ extern NSString *kDeviceIDCharacteristicUUIDString;
 //8C6BD1D0-A312-681D-025B-0032C0D16A2D  Device ID Characteristic
 
 @interface BleBridgeService : BleService <CBPeripheralDelegate>
+@property BOOL isOpen;
 
 /*
  *  @method                 openBridge
@@ -35,7 +36,7 @@ extern NSString *kDeviceIDCharacteristicUUIDString;
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-+ (void)openBridge;
+- (void)openBridge;
 
 /*
  *  @method                 closeBridge
@@ -44,6 +45,6 @@ extern NSString *kDeviceIDCharacteristicUUIDString;
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-+ (void)closeBridge;
+- (void)closeBridge;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "BleBridgeService.h"
 #import "LeDiscoveryManager.h"
+#import "BLEduinoPeripheral.h"
 
 #pragma mark -
 #pragma mark BLE Bridge Service UUIDs
@@ -22,19 +23,18 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
 @implementation BleBridgeService
 {
     @private
-    CBUUID              *_bleBridgeServiceUUID;
-    CBUUID              *_bridgeRxCharacteristicUUID;
-    CBUUID              *_bridgeTxCharacteristicUUID;
-    CBUUID              *_deviceIDCharacteristicUUID;
+    CBUUID                  *_bleBridgeServiceUUID;
+    CBUUID                  *_bridgeRxCharacteristicUUID;
+    CBUUID                  *_bridgeTxCharacteristicUUID;
+    CBUUID                  *_deviceIDCharacteristicUUID;
+    
+    NSMutableOrderedSet     *_servicePeripherals;
 }
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+- (id) init
 {
     self = [super init];
-    if (self) {
-        _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = self;
-    
+    if (self) {    
         _bleBridgeServiceUUID = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
         _bridgeRxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
         _bridgeTxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString];
@@ -42,13 +42,6 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
     }
     
     return self;
-}
-
-- (void)readDeviceID
-{
-    [self readDataFromPeripheral:nil
-                     serviceUUID:_bleBridgeServiceUUID
-              characteristicUUID:_deviceIDCharacteristicUUID];
 }
 
 /*
@@ -59,14 +52,24 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-+ (void)openBridge
+- (void)openBridge
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
 
-    for(CBPeripheral *bleduino in leManager.bleduinos)
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BleBridgeService *bridgeService = [[BleBridgeService alloc] initWithPeripheral:bleduino];
-        [bridgeService readDeviceID];
+        CBPeripheral *bleduinoPeripheral = [bleduino copy];
+        bleduinoPeripheral.delegate = self;
+        
+        BLEduinoPeripheral *device = [[BLEduinoPeripheral alloc] init];
+        device.bleduino = bleduinoPeripheral;
+        
+        _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
+        [_servicePeripherals addObject:device];
+        
+        [self readDataFromPeripheral:device.bleduino
+                         serviceUUID:_bleBridgeServiceUUID
+                  characteristicUUID:_deviceIDCharacteristicUUID];
     }
 }
 
@@ -77,9 +80,15 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-+ (void)closeBridge
+- (void)closeBridge
 {
-    
+    for(BLEduinoPeripheral *device in _servicePeripherals)
+    {
+        [self setNotificationForPeripheral:device.bleduino
+                               serviceUUID:_bleBridgeServiceUUID
+                        characteristicUUID:_bridgeTxCharacteristicUUID
+                               notifyValue:NO];
+    }
 }
 
 #pragma mark Peripheral Delegate
@@ -91,12 +100,50 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
 
     if([characteristic.UUID isEqual:_deviceIDCharacteristicUUID])
     {
-        //store device ID.
-        //subscribe to peripheral;
+        //Convert deviceID data to integer.
+        Byte *deviceIDByte = (Byte*)malloc(1);
+        NSRange deviceIDRange = NSMakeRange(0, 1);
+        [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
+        NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
+        int deviceID = *(int*)([deviceIDData bytes]);
+        
+        //Store deviceID.
+        for(BLEduinoPeripheral *device in _servicePeripherals)
+        {
+            if([device.bleduino.identifier isEqual:peripheral.identifier])
+            {
+                device.bridgeDeviceID = deviceID;
+            }
+        }
+        
+        //Found deviceID, now subscribe to recive data from this bleduino.
+        [self setNotificationForPeripheral:peripheral
+                               serviceUUID:_bleBridgeServiceUUID
+                        characteristicUUID:_bridgeTxCharacteristicUUID
+                               notifyValue:YES];
     }
     else
     {
-        //relay message.
+        //Find deviceID for destination device.
+        Byte *deviceIDByte = (Byte*)malloc(1);
+        NSRange deviceIDRange = NSMakeRange(1, 1);
+        [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
+        NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
+        int deviceID = *(int*)([deviceIDData bytes]);
+        
+        //Find destination device.
+        for(BLEduinoPeripheral *device in _servicePeripherals)
+        {
+            //Found destination device. Relay message.
+            if(device.bridgeDeviceID == deviceID)
+            {
+                [self writeDataToPeripheral:device.bleduino
+                                serviceUUID:_bleBridgeServiceUUID
+                         characteristicUUID:_bridgeRxCharacteristicUUID
+                                       data:characteristic.value
+                                    withAck:NO];
+            }
+        }
     }
 }
 @end

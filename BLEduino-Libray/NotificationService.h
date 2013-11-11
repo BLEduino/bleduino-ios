@@ -8,6 +8,8 @@
 
 #import "BleService.h"
 
+#pragma mark -
+#pragma mark Notification Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
