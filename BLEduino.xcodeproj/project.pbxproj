@@ -20,6 +20,12 @@
 		B75EC51817FB49D8000309FF /* Module.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51717FB49D8000309FF /* Module.m */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
 		B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */; };
+		B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B78D3FC71832CCC00058BFD6 /* Images.xcassets */; };
+		B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */; };
+		B7A8C38F1832C726009A4577 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38A1832C726009A4577 /* RECommonFunctions.m */; };
+		B7A8C3901832C726009A4577 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38C1832C726009A4577 /* RESideMenu.m */; };
+		B7A8C3911832C726009A4577 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */; };
+		B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3931832CB69009A4577 /* BleduinoRootController.m */; };
 		B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */; };
 		B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */; };
 		B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */; };
@@ -48,7 +54,6 @@
 		B7B73BFE17F256B3008E6769 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73BFD17F256B3008E6769 /* main.m */; };
 		B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C0117F256B3008E6769 /* AppDelegate.m */; };
 		B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7B73C0317F256B3008E6769 /* Main.storyboard */; };
-		B7B73C0A17F256B3008E6769 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7B73C0917F256B3008E6769 /* Images.xcassets */; };
 		B7B73C1117F256B3008E6769 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C1017F256B3008E6769 /* XCTest.framework */; };
 		B7B73C1217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73C1317F256B3008E6769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF517F256B3008E6769 /* UIKit.framework */; };
@@ -107,6 +112,17 @@
 		B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardModuleTableViewController.m; sourceTree = "<group>"; };
 		B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryTableViewController.h; sourceTree = "<group>"; };
 		B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryTableViewController.m; sourceTree = "<group>"; };
+		B78D3FC71832CCC00058BFD6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BLEduino/Images.xcassets; sourceTree = "<group>"; };
+		B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuTableViewController.h; sourceTree = "<group>"; };
+		B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuTableViewController.m; sourceTree = "<group>"; };
+		B7A8C3891832C726009A4577 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		B7A8C38A1832C726009A4577 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		B7A8C38B1832C726009A4577 /* RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESideMenu.h; sourceTree = "<group>"; };
+		B7A8C38C1832C726009A4577 /* RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESideMenu.m; sourceTree = "<group>"; };
+		B7A8C38D1832C726009A4577 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
+		B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
+		B7A8C3921832CB69009A4577 /* BleduinoRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleduinoRootController.h; sourceTree = "<group>"; };
+		B7A8C3931832CB69009A4577 /* BleduinoRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleduinoRootController.m; sourceTree = "<group>"; };
 		B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2.png"; path = "Images/ble-bridge-2.png"; sourceTree = SOURCE_ROOT; };
 		B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2@2x.png"; path = "Images/ble-bridge-2@2x.png"; sourceTree = SOURCE_ROOT; };
 		B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge.png"; path = "Images/ble-bridge.png"; sourceTree = SOURCE_ROOT; };
@@ -140,7 +156,6 @@
 		B7B73C0017F256B3008E6769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B7B73C0117F256B3008E6769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B7B73C0417F256B3008E6769 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B7B73C0917F256B3008E6769 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B7B73C0F17F256B3008E6769 /* BLEduinoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLEduinoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B73C1017F256B3008E6769 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B7B73C1817F256B3008E6769 /* BLEduinoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BLEduinoTests-Info.plist"; sourceTree = "<group>"; };
@@ -252,6 +267,32 @@
 			path = "../Images/Images-2";
 			sourceTree = "<group>";
 		};
+		B7A8C3881832C726009A4577 /* RESideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				B7A8C3891832C726009A4577 /* RECommonFunctions.h */,
+				B7A8C38A1832C726009A4577 /* RECommonFunctions.m */,
+				B7A8C38B1832C726009A4577 /* RESideMenu.h */,
+				B7A8C38C1832C726009A4577 /* RESideMenu.m */,
+				B7A8C38D1832C726009A4577 /* UIViewController+RESideMenu.h */,
+				B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */,
+			);
+			path = RESideMenu;
+			sourceTree = "<group>";
+		};
+		B7A8C3951832CB83009A4577 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B75EC51517FB415F000309FF /* ModulesConrtoller */,
+				B7B3F82C17FF701100DCDAF5 /* ConnectionController */,
+				B7A8C3921832CB69009A4577 /* BleduinoRootController.h */,
+				B7A8C3931832CB69009A4577 /* BleduinoRootController.m */,
+				B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */,
+				B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		B7B3F82617FF5FAC00DCDAF5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,9 +351,9 @@
 				B7EB1CE0183080810060441E /* 7.png */,
 				B7EB1CE1183080810060441E /* 1.png */,
 				B7EB1CE2183080810060441E /* 6.png */,
-				B7B73C2A17F259C6008E6769 /* BLEduino-Library */,
 				B7B73BF717F256B3008E6769 /* BLEduino */,
 				B7B73C1617F256B3008E6769 /* BLEduinoTests */,
+				B78D3FC71832CCC00058BFD6 /* Images.xcassets */,
 				B7B73BF017F256B3008E6769 /* Frameworks */,
 				B7B73BEF17F256B3008E6769 /* Products */,
 			);
@@ -330,8 +371,9 @@
 		B7B73BF017F256B3008E6769 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B7B73C2817F25927008E6769 /* QuartzCore.framework */,
+				B7A8C3881832C726009A4577 /* RESideMenu */,
 				B7B73C2617F25920008E6769 /* CoreBluetooth.framework */,
+				B7B73C2817F25927008E6769 /* QuartzCore.framework */,
 				B7B73BF117F256B3008E6769 /* Foundation.framework */,
 				B7B73BF317F256B3008E6769 /* CoreGraphics.framework */,
 				B7B73BF517F256B3008E6769 /* UIKit.framework */,
@@ -346,10 +388,9 @@
 				B7B73C0017F256B3008E6769 /* AppDelegate.h */,
 				B7B73C0117F256B3008E6769 /* AppDelegate.m */,
 				B7B73C0317F256B3008E6769 /* Main.storyboard */,
-				B7B3F82C17FF701100DCDAF5 /* ConnectionController */,
-				B75EC51517FB415F000309FF /* ModulesConrtoller */,
+				B7B73C2A17F259C6008E6769 /* BLEduino-Library */,
+				B7A8C3951832CB83009A4577 /* Menu */,
 				B75EC54B17FB7B27000309FF /* Modules */,
-				B7B73C0917F256B3008E6769 /* Images.xcassets */,
 				B7B73BF817F256B3008E6769 /* Supporting Files */,
 				B7851D4517FDFE4400181C53 /* Images */,
 			);
@@ -396,7 +437,7 @@
 			);
 			name = "BLEduino-Library";
 			path = "BLEduino-Libray";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -478,8 +519,8 @@
 				B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */,
 				B7EB1CE7183080810060441E /* 2.png in Resources */,
 				B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */,
-				B7B73C0A17F256B3008E6769 /* Images.xcassets in Resources */,
 				B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */,
+				B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */,
 				B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */,
 				B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */,
 				B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */,
@@ -528,15 +569,20 @@
 				B72D18591826FBBF00BD1A2D /* VehicleMotionService.m in Sources */,
 				B72D18651826FED500BD1A2D /* ControllerService.m in Sources */,
 				B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */,
+				B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */,
 				B75EC51817FB49D8000309FF /* Module.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
+				B7A8C3901832C726009A4577 /* RESideMenu.m in Sources */,
 				B72E580118104B8F00745BD8 /* BleService.m in Sources */,
 				B7EB1CF01830D6010060441E /* NotificationAttributesCharacteristic.m in Sources */,
+				B7A8C38F1832C726009A4577 /* RECommonFunctions.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
 				B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* NotificationService.m in Sources */,
+				B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */,
 				B75EC50917FA85EE000309FF /* LeDiscoveryManager.m in Sources */,
 				B73447C318305596006F76C2 /* ButtonActionCharacteristic.m in Sources */,
+				B7A8C3911832C726009A4577 /* UIViewController+RESideMenu.m in Sources */,
 				B7EB1CED1830972A0060441E /* BLEduinoPeripheral.m in Sources */,
 				B7FAC246182AEA7E00F33CE8 /* FirmataCommandCharacteristic.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,

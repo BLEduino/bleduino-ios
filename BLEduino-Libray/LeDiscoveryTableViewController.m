@@ -8,6 +8,7 @@
 
 #import "LeDiscoveryTableViewController.h"
 #import "LeDiscoveryManager.h"
+#import "RESideMenu.h"
 
 @interface LeDiscoveryTableViewController ()
 
@@ -22,6 +23,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IBAction)showMenu
+{
+    [self.sideMenuViewController presentMenuViewController];
 }
 
 - (void)viewDidLoad
@@ -49,11 +55,11 @@
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
     
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
+//    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+//    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
 //    self.refreshControl = [[UIRefreshControl alloc] init];
 //	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
-	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
+//	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)scanForBleDevices:(id)sender

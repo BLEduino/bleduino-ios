@@ -12,6 +12,7 @@
 #import "LeDiscoveryTableViewController.h"
 
 #import "NotificationService.h"
+#import "RESideMenu.h"
 
 
 @implementation ModulesCollectionViewController
@@ -29,6 +30,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IBAction)showMenu
+{
+    [self.sideMenuViewController presentMenuViewController];
 }
 
 - (void)viewDidLoad
@@ -52,7 +58,7 @@
     
     //Set BLE navigation.
     [self.navigationItem.leftBarButtonItem setTarget:self];
-    [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
+//    [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
 
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -220,10 +226,10 @@ referenceSizeForFooterInSection:(NSInteger)section
 /*                              Modules Segues                              */
 /****************************************************************************/
 
-- (void)presentConnectionManager:(id)sender
-{
-    [self performSegueWithIdentifier:@"ConnectionManagerSegue" sender:self];
-}
+//- (void)presentConnectionManager:(id)sender
+//{
+//    [self performSegueWithIdentifier:@"ConnectionManagerSegue" sender:self];
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -233,12 +239,12 @@ referenceSizeForFooterInSection:(NSInteger)section
         KeyboardModuleTableViewController *keyboardController = [[navigationController viewControllers] objectAtIndex:0];
         keyboardController.delegate = self;
     }
-    else if ([segue.identifier isEqualToString:@"ConnectionManagerSegue"])
-    {
-        UINavigationController *navigationController = segue.destinationViewController;
-        LeDiscoveryTableViewController *connectionController = [[navigationController viewControllers] objectAtIndex:0];
-        connectionController.delegate = self;
-    }
+//    else if ([segue.identifier isEqualToString:@"ConnectionManagerSegue"])
+//    {
+//        UINavigationController *navigationController = segue.destinationViewController;
+//        LeDiscoveryTableViewController *connectionController = [[navigationController viewControllers] objectAtIndex:0];
+//        connectionController.delegate = self;
+//    }
 }
 
 #pragma mark -

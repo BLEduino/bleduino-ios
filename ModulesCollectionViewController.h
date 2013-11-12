@@ -24,4 +24,6 @@ LeDiscoveryTableViewControllerDelegate
 //Services that run in the background.
 @property (strong, nonatomic) NotificationService *notifications;
 @property (strong, nonatomic) BleBridgeService *bleBridge;
+
+- (IBAction)showMenu;
 @end
