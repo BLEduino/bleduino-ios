@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface NotificationAttributesCharacteristic : NSObject
+
+//Notifications have two attributes: title and message;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *message;
 

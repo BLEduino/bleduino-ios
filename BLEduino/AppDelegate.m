@@ -8,18 +8,43 @@
 
 #import "AppDelegate.h"
 #import "LeDiscoveryManager.h"
+#import "NotificationService.h"
 
 @implementation AppDelegate
+
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
     leManager.scanOnlyForBLEduinos = YES;
-
+        
     return YES;
 }
-							
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    //Verify service sending local notification.
+    NSString *serviceUUIDString = [notification.userInfo objectForKey:@"service"];
+    
+    //Notification Service?
+    if([serviceUUIDString isEqual:kNotificationAttributesCharacteristicUUIDString])
+    {
+        NSString *message = [notification.userInfo objectForKey:@"message"];
+        NSString *title   = [notification.userInfo objectForKey:@"title"];
+        
+        
+        UIAlertView *notificationAlert = [[UIAlertView alloc]initWithTitle:title
+                                                                   message:message
+                                                                  delegate:nil
+                                                         cancelButtonTitle:@"Close"
+                                                         otherButtonTitles:nil];
+        
+        [notificationAlert show];
+    }
+
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -46,5 +71,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

@@ -54,6 +54,7 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
  */
 - (void)openBridge
 {
+    self.isOpen = YES;
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
 
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
@@ -89,6 +90,11 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
                         characteristicUUID:_bridgeTxCharacteristicUUID
                                notifyValue:NO];
     }
+    
+    //Remove all BLEduinos.
+    [_servicePeripherals removeAllObjects];
+    
+    self.isOpen = NO;
 }
 
 #pragma mark Peripheral Delegate
@@ -97,7 +103,6 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
 /****************************************************************************/
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-
     if([characteristic.UUID isEqual:_deviceIDCharacteristicUUID])
     {
         //Convert deviceID data to integer.

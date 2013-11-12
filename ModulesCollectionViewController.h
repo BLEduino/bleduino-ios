@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "KeyboardModuleTableViewController.h"
 #import "LeDiscoveryTableViewController.h"
+#import "NotificationService.h"
 #import "BleBridgeService.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
@@ -21,5 +22,6 @@ LeDiscoveryTableViewControllerDelegate
 @property (nonatomic, strong) NSArray *modulesImages;
 
 //Services that run in the background.
+@property (strong, nonatomic) NotificationService *notifications;
 @property (strong, nonatomic) BleBridgeService *bleBridge;
 @end

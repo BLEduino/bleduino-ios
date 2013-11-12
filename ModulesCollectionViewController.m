@@ -11,6 +11,8 @@
 #import "KeyboardModuleTableViewController.h"
 #import "LeDiscoveryTableViewController.h"
 
+#import "NotificationService.h"
+
 
 @implementation ModulesCollectionViewController
 
@@ -132,11 +134,19 @@
             break;
             
         case 6:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            //Toggle notification service.
+            if(self.notifications.isListening)
+            {
+                [self.notifications stopListening];
+            }
+            else
+            {
+                [self.notifications startListening];
+            }
             break;
             
         case 7:
-            //Toggle BLE bridge.
+            //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
                 [self.bleBridge closeBridge];
