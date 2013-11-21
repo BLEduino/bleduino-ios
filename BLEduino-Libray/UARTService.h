@@ -20,6 +20,17 @@ extern NSString *kRxCharacteristicUUIDString;       //8C6BABCD-A312-681D-025B-00
 extern NSString *kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-0032C0D16A2D  Write(Tx) Message Characteristic
 
 
+/****************************************************************************/
+/*						Rx/Tx Transmission State							*/
+/****************************************************************************/
+enum {
+    RxTxTransmissionStateStarted = 0,
+    RxTxTransmissionStateInTransit = 1,
+    RxTxTransmissionStateEnded = 2,
+};
+typedef NSUInteger RxTxTransmissionState;
+
+
 #pragma mark -
 #pragma mark UART Service Protocol
 /****************************************************************************/

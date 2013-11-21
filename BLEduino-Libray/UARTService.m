@@ -68,26 +68,55 @@ NSString *kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
     {
         BOOL lastPacket = false;
         int dataIndex = 0;
-        int totalPackets = ceil(dataLength / 20);
+        int totalPackets = ceil(dataLength / 19);
         
         for (int packetIndex = 0; packetIndex <= totalPackets; packetIndex++)
         {
+            
             lastPacket = (packetIndex == totalPackets);
-            int rangeLength = (lastPacket)?(dataLength - dataIndex):20;
+            int rangeLength = (lastPacket)?(dataLength - dataIndex):19;
             
             NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
             NSData *dataSubset = [data subdataWithRange:dataRange];
             _longTransmission = !lastPacket;
             
 
+            NSMutableData *finalData = [[NSMutableData alloc] initWithCapacity:[dataSubset length]+1];
+
+            //Include state data.
+            if (dataIndex == 0)
+            {//Starting transmission.
+                
+                Byte startByte = (0 >> (0)) & 0xff;
+                NSMutableData *startData = [NSMutableData dataWithBytes:&startByte length:sizeof(startByte)];
+                [finalData appendData:startData];
+            }
+            else if(lastPacket)
+            {//Ending transmission.
+                
+                Byte endByte = (2 >> (0)) & 0xff;
+                NSMutableData *endData = [NSMutableData dataWithBytes:&endByte length:sizeof(endByte)];
+                [finalData appendData:endData];
+            }
+            else if (dataIndex > 0)
+            {//Transmission is in transit.
+                
+                Byte transitByte = (1 >> (0)) & 0xff;
+                NSMutableData *transitData = [NSMutableData dataWithBytes:&transitByte length:sizeof(transitByte)];
+                [finalData appendData:transitData];
+            }
+            
+            //Append message data.
+            [finalData appendData:dataSubset];
+            
             [self writeDataToPeripheral:_servicePeripheral
                             serviceUUID:_uartServiceUUID
                      characteristicUUID:_rxCharacteristicUUID
-                                   data:dataSubset
+                                   data:finalData
                                 withAck:enabled];
             
             //Move dataIndex to the beginning of next packet.
-            dataIndex += 20;
+            dataIndex += 19;
         }
     }
     else

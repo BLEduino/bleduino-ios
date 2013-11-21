@@ -56,10 +56,6 @@
     //Set services that run in the background.
     self.bleBridge = [[BleBridgeService alloc] init];
     
-    //Set BLE navigation.
-    [self.navigationItem.leftBarButtonItem setTarget:self];
-//    [self.navigationItem.leftBarButtonItem setAction:@selector(presentConnectionManager:)];
-
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
@@ -124,19 +120,19 @@
             break;
             
         case 2:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            [self performSegueWithIdentifier:@"GameControllerModuleSegue" sender:self];
             break;
             
         case 3:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            [self performSegueWithIdentifier:@"RadioControlledModuleSegue" sender:self];
             break;
             
         case 4:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            [self performSegueWithIdentifier:@"PowerRelayModuleSegue" sender:self];
             break;
             
         case 5:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            [self performSegueWithIdentifier:@"LEDModuleSegue" sender:self];
             break;
             
         case 6:
@@ -164,24 +160,21 @@
             break;
             
         case 8:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            //Extra Module
             break;
             
         case 9:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            //Extra Module
             break;
             
         case 10:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            //Extra Module
             break;
             
         case 11:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            //Extra Module
             break;
-            
-        case 12:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
-            break;
+
     }
 }
 
@@ -225,11 +218,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                              Modules Segues                              */
 /****************************************************************************/
-
-//- (void)presentConnectionManager:(id)sender
-//{
-//    [self performSegueWithIdentifier:@"ConnectionManagerSegue" sender:self];
-//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

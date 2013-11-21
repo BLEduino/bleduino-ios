@@ -86,6 +86,8 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
                         characteristicUUID:_notificationAttributesCharacteristicUUID
                                notifyValue:YES];
     }
+    
+    NSLog(@"Notifications: Startted listening.");
 }
 
 /*
@@ -109,6 +111,8 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
     [_servicePeripherals removeAllObjects];
     
     self.isListening = NO;
+    
+    NSLog(@"Notifications: Stopped listening.");
 }
 
 #pragma mark -

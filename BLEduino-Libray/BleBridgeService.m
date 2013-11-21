@@ -72,6 +72,8 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
                          serviceUUID:_bleBridgeServiceUUID
                   characteristicUUID:_deviceIDCharacteristicUUID];
     }
+    
+    NSLog(@"BLE-Bridge: bridge is open.");
 }
 
 /*
@@ -95,6 +97,8 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
     [_servicePeripherals removeAllObjects];
     
     self.isOpen = NO;
+    
+    NSLog(@"BLE-Bridge: bridge is closed.");
 }
 
 #pragma mark Peripheral Delegate
