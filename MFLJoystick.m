@@ -55,7 +55,7 @@
 
 - (void)makeHandle
 {
-    self.handle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 61, 61)];
+    self.handle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
     [self.handle setCenter:CGPointMake(self.bounds.size.width/2,
                                        self.bounds.size.height/2)];
     self.defaultPoint = self.handle.center;
@@ -69,6 +69,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [UIView animateWithDuration:.2 animations:^{
+        self.thumbImageView.image = [UIImage imageNamed:@"joystick-hold.png"];
         self.alpha = 1;
     }];
     
@@ -105,6 +106,7 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [UIView animateWithDuration:.4 animations:^{
+        self.thumbImageView.image = [UIImage imageNamed:@"joystick-neutral.png"];
         self.alpha = 1;
     }];
     [self.delegate joystick:self didUpdate:CGPointZero];
@@ -183,6 +185,29 @@
 {
     self.thumbImageView.image = thumbImage;
     self.bgImageView.image = bgImage;
+    
+    //Adding directional arrows to the joystick's background image.
+    UIImage *upArrow = [UIImage imageNamed:@"arrow-up@2x.png"];
+    UIImage *downArrow = [UIImage imageNamed:@"arrow-down@2x.png"];
+    UIImage *leftArrow = [UIImage imageNamed:@"arrow-left@2x.png"];
+    UIImage *rightArrow = [UIImage imageNamed:@"arrow-right@2x.png"];
+    
+    UIImageView *upArrowView = [[UIImageView alloc] initWithImage:upArrow];
+    UIImageView *downArrowView = [[UIImageView alloc] initWithImage:downArrow];
+    UIImageView *leftArrowView = [[UIImageView alloc] initWithImage:leftArrow];
+    UIImageView *rightArrowView = [[UIImageView alloc] initWithImage:rightArrow];
+    
+    //Setup frame for arrow image views.
+    upArrowView.frame= CGRectMake(121, 20, 28, 14);
+    downArrowView.frame= CGRectMake(121, 236, 28, 14);
+    leftArrowView.frame = CGRectMake(20, 121, 14, 28);
+    rightArrowView.frame = CGRectMake(236, 121, 14, 28);
+
+    //Add arrows as subviews of background image.
+    [self.bgImageView addSubview:upArrowView];
+    [self.bgImageView addSubview:downArrowView];
+    [self.bgImageView addSubview:leftArrowView];
+    [self.bgImageView addSubview:rightArrowView];
 }
 
 - (void)roundView:(UIView *)roundedView toDiameter:(float)newSize

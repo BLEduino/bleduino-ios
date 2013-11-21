@@ -25,37 +25,28 @@
 		B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D7865183C60D400CB68D8 /* HorizontalJoystickControlView.m */; };
 		B79D78BC183D343B00CB68D8 /* MFLJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78BA183D343B00CB68D8 /* MFLJoystick.m */; };
 		B79D78C0183D5D2D00CB68D8 /* LEDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78BF183D5D2D00CB68D8 /* LEDTableViewCell.m */; };
-		B79D78C8183DA58400CB68D8 /* red-a.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D78C4183DA58400CB68D8 /* red-a.png */; };
-		B79D78C9183DA58400CB68D8 /* blue-x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D78C5183DA58400CB68D8 /* blue-x.png */; };
-		B79D78CA183DA58400CB68D8 /* yellow-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D78C6183DA58400CB68D8 /* yellow-b.png */; };
-		B79D78CC183DAA3C00CB68D8 /* green-y.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D78CB183DAA3C00CB68D8 /* green-y.png */; };
 		B79D78D3183E4FB500CB68D8 /* OBShapedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78CF183E4FB500CB68D8 /* OBShapedButton.m */; };
 		B79D78D4183E4FB500CB68D8 /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78D2183E4FB500CB68D8 /* UIImage+ColorAtPixel.m */; };
+		B79D792E183E904200CB68D8 /* arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7926183E904200CB68D8 /* arrow-down.png */; };
+		B79D792F183E904200CB68D8 /* arrow-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7927183E904200CB68D8 /* arrow-down@2x.png */; };
+		B79D7930183E904200CB68D8 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7928183E904200CB68D8 /* arrow-left.png */; };
+		B79D7931183E904200CB68D8 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7929183E904200CB68D8 /* arrow-left@2x.png */; };
+		B79D7932183E904200CB68D8 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D792A183E904200CB68D8 /* arrow-right.png */; };
+		B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D792B183E904200CB68D8 /* arrow-right@2x.png */; };
+		B79D7934183E904200CB68D8 /* arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D792C183E904200CB68D8 /* arrow-up.png */; };
+		B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D792D183E904200CB68D8 /* arrow-up@2x.png */; };
+		B79D793B183E90D000CB68D8 /* green-y.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7936183E90D000CB68D8 /* green-y.png */; };
+		B79D793C183E90D000CB68D8 /* joystick-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7937183E90D000CB68D8 /* joystick-bg.png */; };
+		B79D793D183E90D000CB68D8 /* yellow-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7938183E90D000CB68D8 /* yellow-b.png */; };
+		B79D793E183E90D000CB68D8 /* blue-x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7939183E90D000CB68D8 /* blue-x.png */; };
+		B79D793F183E90D000CB68D8 /* red-a.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D793A183E90D000CB68D8 /* red-a.png */; };
+		B79D7942183E913000CB68D8 /* joystick-neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7940183E913000CB68D8 /* joystick-neutral.png */; };
+		B79D7943183E913000CB68D8 /* joystick-hold.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7941183E913000CB68D8 /* joystick-hold.png */; };
 		B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */; };
 		B7A8C38F1832C726009A4577 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38A1832C726009A4577 /* RECommonFunctions.m */; };
 		B7A8C3901832C726009A4577 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38C1832C726009A4577 /* RESideMenu.m */; };
 		B7A8C3911832C726009A4577 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */; };
 		B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3931832CB69009A4577 /* BleduinoRootController.m */; };
-		B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */; };
-		B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */; };
-		B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */; };
-		B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */; };
-		B7B3F81617FDFF7200DCDAF5 /* game-controller-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */; };
-		B7B3F81717FDFF7200DCDAF5 /* game-controller-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */; };
-		B7B3F81817FDFF7200DCDAF5 /* game-controller.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80417FDFF7200DCDAF5 /* game-controller.png */; };
-		B7B3F81917FDFF7200DCDAF5 /* game-controller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */; };
-		B7B3F81A17FDFF7200DCDAF5 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80617FDFF7200DCDAF5 /* keyboard.png */; };
-		B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */; };
-		B7B3F81C17FDFF7200DCDAF5 /* lcd.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80817FDFF7200DCDAF5 /* lcd.png */; };
-		B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */; };
-		B7B3F81E17FDFF7200DCDAF5 /* led.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80A17FDFF7200DCDAF5 /* led.png */; };
-		B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */; };
-		B7B3F82017FDFF7200DCDAF5 /* notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80C17FDFF7200DCDAF5 /* notifications.png */; };
-		B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */; };
-		B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */; };
-		B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */; };
-		B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81017FDFF7200DCDAF5 /* rc-car.png */; };
-		B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */; };
 		B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
@@ -72,33 +63,7 @@
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
 		B7B73C2D17F25A58008E6769 /* UARTService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* UARTService.m */; };
-		B7BEFC1D1832E25A00EA6E78 /* 4f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC131832E25A00EA6E78 /* 4f.png */; };
-		B7BEFC1E1832E25A00EA6E78 /* 5f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC141832E25A00EA6E78 /* 5f.png */; };
-		B7BEFC1F1832E25A00EA6E78 /* 6f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC151832E25A00EA6E78 /* 6f.png */; };
-		B7BEFC201832E25A00EA6E78 /* 7f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC161832E25A00EA6E78 /* 7f.png */; };
-		B7BEFC211832E25A00EA6E78 /* 3f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC171832E25A00EA6E78 /* 3f.png */; };
-		B7BEFC221832E25A00EA6E78 /* 2f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC181832E25A00EA6E78 /* 2f.png */; };
-		B7BEFC231832E25A00EA6E78 /* 1f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC191832E25A00EA6E78 /* 1f.png */; };
-		B7BEFC241832E25A00EA6E78 /* 0f.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC1A1832E25A00EA6E78 /* 0f.png */; };
-		B7BEFC271832E95D00EA6E78 /* modules.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC251832E95D00EA6E78 /* modules.png */; };
-		B7BEFC281832E95D00EA6E78 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BEFC261832E95D00EA6E78 /* menu.png */; };
 		B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BEFC2A18332E7600EA6E78 /* LEDModuleTableViewController.m */; };
-		B7E3A787183BC8A200DD3926 /* joystick-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A786183BC8A200DD3926 /* joystick-bg.png */; };
-		B7E3A789183BD12A00DD3926 /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A788183BD12A00DD3926 /* yellow.png */; };
-		B7E3A78D183BD6C200DD3926 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A78A183BD6C200DD3926 /* green.png */; };
-		B7E3A78E183BD6C200DD3926 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A78B183BD6C200DD3926 /* red.png */; };
-		B7E3A78F183BD6C200DD3926 /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A78C183BD6C200DD3926 /* blue.png */; };
-		B7E3A792183BDAFD00DD3926 /* joystick-hold.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A790183BDAFD00DD3926 /* joystick-hold.png */; };
-		B7E3A793183BDAFD00DD3926 /* joystick-neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E3A791183BDAFD00DD3926 /* joystick-neutral.png */; };
-		B7E3A79E183C16E300DD3926 /* JoystickControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E3A79D183C16E300DD3926 /* JoystickControlView.m */; };
-		B7EB1CE3183080810060441E /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDB183080810060441E /* 4.png */; };
-		B7EB1CE4183080810060441E /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDC183080810060441E /* 0.png */; };
-		B7EB1CE5183080810060441E /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDD183080810060441E /* 5.png */; };
-		B7EB1CE6183080810060441E /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDE183080810060441E /* 3.png */; };
-		B7EB1CE7183080810060441E /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CDF183080810060441E /* 2.png */; };
-		B7EB1CE8183080810060441E /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE0183080810060441E /* 7.png */; };
-		B7EB1CE9183080810060441E /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE1183080810060441E /* 1.png */; };
-		B7EB1CEA183080810060441E /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EB1CE2183080810060441E /* 6.png */; };
 		B7EB1CED1830972A0060441E /* BLEduinoPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */; };
 		B7EB1CF01830D6010060441E /* NotificationAttributesCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* NotificationAttributesCharacteristic.m */; };
 		B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */; };
@@ -154,14 +119,25 @@
 		B79D78BB183D343B00CB68D8 /* MFLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFLJoystick.h; sourceTree = "<group>"; };
 		B79D78BE183D5D2D00CB68D8 /* LEDTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDTableViewCell.h; sourceTree = "<group>"; };
 		B79D78BF183D5D2D00CB68D8 /* LEDTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDTableViewCell.m; sourceTree = "<group>"; };
-		B79D78C4183DA58400CB68D8 /* red-a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-a.png"; sourceTree = "<group>"; };
-		B79D78C5183DA58400CB68D8 /* blue-x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-x.png"; sourceTree = "<group>"; };
-		B79D78C6183DA58400CB68D8 /* yellow-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow-b.png"; sourceTree = "<group>"; };
-		B79D78CB183DAA3C00CB68D8 /* green-y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-y.png"; sourceTree = "<group>"; };
 		B79D78CE183E4FB500CB68D8 /* OBShapedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBShapedButton.h; sourceTree = "<group>"; };
 		B79D78CF183E4FB500CB68D8 /* OBShapedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBShapedButton.m; sourceTree = "<group>"; };
 		B79D78D1183E4FB500CB68D8 /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
 		B79D78D2183E4FB500CB68D8 /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
+		B79D7926183E904200CB68D8 /* arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-down.png"; sourceTree = "<group>"; };
+		B79D7927183E904200CB68D8 /* arrow-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-down@2x.png"; sourceTree = "<group>"; };
+		B79D7928183E904200CB68D8 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left.png"; sourceTree = "<group>"; };
+		B79D7929183E904200CB68D8 /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
+		B79D792A183E904200CB68D8 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
+		B79D792B183E904200CB68D8 /* arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right@2x.png"; sourceTree = "<group>"; };
+		B79D792C183E904200CB68D8 /* arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-up.png"; sourceTree = "<group>"; };
+		B79D792D183E904200CB68D8 /* arrow-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-up@2x.png"; sourceTree = "<group>"; };
+		B79D7936183E90D000CB68D8 /* green-y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-y.png"; sourceTree = "<group>"; };
+		B79D7937183E90D000CB68D8 /* joystick-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-bg.png"; sourceTree = "<group>"; };
+		B79D7938183E90D000CB68D8 /* yellow-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow-b.png"; sourceTree = "<group>"; };
+		B79D7939183E90D000CB68D8 /* blue-x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-x.png"; sourceTree = "<group>"; };
+		B79D793A183E90D000CB68D8 /* red-a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-a.png"; sourceTree = "<group>"; };
+		B79D7940183E913000CB68D8 /* joystick-neutral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-neutral.png"; sourceTree = "<group>"; };
+		B79D7941183E913000CB68D8 /* joystick-hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-hold.png"; sourceTree = "<group>"; };
 		B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuTableViewController.h; sourceTree = "<group>"; };
 		B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuTableViewController.m; sourceTree = "<group>"; };
 		B7A8C3891832C726009A4577 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
@@ -172,26 +148,6 @@
 		B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
 		B7A8C3921832CB69009A4577 /* BleduinoRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleduinoRootController.h; sourceTree = "<group>"; };
 		B7A8C3931832CB69009A4577 /* BleduinoRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleduinoRootController.m; sourceTree = "<group>"; };
-		B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2.png"; path = "Images/ble-bridge-2.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge-2@2x.png"; path = "Images/ble-bridge-2@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge.png"; path = "Images/ble-bridge.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ble-bridge@2x.png"; path = "Images/ble-bridge@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller-2.png"; path = "Images/game-controller-2.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller-2@2x.png"; path = "Images/game-controller-2@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80417FDFF7200DCDAF5 /* game-controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller.png"; path = "Images/game-controller.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game-controller@2x.png"; path = "Images/game-controller@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80617FDFF7200DCDAF5 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard.png; path = Images/keyboard.png; sourceTree = SOURCE_ROOT; };
-		B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "keyboard@2x.png"; path = "Images/keyboard@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80817FDFF7200DCDAF5 /* lcd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lcd.png; path = Images/lcd.png; sourceTree = SOURCE_ROOT; };
-		B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lcd@2x.png"; path = "Images/lcd@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80A17FDFF7200DCDAF5 /* led.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = led.png; path = Images/led.png; sourceTree = SOURCE_ROOT; };
-		B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led@2x.png"; path = "Images/led@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80C17FDFF7200DCDAF5 /* notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = notifications.png; path = Images/notifications.png; sourceTree = SOURCE_ROOT; };
-		B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "notifications@2x.png"; path = "Images/notifications@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "power-relay.png"; path = "Images/power-relay.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "power-relay@2x.png"; path = "Images/power-relay@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F81017FDFF7200DCDAF5 /* rc-car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car.png"; path = "Images/rc-car.png"; sourceTree = SOURCE_ROOT; };
-		B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rc-car@2x.png"; path = "Images/rc-car@2x.png"; sourceTree = SOURCE_ROOT; };
 		B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrottleYawRollPitchCharacteristic.h; sourceTree = "<group>"; };
 		B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrottleYawRollPitchCharacteristic.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,35 +170,8 @@
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* UARTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARTService.h; sourceTree = "<group>"; };
 		B7B73C2C17F25A58008E6769 /* UARTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UARTService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B7BEFC131832E25A00EA6E78 /* 4f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4f.png; sourceTree = "<group>"; };
-		B7BEFC141832E25A00EA6E78 /* 5f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5f.png; sourceTree = "<group>"; };
-		B7BEFC151832E25A00EA6E78 /* 6f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6f.png; sourceTree = "<group>"; };
-		B7BEFC161832E25A00EA6E78 /* 7f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7f.png; sourceTree = "<group>"; };
-		B7BEFC171832E25A00EA6E78 /* 3f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3f.png; sourceTree = "<group>"; };
-		B7BEFC181832E25A00EA6E78 /* 2f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2f.png; sourceTree = "<group>"; };
-		B7BEFC191832E25A00EA6E78 /* 1f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1f.png; sourceTree = "<group>"; };
-		B7BEFC1A1832E25A00EA6E78 /* 0f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0f.png; sourceTree = "<group>"; };
-		B7BEFC251832E95D00EA6E78 /* modules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modules.png; sourceTree = "<group>"; };
-		B7BEFC261832E95D00EA6E78 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		B7BEFC2918332E7600EA6E78 /* LEDModuleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDModuleTableViewController.h; sourceTree = "<group>"; };
 		B7BEFC2A18332E7600EA6E78 /* LEDModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDModuleTableViewController.m; sourceTree = "<group>"; };
-		B7E3A786183BC8A200DD3926 /* joystick-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-bg.png"; sourceTree = "<group>"; };
-		B7E3A788183BD12A00DD3926 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
-		B7E3A78A183BD6C200DD3926 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
-		B7E3A78B183BD6C200DD3926 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
-		B7E3A78C183BD6C200DD3926 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
-		B7E3A790183BDAFD00DD3926 /* joystick-hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-hold.png"; sourceTree = "<group>"; };
-		B7E3A791183BDAFD00DD3926 /* joystick-neutral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-neutral.png"; sourceTree = "<group>"; };
-		B7E3A79C183C16E300DD3926 /* JoystickControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickControlView.h; sourceTree = "<group>"; };
-		B7E3A79D183C16E300DD3926 /* JoystickControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoystickControlView.m; sourceTree = "<group>"; };
-		B7EB1CDB183080810060441E /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
-		B7EB1CDC183080810060441E /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
-		B7EB1CDD183080810060441E /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
-		B7EB1CDE183080810060441E /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
-		B7EB1CDF183080810060441E /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
-		B7EB1CE0183080810060441E /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
-		B7EB1CE1183080810060441E /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		B7EB1CE2183080810060441E /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		B7EB1CEB1830972A0060441E /* BLEduinoPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEduinoPeripheral.h; sourceTree = "<group>"; };
 		B7EB1CEC1830972A0060441E /* BLEduinoPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEduinoPeripheral.m; sourceTree = "<group>"; };
 		B7EB1CEE1830D6010060441E /* NotificationAttributesCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationAttributesCharacteristic.h; sourceTree = "<group>"; };
@@ -321,34 +250,6 @@
 			name = Modules;
 			sourceTree = "<group>";
 		};
-		B7851D4517FDFE4400181C53 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				B7B3F7FE17FDFF7200DCDAF5 /* ble-bridge-2.png */,
-				B7B3F7FF17FDFF7200DCDAF5 /* ble-bridge-2@2x.png */,
-				B7B3F80017FDFF7200DCDAF5 /* ble-bridge.png */,
-				B7B3F80117FDFF7200DCDAF5 /* ble-bridge@2x.png */,
-				B7B3F80217FDFF7200DCDAF5 /* game-controller-2.png */,
-				B7B3F80317FDFF7200DCDAF5 /* game-controller-2@2x.png */,
-				B7B3F80417FDFF7200DCDAF5 /* game-controller.png */,
-				B7B3F80517FDFF7200DCDAF5 /* game-controller@2x.png */,
-				B7B3F80617FDFF7200DCDAF5 /* keyboard.png */,
-				B7B3F80717FDFF7200DCDAF5 /* keyboard@2x.png */,
-				B7B3F80817FDFF7200DCDAF5 /* lcd.png */,
-				B7B3F80917FDFF7200DCDAF5 /* lcd@2x.png */,
-				B7B3F80A17FDFF7200DCDAF5 /* led.png */,
-				B7B3F80B17FDFF7200DCDAF5 /* led@2x.png */,
-				B7B3F80C17FDFF7200DCDAF5 /* notifications.png */,
-				B7B3F80D17FDFF7200DCDAF5 /* notifications@2x.png */,
-				B7B3F80E17FDFF7200DCDAF5 /* power-relay.png */,
-				B7B3F80F17FDFF7200DCDAF5 /* power-relay@2x.png */,
-				B7B3F81017FDFF7200DCDAF5 /* rc-car.png */,
-				B7B3F81117FDFF7200DCDAF5 /* rc-car@2x.png */,
-			);
-			name = Images;
-			path = "../Images/Images-2";
-			sourceTree = "<group>";
-		};
 		B79D7860183C5CE400CB68D8 /* RadioControlled */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +299,28 @@
 				B79D78D2183E4FB500CB68D8 /* UIImage+ColorAtPixel.m */,
 			);
 			path = "UIImage+ColorAtPixel";
+			sourceTree = "<group>";
+		};
+		B79D7925183E904200CB68D8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B79D7940183E913000CB68D8 /* joystick-neutral.png */,
+				B79D7941183E913000CB68D8 /* joystick-hold.png */,
+				B79D7937183E90D000CB68D8 /* joystick-bg.png */,
+				B79D7936183E90D000CB68D8 /* green-y.png */,
+				B79D7938183E90D000CB68D8 /* yellow-b.png */,
+				B79D7939183E90D000CB68D8 /* blue-x.png */,
+				B79D793A183E90D000CB68D8 /* red-a.png */,
+				B79D7926183E904200CB68D8 /* arrow-down.png */,
+				B79D7927183E904200CB68D8 /* arrow-down@2x.png */,
+				B79D7928183E904200CB68D8 /* arrow-left.png */,
+				B79D7929183E904200CB68D8 /* arrow-left@2x.png */,
+				B79D792A183E904200CB68D8 /* arrow-right.png */,
+				B79D792B183E904200CB68D8 /* arrow-right@2x.png */,
+				B79D792C183E904200CB68D8 /* arrow-up.png */,
+				B79D792D183E904200CB68D8 /* arrow-up@2x.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		B7A8C3881832C726009A4577 /* RESideMenu */ = {
@@ -476,35 +399,7 @@
 		B7B73BE517F256B3008E6769 = {
 			isa = PBXGroup;
 			children = (
-				B7BEFC251832E95D00EA6E78 /* modules.png */,
-				B7BEFC261832E95D00EA6E78 /* menu.png */,
-				B7BEFC131832E25A00EA6E78 /* 4f.png */,
-				B7BEFC141832E25A00EA6E78 /* 5f.png */,
-				B7BEFC151832E25A00EA6E78 /* 6f.png */,
-				B7BEFC161832E25A00EA6E78 /* 7f.png */,
-				B7BEFC171832E25A00EA6E78 /* 3f.png */,
-				B7BEFC181832E25A00EA6E78 /* 2f.png */,
-				B7BEFC191832E25A00EA6E78 /* 1f.png */,
-				B7BEFC1A1832E25A00EA6E78 /* 0f.png */,
-				B7EB1CDB183080810060441E /* 4.png */,
-				B7EB1CDC183080810060441E /* 0.png */,
-				B7EB1CDD183080810060441E /* 5.png */,
-				B7EB1CDE183080810060441E /* 3.png */,
-				B7EB1CDF183080810060441E /* 2.png */,
-				B7EB1CE0183080810060441E /* 7.png */,
-				B7EB1CE1183080810060441E /* 1.png */,
-				B7EB1CE2183080810060441E /* 6.png */,
-				B7E3A786183BC8A200DD3926 /* joystick-bg.png */,
-				B7E3A790183BDAFD00DD3926 /* joystick-hold.png */,
-				B7E3A791183BDAFD00DD3926 /* joystick-neutral.png */,
-				B7E3A788183BD12A00DD3926 /* yellow.png */,
-				B7E3A78A183BD6C200DD3926 /* green.png */,
-				B7E3A78B183BD6C200DD3926 /* red.png */,
-				B7E3A78C183BD6C200DD3926 /* blue.png */,
-				B79D78C4183DA58400CB68D8 /* red-a.png */,
-				B79D78C5183DA58400CB68D8 /* blue-x.png */,
-				B79D78C6183DA58400CB68D8 /* yellow-b.png */,
-				B79D78CB183DAA3C00CB68D8 /* green-y.png */,
+				B79D7925183E904200CB68D8 /* Images */,
 				B7B73BF717F256B3008E6769 /* BLEduino */,
 				B7B73C1617F256B3008E6769 /* BLEduinoTests */,
 				B78D3FC71832CCC00058BFD6 /* Images.xcassets */,
@@ -549,7 +444,6 @@
 				B7A8C3951832CB83009A4577 /* Menu */,
 				B75EC54B17FB7B27000309FF /* Modules */,
 				B7B73BF817F256B3008E6769 /* Supporting Files */,
-				B7851D4517FDFE4400181C53 /* Images */,
 			);
 			path = BLEduino;
 			sourceTree = "<group>";
@@ -601,8 +495,6 @@
 			children = (
 				B7EDFDFC1835C22E002FECA0 /* GameControllerViewController.h */,
 				B7EDFDFD1835C22E002FECA0 /* GameControllerViewController.m */,
-				B7E3A79C183C16E300DD3926 /* JoystickControlView.h */,
-				B7E3A79D183C16E300DD3926 /* JoystickControlView.m */,
 			);
 			name = GameController;
 			sourceTree = "<group>";
@@ -694,58 +586,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7BEFC241832E25A00EA6E78 /* 0f.png in Resources */,
-				B79D78CA183DA58400CB68D8 /* yellow-b.png in Resources */,
-				B7E3A78D183BD6C200DD3926 /* green.png in Resources */,
-				B7BEFC231832E25A00EA6E78 /* 1f.png in Resources */,
-				B7E3A78E183BD6C200DD3926 /* red.png in Resources */,
-				B7BEFC221832E25A00EA6E78 /* 2f.png in Resources */,
-				B7B3F81E17FDFF7200DCDAF5 /* led.png in Resources */,
-				B7B3F81517FDFF7200DCDAF5 /* ble-bridge@2x.png in Resources */,
-				B7EB1CE7183080810060441E /* 2.png in Resources */,
-				B79D78C8183DA58400CB68D8 /* red-a.png in Resources */,
-				B7B3F81B17FDFF7200DCDAF5 /* keyboard@2x.png in Resources */,
-				B7B3F82217FDFF7200DCDAF5 /* power-relay.png in Resources */,
+				B79D7932183E904200CB68D8 /* arrow-right.png in Resources */,
+				B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */,
+				B79D793C183E90D000CB68D8 /* joystick-bg.png in Resources */,
+				B79D793E183E90D000CB68D8 /* blue-x.png in Resources */,
+				B79D792F183E904200CB68D8 /* arrow-down@2x.png in Resources */,
+				B79D793F183E90D000CB68D8 /* red-a.png in Resources */,
+				B79D7931183E904200CB68D8 /* arrow-left@2x.png in Resources */,
 				B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */,
-				B7E3A789183BD12A00DD3926 /* yellow.png in Resources */,
-				B7B3F81F17FDFF7200DCDAF5 /* led@2x.png in Resources */,
-				B7B3F82117FDFF7200DCDAF5 /* notifications@2x.png in Resources */,
-				B7B3F81D17FDFF7200DCDAF5 /* lcd@2x.png in Resources */,
-				B7EB1CE9183080810060441E /* 1.png in Resources */,
-				B7BEFC1E1832E25A00EA6E78 /* 5f.png in Resources */,
-				B7B3F81917FDFF7200DCDAF5 /* game-controller@2x.png in Resources */,
-				B7B3F81317FDFF7200DCDAF5 /* ble-bridge-2@2x.png in Resources */,
-				B79D78CC183DAA3C00CB68D8 /* green-y.png in Resources */,
-				B79D78C9183DA58400CB68D8 /* blue-x.png in Resources */,
-				B7B3F81217FDFF7200DCDAF5 /* ble-bridge-2.png in Resources */,
-				B7EB1CEA183080810060441E /* 6.png in Resources */,
-				B7E3A78F183BD6C200DD3926 /* blue.png in Resources */,
-				B7E3A787183BC8A200DD3926 /* joystick-bg.png in Resources */,
-				B7EB1CE5183080810060441E /* 5.png in Resources */,
-				B7BEFC211832E25A00EA6E78 /* 3f.png in Resources */,
-				B7EB1CE6183080810060441E /* 3.png in Resources */,
-				B7B3F81617FDFF7200DCDAF5 /* game-controller-2.png in Resources */,
-				B7EB1CE3183080810060441E /* 4.png in Resources */,
-				B7B3F82517FDFF7200DCDAF5 /* rc-car@2x.png in Resources */,
-				B7BEFC201832E25A00EA6E78 /* 7f.png in Resources */,
-				B7B3F81717FDFF7200DCDAF5 /* game-controller-2@2x.png in Resources */,
-				B7E3A793183BDAFD00DD3926 /* joystick-neutral.png in Resources */,
-				B7EB1CE8183080810060441E /* 7.png in Resources */,
+				B79D792E183E904200CB68D8 /* arrow-down.png in Resources */,
 				B7B73BFC17F256B3008E6769 /* InfoPlist.strings in Resources */,
-				B7E3A792183BDAFD00DD3926 /* joystick-hold.png in Resources */,
-				B7BEFC1F1832E25A00EA6E78 /* 6f.png in Resources */,
-				B7B3F82417FDFF7200DCDAF5 /* rc-car.png in Resources */,
+				B79D793D183E90D000CB68D8 /* yellow-b.png in Resources */,
+				B79D7934183E904200CB68D8 /* arrow-up.png in Resources */,
+				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
+				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
+				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
-				B7BEFC271832E95D00EA6E78 /* modules.png in Resources */,
-				B7B3F81A17FDFF7200DCDAF5 /* keyboard.png in Resources */,
-				B7B3F81417FDFF7200DCDAF5 /* ble-bridge.png in Resources */,
-				B7B3F82317FDFF7200DCDAF5 /* power-relay@2x.png in Resources */,
-				B7EB1CE4183080810060441E /* 0.png in Resources */,
-				B7B3F81817FDFF7200DCDAF5 /* game-controller.png in Resources */,
-				B7BEFC1D1832E25A00EA6E78 /* 4f.png in Resources */,
-				B7B3F81C17FDFF7200DCDAF5 /* lcd.png in Resources */,
-				B7BEFC281832E95D00EA6E78 /* menu.png in Resources */,
-				B7B3F82017FDFF7200DCDAF5 /* notifications.png in Resources */,
+				B79D7943183E913000CB68D8 /* joystick-hold.png in Resources */,
+				B79D7942183E913000CB68D8 /* joystick-neutral.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,7 +651,6 @@
 				B79D78D3183E4FB500CB68D8 /* OBShapedButton.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
-				B7E3A79E183C16E300DD3926 /* JoystickControlView.m in Sources */,
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,

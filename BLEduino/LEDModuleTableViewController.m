@@ -309,6 +309,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 - (void)ledSwitchToggled:(id)sender
 {
     UISwitch *ledSwitch = (UISwitch *)sender;
@@ -323,7 +328,7 @@
     FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:Nil controller:self];
     [firmataService writeFirmataCommand:ledToggleCommand];
     
-    NSLog(@"LED %d was turned %d", ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] integerValue]);
+    NSLog(@"LED %ld was turned %ld", ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
 }
 
 @end

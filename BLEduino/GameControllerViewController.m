@@ -8,14 +8,22 @@
 
 #import "GameControllerViewController.h"
 #import "LeDiscoveryManager.h"
-#import "ButtonActionCharacteristic.h"
 #import "ControllerService.h"
+#import "ButtonActionCharacteristic.h"
+#import "OBShapedButton.h"
 
-@interface GameControllerViewController ()
-
-@end
-
+#pragma mark -
+#pragma mark Setup
+/****************************************************************************/
+/*                                  Setup                                   */
+/****************************************************************************/
 @implementation GameControllerViewController
+{
+    IBOutlet OBShapedButton *yButton;
+    IBOutlet OBShapedButton *xButton;
+    IBOutlet OBShapedButton *aButton;
+    IBOutlet OBShapedButton *bButton;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,22 +41,25 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
+    //Setup joystick.
     MFLJoystick *joystick = [[MFLJoystick alloc] initWithFrame:CGRectMake(10, 25, 270, 270)];
-    [joystick setThumbImage:[UIImage imageNamed:@"JoystickNeutral"]
+    [joystick setThumbImage:[UIImage imageNamed:@"joystick-neutral.png"]
                  andBGImage:[UIImage imageNamed:@"joystick-bg.png"]];
     [joystick setDelegate:self];
     [self.view addSubview:joystick];
-}
-
-- (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
-{
-//    NSLog(@"%@", NSStringFromCGPoint(dir));
-//    CGPoint newpos = self.playerOrigin;
-//    newpos.x = 30.0 * dir.x + self.playerOrigin.x;
-//    newpos.y = 30.0 * dir.y + self.playerOrigin.y;
-//    CGRect fr = self.player.frame;
-//    fr.origin = newpos;
-//    self.player.frame = fr;
+    
+    //Setup push buttons.
+    //Button Pressing Down Observer
+    [xButton addTarget:self action:@selector(xButton:) forControlEvents:UIControlEventTouchDown];
+    [yButton addTarget:self action:@selector(yButton:) forControlEvents:UIControlEventTouchDown];
+    [aButton addTarget:self action:@selector(aButton:) forControlEvents:UIControlEventTouchDown];
+    [bButton addTarget:self action:@selector(bButton:) forControlEvents:UIControlEventTouchDown];
+    
+    //Button Released Observer
+    [xButton addTarget:self action:@selector(xButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [yButton addTarget:self action:@selector(yButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [aButton addTarget:self action:@selector(aButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [bButton addTarget:self action:@selector(bButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -62,55 +73,125 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)upButton:(id)sender {
-    
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    
-    //Build button action.
-    ButtonActionCharacteristic *action = [[ButtonActionCharacteristic alloc] init];
-    action.buttonValue = 20;
-    action.buttonID = 22;
-    action.buttonStatus = 1;
-    
-    ControllerService *controller = [[ControllerService alloc] initWithPeripheral:bleduino controller:self];
-    [controller writeButtonAction:action];
-    
-    NSLog(@"Controller update sent.");
-}
-- (IBAction)down:(id)sender {
-    
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    
-    //Build button action.
-    ButtonActionCharacteristic *action = [[ButtonActionCharacteristic alloc] init];
-    action.buttonValue = 120;
-    action.buttonID = 22;
-    action.buttonStatus = 1;
-    
-    ControllerService *controller = [[ControllerService alloc] initWithPeripheral:bleduino controller:self];
-    [controller writeButtonAction:action];
-    
-    NSLog(@"Controller update sent.");
+/****************************************************************************/
+/*                       Button Action Updates                              */
+/****************************************************************************/
+
+#pragma mark -
+#pragma mark - Joystick Updates
+- (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
+{
+    NSLog(@"Dir X:%f Y:%f", dir.x, dir.y);
 }
 
-- (IBAction)leftButton:(id)sender {
+#pragma mark -
+#pragma mark Button Pushed Down
+//Send button pushed down action.
+- (void)yButton:(id)sender
+{
+    [self ySendUpdateWithStateSelected:YES];
 }
 
-- (IBAction)rightButton:(id)sender {
+- (void)xButton:(id)sender
+{
+    [self xSendUpdateWithStateSelected:YES];
 }
 
-
-- (IBAction)aButton:(id)sender {
+- (void)aButton:(id)sender
+{
+    [self aSendUpdateWithStateSelected:YES];
 }
 
-- (IBAction)bButton:(id)sender {
+- (void)bButton:(id)sender
+{
+    [self bSendUpdateWithStateSelected:YES];
 }
 
-- (IBAction)xButton:(id)sender {
+#pragma mark -
+#pragma mark Button Released
+//Send button released action.
+- (void)yButtonReleased:(id)sender
+{
+    [self ySendUpdateWithStateSelected:NO];
 }
 
-- (IBAction)yButton:(id)sender {
+- (void)xButtonReleased:(id)sender
+{
+    [self xSendUpdateWithStateSelected:NO];
 }
+
+- (void)aButtonReleased:(id)sender
+{
+    [self aSendUpdateWithStateSelected:NO];
+}
+
+- (void)bButtonReleased:(id)sender
+{
+    [self bSendUpdateWithStateSelected:NO];
+}
+
+#pragma mark -
+#pragma mark Send Button Action Updates
+//Send button action updates.
+- (void)ySendUpdateWithStateSelected:(BOOL)selected
+{
+    //Create button action.
+    ButtonActionCharacteristic *yButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    yButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
+    yButtonUpdate.buttonID = 1;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:yButtonUpdate];
+    
+    NSLog(@"GameController, sent button *Y* action update, state: %i", selected);
+}
+
+- (void)xSendUpdateWithStateSelected:(BOOL)selected
+{
+    //Create button action.
+    ButtonActionCharacteristic *xButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    xButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
+    xButtonUpdate.buttonID = 2;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:xButtonUpdate];
+    
+    NSLog(@"GameController, sent button *X* action update, state: %i", selected);
+}
+
+- (void)aSendUpdateWithStateSelected:(BOOL)selected
+{
+        //Create button action.
+    ButtonActionCharacteristic *aButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    aButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
+    aButtonUpdate.buttonID = 3;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:aButtonUpdate];
+    
+    NSLog(@"GameController, sent button *A* action update, state: %i", selected);
+}
+
+- (void)bSendUpdateWithStateSelected:(BOOL)selected
+{
+    
+    //Create button action.
+    ButtonActionCharacteristic *bButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
+    bButtonUpdate.buttonID = 4;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:bButtonUpdate];
+    
+    NSLog(@"GameController, sent button *B* action update, state: %i", selected);
+}
+
 @end

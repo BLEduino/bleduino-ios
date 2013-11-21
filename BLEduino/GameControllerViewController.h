@@ -15,12 +15,4 @@
 ControllerServiceDelegate,
 JoystickDelegate
 >
-
-- (IBAction)upButton:(id)sender;
-- (IBAction)leftButton:(id)sender;
-
-- (IBAction)aButton:(id)sender;
-- (IBAction)bButton:(id)sender;
-- (IBAction)xButton:(id)sender;
-- (IBAction)yButton:(id)sender;
 @end
