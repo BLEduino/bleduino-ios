@@ -20,8 +20,8 @@
 
 - (void) initJoystick
 {
-    joystickNeutralImage = [UIImage imageNamed:@"JoystickNeutral"];
-    joystickHoldImage = [UIImage imageNamed:@"JoystickHold"];
+    joystickNeutralImage = [UIImage imageNamed:@"joystick-neutral.png"];
+    joystickHoldImage = [UIImage imageNamed:@"joystick-hold.png"];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -73,35 +73,38 @@
     CGPoint center = CGPointMake(CGRectGetMidX(newFrame), CGRectGetMidY(newFrame));
     
     double differenceX = fabsf(center.x - 135);
-    double differenceY = fabsf(center.y - 135);
-    double maxDistance = sqrt((differenceX * differenceX) + (differenceY * differenceY));
-    
-    
-    if(maxDistance > 89)
+    double maxDistance = sqrt(differenceX * differenceX);
+
+    //Joystick is within allowed space? Update location.
+    if(maxDistance < 90)
     {
-        //Do nothing.
-        //PENDING: Send max roll left or right. Need to check.
-    }
-    else
-    {
+        //Send yaw data.
+        [self.delegate horizontalJoystickDidUpdate:center];
+        
         //Execute movement.
-        [UIView beginAnimations:@"Dragging Power Switch" context:nil];
+        [UIView beginAnimations:@"Moving Joystick" context:nil];
         joystickView.frame = CGRectMake(destination.x, joystickView.frame.origin.y, 90, 90);
         [UIView commitAnimations];
-        
-        //PENDING: Send roll information. Need to check.
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    CGRect centerFrame = CGRectMake(90, 90, 90, 90); //Center position.
+    CGPoint center = CGPointMake(CGRectGetMidX(centerFrame), CGRectGetMidY(centerFrame));
+    
+    //Send throttle data.
+    [self.delegate horizontalJoystickDidUpdate:center];
+    
     [UIView beginAnimations:@"Moving Joystick" context:nil];
-    joystickView.frame = CGRectMake(90, 90, 90, 90); //Center position.
+    joystickView.frame = centerFrame;
     [UIView setAnimationDuration:0.1];
     [UIView commitAnimations];
     
     //Update joystick image to neutral state image.
     joystickView.image = joystickNeutralImage;
+    
+    NSLog(@"X: %f", joystickView.center.x);
 }
 
 @end

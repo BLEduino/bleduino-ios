@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VerticalJoystickControlView : UIView
+@class VerticalJoystickControlView;
+@protocol VerticalJoystickControlViewDelegate <NSObject>
+- (void)verticalJoystickDidUpdate:(CGPoint)position;
+@end
 
+@interface VerticalJoystickControlView : UIView
+@property (weak, nonatomic) id <VerticalJoystickControlViewDelegate> delegate;
 @end

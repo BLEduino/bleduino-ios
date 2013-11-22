@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VehicleMotionService.h"
+#import "VerticalJoystickControlView.h"
+#import "HorizontalJoystickControlView.h"
 
 @interface RadioControlledViewController : UIViewController
-
+<
+VehicleMotionServiceDelegate,
+VerticalJoystickControlViewDelegate,
+HorizontalJoystickControlViewDelegate
+>
 @end
+
+

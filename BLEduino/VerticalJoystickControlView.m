@@ -20,8 +20,9 @@
 
 - (void) initJoystick
 {
-    joystickNeutralImage = [UIImage imageNamed:@"JoystickNeutral"];
-    joystickHoldImage = [UIImage imageNamed:@"JoystickHold"];
+    self.delegate = nil;
+    joystickNeutralImage = [UIImage imageNamed:@"joystick-neutral.png"];
+    joystickHoldImage = [UIImage imageNamed:@"joystick-hold.png"];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -72,31 +73,31 @@
     CGRect newFrame = CGRectMake(destination.x, destination.y, 90, 90);
     CGPoint center = CGPointMake(CGRectGetMidX(newFrame), CGRectGetMidY(newFrame));
     
-    double differenceX = fabsf(center.x - 135);
     double differenceY = fabsf(center.y - 135);
-    double maxDistance = sqrt((differenceX * differenceX) + (differenceY * differenceY));
+    double maxDistance = sqrt(differenceY * differenceY);
     
-    
-    if(maxDistance > 89)
+    if(maxDistance < 90)
     {
-        //Do nothing.
-        //PENDING: Send max throttle forward or reverse. Need to check.
-    }
-    else
-    {
+        //Send throttle data.
+        [self.delegate verticalJoystickDidUpdate:center];
+        
         //Execute movement.
-        [UIView beginAnimations:@"Dragging Power Switch" context:nil];
+        [UIView beginAnimations:@"Moving Joystick" context:nil];
         joystickView.frame = CGRectMake(joystickView.frame.origin.x, destination.y, 90, 90);
         [UIView commitAnimations];
-        
-        //PENDING: Send throttle information. Need to check.
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    CGRect centerFrame = CGRectMake(90, 90, 90, 90); //Center position.
+    CGPoint center = CGPointMake(CGRectGetMidX(centerFrame), CGRectGetMidY(centerFrame));
+    
+    //Send throttle data.
+    [self.delegate verticalJoystickDidUpdate:center];
+    
     [UIView beginAnimations:@"Moving Joystick" context:nil];
-    joystickView.frame = CGRectMake(90, 90, 90, 90); //Center position.
+    joystickView.frame = centerFrame;
     [UIView setAnimationDuration:0.1];
     [UIView commitAnimations];
     

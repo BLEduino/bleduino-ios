@@ -23,6 +23,9 @@
     IBOutlet OBShapedButton *xButton;
     IBOutlet OBShapedButton *aButton;
     IBOutlet OBShapedButton *bButton;
+    
+    IBOutlet UIButton *start;
+    IBOutlet UIButton *select;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -60,6 +63,11 @@
     [yButton addTarget:self action:@selector(yButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
     [aButton addTarget:self action:@selector(aButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
     [bButton addTarget:self action:@selector(bButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //Start/Select buttons.
+    [start addTarget:self action:@selector(startButton:) forControlEvents:UIControlEventTouchDown];
+    [select addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchDown];
+    
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -79,9 +87,28 @@
 
 #pragma mark -
 #pragma mark - Joystick Updates
+//Vertical Resolution: 200, 135 > neutral, 35 > 90 (Max up), 235 > -90 (Max down)
+//Horizontal Resolution: 200, 135 > neutral, 35 > 90 (Max left), 235 > -90 (Max right)
 - (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
 {
-    NSLog(@"Dir X:%f Y:%f", dir.x, dir.y);
+    //Create Vertical Joystick action.
+    ButtonActionCharacteristic *vJoystickUpdate = [[ButtonActionCharacteristic alloc] init];
+    vJoystickUpdate.buttonValue = dir.y;
+    vJoystickUpdate.buttonID = 0;
+    
+    //Create Horizontal Joystick action.
+    ButtonActionCharacteristic *hJoystickUpdate = [[ButtonActionCharacteristic alloc] init];
+    hJoystickUpdate.buttonValue = dir.x;
+    hJoystickUpdate.buttonID = 1;
+
+    //Send joystick action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:vJoystickUpdate]; //Vertical
+    [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
+    
+    NSLog(@"GameController, sent *Vertical Joystick* action update, state: %f", dir.y);
+    NSLog(@"GameController, sent *Horizontal Joystick* action update, state: %f", dir.x);
 }
 
 #pragma mark -
@@ -138,7 +165,7 @@
     //Create button action.
     ButtonActionCharacteristic *yButtonUpdate = [[ButtonActionCharacteristic alloc] init];
     yButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
-    yButtonUpdate.buttonID = 1;
+    yButtonUpdate.buttonID = 2;
     
     //Send button action.
     ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
@@ -153,7 +180,7 @@
     //Create button action.
     ButtonActionCharacteristic *xButtonUpdate = [[ButtonActionCharacteristic alloc] init];
     xButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
-    xButtonUpdate.buttonID = 2;
+    xButtonUpdate.buttonID = 3;
     
     //Send button action.
     ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
@@ -165,10 +192,10 @@
 
 - (void)aSendUpdateWithStateSelected:(BOOL)selected
 {
-        //Create button action.
+    //Create button action.
     ButtonActionCharacteristic *aButtonUpdate = [[ButtonActionCharacteristic alloc] init];
     aButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
-    aButtonUpdate.buttonID = 3;
+    aButtonUpdate.buttonID = 4;
     
     //Send button action.
     ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
@@ -184,7 +211,7 @@
     //Create button action.
     ButtonActionCharacteristic *bButtonUpdate = [[ButtonActionCharacteristic alloc] init];
     bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
-    bButtonUpdate.buttonID = 4;
+    bButtonUpdate.buttonID = 5;
     
     //Send button action.
     ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
@@ -192,6 +219,39 @@
     [gameController writeButtonAction:bButtonUpdate];
     
     NSLog(@"GameController, sent button *B* action update, state: %i", selected);
+}
+
+#pragma mark -
+#pragma mark Start/Select buttons
+//Send start/select action.
+- (void)startButton:(id)sender
+{
+    //Create button action.
+    ButtonActionCharacteristic *startButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    startButtonUpdate.buttonStatus = 1;
+    startButtonUpdate.buttonID = 6;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:startButtonUpdate];
+    
+    NSLog(@"GameController, sent button *Start* action update");
+}
+
+- (void)selectButton:(id)sender
+{
+    //Create button action.
+    ButtonActionCharacteristic *selectButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    selectButtonUpdate.buttonStatus = 1;
+    selectButtonUpdate.buttonID = 6;
+    
+    //Send button action.
+    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
+                                                                           controller:self];
+    [gameController writeButtonAction:selectButtonUpdate];
+    
+    NSLog(@"GameController, sent button *Select* action update");
 }
 
 @end

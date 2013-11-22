@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HorizontalJoystickControlView : UIView
+@class HorizontalJoystickControlView;
+@protocol HorizontalJoystickControlViewDelegate <NSObject>
+- (void)horizontalJoystickDidUpdate:(CGPoint)position;
+@end
 
+@interface HorizontalJoystickControlView : UIView
+@property (weak, nonatomic) id <HorizontalJoystickControlViewDelegate> delegate;
 @end

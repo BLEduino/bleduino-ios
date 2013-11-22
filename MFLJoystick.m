@@ -109,7 +109,7 @@
         self.thumbImageView.image = [UIImage imageNamed:@"joystick-neutral.png"];
         self.alpha = 1;
     }];
-    [self.delegate joystick:self didUpdate:CGPointZero];
+    [self.delegate joystick:self didUpdate:self.defaultPoint];
     self.isTouching = FALSE;
 }
 
@@ -160,7 +160,7 @@
     {
         CGPoint degreeOfPosition = CGPointMake((self.handle.frame.origin.x/self.handle.frame.size.width-.55)*2,
                                                (self.handle.frame.origin.y/self.handle.frame.size.height-.55)*2);
-        [self.delegate joystick:self didUpdate:degreeOfPosition];
+        [self.delegate joystick:self didUpdate:self.thumbImageView.center];
     }
     
     [self performSelector:@selector(notifyDelegate) withObject:nil afterDelay:self.updateInterval];

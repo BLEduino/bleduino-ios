@@ -40,8 +40,9 @@
 		B79D793D183E90D000CB68D8 /* yellow-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7938183E90D000CB68D8 /* yellow-b.png */; };
 		B79D793E183E90D000CB68D8 /* blue-x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7939183E90D000CB68D8 /* blue-x.png */; };
 		B79D793F183E90D000CB68D8 /* red-a.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D793A183E90D000CB68D8 /* red-a.png */; };
-		B79D7942183E913000CB68D8 /* joystick-neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7940183E913000CB68D8 /* joystick-neutral.png */; };
-		B79D7943183E913000CB68D8 /* joystick-hold.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7941183E913000CB68D8 /* joystick-hold.png */; };
+		B79D7946183EA81B00CB68D8 /* joystick-neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7944183EA81B00CB68D8 /* joystick-neutral.png */; };
+		B79D7947183EA81B00CB68D8 /* joystick-hold.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7945183EA81B00CB68D8 /* joystick-hold.png */; };
+		B79D794B183ECF1D00CB68D8 /* VerticalJoystickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B79D794A183ECF1D00CB68D8 /* VerticalJoystickView.xib */; };
 		B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */; };
 		B7A8C38F1832C726009A4577 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38A1832C726009A4577 /* RECommonFunctions.m */; };
 		B7A8C3901832C726009A4577 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38C1832C726009A4577 /* RESideMenu.m */; };
@@ -136,8 +137,9 @@
 		B79D7938183E90D000CB68D8 /* yellow-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow-b.png"; sourceTree = "<group>"; };
 		B79D7939183E90D000CB68D8 /* blue-x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-x.png"; sourceTree = "<group>"; };
 		B79D793A183E90D000CB68D8 /* red-a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-a.png"; sourceTree = "<group>"; };
-		B79D7940183E913000CB68D8 /* joystick-neutral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-neutral.png"; sourceTree = "<group>"; };
-		B79D7941183E913000CB68D8 /* joystick-hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-hold.png"; sourceTree = "<group>"; };
+		B79D7944183EA81B00CB68D8 /* joystick-neutral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-neutral.png"; sourceTree = "<group>"; };
+		B79D7945183EA81B00CB68D8 /* joystick-hold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-hold.png"; sourceTree = "<group>"; };
+		B79D794A183ECF1D00CB68D8 /* VerticalJoystickView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerticalJoystickView.xib; sourceTree = "<group>"; };
 		B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuTableViewController.h; sourceTree = "<group>"; };
 		B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuTableViewController.m; sourceTree = "<group>"; };
 		B7A8C3891832C726009A4577 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				B79D7862183C5F2F00CB68D8 /* VerticalJoystickControlView.m */,
 				B79D7864183C60D400CB68D8 /* HorizontalJoystickControlView.h */,
 				B79D7865183C60D400CB68D8 /* HorizontalJoystickControlView.m */,
+				B79D794A183ECF1D00CB68D8 /* VerticalJoystickView.xib */,
 			);
 			name = RadioControlled;
 			sourceTree = "<group>";
@@ -277,8 +280,8 @@
 		B79D78BD183D344000CB68D8 /* MFLJoystick */ = {
 			isa = PBXGroup;
 			children = (
-				B79D78BA183D343B00CB68D8 /* MFLJoystick.m */,
 				B79D78BB183D343B00CB68D8 /* MFLJoystick.h */,
+				B79D78BA183D343B00CB68D8 /* MFLJoystick.m */,
 			);
 			name = MFLJoystick;
 			sourceTree = "<group>";
@@ -304,8 +307,8 @@
 		B79D7925183E904200CB68D8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B79D7940183E913000CB68D8 /* joystick-neutral.png */,
-				B79D7941183E913000CB68D8 /* joystick-hold.png */,
+				B79D7944183EA81B00CB68D8 /* joystick-neutral.png */,
+				B79D7945183EA81B00CB68D8 /* joystick-hold.png */,
 				B79D7937183E90D000CB68D8 /* joystick-bg.png */,
 				B79D7936183E90D000CB68D8 /* green-y.png */,
 				B79D7938183E90D000CB68D8 /* yellow-b.png */,
@@ -320,7 +323,8 @@
 				B79D792C183E904200CB68D8 /* arrow-up.png */,
 				B79D792D183E904200CB68D8 /* arrow-up@2x.png */,
 			);
-			path = Images;
+			name = Images;
+			path = ../Images;
 			sourceTree = "<group>";
 		};
 		B7A8C3881832C726009A4577 /* RESideMenu */ = {
@@ -399,7 +403,6 @@
 		B7B73BE517F256B3008E6769 = {
 			isa = PBXGroup;
 			children = (
-				B79D7925183E904200CB68D8 /* Images */,
 				B7B73BF717F256B3008E6769 /* BLEduino */,
 				B7B73C1617F256B3008E6769 /* BLEduinoTests */,
 				B78D3FC71832CCC00058BFD6 /* Images.xcassets */,
@@ -443,6 +446,7 @@
 				B7B73C2A17F259C6008E6769 /* BLEduino-Library */,
 				B7A8C3951832CB83009A4577 /* Menu */,
 				B75EC54B17FB7B27000309FF /* Modules */,
+				B79D7925183E904200CB68D8 /* Images */,
 				B7B73BF817F256B3008E6769 /* Supporting Files */,
 			);
 			path = BLEduino;
@@ -602,8 +606,9 @@
 				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
-				B79D7943183E913000CB68D8 /* joystick-hold.png in Resources */,
-				B79D7942183E913000CB68D8 /* joystick-neutral.png in Resources */,
+				B79D794B183ECF1D00CB68D8 /* VerticalJoystickView.xib in Resources */,
+				B79D7947183EA81B00CB68D8 /* joystick-hold.png in Resources */,
+				B79D7946183EA81B00CB68D8 /* joystick-neutral.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
