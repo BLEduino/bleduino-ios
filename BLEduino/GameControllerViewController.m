@@ -81,6 +81,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dismissModule
+{
+    [self.delegate gameControllerModuleViewControllerDismissed:self];
+}
+
 /****************************************************************************/
 /*                       Button Action Updates                              */
 /****************************************************************************/

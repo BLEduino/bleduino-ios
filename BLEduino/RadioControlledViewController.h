@@ -11,12 +11,19 @@
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
 
+@class RadioControlledViewController;
+@protocol RadioControlledViewControllerDelegate <NSObject>
+- (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller;
+@end
+
 @interface RadioControlledViewController : UIViewController
 <
 VehicleMotionServiceDelegate,
 VerticalJoystickControlViewDelegate,
 HorizontalJoystickControlViewDelegate
 >
+@property (weak, nonatomic) id <RadioControlledViewControllerDelegate> delegate;
+- (IBAction)dismissModule;
 @end
 
 

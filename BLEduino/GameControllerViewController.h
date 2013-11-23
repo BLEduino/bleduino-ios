@@ -10,9 +10,16 @@
 #import "ControllerService.h"
 #import "MFLJoystick.h"
 
+@class GameControllerViewController;
+@protocol GameControllerViewControllerDelegate <NSObject>
+- (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller;
+@end
+
 @interface GameControllerViewController : UIViewController
 <
 ControllerServiceDelegate,
 JoystickDelegate
 >
+@property (weak, nonatomic) id <GameControllerViewControllerDelegate> delegate;
+- (IBAction)dismissModule;
 @end

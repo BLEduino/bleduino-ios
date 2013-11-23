@@ -32,6 +32,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

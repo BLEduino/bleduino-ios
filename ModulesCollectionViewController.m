@@ -8,12 +8,7 @@
 
 #import "ModulesCollectionViewController.h"
 #import "ModuleCollectionViewCell.h"
-#import "KeyboardModuleTableViewController.h"
-#import "LeDiscoveryTableViewController.h"
-
-#import "NotificationService.h"
 #import "RESideMenu.h"
-
 
 @implementation ModulesCollectionViewController
 
@@ -32,9 +27,17 @@
     return self;
 }
 
+//Present admin (side) navigation menu.
 - (IBAction)showMenu
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.sideMenuViewController presentMenuViewController];
+}
+
+//Show status bar after hiding the admin (side) nagivation menu.
+- (void)showStatusBar
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidLoad
@@ -45,22 +48,20 @@
     self.modules = @[@"LCD",@"Keyboard",@"Game Controller",@"R/C Car",@"Power Relay",@"LED",
                      @"Notifications",@"BLE Bridge"];
     
-//    self.modulesImages = @[@"lcd.png",@"keyboard.png",@"game-controller.png",
-//                           @"rc-car.png",@"power-relay.png", @"led.png",
-//                           @"notifications.png",@"ble-bridge.png"];
-    
-    self.modulesImages = @[@"0.png",@"1.png",@"2.png",
-                           @"3",@"4.png", @"5.png",
-                           @"6.png",@"7.png"];
+    self.modulesImages = @[@"lcd-b.png",@"keyboard-b.png",@"controller-b.png",
+                           @"rc-b.png",@"power-b2.png", @"led-b3.png",
+                           @"notifications-b.png",@"bridge-b.png"];
     
     //Set services that run in the background.
+    self.notifications = [[NotificationService alloc] init];
     self.bleBridge = [[BleBridgeService alloc] init];
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor = darkBlue;
+    self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
 }
@@ -97,6 +98,36 @@
     
     moduleCell.moduleImage.image = image;
     moduleCell.moduleName.text = [self.modules objectAtIndex:indexPath.row];
+    
+//    //Set aspect ratio.
+//    switch (indexPath.row) {
+//        case 0:
+//            UIImageView *newImageView = [UIImageView ui]
+//            moduleCell.moduleImage.frame = CGRectMake(32, 42, 56, 36);
+//            break;
+//        case 1:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
+//            break;
+//        case 2:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
+//            break;
+//        case 3:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 35, 56, 50);
+//            break;
+//        case 4:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
+//            break;
+//        case 5:
+//            moduleCell.moduleImage.frame = CGRectMake(42, 32, 36, 56);
+//            break;
+//        case 6:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 34, 56, 52);
+//            break;
+//        case 7:
+//            moduleCell.moduleImage.frame = CGRectMake(32, 32, 56, 56);
+//            break;
+//    }
+    
     return moduleCell;
 }
 
@@ -112,7 +143,7 @@
     
     switch (module) {
         case 0:
-            [self performSegueWithIdentifier:@"KeyboardModuleSegue" sender:self];
+            [self performSegueWithIdentifier:@"LCDModuleSegue" sender:self];
             break;
             
         case 1:
@@ -218,21 +249,42 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                              Modules Segues                              */
 /****************************************************************************/
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"KeyboardModuleSegue"])
+    if([segue.identifier isEqualToString:@"LCDModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        LCDTableViewController *lcdController = [[navigationController viewControllers] objectAtIndex:0];
+        lcdController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"KeyboardModuleSegue"])
     {
         UINavigationController *navigationController = segue.destinationViewController;
         KeyboardModuleTableViewController *keyboardController = [[navigationController viewControllers] objectAtIndex:0];
         keyboardController.delegate = self;
     }
-//    else if ([segue.identifier isEqualToString:@"ConnectionManagerSegue"])
-//    {
-//        UINavigationController *navigationController = segue.destinationViewController;
-//        LeDiscoveryTableViewController *connectionController = [[navigationController viewControllers] objectAtIndex:0];
-//        connectionController.delegate = self;
-//    }
+    else if([segue.identifier isEqualToString:@"GameControllerModuleSegue"])
+    {
+        GameControllerViewController *gameController = segue.destinationViewController;
+        gameController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"RadioControlledModuleSegue"])
+    {
+        RadioControlledViewController *rcController = segue.destinationViewController;
+        rcController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"PowerRelayModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        PowerRelayViewController *powerRelayController = [[navigationController viewControllers] objectAtIndex:0];
+        powerRelayController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"LEDModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        LEDModuleTableViewController *ledController = [[navigationController viewControllers] objectAtIndex:0];
+        ledController.delegate = self;
+    }
 }
 
 #pragma mark -
@@ -240,14 +292,39 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                         Modules Dismiss' Delegate                        */
 /****************************************************************************/
-- (void) keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
+- (void)lcdModuleTableViewControllerDismissed:(LCDTableViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) leDiscoveryTableViewControllerDismissed:(LeDiscoveryTableViewController *)controller
+- (void)keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }];
+}
+
+- (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }];
+}
+
+- (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

@@ -27,7 +27,14 @@
 
 - (IBAction)showMenu
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.sideMenuViewController presentMenuViewController];
+}
+
+//Show status bar after hiding the admin (side) nagivation menu.
+- (void)showStatusBar
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidLoad
@@ -42,9 +49,11 @@
     [self scanForBleDevices:self];
     
     //Set appareance.
-    UIColor *darkBlue = [UIColor colorWithRed:50/255.0 green:81/255.0 blue:147/255.0 alpha:1.0];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor = darkBlue;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
@@ -187,8 +196,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     {
         LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
         [leManager disconnectBleduino:leManager.connectedBleduinos[indexPath.row]];
-        
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
@@ -207,7 +214,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 /****************************************************************************/
 /*                            LeManager Delegate                            */
 /****************************************************************************/
-
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
 //    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
@@ -246,14 +252,4 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     NSLog(@"Disconnected from peripheral: %@", bleduino.name);
 
 }
-
-
-/****************************************************************************/
-/*                     Dismiss Connection Controller                        */
-/****************************************************************************/
-- (IBAction)dismissConnectionController:(id)sender
-{
-    [self.delegate leDiscoveryTableViewControllerDismissed:self];
-}
-
 @end

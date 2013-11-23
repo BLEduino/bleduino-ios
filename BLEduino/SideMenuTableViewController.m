@@ -7,27 +7,15 @@
 //
 
 #import "SideMenuTableViewController.h"
-
-@interface SideMenuTableViewController ()
-
-@end
+#import "ModulesCollectionViewController.h"
 
 @implementation SideMenuTableViewController
-
-//- (id)initWithStyle:(UITableViewStyle)style
-//{
-//    self = [super initWithStyle:style];
-//    if (self) {
-//        // Custom initialization
-//    }
-//    return self;
-//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 5) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 10) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -76,12 +64,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
-    return 5;
+    int rows = 0;
+    switch (sectionIndex) {
+        case 0:
+            rows = 3;
+            break;
+        case 1:
+            rows = 2;
+            break;
+        case 2:
+            rows = 1;
+            break;
+    }
+        
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,8 +100,8 @@
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     
-    NSArray *titles = @[@"Modules", @"Manager", @"Settings", @"Hardware", @"Kytelabs"];
-    NSArray *images = @[@"0", @"1", @"2", @"3", @"4"];
+    NSArray *titles = @[@"Modules", @"BLE Manager", @"Settings", @"Tutorials" @"Hardware", @"Kytelabs"];
+    NSArray *images = @[@"modules.png", @"search.png", @"settings.png", @"hardware.png", @"contact"];
     cell.textLabel.text = titles[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
     
@@ -133,6 +134,9 @@
 - (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
 {
     NSLog(@"didHideMenuViewController");
+    
+    UINavigationController *nav = (UINavigationController *)sideMenu.contentViewController; //Content controller.
+    [nav.topViewController performSelector:@selector(showStatusBar)];
 }
 
 - (void)didReceiveMemoryWarning

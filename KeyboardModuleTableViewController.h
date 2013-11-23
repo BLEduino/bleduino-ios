@@ -19,7 +19,7 @@
 UITextViewDelegate,
 UARTServiceDelegate
 >
-
 @property (strong, nonatomic) IBOutlet UITextView *messageView;
 @property (weak, nonatomic) id <KeyboardModuleTableViewControllerDelegate> delegate;
+- (IBAction)dismissModule;
 @end

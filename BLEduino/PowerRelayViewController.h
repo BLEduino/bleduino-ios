@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FirmataService.h"
+#import "PowerSwitchButtonView.h"
+
+@class PowerRelayViewController;
+@protocol PowerRelayViewControllerDelegate <NSObject>
+- (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller;
+@end
 
 @interface PowerRelayViewController : UIViewController
-
+<
+CBPeripheralDelegate,
+FirmataServiceDelegate,
+PowerSwitchButtonViewDelegate
+>
+@property (weak, nonatomic) id <PowerRelayViewControllerDelegate> delegate;
+- (IBAction)dismissModule;
 @end

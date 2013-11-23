@@ -52,6 +52,11 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)dismissModule
+{
+    [self.delegate radioControlledModuleViewControllerDismissed:self];
+}
+
 //Joystick Delegates
 #pragma mark -
 #pragma mark - Joystick Delegates
@@ -74,7 +79,8 @@
     VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:nil
                                                                                 controller:self];
     [motionService writeMotionUpdate:newThrottleYawUpdate];
-    NSLog(@"Sent ThrottleYaw update, yaw: %i, throttle: %i", _lastThrottleYawUpdate.yaw, _lastThrottleYawUpdate.throttle);
+    NSLog(@"Sent ThrottleYaw update, yaw: %ld, throttle: %ld",
+          (long)_lastThrottleYawUpdate.yaw, (long)_lastThrottleYawUpdate.throttle);
 }
 
 //Throttle Joystick.
@@ -91,7 +97,8 @@
     VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:nil
                                                                                 controller:self];
     [motionService writeMotionUpdate:newThrottleYawUpdate];
-    NSLog(@"Sent ThrottleYaw update, throttle: %i, yaw: %i,", _lastThrottleYawUpdate.throttle, _lastThrottleYawUpdate.yaw);
+    NSLog(@"Sent ThrottleYaw update, throttle: %ld, yaw: %ld,",
+          (long)_lastThrottleYawUpdate.throttle, (long)_lastThrottleYawUpdate.yaw);
 }
 
 @end

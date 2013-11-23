@@ -18,7 +18,13 @@
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
     leManager.scanOnlyForBLEduinos = YES;
-        
+    
+    //PENDING: Add configuration settings, check if available first.
+    //Configure settings.
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setValue:@"Caca" forKey:@"CACA"];
+//    [defaults synchronize];
+    
     return YES;
 }
 

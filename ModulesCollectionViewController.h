@@ -8,15 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "KeyboardModuleTableViewController.h"
-#import "LeDiscoveryTableViewController.h"
+
+//Modules
+#import "LCDTableViewController.h"
+#import "KeyboardModuleTableViewController.h"
+#import "GameControllerViewController.h"
+#import "RadioControlledViewController.h"
+#import "PowerRelayViewController.h"
+#import "LEDModuleTableViewController.h"
 #import "NotificationService.h"
 #import "BleBridgeService.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
 UICollectionViewDelegateFlowLayout,
+LCDTableViewControllerDelegate,
 KeyboardModuleTableViewControllerDelegate,
-LeDiscoveryTableViewControllerDelegate
+GameControllerViewControllerDelegate,
+RadioControlledViewControllerDelegate,
+PowerRelayViewControllerDelegate,
+LEDModuleTableViewControllerDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;
@@ -26,4 +37,6 @@ LeDiscoveryTableViewControllerDelegate
 @property (strong, nonatomic) BleBridgeService *bleBridge;
 
 - (IBAction)showMenu;
+- (void)showStatusBar;
+
 @end

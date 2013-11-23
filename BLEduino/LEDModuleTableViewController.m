@@ -55,6 +55,15 @@
 {
     [super viewDidLoad];
     
+    //Set appareance.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.navigationController.navigationBar.barTintColor = lightBlue;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
+    
     /****************************************************************************/
     /*                              Digital Pins                                */
     /****************************************************************************/
@@ -309,9 +318,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (IBAction)dismissModule
 {
-    return UIInterfaceOrientationMaskPortrait;
+    [self.delegate ledModuleTableViewControllerDismissed:self];
 }
 
 - (void)ledSwitchToggled:(id)sender
@@ -328,7 +337,7 @@
     FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:Nil controller:self];
     [firmataService writeFirmataCommand:ledToggleCommand];
     
-    NSLog(@"LED %ld was turned %ld", ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
+    NSLog(@"LED %ld was turned %ld", (long)ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
 }
 
 @end

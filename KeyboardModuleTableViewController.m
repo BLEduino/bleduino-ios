@@ -10,10 +10,11 @@
 #import "UARTService.h"
 #import "LeDiscoveryManager.h"
 
-@interface KeyboardModuleTableViewController ()
-
-@end
-
+#pragma mark -
+#pragma mark Setup
+/****************************************************************************/
+/*                                  Setup                                   */
+/****************************************************************************/
 @implementation KeyboardModuleTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -28,12 +29,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIBarButtonItem *dissmissButton = [[UIBarButtonItem alloc] initWithTitle:@"Modules" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModule:)];
-    self.navigationItem.leftBarButtonItem = dissmissButton;
     
     self.messageView.delegate = self;
     [self.messageView becomeFirstResponder];
+    
+    //Set appareance.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.navigationController.navigationBar.barTintColor = lightBlue;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,9 +49,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-
+#pragma mark -
+#pragma mark TextView Delegate
+/****************************************************************************/
+/*                          TextView Delegate                               */
+/****************************************************************************/
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if([text isEqualToString:@"\n"])
@@ -55,11 +65,15 @@
         NSString *message = self.messageView.text;
         UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
         [messageService writeMessage:message];
+        
+        //Clear text view.
+        self.messageView.text = @"";
     }
+    
     return YES;
 }
 
-- (void)dismissModule:(id)sender
+- (IBAction)dismissModule
 {
     [self.delegate keyboardModuleTableViewControllerDismissed:self];
 }

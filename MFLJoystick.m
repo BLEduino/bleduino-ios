@@ -158,13 +158,14 @@
 {
     if (self.isTouching)
     {
-        CGPoint degreeOfPosition = CGPointMake((self.handle.frame.origin.x/self.handle.frame.size.width-.55)*2,
-                                               (self.handle.frame.origin.y/self.handle.frame.size.height-.55)*2);
+//        CGPoint degreeOfPosition = CGPointMake((self.handle.frame.origin.x/self.handle.frame.size.width-.55)*2,
+//                                               (self.handle.frame.origin.y/self.handle.frame.size.height-.55)*2);
+
+        //RGT: Using thumb image's center as movement reference.
         [self.delegate joystick:self didUpdate:self.thumbImageView.center];
     }
     
     [self performSelector:@selector(notifyDelegate) withObject:nil afterDelay:self.updateInterval];
-
 }
 
 - (void)setMovementUpdateInterval:(CGFloat)interval

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PowerSwitchButtonView : UIView
 
+@class PowerSwitchButtonView;
+@protocol PowerSwitchButtonViewDelegate <NSObject>
+- (void)powerSwitchDidUpdateWithStateOn:(BOOL)state;
 @end
+
+@interface PowerSwitchButtonView : UIView
+@property (weak, nonatomic) id <PowerSwitchButtonViewDelegate> delegate;
+@end
+
+
+
+

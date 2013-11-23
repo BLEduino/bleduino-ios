@@ -13,7 +13,6 @@
 @implementation PowerSwitchButtonView
 {
     CGPoint _offset;
-
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -21,6 +20,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        NSLog(@"X: %f Y: %f", frame.origin.x, frame.origin.y);
     }
     return self;
 }
@@ -28,32 +28,12 @@
 //Send firmata command.
 - (void)switchPowerOn
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    
-    //Build command.
-    FirmataCommandCharacteristic *firmataCommand = [[FirmataCommandCharacteristic alloc] init];
-    firmataCommand.pinState = FirmataCommandPinStateOutput;
-    firmataCommand.pinNumber = 3;
-    firmataCommand.pinValue = 255;
-    
-    FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:nil];
-    [firmataService writeFirmataCommand:firmataCommand];
+    [self.delegate powerSwitchDidUpdateWithStateOn:YES];
 }
 
 - (void)switchPowerOff
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    
-    //Build command.
-    FirmataCommandCharacteristic *firmataCommand = [[FirmataCommandCharacteristic alloc] init];
-    firmataCommand.pinState = FirmataCommandPinStateOutput;
-    firmataCommand.pinNumber = 3;
-    firmataCommand.pinValue = 0;
-    
-    FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:nil];
-    [firmataService writeFirmataCommand:firmataCommand];
+    [self.delegate powerSwitchDidUpdateWithStateOn:NO];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -76,12 +56,12 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    BOOL isOnTopHalf = (self.center.y < 308)?YES:NO;
+    BOOL isOnTopHalf = (self.center.y < 252)?YES:NO;
     
     CGRect newFrame;
     if(isOnTopHalf)
     {
-        newFrame = CGRectMake(self.frame.origin.x, 0,
+        newFrame = CGRectMake(self.frame.origin.x, 10,
                               self.frame.size.width, self.frame.size.height);
         
         UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
@@ -91,7 +71,7 @@
     }
     else
     {
-        newFrame = CGRectMake(self.frame.origin.x, 568 - (self.frame.size.height),
+        newFrame = CGRectMake(self.frame.origin.x, 568 - (self.frame.size.height) - 10 - 63,
                               self.frame.size.width, self.frame.size.height);
         
         UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
