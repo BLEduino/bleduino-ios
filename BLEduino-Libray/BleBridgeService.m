@@ -56,6 +56,7 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
 {
     self.isOpen = YES;
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
 
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -65,7 +66,6 @@ NSString *kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0032C0D1
         BLEduinoPeripheral *device = [[BLEduinoPeripheral alloc] init];
         device.bleduino = bleduinoPeripheral;
         
-        _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
         [_servicePeripherals addObject:device];
         
         [self readDataFromPeripheral:device.bleduino

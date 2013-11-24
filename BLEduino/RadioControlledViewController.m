@@ -76,9 +76,15 @@
     _lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:nil
-                                                                                controller:self];
-    [motionService writeMotionUpdate:newThrottleYawUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:bleduino
+                                                                                    controller:self];
+        [motionService writeMotionUpdate:newThrottleYawUpdate];
+    }
+    
     NSLog(@"Sent ThrottleYaw update, yaw: %ld, throttle: %ld",
           (long)_lastThrottleYawUpdate.yaw, (long)_lastThrottleYawUpdate.throttle);
 }
@@ -94,9 +100,15 @@
     _lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:nil
-                                                                                controller:self];
-    [motionService writeMotionUpdate:newThrottleYawUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:bleduino
+                                                                                    controller:self];
+        [motionService writeMotionUpdate:newThrottleYawUpdate];
+    }
+    
     NSLog(@"Sent ThrottleYaw update, throttle: %ld, yaw: %ld,",
           (long)_lastThrottleYawUpdate.throttle, (long)_lastThrottleYawUpdate.yaw);
 }

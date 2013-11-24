@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+enum {
+    PowerSwitchStatusColorBlue = 1,
+    PowerSwitchStatusColorGreenRed = 2,
+};
+typedef NSUInteger PowerSwitchStatusColor;
 
 @class PowerSwitchButtonView;
 @protocol PowerSwitchButtonViewDelegate <NSObject>

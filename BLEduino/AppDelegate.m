@@ -9,32 +9,76 @@
 #import "AppDelegate.h"
 #import "LeDiscoveryManager.h"
 #import "NotificationService.h"
+#import "PowerSwitchButtonView.h"
 
 @implementation AppDelegate
 
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Launch LeDiscovery manager.
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    leManager.scanOnlyForBLEduinos = YES;
     
-    //PENDING: Add configuration settings, check if available first.
     //Configure settings.
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setValue:@"Caca" forKey:@"CACA"];
-//    [defaults synchronize];
+    //Is this the first launch ever of this application?
+    //Verify if keys exists prior to this launch.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    //Scanning and connection
+    if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||
+       [defaults objectForKey:SETTINGS_NOTIFY_CONNECT] == nil ||
+       [defaults objectForKey:SETTINGS_NOTIFY_DISCONNECT] == nil)
+    {
+        leManager.scanOnlyForBLEduinos = YES;
+        leManager.notifyConnect = NO;
+        leManager.notifyDisconnect = YES;
+        
+        [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
+        [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
+        [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
+    }
+    
+    //Modules
+    if([defaults objectForKey:SETTINGS_LCD_TOTAL_CHARS] == nil ||
+       [defaults objectForKey:SETTINGS_POWERRELAY_PIN_NUMBER] == nil ||
+       [defaults objectForKey:SETTINGS_POWERRELAY_STATUS_COLOR] == nil)
+    {
+        [defaults setInteger:32 forKey:SETTINGS_LCD_TOTAL_CHARS];
+        [defaults setInteger:11 forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
+        [defaults setInteger:PowerSwitchStatusColorBlue  forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+    }
+    [defaults synchronize];
     
     return YES;
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    //Verify service sending local notification.
+    //Verify who is sending local notification.
     NSString *serviceUUIDString = [notification.userInfo objectForKey:@"service"];
+    NSString *connectNotification = [notification.userInfo objectForKey:@"connect"];
+    NSString *disconnectNotification = [notification.userInfo objectForKey:@"disconnect"];
     
-    //Notification Service?
-    if([serviceUUIDString isEqual:kNotificationAttributesCharacteristicUUIDString])
+
+    if(serviceUUIDString)
+    {
+        //Notification Service?
+        if([serviceUUIDString isEqual:kNotificationAttributesCharacteristicUUIDString])
+        {
+            NSString *message = [notification.userInfo objectForKey:@"message"];
+            NSString *title   = [notification.userInfo objectForKey:@"title"];
+            
+            
+            UIAlertView *notificationAlert = [[UIAlertView alloc]initWithTitle:title
+                                                                       message:message
+                                                                      delegate:nil
+                                                             cancelButtonTitle:@"Close"
+                                                             otherButtonTitles:nil];
+            
+            [notificationAlert show];
+        }
+    }
+
+    else if(connectNotification || disconnectNotification)
     {
         NSString *message = [notification.userInfo objectForKey:@"message"];
         NSString *title   = [notification.userInfo objectForKey:@"title"];

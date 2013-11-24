@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
@@ -50,6 +49,16 @@
                  andBGImage:[UIImage imageNamed:@"joystick-bg.png"]];
     [joystick setDelegate:self];
     [self.view addSubview:joystick];
+    
+    //Setup dismiss button.
+    UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    dismissButton.frame = CGRectMake(34, 20, 14, 28);
+    [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
+    [dismissButton addTarget:self
+                      action:@selector(dismissModule)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:dismissButton];
     
     //Setup push buttons.
     //Button Pressing Down Observer
@@ -107,10 +116,15 @@
     hJoystickUpdate.buttonID = 1;
 
     //Send joystick action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:vJoystickUpdate]; //Vertical
-    [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:vJoystickUpdate]; //Vertical
+        [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
+    }
     
     NSLog(@"GameController, sent *Vertical Joystick* action update, state: %f", dir.y);
     NSLog(@"GameController, sent *Horizontal Joystick* action update, state: %f", dir.x);
@@ -173,9 +187,14 @@
     yButtonUpdate.buttonID = 2;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:yButtonUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:yButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *Y* action update, state: %i", selected);
 }
@@ -188,9 +207,14 @@
     xButtonUpdate.buttonID = 3;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:xButtonUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:xButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *X* action update, state: %i", selected);
 }
@@ -212,16 +236,20 @@
 
 - (void)bSendUpdateWithStateSelected:(BOOL)selected
 {
-    
     //Create button action.
     ButtonActionCharacteristic *bButtonUpdate = [[ButtonActionCharacteristic alloc] init];
     bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     bButtonUpdate.buttonID = 5;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:bButtonUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:bButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *B* action update, state: %i", selected);
 }
@@ -237,9 +265,14 @@
     startButtonUpdate.buttonID = 6;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:startButtonUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:startButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *Start* action update");
 }
@@ -252,9 +285,14 @@
     selectButtonUpdate.buttonID = 6;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
-    [gameController writeButtonAction:selectButtonUpdate];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
+                                                                               controller:self];
+        [gameController writeButtonAction:selectButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *Select* action update");
 }

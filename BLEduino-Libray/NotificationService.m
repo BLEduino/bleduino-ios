@@ -57,6 +57,7 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 /****************************************************************************/
 /*				       Write notification to BLEduino                       */
 /****************************************************************************/
+
 /*
  *  @method                 startListening
  *
@@ -69,6 +70,7 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 {
     self.isListening = YES;
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -78,7 +80,6 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
         BLEduinoPeripheral *device = [[BLEduinoPeripheral alloc] init];
         device.bleduino = bleduinoPeripheral;
         
-        _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
         [_servicePeripherals addObject:device];
         
         [self setNotificationForPeripheral:device.bleduino

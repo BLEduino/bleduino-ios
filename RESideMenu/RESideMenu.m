@@ -120,11 +120,13 @@
         self.backgroundImageView.transform = CGAffineTransformMakeScale(1.7f, 1.7f);
     
     [self addMenuViewControllerMotionEffects];
+
     
-    if (self.panGestureEnabled) {
-        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
-        [self.view addGestureRecognizer:panGestureRecognizer];
-    }
+// Disabling PanGesture for now.
+//    if (self.panGestureEnabled) {
+//        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
+//        [self.view addGestureRecognizer:panGestureRecognizer];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

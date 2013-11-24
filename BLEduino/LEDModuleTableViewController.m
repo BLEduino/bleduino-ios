@@ -7,7 +7,7 @@
 //
 
 #import "LEDModuleTableViewController.h"
-#import "LEDTableViewCell.h"
+#import "LeDiscoveryManager.h"
 
 @implementation LEDModuleTableViewController
 {
@@ -326,7 +326,7 @@
 - (void)ledSwitchToggled:(id)sender
 {
     UISwitch *ledSwitch = (UISwitch *)sender;
-
+       
     //Create firmata command.
     FirmataCommandCharacteristic *ledToggleCommand = [[FirmataCommandCharacteristic alloc] init];
     ledToggleCommand.pinNumber = ledSwitch.tag - 100;
@@ -334,10 +334,16 @@
     ledToggleCommand.pinValue = [[NSNumber numberWithBool:ledSwitch.on] integerValue];
     
     //Send command.
-    FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:Nil controller:self];
-    [firmataService writeFirmataCommand:ledToggleCommand];
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
     
-    NSLog(@"LED %ld was turned %ld", (long)ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:self];
+        [firmataService writeFirmataCommand:ledToggleCommand];
+    }
+    
+    NSLog(@"LED %ld was turned %ld",
+          (long)ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
 }
 
 @end

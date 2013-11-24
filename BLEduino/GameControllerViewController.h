@@ -21,5 +21,5 @@ ControllerServiceDelegate,
 JoystickDelegate
 >
 @property (weak, nonatomic) id <GameControllerViewControllerDelegate> delegate;
-- (IBAction)dismissModule;
+- (void)dismissModule;
 @end

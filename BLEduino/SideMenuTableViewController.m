@@ -49,7 +49,9 @@
             navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"bleController"]];
             [self.sideMenuViewController hideMenuViewController];
             break;
-        default:
+        case 2:
+            navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"settingsController"]];
+            [self.sideMenuViewController hideMenuViewController];
             break;
     }
 }

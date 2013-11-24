@@ -18,12 +18,16 @@
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
+		B765076718418E9400ACE0A2 /* menu-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B765076518418E9400ACE0A2 /* menu-2.png */; };
+		B765076818418E9400ACE0A2 /* menu-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B765076618418E9400ACE0A2 /* menu-2@2x.png */; };
+		B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */; };
+		B7650771184264A900ACE0A2 /* SettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */; };
+		B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650773184264C300ACE0A2 /* SettingsNumberCell.m */; };
 		B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */; };
 		B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B78D3FC71832CCC00058BFD6 /* Images.xcassets */; };
 		B79D7863183C5F3000CB68D8 /* VerticalJoystickControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D7862183C5F2F00CB68D8 /* VerticalJoystickControlView.m */; };
 		B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D7865183C60D400CB68D8 /* HorizontalJoystickControlView.m */; };
 		B79D78BC183D343B00CB68D8 /* MFLJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78BA183D343B00CB68D8 /* MFLJoystick.m */; };
-		B79D78C0183D5D2D00CB68D8 /* LEDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78BF183D5D2D00CB68D8 /* LEDTableViewCell.m */; };
 		B79D78D3183E4FB500CB68D8 /* OBShapedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78CF183E4FB500CB68D8 /* OBShapedButton.m */; };
 		B79D78D4183E4FB500CB68D8 /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D78D2183E4FB500CB68D8 /* UIImage+ColorAtPixel.m */; };
 		B79D792E183E904200CB68D8 /* arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7926183E904200CB68D8 /* arrow-down.png */; };
@@ -157,6 +161,14 @@
 		B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleCollectionViewCell.m; sourceTree = "<group>"; };
 		B75EC54717FB7AF7000309FF /* KeyboardModuleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardModuleTableViewController.h; sourceTree = "<group>"; };
 		B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardModuleTableViewController.m; sourceTree = "<group>"; };
+		B765076518418E9400ACE0A2 /* menu-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-2.png"; sourceTree = "<group>"; };
+		B765076618418E9400ACE0A2 /* menu-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-2@2x.png"; sourceTree = "<group>"; };
+		B76507691841EA9400ACE0A2 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		B765076F184264A900ACE0A2 /* SettingsSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSwitchCell.h; sourceTree = "<group>"; };
+		B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSwitchCell.m; sourceTree = "<group>"; };
+		B7650772184264C300ACE0A2 /* SettingsNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsNumberCell.h; sourceTree = "<group>"; };
+		B7650773184264C300ACE0A2 /* SettingsNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsNumberCell.m; sourceTree = "<group>"; };
 		B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryTableViewController.h; sourceTree = "<group>"; };
 		B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryTableViewController.m; sourceTree = "<group>"; };
 		B78D3FC71832CCC00058BFD6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BLEduino/Images.xcassets; sourceTree = "<group>"; };
@@ -166,8 +178,6 @@
 		B79D7865183C60D400CB68D8 /* HorizontalJoystickControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalJoystickControlView.m; sourceTree = "<group>"; };
 		B79D78BA183D343B00CB68D8 /* MFLJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFLJoystick.m; sourceTree = "<group>"; };
 		B79D78BB183D343B00CB68D8 /* MFLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFLJoystick.h; sourceTree = "<group>"; };
-		B79D78BE183D5D2D00CB68D8 /* LEDTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDTableViewCell.h; sourceTree = "<group>"; };
-		B79D78BF183D5D2D00CB68D8 /* LEDTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDTableViewCell.m; sourceTree = "<group>"; };
 		B79D78CE183E4FB500CB68D8 /* OBShapedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBShapedButton.h; sourceTree = "<group>"; };
 		B79D78CF183E4FB500CB68D8 /* OBShapedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBShapedButton.m; sourceTree = "<group>"; };
 		B79D78D1183E4FB500CB68D8 /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
@@ -354,6 +364,19 @@
 			name = Modules;
 			sourceTree = "<group>";
 		};
+		B765076E1842648600ACE0A2 /* Settings Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B76507691841EA9400ACE0A2 /* SettingsTableViewController.h */,
+				B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */,
+				B765076F184264A900ACE0A2 /* SettingsSwitchCell.h */,
+				B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */,
+				B7650772184264C300ACE0A2 /* SettingsNumberCell.h */,
+				B7650773184264C300ACE0A2 /* SettingsNumberCell.m */,
+			);
+			name = "Settings Menu";
+			sourceTree = "<group>";
+		};
 		B79D7860183C5CE400CB68D8 /* RadioControlled */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,8 +396,6 @@
 			children = (
 				B7BEFC2918332E7600EA6E78 /* LEDModuleTableViewController.h */,
 				B7BEFC2A18332E7600EA6E78 /* LEDModuleTableViewController.m */,
-				B79D78BE183D5D2D00CB68D8 /* LEDTableViewCell.h */,
-				B79D78BF183D5D2D00CB68D8 /* LEDTableViewCell.m */,
 			);
 			name = LEDs;
 			sourceTree = "<group>";
@@ -410,6 +431,8 @@
 			isa = PBXGroup;
 			children = (
 				B79D79B81840502500CB68D8 /* led-b2.png */,
+				B765076518418E9400ACE0A2 /* menu-2.png */,
+				B765076618418E9400ACE0A2 /* menu-2@2x.png */,
 				B79D79BA1840509000CB68D8 /* led-b3.png */,
 				B79D79BC1840514900CB68D8 /* power-b2.png */,
 				B79D79A4184046F300CB68D8 /* bridge-b.png */,
@@ -504,7 +527,8 @@
 			isa = PBXGroup;
 			children = (
 				B75EC51517FB415F000309FF /* ModulesConrtoller */,
-				B7B3F82C17FF701100DCDAF5 /* ConnectionController */,
+				B7B3F82C17FF701100DCDAF5 /* ConnectionManagerController */,
+				B765076E1842648600ACE0A2 /* Settings Menu */,
 				B7A8C3921832CB69009A4577 /* BleduinoRootController.h */,
 				B7A8C3931832CB69009A4577 /* BleduinoRootController.m */,
 				B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */,
@@ -535,13 +559,13 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
-		B7B3F82C17FF701100DCDAF5 /* ConnectionController */ = {
+		B7B3F82C17FF701100DCDAF5 /* ConnectionManagerController */ = {
 			isa = PBXGroup;
 			children = (
 				B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */,
 				B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */,
 			);
-			name = ConnectionController;
+			name = ConnectionManagerController;
 			path = "BLEduino-Libray";
 			sourceTree = SOURCE_ROOT;
 		};
@@ -787,6 +811,7 @@
 				B79D7973183FD4BF00CB68D8 /* bridge@2x.png in Resources */,
 				B79D7975183FD4BF00CB68D8 /* controller@2x.png in Resources */,
 				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
+				B765076718418E9400ACE0A2 /* menu-2.png in Resources */,
 				B79D79AF184046F300CB68D8 /* bridge-selected.png in Resources */,
 				B79D7979183FD4BF00CB68D8 /* lcd@2x.png in Resources */,
 				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
@@ -801,6 +826,7 @@
 				B79D799B184009BC00CB68D8 /* contact.png in Resources */,
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B79D799F184009BC00CB68D8 /* search.png in Resources */,
+				B765076818418E9400ACE0A2 /* menu-2@2x.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B79D797D183FD4BF00CB68D8 /* menu-t@2x.png in Resources */,
 				B79D7954183F238B00CB68D8 /* blue-bg.jpg in Resources */,
@@ -842,7 +868,6 @@
 				B72D18651826FED500BD1A2D /* ControllerService.m in Sources */,
 				B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */,
 				B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */,
-				B79D78C0183D5D2D00CB68D8 /* LEDTableViewCell.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B7EDFDFB1835A788002FECA0 /* PowerSwitchButtonView.m in Sources */,
 				B79D78D4183E4FB500CB68D8 /* UIImage+ColorAtPixel.m in Sources */,
@@ -869,8 +894,11 @@
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BleBridgeService.m in Sources */,
 				B72D185F1826FE8100BD1A2D /* FirmataService.m in Sources */,
+				B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */,
 				B79D7863183C5F3000CB68D8 /* VerticalJoystickControlView.m in Sources */,
+				B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */,
 				B79D795D183FC5BD00CB68D8 /* OrientationNavigationController.m in Sources */,
+				B7650771184264A900ACE0A2 /* SettingsSwitchCell.m in Sources */,
 				B7EDFDFE1835C22E002FECA0 /* GameControllerViewController.m in Sources */,
 				B79D79C018405F3200CB68D8 /* LCDTableViewController.m in Sources */,
 			);

@@ -44,9 +44,8 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    //Load total available chars.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    _totalAvailableChars = [prefs integerForKey:@"LCDTotalAvailableChars"];
+    //Load total available characters.
+    _totalAvailableChars = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_LCD_TOTAL_CHARS];
     self.charCountView.text = [NSString stringWithFormat:@"%d", _totalAvailableChars];
 }
 
@@ -92,12 +91,14 @@
     if([text isEqualToString:@"\n"])
     {
         LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-        CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
         
-        NSString *message = self.messageView.text;
-        UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
-        [messageService writeMessage:message];
-        
+        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        {
+            NSString *message = self.messageView.text;
+            UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
+            [messageService writeMessage:message];
+        }
+    
         //Clear text view.
         self.messageView.text = @"";
     }

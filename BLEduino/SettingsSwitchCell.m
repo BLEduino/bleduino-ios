@@ -1,14 +1,14 @@
 //
-//  LEDTableViewCell.m
+//  SettingsSwitchCell.m
 //  BLEduino
 //
-//  Created by Ramon Gonzalez on 11/20/13.
+//  Created by Ramon Gonzalez on 11/24/13.
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "LEDTableViewCell.h"
+#import "SettingsSwitchCell.h"
 
-@implementation LEDTableViewCell
+@implementation SettingsSwitchCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -6,6 +6,18 @@
 
 #import <Availability.h>
 
+//Settings Persistance Keys
+
+//Scanning and connection.
+#define SETTINGS_SCAN_ONLY_BLEDUINO @"OnlyBleduinos"
+#define SETTINGS_NOTIFY_CONNECT @"NotifyConnect"
+#define SETTINGS_NOTIFY_DISCONNECT @"NotifyDisconnect"
+
+//Modules.
+#define SETTINGS_LCD_TOTAL_CHARS @"LCD-TotalChars"
+#define SETTINGS_POWERRELAY_PIN_NUMBER @"PowerRelayPinNumber"
+#define SETTINGS_POWERRELAY_STATUS_COLOR @"PowerRelayStatusColor"
+
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif

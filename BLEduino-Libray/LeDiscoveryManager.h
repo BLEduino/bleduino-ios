@@ -24,7 +24,6 @@
 - (void) didConnectToBleDevice:(CBPeripheral *)bleDevice;
 - (void) didConnectToDevices:(NSArray *)devicesList;
 
-
 - (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
 
 //Disconnecting from BLEduino and BLE devices.
@@ -34,55 +33,52 @@
 - (void) didDisconnectFromDevices:(NSArray *)devicesList error:(NSError *)error;
 @end
 
-
 @interface LeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
-
 @property (nonatomic, weak) id <LeDiscoveryManagerDelegate> delegate;
 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/
+
+//PENDING: Stretched goal.
+//Add support to persist devices.
 @property (retain, nonatomic) NSMutableOrderedSet *foundBleduinos;
 @property (retain, nonatomic) NSMutableOrderedSet *connectedBleduinos;
+
+//PENDING: Stretched goal.
+//Add more context to discovered devices (e.g. RSSI).
 @property (retain, nonatomic) NSMutableOrderedSet *bleduinos;
+
 
 /****************************************************************************/
 /*					 Central Manager Settings                               */
 /****************************************************************************/
-@property BOOL scanOnlyForBLEduinos;
-@property BOOL notifyConnect;
-@property BOOL notifyDisconnect;
+@property (nonatomic, getter = getScanOnlyForBLEduinos) BOOL scanOnlyForBLEduinos;
+@property (nonatomic, getter = getNotifyConnect) BOOL notifyConnect;
+@property (nonatomic, getter = getNotifyDisconnect) BOOL notifyDisconnect;
 
 /****************************************************************************/
 /*								Actions										*/
 /****************************************************************************/
 - (void) startScanningForBleduinos;
 - (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout;
+- (void) startScanningForBleDevices;
+- (void) startScanning;
+- (void) stopScanning;
+- (void) connectBleduino:(CBPeripheral *)bleduino;
+- (void) disconnectBleduino:(CBPeripheral *)bleduino;
+
+//PENDING: Streached goal. Possible additions.
 //- (void) startScanningForBleduinoWithServiceUUIDString:(NSString *)uuidString;
 //- (void) startScanningForBleduinoWithServicesUUIDStringList:(NSArray *)uuidStringList;
 //- (void) startScanningForBleduinoWithServiceUUID:(NSUUID *)uuid;
 //- (void) startScanningForBleduinoWithServicesUUID:(NSArray *)uuidList;
-
 //- (void) startScanningForUUIDString:(NSString *)uuidString;
 //- (void) startScanningForUUID:(NSUUID *)uuid;
-
-- (void) stopScanning;
-
-- (void) connectBleduino:(CBPeripheral *)bleduino;
-//- (void) connectBleduinos:(NSArray *)bleduinoList;
-
-- (void) disconnectBleduino:(CBPeripheral *)bleduino;
-//- (void) disconnectBleduinos:(NSArray *)bleduinoList;
-
 
 /****************************************************************************/
 /*				       Access to LeDiscovery instance			     	    */
 /****************************************************************************/
-
 + (id)sharedLeManager;
 - (void)dismiss;
-//+ (id)sharedBleDevice;
-//+ (id)sharedBleduino:(id)identifier;
-//+ (id)sharedBleDevice:(id)identifier;
-
 @end

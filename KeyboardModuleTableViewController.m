@@ -60,12 +60,14 @@
     if([text isEqualToString:@"\n"])
     {
         LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-        CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-        
-        NSString *message = self.messageView.text;
-        UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
-        [messageService writeMessage:message];
-        
+
+        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        {
+            NSString *message = self.messageView.text;
+            UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
+            [messageService writeMessage:message];
+        }
+
         //Clear text view.
         self.messageView.text = @"";
     }

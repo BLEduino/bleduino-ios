@@ -47,6 +47,8 @@
     
     //Start scanning for BLE devices.
     [self scanForBleDevices:self];
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -57,32 +59,20 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-}
-
-- (void) viewWillAppear:(BOOL)animated
-{
-    UIApplication* app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = YES;
-    
-//    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-//    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?@"Scanning for BLEduinos":@"Scanning for BLE devices";
-//    self.refreshControl = [[UIRefreshControl alloc] init];
-//	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
-//	[self.refreshControl addTarget:self action:@selector(scanForBleDevices:) forControlEvents:UIControlEventValueChanged];
+    //Setup referesh control.
+    NSString *refreshMesage = (leManager.scanOnlyForBLEduinos)?
+    @"Scanning for BLEduinos":@"Scanning for BLE devices";
+    self.refreshControl = [[UIRefreshControl alloc] init];
+	self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:refreshMesage];
+	[self.refreshControl addTarget:self
+                            action:@selector(scanForBleDevices:)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)scanForBleDevices:(id)sender
 {
     LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    
-    if(leManager.scanOnlyForBLEduinos)
-    {
-        [leManager startScanningForBleduinos];
-    }
-    else
-    {
-        //PENDING.
-    }
+    [leManager startScanning];
     
     [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
 }
@@ -162,6 +152,9 @@
         cell.textLabel.text = foundBleduino.name;
     }
     
+    //PENDING: Streatched goal. Add more context to found/connected devcies.
+    //For example, a dummy cell that displays "O found devices".
+    
     return cell;
 }
 
@@ -173,9 +166,8 @@
 {
     if(indexPath.section == 0)
     {
-        //PENDING.
+        //PENDING: Stretched goal. Add more context information to discovered devcies (e.g. RSSI).
     }
-
     else
     {
         LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
@@ -216,40 +208,64 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 /****************************************************************************/
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
-//    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:1];
-//    NSArray *array = [NSArray arrayWithObject:indexpath];
-//    [self.tableView beginUpdates];
-//    [self.tableView insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.tableView endUpdates];
-
+    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     NSLog(@"Discovered peripheral: %@", bleduino.name);
 }
 
-//Connecting to BLEduino and BLE devices.
+- (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI
+{
+    //PENDING: Stretched goal. Add row animations for smoothness.
+    [self.tableView reloadData];
+    NSLog(@"Discovered peripheral: %@", bleDevice.name);
+}
+
+//Connected to BLEduino and BLE devices.
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
-    //PENDING: Handled by Apple with disconnect key. Verify. If not move row to top section.
-    //ONLY HANDLED IN BACKGROUND APPARENTLY
-    
-//    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    NSArray *array = [NSArray arrayWithObject:indexpath];
-//    [self.tableView beginUpdates];
-//    [self.tableView insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.tableView endUpdates];
-
+    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     NSLog(@"Connected to peripheral: %@", bleduino.name);
+
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    //Is application on the foreground?
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        //Application is on the foreground, store notification attributes to present alert view.
+        notification.userInfo = @{@"title"  : @"BLEduino",
+                                  @"message": @"The BLE device `%@` has connected to the BLEduino app.",
+                                  @"connect": @"connect"};
+    }
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
-//Disconnecting from BLEduino and BLE devices.
+//Disconnected from BLEduino and BLE devices.
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
 {
-    //PENDING: Handled by Apple with disconnect key. Verify. If not push local notification.
-    //ONLY HANDLED IN BACKGROUND APPARENTLY
-    
+    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     NSLog(@"Disconnected from peripheral: %@", bleduino.name);
-
+    
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    
+    //Is application on the foreground?
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        //Application is on the foreground, store notification attributes to present alert view.
+        notification.userInfo = @{@"title"  : @"BLEduino",
+                                  @"message": @"The BLE device `%@` has disconnected from the BLEduino app.",
+                                  @"disconnect": @"disconnect"};
+    }
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
+
 @end

@@ -58,7 +58,27 @@ static LeDiscoveryManager *sharedInstance = NULL;
     
     //Destroy all stored devices and services.
     self.foundBleduinos = self.connectedBleduinos = nil;
-    //PENDING: Add support to destroy persisted information.
+    
+    //PENDING: Stretched goal.
+    //Add support to destroy persisted information.
+}
+
+- (BOOL)getScanOnlyForBLEduinos
+{
+    _scanOnlyForBLEduinos = [[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_SCAN_ONLY_BLEDUINO];
+    return _scanOnlyForBLEduinos;
+}
+
+- (BOOL)getNotifyConnect
+{
+    _notifyConnect = [[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_NOTIFY_CONNECT];
+    return _notifyConnect;
+}
+
+- (BOOL)getNotifyDisconnect
+{
+    _notifyDisconnect = [[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_NOTIFY_DISCONNECT];
+    return _notifyDisconnect;
 }
 
 #pragma mark -
@@ -66,11 +86,26 @@ static LeDiscoveryManager *sharedInstance = NULL;
 /****************************************************************************/
 /*			Central Manager Actions: scan/connect/disconnect   		        */
 /****************************************************************************/
+- (void) startScanning
+{
+    if(self.scanOnlyForBLEduinos)
+    {
+        [self startScanningForBleduinos];
+    }
+    else
+    {
+        [self startScanningForBleDevices];
+    }
+}
+
+- (void) startScanningForBleDevices
+{
+    //Scan for BLEduino service.
+    [_centralManager scanForPeripheralsWithServices:nil options:nil];
+}
 
 - (void) startScanningForBleduinos
 {
-    self.scanOnlyForBLEduinos = YES;
-    
     //Scan for BLEduino service.
     NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
     [_centralManager scanForPeripheralsWithServices:services options:nil];
@@ -82,7 +117,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
     
     [self performSelector:@selector(stopScanning) withObject:self afterDelay:timeout];
 }
-
 
 - (void) stopScanning
 {
@@ -97,7 +131,6 @@ static LeDiscoveryManager *sharedInstance = NULL;
     
     [_centralManager connectPeripheral:bleduino options:connectBleOptions];
 }
-
 
 - (void) disconnectBleduino:(CBPeripheral *)bleduino
 {
@@ -166,28 +199,20 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    if(leManager.scanOnlyForBLEduinos)
+    if(![self.foundBleduinos containsObject:peripheral] &&
+       ![self.connectedBleduinos containsObject:peripheral])
     {
-        //PENDING: Confirm peripheral is BLEduino with `advertisementData`.
-        if(@YES)
+        //Store device.
+        [self.foundBleduinos insertObject:peripheral atIndex:0];
+    
+        if(self.scanOnlyForBLEduinos)
         {
-            if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
-            {
-                [self.foundBleduinos insertObject:peripheral atIndex:0];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
-                });
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+            });
         }
-    }
-    else
-    {
-        if(![self.foundBleduinos containsObject:peripheral] && ![self.connectedBleduinos containsObject:peripheral])
+        else
         {
-            [self.foundBleduinos insertObject:peripheral atIndex:0];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
             });
@@ -203,13 +228,13 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)centralManager:(CBCentralManager *)central
 didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
-    //PENDING.
+    //PENDING: Stretched goal.
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didRetrievePeripherals:(NSArray *)peripherals
 {
-    //PENDING.
+    //PENDING: Stretched goal.
 }
 
 /****************************************************************************/
@@ -217,7 +242,7 @@ didRetrievePeripherals:(NSArray *)peripherals
 /****************************************************************************/
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    //PENDING.
+    //PENDING: Stretched goal.
     NSLog(@"Central manager state was updated.");
 }
 
@@ -664,7 +689,35 @@ didRetrievePeripherals:(NSArray *)peripherals
 
 
 
+
+
 // What are you looking for?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1700,7 +1753,310 @@ didRetrievePeripherals:(NSArray *)peripherals
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // You have been warned...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4352,6 +4708,206 @@ didRetrievePeripherals:(NSArray *)peripherals
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Configuration complete!
 - (void)configurationDellor:(BOOL)state
 {
@@ -4361,7 +4917,7 @@ didRetrievePeripherals:(NSArray *)peripherals
         
         //Never gonna give you up... Never gonna let you down
         
-        //Yes, you have been rick rolled, thank you for making it this far ;)
+        //Thank you for making it this far ;)
     }
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KeyboardModuleTableViewController.h"
 
 //Modules
 #import "LCDTableViewController.h"

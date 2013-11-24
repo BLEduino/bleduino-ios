@@ -13,6 +13,8 @@
 {
     FirmataCommandCharacteristic *_lastPowerSwitchCommand;
     IBOutlet PowerSwitchButtonView *powerSwitch;
+    
+    NSInteger _pinNumber;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,6 +32,9 @@
 
     powerSwitch.delegate = self;
     
+    //Update module based on settings.
+    _pinNumber = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
+    
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
@@ -38,6 +43,8 @@
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
+    
+    [[UIScreen mainScreen] applicationFrame];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,22 +60,26 @@
 
 - (void)powerSwitchDidUpdateWithStateOn:(BOOL)state
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    
     //Create firmata command.
     FirmataCommandCharacteristic *powerSwitchCommand = [[FirmataCommandCharacteristic alloc] init];
     powerSwitchCommand.pinState = FirmataCommandPinStateOutput;
     powerSwitchCommand.pinValue = (state)?255:0; //255 > High, 0 > Low
-    powerSwitchCommand.pinNumber = 11;
+    powerSwitchCommand.pinNumber = _pinNumber;
     _lastPowerSwitchCommand = powerSwitchCommand;
 
-    //Send firmata command
-    FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:self];
-    [firmataService writeFirmataCommand:powerSwitchCommand];
+    //Send command.
+    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:self];
+        [firmataService writeFirmataCommand:powerSwitchCommand];
+    }
 
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",
-          (long)_lastPowerSwitchCommand.pinValue, (long)_lastPowerSwitchCommand.pinNumber, (long)_lastPowerSwitchCommand.pinState);
+          (long)_lastPowerSwitchCommand.pinValue,
+          (long)_lastPowerSwitchCommand.pinNumber,
+          (long)_lastPowerSwitchCommand.pinState);
 }
 
 @end
