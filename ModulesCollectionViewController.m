@@ -177,7 +177,7 @@
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-b5.png"] forState:UIControlStateNormal];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications.png"] forState:UIControlStateNormal];
             }
             else
             {
@@ -185,7 +185,7 @@
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-s5.png"] forState:UIControlStateNormal];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-s.png"] forState:UIControlStateNormal];
             }
             break;
             
@@ -197,7 +197,7 @@
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-b5.png"] forState:UIControlStateNormal];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge.png"] forState:UIControlStateNormal];
             }
             else
             {
@@ -205,7 +205,7 @@
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s5.png"] forState:UIControlStateNormal];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s.png"] forState:UIControlStateNormal];
             }
             break;
             

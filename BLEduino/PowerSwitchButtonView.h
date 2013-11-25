@@ -21,6 +21,7 @@ typedef NSUInteger PowerSwitchStatusColor;
 
 @interface PowerSwitchButtonView : UIView
 @property (weak, nonatomic) id <PowerSwitchButtonViewDelegate> delegate;
+- (void)updatePowerSwitchTextWithStateOn:(BOOL)isOn;
 @end
 
 

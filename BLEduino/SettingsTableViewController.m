@@ -59,7 +59,7 @@
 /****************************************************************************/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //Update LCD settings.
+    //Update Power Relay settings.
     if(buttonIndex < 21)
     {
         if(actionSheet.tag == 100)
@@ -71,7 +71,7 @@
         else if(actionSheet.tag == 101)
         {
             PowerSwitchStatusColor powerSwitchColor =
-            (buttonIndex)?PowerSwitchStatusColorBlue:PowerSwitchStatusColorGreenRed;
+            (buttonIndex == 0)?PowerSwitchStatusColorBlue:PowerSwitchStatusColorGreenRed;
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setInteger:powerSwitchColor forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
@@ -88,7 +88,7 @@
     UISwitch *settingsSwitch = (UISwitch *)sender;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    //Update settings.
+    //Update Scanning/Connection settings.
     switch (settingsSwitch.tag) {
         //Scan only BLEduinos
         case 100:
@@ -208,7 +208,7 @@
         }
         else
         {
-            cell.settingDescription.text = @"Power Relay Status Color";
+            cell.settingDescription.text = @"Power Relay Status";
             NSInteger statusColorValue = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
             NSString *colorString = (statusColorValue == PowerSwitchStatusColorGreenRed)?@"Green/Red":@"Blue";
             cell.settingsNumber.text = colorString;

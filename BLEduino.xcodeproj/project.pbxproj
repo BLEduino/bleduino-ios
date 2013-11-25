@@ -73,6 +73,9 @@
 		B7AE6600184307C7007C45A3 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F6184307C7007C45A3 /* settings.png */; };
 		B7AE6601184307C7007C45A3 /* modules.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F7184307C7007C45A3 /* modules.png */; };
 		B7AE6602184307C7007C45A3 /* modules@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F8184307C7007C45A3 /* modules@2x.png */; };
+		B7AE660818430CA7007C45A3 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE660618430CA7007C45A3 /* menu.png */; };
+		B7AE660918430CA7007C45A3 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE660718430CA7007C45A3 /* menu@2x.png */; };
+		B7AE660C18431451007C45A3 /* PowerOtherStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AE660B18431451007C45A3 /* PowerOtherStateView.m */; };
 		B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
@@ -203,6 +206,10 @@
 		B7AE65F6184307C7007C45A3 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		B7AE65F7184307C7007C45A3 /* modules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modules.png; sourceTree = "<group>"; };
 		B7AE65F8184307C7007C45A3 /* modules@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modules@2x.png"; sourceTree = "<group>"; };
+		B7AE660618430CA7007C45A3 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		B7AE660718430CA7007C45A3 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		B7AE660A18431451007C45A3 /* PowerOtherStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerOtherStateView.h; sourceTree = "<group>"; };
+		B7AE660B18431451007C45A3 /* PowerOtherStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerOtherStateView.m; sourceTree = "<group>"; };
 		B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrottleYawRollPitchCharacteristic.h; sourceTree = "<group>"; };
 		B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrottleYawRollPitchCharacteristic.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -460,6 +467,8 @@
 		B7AE6603184307D7007C45A3 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				B7AE660618430CA7007C45A3 /* menu.png */,
+				B7AE660718430CA7007C45A3 /* menu@2x.png */,
 				B7AE65EF184307C7007C45A3 /* hardware.png */,
 				B7AE65F0184307C7007C45A3 /* hardware@2x.png */,
 				B7AE65F1184307C7007C45A3 /* contact@2x.png */,
@@ -631,6 +640,8 @@
 				B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */,
 				B7EDFDF91835A788002FECA0 /* PowerSwitchButtonView.h */,
 				B7EDFDFA1835A788002FECA0 /* PowerSwitchButtonView.m */,
+				B7AE660A18431451007C45A3 /* PowerOtherStateView.h */,
+				B7AE660B18431451007C45A3 /* PowerOtherStateView.m */,
 			);
 			name = PowerRelay;
 			sourceTree = "<group>";
@@ -720,6 +731,7 @@
 				B7AE65FC184307C7007C45A3 /* contact.png in Resources */,
 				B7AE65E81842C215007C45A3 /* power.png in Resources */,
 				B7AE65E31842C215007C45A3 /* lcd.png in Resources */,
+				B7AE660918430CA7007C45A3 /* menu@2x.png in Resources */,
 				B79D792F183E904200CB68D8 /* arrow-down@2x.png in Resources */,
 				B79D793F183E90D000CB68D8 /* red-a.png in Resources */,
 				B7AE65E51842C215007C45A3 /* notifications.png in Resources */,
@@ -743,6 +755,7 @@
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B79D7954183F238B00CB68D8 /* blue-bg.jpg in Resources */,
 				B7AE6601184307C7007C45A3 /* modules.png in Resources */,
+				B7AE660818430CA7007C45A3 /* menu.png in Resources */,
 				B7AE65EB1842CBB6007C45A3 /* bridge-s.png in Resources */,
 				B79D794B183ECF1D00CB68D8 /* VerticalJoystickView.xib in Resources */,
 				B7AE65EC1842CBB6007C45A3 /* notifications-s.png in Resources */,
@@ -797,6 +810,7 @@
 				B79D78D3183E4FB500CB68D8 /* OBShapedButton.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
+				B7AE660C18431451007C45A3 /* PowerOtherStateView.m in Sources */,
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,

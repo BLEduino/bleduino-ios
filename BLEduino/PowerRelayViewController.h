@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FirmataService.h"
 #import "PowerSwitchButtonView.h"
+#import "PowerOtherStateView.h"
 
 @class PowerRelayViewController;
 @protocol PowerRelayViewControllerDelegate <NSObject>
@@ -19,7 +20,8 @@
 <
 CBPeripheralDelegate,
 FirmataServiceDelegate,
-PowerSwitchButtonViewDelegate
+PowerSwitchButtonViewDelegate,
+PowerOtherStateViewDelegate
 >
 @property (weak, nonatomic) id <PowerRelayViewControllerDelegate> delegate;
 - (IBAction)dismissModule;

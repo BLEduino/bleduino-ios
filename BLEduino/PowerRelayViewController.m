@@ -8,11 +8,14 @@
 
 #import "PowerRelayViewController.h"
 #import "LeDiscoveryManager.h"
+#import "PowerOtherStateView.h"
 
 @implementation PowerRelayViewController
 {
     FirmataCommandCharacteristic *_lastPowerSwitchCommand;
     IBOutlet PowerSwitchButtonView *powerSwitch;
+    IBOutlet PowerOtherStateView *otherStateIsOn;
+    IBOutlet PowerOtherStateView *otherStateIsOff;
     
     NSInteger _pinNumber;
 }
@@ -31,6 +34,8 @@
     [super viewDidLoad];
 
     powerSwitch.delegate = self;
+    otherStateIsOff.delegate = self;
+    otherStateIsOn.delegate = self;
     
     //Update module based on settings.
     _pinNumber = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
@@ -45,6 +50,7 @@
     self.navigationController.navigationBar.translucent = NO;
     
     [[UIScreen mainScreen] applicationFrame];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +64,31 @@
     [self.delegate powerRelayModulViewControllerDismissed:self];
 }
 
+- (void)updatePowerSwitchViewWithStateOn:(BOOL)state
+{
+    CGRect newFrame;
+    //Switch it On?
+    if(state)
+    {
+        //Move it to top half position.
+        newFrame = CGRectMake(10, 10, 300, 245);
+
+    }
+    else
+    {
+        //Move it to bottom half position.
+        newFrame = CGRectMake(10, 250, 300, 245);
+    }
+
+    //Execute view update.
+    [UIView beginAnimations:@"Dragging Power Switch" context:nil];
+    powerSwitch.frame = newFrame;
+    [powerSwitch updatePowerSwitchTextWithStateOn:state];
+    [UIView setAnimationDuration:0.3];
+    [UIView commitAnimations];
+}
+
+//Power Switch Delegate
 - (void)powerSwitchDidUpdateWithStateOn:(BOOL)state
 {
     //Create firmata command.
@@ -80,6 +111,15 @@
           (long)_lastPowerSwitchCommand.pinValue,
           (long)_lastPowerSwitchCommand.pinNumber,
           (long)_lastPowerSwitchCommand.pinState);
+}
+
+//Power Other State Delegate
+- (void)powerOtherStateDidUpdateWithStateOn:(BOOL)state
+{
+    //User tocuhed the other state label instead of dragging the switch.
+    //Update switch view i.e. move it, and then send firmata command.
+    [self updatePowerSwitchViewWithStateOn:state];
+    [self powerSwitchDidUpdateWithStateOn:state];
 }
 
 @end

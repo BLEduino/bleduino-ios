@@ -16,6 +16,7 @@
     
     //Setttings
     UIColor *_statusColor;
+    PowerSwitchStatusColor _colorCode;
 }
 
 - (void) initPowerSwitch
@@ -25,8 +26,8 @@
     self.layer.borderWidth = 0.8f;
     
     //Update module based on settings.
-    int statusColorCode = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
-    if(statusColorCode == PowerSwitchStatusColorBlue)
+    _colorCode = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+    if(_colorCode == PowerSwitchStatusColorBlue)
     {
         UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:.90];
         _statusColor = lightBlue;
@@ -91,24 +92,34 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSString *text;
-    CGRect newFrame;
+    BOOL isOnTopHalf = (self.center.y < 252)?YES:NO;
+    [self updatePowerSwitchView:isOnTopHalf];
+}
+   
 
+- (void)updatePowerSwitchView:(BOOL)isOnTopHalf
+{
+    NSString *text;
+    UIColor *color;
+    CGRect newFrame;
+    
     //Update status message.
     UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
-    BOOL isOnTopHalf = (self.center.y < 252)?YES:NO;
     
     if(isOnTopHalf)
     {
         [self switchPowerOn];
         text = @"ON";
+        color = _statusColor;
         newFrame = CGRectMake(self.frame.origin.x, 10,
                               self.frame.size.width, self.frame.size.height);
+        
     }
     else
     {
         [self switchPowerOff];
         text = @"OFF";
+        color = (_colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:_statusColor;
         newFrame = CGRectMake(self.frame.origin.x, 568 - (self.frame.size.height) - 10 - 63,
                               self.frame.size.width, self.frame.size.height);
     }
@@ -117,7 +128,34 @@
     [UIView beginAnimations:@"Dragging Power Switch" context:nil];
     self.frame = newFrame;
     switchMessage.text = text;
-    switchMessage.textColor = _statusColor;
+    switchMessage.textColor = color;
+    [UIView setAnimationDuration:0.3];
+    [UIView commitAnimations];
+}
+
+- (void)updatePowerSwitchTextWithStateOn:(BOOL)isOn
+{
+    NSString *text;
+    UIColor *color;
+    
+    //Update status message.
+    UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
+    
+    if(isOn)
+    {
+        text = @"ON";
+        color = _statusColor;
+    }
+    else
+    {
+        text = @"OFF";
+        color = (_colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:_statusColor;
+    }
+    
+    //Execute update.
+    [UIView beginAnimations:@"Dragging Power Switch" context:nil];
+    switchMessage.text = text;
+    switchMessage.textColor = color;
     [UIView setAnimationDuration:0.3];
     [UIView commitAnimations];
 }
