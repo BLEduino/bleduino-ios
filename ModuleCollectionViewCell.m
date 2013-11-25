@@ -9,7 +9,6 @@
 #import "ModuleCollectionViewCell.h"
 
 @implementation ModuleCollectionViewCell
-@synthesize moduleName, moduleImage;
 
 - (id)initWithFrame:(CGRect)frame
 {

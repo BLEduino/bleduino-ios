@@ -44,14 +44,6 @@
 {
     [super viewDidLoad];
     
-    //Set modules' data.
-    self.modules = @[@"LCD",@"Keyboard",@"Game Controller",@"R/C Car",@"Power Relay",@"LED",
-                     @"Notifications",@"BLE Bridge"];
-    
-    self.modulesImages = @[@"lcd-b.png",@"keyboard-b.png",@"controller-b.png",
-                           @"rc-b.png",@"power-b2.png", @"led-b3.png",
-                           @"notifications-b.png",@"bridge-b.png"];
-    
     //Set services that run in the background.
     self.notifications = [[NotificationService alloc] init];
     self.bleBridge = [[BleBridgeService alloc] init];
@@ -86,48 +78,59 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.modules.count;
+    return 8;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ModuleCollectionViewCell *moduleCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ModuleCell" forIndexPath:indexPath];
+    NSString *cellIdentifier;
     
-    UIImage *image = [[UIImage alloc] init];
-    image = [UIImage imageNamed:[self.modulesImages objectAtIndex:indexPath.row]];
+    switch (indexPath.row) {
+        case 0:
+            //LCD Module
+            cellIdentifier = @"LCDModuleCell";
+            break;
+        case 1:
+            //Keyboard Module
+            cellIdentifier = @"KeyboardModuleCell";
+            break;
+        case 2:
+            //Game Controller Module
+            cellIdentifier = @"GameControllerModuleCell";
+            break;
+        case 3:
+            //Radio Controlled Module
+            cellIdentifier = @"RadioControlledModuleCell";
+            break;
+        case 4:
+            //Power Relay Module
+            cellIdentifier = @"PowerRelayModuleCell";
+            break;
+        case 5:
+            //LED Module
+            cellIdentifier = @"LEDModuleCell";
+            break;
+        case 6:
+            //Notifications Module
+            cellIdentifier = @"NotificationsModuleCell";
+            break;
+        case 7:
+            //BleBridge Module
+            cellIdentifier = @"BleBridgeModuleCell";
+            break;
+    }
     
-    moduleCell.moduleImage.image = image;
-    moduleCell.moduleName.text = [self.modules objectAtIndex:indexPath.row];
+    ModuleCollectionViewCell *moduleCell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
+                                              forIndexPath:indexPath];
     
-//    //Set aspect ratio.
-//    switch (indexPath.row) {
-//        case 0:
-//            UIImageView *newImageView = [UIImageView ui]
-//            moduleCell.moduleImage.frame = CGRectMake(32, 42, 56, 36);
-//            break;
-//        case 1:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
-//            break;
-//        case 2:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
-//            break;
-//        case 3:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 35, 56, 50);
-//            break;
-//        case 4:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 38, 56, 44);
-//            break;
-//        case 5:
-//            moduleCell.moduleImage.frame = CGRectMake(42, 32, 36, 56);
-//            break;
-//        case 6:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 34, 56, 52);
-//            break;
-//        case 7:
-//            moduleCell.moduleImage.frame = CGRectMake(32, 32, 56, 56);
-//            break;
-//    }
-    
+    //Setup dismiss button.
+    UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    dismissButton.frame = CGRectMake(34, 20, 14, 28);
+    [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
+    [dismissButton addTarget:self
+                      action:@selector(dismissModule)
+            forControlEvents:UIControlEventTouchUpInside];
     return moduleCell;
 }
 
@@ -171,10 +174,18 @@
             if(self.notifications.isListening)
             {
                 [self.notifications stopListening];
+                
+                //Update icon.
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-b5.png"] forState:UIControlStateNormal];
             }
             else
             {
                 [self.notifications startListening];
+                
+                //Update icon.
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-s5.png"] forState:UIControlStateNormal];
             }
             break;
             
@@ -183,10 +194,18 @@
             if(self.bleBridge.isOpen)
             {
                 [self.bleBridge closeBridge];
+                
+                //Update icon.
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-b5.png"] forState:UIControlStateNormal];
             }
             else
             {
                 [self.bleBridge openBridge];
+                
+                //Update icon.
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s5.png"] forState:UIControlStateNormal];
             }
             break;
             
@@ -227,14 +246,14 @@
         insetForSectionAtIndex:(NSInteger)section
 {
     
-    return UIEdgeInsetsMake(15, 25, 15, 25);
+    return UIEdgeInsetsMake(0, 25, 0, 25);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
 referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(10, -20);
+    return CGSizeMake(10, -15);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

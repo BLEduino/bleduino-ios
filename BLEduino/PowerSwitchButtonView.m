@@ -15,7 +15,6 @@
     CGPoint _offset;
     
     //Setttings
-    NSInteger _pinNumber;
     UIColor *_statusColor;
 }
 
@@ -37,6 +36,9 @@
         UIColor *lightGreen = [UIColor colorWithRed:0 green:200/255.0 blue:0 alpha:1.0];
         _statusColor = lightGreen;
     }
+    
+    UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
+    [switchMessage setTextColor:_statusColor];
 }
 
 - (id)initWithFrame:(CGRect)frame

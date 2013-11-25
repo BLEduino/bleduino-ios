@@ -209,8 +209,9 @@
         else
         {
             cell.settingDescription.text = @"Power Relay Status Color";
-            NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
-            cell.settingsNumber.text = [NSString stringWithFormat:@"%d", value];
+            NSInteger statusColorValue = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+            NSString *colorString = (statusColorValue == PowerSwitchStatusColorGreenRed)?@"Green/Red":@"Blue";
+            cell.settingsNumber.text = colorString;
         }
         return  cell;
     }
