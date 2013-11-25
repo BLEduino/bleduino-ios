@@ -112,7 +112,11 @@
         button;
     });
     
+//    UIView *temp = [[UIView alloc] initWithFrame:self.backgroundImageView.frame];
+//    [temp setBackgroundColor:[UIColor darkGrayColor]];
+//    [self.view addSubview:temp];
     [self.view addSubview:self.backgroundImageView];
+    
     [self re_displayController:self.menuViewController frame:self.view.frame];
     [self re_displayController:self.contentViewController frame:self.view.frame];
     self.menuViewController.view.alpha = 0;

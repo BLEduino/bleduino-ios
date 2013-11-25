@@ -18,8 +18,6 @@
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC51417FB3F6D000309FF /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
-		B765076718418E9400ACE0A2 /* menu-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B765076518418E9400ACE0A2 /* menu-2.png */; };
-		B765076818418E9400ACE0A2 /* menu-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B765076618418E9400ACE0A2 /* menu-2@2x.png */; };
 		B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */; };
 		B7650771184264A900ACE0A2 /* SettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */; };
 		B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650773184264C300ACE0A2 /* SettingsNumberCell.m */; };
@@ -49,72 +47,32 @@
 		B79D7954183F238B00CB68D8 /* blue-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B79D794E183F238B00CB68D8 /* blue-bg.jpg */; };
 		B79D7959183F238B00CB68D8 /* silver-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B79D7953183F238B00CB68D8 /* silver-bg.jpg */; };
 		B79D795D183FC5BD00CB68D8 /* OrientationNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D795C183FC5BD00CB68D8 /* OrientationNavigationController.m */; };
-		B79D7972183FD4BF00CB68D8 /* bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D795E183FD4BF00CB68D8 /* bridge.png */; };
-		B79D7973183FD4BF00CB68D8 /* bridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D795F183FD4BF00CB68D8 /* bridge@2x.png */; };
-		B79D7974183FD4BF00CB68D8 /* controller.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7960183FD4BF00CB68D8 /* controller.png */; };
-		B79D7975183FD4BF00CB68D8 /* controller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7961183FD4BF00CB68D8 /* controller@2x.png */; };
-		B79D7976183FD4BF00CB68D8 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7962183FD4BF00CB68D8 /* keyboard.png */; };
-		B79D7977183FD4BF00CB68D8 /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7963183FD4BF00CB68D8 /* keyboard@2x.png */; };
-		B79D7978183FD4BF00CB68D8 /* lcd.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7964183FD4BF00CB68D8 /* lcd.png */; };
-		B79D7979183FD4BF00CB68D8 /* lcd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7965183FD4BF00CB68D8 /* lcd@2x.png */; };
-		B79D797A183FD4BF00CB68D8 /* led.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7966183FD4BF00CB68D8 /* led.png */; };
-		B79D797B183FD4BF00CB68D8 /* led@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7967183FD4BF00CB68D8 /* led@2x.png */; };
-		B79D797C183FD4BF00CB68D8 /* menu-t.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7968183FD4BF00CB68D8 /* menu-t.png */; };
-		B79D797D183FD4BF00CB68D8 /* menu-t@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7969183FD4BF00CB68D8 /* menu-t@2x.png */; };
-		B79D797E183FD4BF00CB68D8 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796A183FD4BF00CB68D8 /* menu.png */; };
-		B79D797F183FD4BF00CB68D8 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796B183FD4BF00CB68D8 /* menu@2x.png */; };
-		B79D7980183FD4BF00CB68D8 /* notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796C183FD4BF00CB68D8 /* notifications.png */; };
-		B79D7981183FD4BF00CB68D8 /* notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796D183FD4BF00CB68D8 /* notifications@2x.png */; };
-		B79D7982183FD4BF00CB68D8 /* power.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796E183FD4BF00CB68D8 /* power.png */; };
-		B79D7983183FD4BF00CB68D8 /* power@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D796F183FD4BF00CB68D8 /* power@2x.png */; };
-		B79D7984183FD4BF00CB68D8 /* rc.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7970183FD4BF00CB68D8 /* rc.png */; };
-		B79D7985183FD4BF00CB68D8 /* rc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7971183FD4BF00CB68D8 /* rc@2x.png */; };
-		B79D7989183FE53200CB68D8 /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7988183FE53200CB68D8 /* grid.png */; };
-		B79D798E183FE58A00CB68D8 /* grid-4-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D798A183FE58A00CB68D8 /* grid-4-selected@2x.png */; };
-		B79D798F183FE58A00CB68D8 /* grid-4-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D798B183FE58A00CB68D8 /* grid-4-selected.png */; };
-		B79D7990183FE58A00CB68D8 /* grid-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D798C183FE58A00CB68D8 /* grid-4@2x.png */; };
-		B79D7991183FE58A00CB68D8 /* grid-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D798D183FE58A00CB68D8 /* grid-4.png */; };
-		B79D799B184009BC00CB68D8 /* contact.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7992184009BC00CB68D8 /* contact.png */; };
-		B79D799C184009BC00CB68D8 /* contact2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7993184009BC00CB68D8 /* contact2@2x.png */; };
-		B79D799D184009BC00CB68D8 /* hardware.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7994184009BC00CB68D8 /* hardware.png */; };
-		B79D799E184009BC00CB68D8 /* modules.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7995184009BC00CB68D8 /* modules.png */; };
-		B79D799F184009BC00CB68D8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7996184009BC00CB68D8 /* search.png */; };
-		B79D79A0184009BC00CB68D8 /* search3.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7997184009BC00CB68D8 /* search3.png */; };
-		B79D79A1184009BC00CB68D8 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7998184009BC00CB68D8 /* settings.png */; };
-		B79D79A2184009BC00CB68D8 /* tutorials.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D7999184009BC00CB68D8 /* tutorials.png */; };
-		B79D79A3184009BC00CB68D8 /* tutorials2.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D799A184009BC00CB68D8 /* tutorials2.png */; };
-		B79D79AE184046F300CB68D8 /* bridge-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A4184046F300CB68D8 /* bridge-b.png */; };
-		B79D79AF184046F300CB68D8 /* bridge-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A5184046F300CB68D8 /* bridge-selected.png */; };
-		B79D79B0184046F300CB68D8 /* car-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A6184046F300CB68D8 /* car-b.png */; };
-		B79D79B1184046F300CB68D8 /* controller-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A7184046F300CB68D8 /* controller-b.png */; };
-		B79D79B2184046F300CB68D8 /* laptop-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A8184046F300CB68D8 /* laptop-b.png */; };
-		B79D79B3184046F300CB68D8 /* lcd-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79A9184046F300CB68D8 /* lcd-b.png */; };
-		B79D79B4184046F300CB68D8 /* led-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79AA184046F300CB68D8 /* led-b.png */; };
-		B79D79B5184046F300CB68D8 /* notifications-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79AB184046F300CB68D8 /* notifications-b.png */; };
-		B79D79B6184046F300CB68D8 /* notifications-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79AC184046F300CB68D8 /* notifications-selected.png */; };
-		B79D79B7184046F300CB68D8 /* power-b.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79AD184046F300CB68D8 /* power-b.png */; };
-		B79D79B91840502500CB68D8 /* led-b2.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79B81840502500CB68D8 /* led-b2.png */; };
-		B79D79BB1840509000CB68D8 /* led-b3.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79BA1840509000CB68D8 /* led-b3.png */; };
-		B79D79BD1840514900CB68D8 /* power-b2.png in Resources */ = {isa = PBXBuildFile; fileRef = B79D79BC1840514900CB68D8 /* power-b2.png */; };
 		B79D79C018405F3200CB68D8 /* LCDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D79BF18405F3200CB68D8 /* LCDTableViewController.m */; };
 		B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */; };
 		B7A8C38F1832C726009A4577 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38A1832C726009A4577 /* RECommonFunctions.m */; };
 		B7A8C3901832C726009A4577 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38C1832C726009A4577 /* RESideMenu.m */; };
 		B7A8C3911832C726009A4577 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */; };
 		B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A8C3931832CB69009A4577 /* BleduinoRootController.m */; };
-		B7AE65D11842B977007C45A3 /* car-b3.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D01842B977007C45A3 /* car-b3.png */; };
-		B7AE65D61842BF2E007C45A3 /* car-b4.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D51842BF2E007C45A3 /* car-b4.png */; };
-		B7AE65D81842BFC3007C45A3 /* led-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D71842BFC3007C45A3 /* led-b5.png */; };
-		B7AE65E11842C215007C45A3 /* bridge-selected5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D91842C215007C45A3 /* bridge-selected5.png */; };
-		B7AE65E21842C215007C45A3 /* laptop-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DA1842C215007C45A3 /* laptop-b5.png */; };
-		B7AE65E31842C215007C45A3 /* lcd-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DB1842C215007C45A3 /* lcd-b5.png */; };
-		B7AE65E41842C215007C45A3 /* notifications-selected5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DC1842C215007C45A3 /* notifications-selected5.png */; };
-		B7AE65E51842C215007C45A3 /* notifications-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DD1842C215007C45A3 /* notifications-b5.png */; };
-		B7AE65E61842C215007C45A3 /* bridge-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DE1842C215007C45A3 /* bridge-b5.png */; };
-		B7AE65E71842C215007C45A3 /* controller-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DF1842C215007C45A3 /* controller-b5.png */; };
-		B7AE65E81842C215007C45A3 /* power-b5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65E01842C215007C45A3 /* power-b5.png */; };
-		B7AE65EB1842CBB6007C45A3 /* bridge-s5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65E91842CBB6007C45A3 /* bridge-s5.png */; };
-		B7AE65EC1842CBB6007C45A3 /* notifications-s5.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65EA1842CBB6007C45A3 /* notifications-s5.png */; };
+		B7AE65D61842BF2E007C45A3 /* car.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D51842BF2E007C45A3 /* car.png */; };
+		B7AE65D81842BFC3007C45A3 /* led.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65D71842BFC3007C45A3 /* led.png */; };
+		B7AE65E21842C215007C45A3 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DA1842C215007C45A3 /* keyboard.png */; };
+		B7AE65E31842C215007C45A3 /* lcd.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DB1842C215007C45A3 /* lcd.png */; };
+		B7AE65E51842C215007C45A3 /* notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DD1842C215007C45A3 /* notifications.png */; };
+		B7AE65E61842C215007C45A3 /* bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DE1842C215007C45A3 /* bridge.png */; };
+		B7AE65E71842C215007C45A3 /* controller.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65DF1842C215007C45A3 /* controller.png */; };
+		B7AE65E81842C215007C45A3 /* power.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65E01842C215007C45A3 /* power.png */; };
+		B7AE65EB1842CBB6007C45A3 /* bridge-s.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65E91842CBB6007C45A3 /* bridge-s.png */; };
+		B7AE65EC1842CBB6007C45A3 /* notifications-s.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65EA1842CBB6007C45A3 /* notifications-s.png */; };
+		B7AE65F9184307C7007C45A3 /* hardware.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65EF184307C7007C45A3 /* hardware.png */; };
+		B7AE65FA184307C7007C45A3 /* hardware@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F0184307C7007C45A3 /* hardware@2x.png */; };
+		B7AE65FB184307C7007C45A3 /* contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F1184307C7007C45A3 /* contact@2x.png */; };
+		B7AE65FC184307C7007C45A3 /* contact.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F2184307C7007C45A3 /* contact.png */; };
+		B7AE65FD184307C7007C45A3 /* manager.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F3184307C7007C45A3 /* manager.png */; };
+		B7AE65FE184307C7007C45A3 /* manager@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F4184307C7007C45A3 /* manager@2x.png */; };
+		B7AE65FF184307C7007C45A3 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F5184307C7007C45A3 /* settings@2x.png */; };
+		B7AE6600184307C7007C45A3 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F6184307C7007C45A3 /* settings.png */; };
+		B7AE6601184307C7007C45A3 /* modules.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F7184307C7007C45A3 /* modules.png */; };
+		B7AE6602184307C7007C45A3 /* modules@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AE65F8184307C7007C45A3 /* modules@2x.png */; };
 		B7B562F318289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
@@ -174,8 +132,6 @@
 		B75EC51317FB3F6D000309FF /* ModuleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleCollectionViewCell.m; sourceTree = "<group>"; };
 		B75EC54717FB7AF7000309FF /* KeyboardModuleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardModuleTableViewController.h; sourceTree = "<group>"; };
 		B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardModuleTableViewController.m; sourceTree = "<group>"; };
-		B765076518418E9400ACE0A2 /* menu-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-2.png"; sourceTree = "<group>"; };
-		B765076618418E9400ACE0A2 /* menu-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-2@2x.png"; sourceTree = "<group>"; };
 		B76507691841EA9400ACE0A2 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		B765076F184264A900ACE0A2 /* SettingsSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSwitchCell.h; sourceTree = "<group>"; };
@@ -215,53 +171,6 @@
 		B79D7953183F238B00CB68D8 /* silver-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "silver-bg.jpg"; sourceTree = "<group>"; };
 		B79D795B183FC5BD00CB68D8 /* OrientationNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrientationNavigationController.h; sourceTree = "<group>"; };
 		B79D795C183FC5BD00CB68D8 /* OrientationNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrientationNavigationController.m; sourceTree = "<group>"; };
-		B79D795E183FD4BF00CB68D8 /* bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bridge.png; sourceTree = "<group>"; };
-		B79D795F183FD4BF00CB68D8 /* bridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge@2x.png"; sourceTree = "<group>"; };
-		B79D7960183FD4BF00CB68D8 /* controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controller.png; sourceTree = "<group>"; };
-		B79D7961183FD4BF00CB68D8 /* controller@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controller@2x.png"; sourceTree = "<group>"; };
-		B79D7962183FD4BF00CB68D8 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
-		B79D7963183FD4BF00CB68D8 /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard@2x.png"; sourceTree = "<group>"; };
-		B79D7964183FD4BF00CB68D8 /* lcd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lcd.png; sourceTree = "<group>"; };
-		B79D7965183FD4BF00CB68D8 /* lcd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lcd@2x.png"; sourceTree = "<group>"; };
-		B79D7966183FD4BF00CB68D8 /* led.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led.png; sourceTree = "<group>"; };
-		B79D7967183FD4BF00CB68D8 /* led@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led@2x.png"; sourceTree = "<group>"; };
-		B79D7968183FD4BF00CB68D8 /* menu-t.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-t.png"; sourceTree = "<group>"; };
-		B79D7969183FD4BF00CB68D8 /* menu-t@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-t@2x.png"; sourceTree = "<group>"; };
-		B79D796A183FD4BF00CB68D8 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		B79D796B183FD4BF00CB68D8 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
-		B79D796C183FD4BF00CB68D8 /* notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notifications.png; sourceTree = "<group>"; };
-		B79D796D183FD4BF00CB68D8 /* notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications@2x.png"; sourceTree = "<group>"; };
-		B79D796E183FD4BF00CB68D8 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
-		B79D796F183FD4BF00CB68D8 /* power@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power@2x.png"; sourceTree = "<group>"; };
-		B79D7970183FD4BF00CB68D8 /* rc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rc.png; sourceTree = "<group>"; };
-		B79D7971183FD4BF00CB68D8 /* rc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rc@2x.png"; sourceTree = "<group>"; };
-		B79D7988183FE53200CB68D8 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
-		B79D798A183FE58A00CB68D8 /* grid-4-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-4-selected@2x.png"; sourceTree = "<group>"; };
-		B79D798B183FE58A00CB68D8 /* grid-4-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-4-selected.png"; sourceTree = "<group>"; };
-		B79D798C183FE58A00CB68D8 /* grid-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-4@2x.png"; sourceTree = "<group>"; };
-		B79D798D183FE58A00CB68D8 /* grid-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-4.png"; sourceTree = "<group>"; };
-		B79D7992184009BC00CB68D8 /* contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contact.png; sourceTree = "<group>"; };
-		B79D7993184009BC00CB68D8 /* contact2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact2@2x.png"; sourceTree = "<group>"; };
-		B79D7994184009BC00CB68D8 /* hardware.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hardware.png; sourceTree = "<group>"; };
-		B79D7995184009BC00CB68D8 /* modules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modules.png; sourceTree = "<group>"; };
-		B79D7996184009BC00CB68D8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
-		B79D7997184009BC00CB68D8 /* search3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search3.png; sourceTree = "<group>"; };
-		B79D7998184009BC00CB68D8 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
-		B79D7999184009BC00CB68D8 /* tutorials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials.png; sourceTree = "<group>"; };
-		B79D799A184009BC00CB68D8 /* tutorials2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials2.png; sourceTree = "<group>"; };
-		B79D79A4184046F300CB68D8 /* bridge-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-b.png"; sourceTree = "<group>"; };
-		B79D79A5184046F300CB68D8 /* bridge-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-selected.png"; sourceTree = "<group>"; };
-		B79D79A6184046F300CB68D8 /* car-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car-b.png"; sourceTree = "<group>"; };
-		B79D79A7184046F300CB68D8 /* controller-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controller-b.png"; sourceTree = "<group>"; };
-		B79D79A8184046F300CB68D8 /* laptop-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laptop-b.png"; sourceTree = "<group>"; };
-		B79D79A9184046F300CB68D8 /* lcd-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lcd-b.png"; sourceTree = "<group>"; };
-		B79D79AA184046F300CB68D8 /* led-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-b.png"; sourceTree = "<group>"; };
-		B79D79AB184046F300CB68D8 /* notifications-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-b.png"; sourceTree = "<group>"; };
-		B79D79AC184046F300CB68D8 /* notifications-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-selected.png"; sourceTree = "<group>"; };
-		B79D79AD184046F300CB68D8 /* power-b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power-b.png"; sourceTree = "<group>"; };
-		B79D79B81840502500CB68D8 /* led-b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-b2.png"; sourceTree = "<group>"; };
-		B79D79BA1840509000CB68D8 /* led-b3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-b3.png"; sourceTree = "<group>"; };
-		B79D79BC1840514900CB68D8 /* power-b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power-b2.png"; sourceTree = "<group>"; };
 		B79D79BE18405F3200CB68D8 /* LCDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCDTableViewController.h; sourceTree = "<group>"; };
 		B79D79BF18405F3200CB68D8 /* LCDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCDTableViewController.m; sourceTree = "<group>"; };
 		B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuTableViewController.h; sourceTree = "<group>"; };
@@ -274,19 +183,26 @@
 		B7A8C38E1832C726009A4577 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
 		B7A8C3921832CB69009A4577 /* BleduinoRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleduinoRootController.h; sourceTree = "<group>"; };
 		B7A8C3931832CB69009A4577 /* BleduinoRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleduinoRootController.m; sourceTree = "<group>"; };
-		B7AE65D01842B977007C45A3 /* car-b3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car-b3.png"; sourceTree = "<group>"; };
-		B7AE65D51842BF2E007C45A3 /* car-b4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car-b4.png"; sourceTree = "<group>"; };
-		B7AE65D71842BFC3007C45A3 /* led-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-b5.png"; sourceTree = "<group>"; };
-		B7AE65D91842C215007C45A3 /* bridge-selected5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-selected5.png"; sourceTree = "<group>"; };
-		B7AE65DA1842C215007C45A3 /* laptop-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laptop-b5.png"; sourceTree = "<group>"; };
-		B7AE65DB1842C215007C45A3 /* lcd-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lcd-b5.png"; sourceTree = "<group>"; };
-		B7AE65DC1842C215007C45A3 /* notifications-selected5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-selected5.png"; sourceTree = "<group>"; };
-		B7AE65DD1842C215007C45A3 /* notifications-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-b5.png"; sourceTree = "<group>"; };
-		B7AE65DE1842C215007C45A3 /* bridge-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-b5.png"; sourceTree = "<group>"; };
-		B7AE65DF1842C215007C45A3 /* controller-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controller-b5.png"; sourceTree = "<group>"; };
-		B7AE65E01842C215007C45A3 /* power-b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "power-b5.png"; sourceTree = "<group>"; };
-		B7AE65E91842CBB6007C45A3 /* bridge-s5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-s5.png"; sourceTree = "<group>"; };
-		B7AE65EA1842CBB6007C45A3 /* notifications-s5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-s5.png"; sourceTree = "<group>"; };
+		B7AE65D51842BF2E007C45A3 /* car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car.png; sourceTree = "<group>"; };
+		B7AE65D71842BFC3007C45A3 /* led.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = led.png; sourceTree = "<group>"; };
+		B7AE65DA1842C215007C45A3 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
+		B7AE65DB1842C215007C45A3 /* lcd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lcd.png; sourceTree = "<group>"; };
+		B7AE65DD1842C215007C45A3 /* notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notifications.png; sourceTree = "<group>"; };
+		B7AE65DE1842C215007C45A3 /* bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bridge.png; sourceTree = "<group>"; };
+		B7AE65DF1842C215007C45A3 /* controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controller.png; sourceTree = "<group>"; };
+		B7AE65E01842C215007C45A3 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
+		B7AE65E91842CBB6007C45A3 /* bridge-s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bridge-s.png"; sourceTree = "<group>"; };
+		B7AE65EA1842CBB6007C45A3 /* notifications-s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications-s.png"; sourceTree = "<group>"; };
+		B7AE65EF184307C7007C45A3 /* hardware.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hardware.png; sourceTree = "<group>"; };
+		B7AE65F0184307C7007C45A3 /* hardware@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hardware@2x.png"; sourceTree = "<group>"; };
+		B7AE65F1184307C7007C45A3 /* contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact@2x.png"; sourceTree = "<group>"; };
+		B7AE65F2184307C7007C45A3 /* contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contact.png; sourceTree = "<group>"; };
+		B7AE65F3184307C7007C45A3 /* manager.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manager.png; sourceTree = "<group>"; };
+		B7AE65F4184307C7007C45A3 /* manager@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manager@2x.png"; sourceTree = "<group>"; };
+		B7AE65F5184307C7007C45A3 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		B7AE65F6184307C7007C45A3 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		B7AE65F7184307C7007C45A3 /* modules.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = modules.png; sourceTree = "<group>"; };
+		B7AE65F8184307C7007C45A3 /* modules@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "modules@2x.png"; sourceTree = "<group>"; };
 		B7B562F118289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrottleYawRollPitchCharacteristic.h; sourceTree = "<group>"; };
 		B7B562F218289D7D0056C6EE /* ThrottleYawRollPitchCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrottleYawRollPitchCharacteristic.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -456,85 +372,11 @@
 		B79D7925183E904200CB68D8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				B7AE65E91842CBB6007C45A3 /* bridge-s5.png */,
-				B7AE65EA1842CBB6007C45A3 /* notifications-s5.png */,
-				B7AE65D91842C215007C45A3 /* bridge-selected5.png */,
-				B7AE65DA1842C215007C45A3 /* laptop-b5.png */,
-				B7AE65DB1842C215007C45A3 /* lcd-b5.png */,
-				B7AE65DC1842C215007C45A3 /* notifications-selected5.png */,
-				B7AE65DD1842C215007C45A3 /* notifications-b5.png */,
-				B7AE65DE1842C215007C45A3 /* bridge-b5.png */,
-				B7AE65DF1842C215007C45A3 /* controller-b5.png */,
-				B7AE65E01842C215007C45A3 /* power-b5.png */,
-				B7AE65D71842BFC3007C45A3 /* led-b5.png */,
-				B7AE65D51842BF2E007C45A3 /* car-b4.png */,
-				B7AE65D01842B977007C45A3 /* car-b3.png */,
-				B79D79B81840502500CB68D8 /* led-b2.png */,
-				B765076518418E9400ACE0A2 /* menu-2.png */,
-				B765076618418E9400ACE0A2 /* menu-2@2x.png */,
-				B79D79BA1840509000CB68D8 /* led-b3.png */,
-				B79D79BC1840514900CB68D8 /* power-b2.png */,
-				B79D79A4184046F300CB68D8 /* bridge-b.png */,
-				B79D79A5184046F300CB68D8 /* bridge-selected.png */,
-				B79D79A6184046F300CB68D8 /* car-b.png */,
-				B79D79A7184046F300CB68D8 /* controller-b.png */,
-				B79D79A8184046F300CB68D8 /* laptop-b.png */,
-				B79D79A9184046F300CB68D8 /* lcd-b.png */,
-				B79D79AA184046F300CB68D8 /* led-b.png */,
-				B79D79AB184046F300CB68D8 /* notifications-b.png */,
-				B79D79AC184046F300CB68D8 /* notifications-selected.png */,
-				B79D79AD184046F300CB68D8 /* power-b.png */,
-				B79D7992184009BC00CB68D8 /* contact.png */,
-				B79D7993184009BC00CB68D8 /* contact2@2x.png */,
-				B79D7994184009BC00CB68D8 /* hardware.png */,
-				B79D7995184009BC00CB68D8 /* modules.png */,
-				B79D7996184009BC00CB68D8 /* search.png */,
-				B79D7997184009BC00CB68D8 /* search3.png */,
-				B79D7998184009BC00CB68D8 /* settings.png */,
-				B79D7999184009BC00CB68D8 /* tutorials.png */,
-				B79D799A184009BC00CB68D8 /* tutorials2.png */,
-				B79D798A183FE58A00CB68D8 /* grid-4-selected@2x.png */,
-				B79D798B183FE58A00CB68D8 /* grid-4-selected.png */,
-				B79D798C183FE58A00CB68D8 /* grid-4@2x.png */,
-				B79D798D183FE58A00CB68D8 /* grid-4.png */,
-				B79D7988183FE53200CB68D8 /* grid.png */,
+				B7AE6603184307D7007C45A3 /* Menu */,
+				B7AE65ED1843074C007C45A3 /* Modules */,
+				B7AE65EE18430763007C45A3 /* Controllers */,
 				B79D794E183F238B00CB68D8 /* blue-bg.jpg */,
 				B79D7953183F238B00CB68D8 /* silver-bg.jpg */,
-				B79D7944183EA81B00CB68D8 /* joystick-neutral.png */,
-				B79D7945183EA81B00CB68D8 /* joystick-hold.png */,
-				B79D795E183FD4BF00CB68D8 /* bridge.png */,
-				B79D795F183FD4BF00CB68D8 /* bridge@2x.png */,
-				B79D7960183FD4BF00CB68D8 /* controller.png */,
-				B79D7961183FD4BF00CB68D8 /* controller@2x.png */,
-				B79D7962183FD4BF00CB68D8 /* keyboard.png */,
-				B79D7963183FD4BF00CB68D8 /* keyboard@2x.png */,
-				B79D7964183FD4BF00CB68D8 /* lcd.png */,
-				B79D7965183FD4BF00CB68D8 /* lcd@2x.png */,
-				B79D7966183FD4BF00CB68D8 /* led.png */,
-				B79D7967183FD4BF00CB68D8 /* led@2x.png */,
-				B79D7968183FD4BF00CB68D8 /* menu-t.png */,
-				B79D7969183FD4BF00CB68D8 /* menu-t@2x.png */,
-				B79D796A183FD4BF00CB68D8 /* menu.png */,
-				B79D796B183FD4BF00CB68D8 /* menu@2x.png */,
-				B79D796C183FD4BF00CB68D8 /* notifications.png */,
-				B79D796D183FD4BF00CB68D8 /* notifications@2x.png */,
-				B79D796E183FD4BF00CB68D8 /* power.png */,
-				B79D796F183FD4BF00CB68D8 /* power@2x.png */,
-				B79D7970183FD4BF00CB68D8 /* rc.png */,
-				B79D7971183FD4BF00CB68D8 /* rc@2x.png */,
-				B79D7937183E90D000CB68D8 /* joystick-bg.png */,
-				B79D7936183E90D000CB68D8 /* green-y.png */,
-				B79D7938183E90D000CB68D8 /* yellow-b.png */,
-				B79D7939183E90D000CB68D8 /* blue-x.png */,
-				B79D793A183E90D000CB68D8 /* red-a.png */,
-				B79D7926183E904200CB68D8 /* arrow-down.png */,
-				B79D7927183E904200CB68D8 /* arrow-down@2x.png */,
-				B79D7928183E904200CB68D8 /* arrow-left.png */,
-				B79D7929183E904200CB68D8 /* arrow-left@2x.png */,
-				B79D792A183E904200CB68D8 /* arrow-right.png */,
-				B79D792B183E904200CB68D8 /* arrow-right@2x.png */,
-				B79D792C183E904200CB68D8 /* arrow-up.png */,
-				B79D792D183E904200CB68D8 /* arrow-up@2x.png */,
 			);
 			name = Images;
 			path = ../Images;
@@ -572,6 +414,62 @@
 				B7A8C3931832CB69009A4577 /* BleduinoRootController.m */,
 				B7A8C3831832C5EE009A4577 /* SideMenuTableViewController.h */,
 				B7A8C3841832C5EE009A4577 /* SideMenuTableViewController.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		B7AE65ED1843074C007C45A3 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B7AE65E91842CBB6007C45A3 /* bridge-s.png */,
+				B7AE65EA1842CBB6007C45A3 /* notifications-s.png */,
+				B7AE65DA1842C215007C45A3 /* keyboard.png */,
+				B7AE65DB1842C215007C45A3 /* lcd.png */,
+				B7AE65DD1842C215007C45A3 /* notifications.png */,
+				B7AE65DE1842C215007C45A3 /* bridge.png */,
+				B7AE65DF1842C215007C45A3 /* controller.png */,
+				B7AE65E01842C215007C45A3 /* power.png */,
+				B7AE65D71842BFC3007C45A3 /* led.png */,
+				B7AE65D51842BF2E007C45A3 /* car.png */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		B7AE65EE18430763007C45A3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B79D7944183EA81B00CB68D8 /* joystick-neutral.png */,
+				B79D7945183EA81B00CB68D8 /* joystick-hold.png */,
+				B79D7937183E90D000CB68D8 /* joystick-bg.png */,
+				B79D7936183E90D000CB68D8 /* green-y.png */,
+				B79D7938183E90D000CB68D8 /* yellow-b.png */,
+				B79D7939183E90D000CB68D8 /* blue-x.png */,
+				B79D793A183E90D000CB68D8 /* red-a.png */,
+				B79D7926183E904200CB68D8 /* arrow-down.png */,
+				B79D7927183E904200CB68D8 /* arrow-down@2x.png */,
+				B79D7928183E904200CB68D8 /* arrow-left.png */,
+				B79D7929183E904200CB68D8 /* arrow-left@2x.png */,
+				B79D792A183E904200CB68D8 /* arrow-right.png */,
+				B79D792B183E904200CB68D8 /* arrow-right@2x.png */,
+				B79D792C183E904200CB68D8 /* arrow-up.png */,
+				B79D792D183E904200CB68D8 /* arrow-up@2x.png */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		B7AE6603184307D7007C45A3 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B7AE65EF184307C7007C45A3 /* hardware.png */,
+				B7AE65F0184307C7007C45A3 /* hardware@2x.png */,
+				B7AE65F1184307C7007C45A3 /* contact@2x.png */,
+				B7AE65F2184307C7007C45A3 /* contact.png */,
+				B7AE65F3184307C7007C45A3 /* manager.png */,
+				B7AE65F4184307C7007C45A3 /* manager@2x.png */,
+				B7AE65F5184307C7007C45A3 /* settings@2x.png */,
+				B7AE65F6184307C7007C45A3 /* settings.png */,
+				B7AE65F7184307C7007C45A3 /* modules.png */,
+				B7AE65F8184307C7007C45A3 /* modules@2x.png */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -813,89 +711,47 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B79D79B4184046F300CB68D8 /* led-b.png in Resources */,
 				B79D7932183E904200CB68D8 /* arrow-right.png in Resources */,
 				B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */,
-				B7AE65D81842BFC3007C45A3 /* led-b5.png in Resources */,
-				B7AE65E61842C215007C45A3 /* bridge-b5.png in Resources */,
-				B79D797E183FD4BF00CB68D8 /* menu.png in Resources */,
-				B7AE65E11842C215007C45A3 /* bridge-selected5.png in Resources */,
+				B7AE65D81842BFC3007C45A3 /* led.png in Resources */,
+				B7AE65E61842C215007C45A3 /* bridge.png in Resources */,
 				B79D793C183E90D000CB68D8 /* joystick-bg.png in Resources */,
-				B79D797B183FD4BF00CB68D8 /* led@2x.png in Resources */,
-				B79D79B0184046F300CB68D8 /* car-b.png in Resources */,
-				B79D7989183FE53200CB68D8 /* grid.png in Resources */,
-				B79D7985183FD4BF00CB68D8 /* rc@2x.png in Resources */,
 				B79D793E183E90D000CB68D8 /* blue-x.png in Resources */,
-				B7AE65E41842C215007C45A3 /* notifications-selected5.png in Resources */,
-				B7AE65E81842C215007C45A3 /* power-b5.png in Resources */,
-				B7AE65E31842C215007C45A3 /* lcd-b5.png in Resources */,
-				B79D7990183FE58A00CB68D8 /* grid-4@2x.png in Resources */,
-				B79D79A2184009BC00CB68D8 /* tutorials.png in Resources */,
-				B79D79B1184046F300CB68D8 /* controller-b.png in Resources */,
+				B7AE65FC184307C7007C45A3 /* contact.png in Resources */,
+				B7AE65E81842C215007C45A3 /* power.png in Resources */,
+				B7AE65E31842C215007C45A3 /* lcd.png in Resources */,
 				B79D792F183E904200CB68D8 /* arrow-down@2x.png in Resources */,
-				B79D79AE184046F300CB68D8 /* bridge-b.png in Resources */,
-				B79D799C184009BC00CB68D8 /* contact2@2x.png in Resources */,
-				B79D799E184009BC00CB68D8 /* modules.png in Resources */,
 				B79D793F183E90D000CB68D8 /* red-a.png in Resources */,
-				B79D798E183FE58A00CB68D8 /* grid-4-selected@2x.png in Resources */,
-				B7AE65E51842C215007C45A3 /* notifications-b5.png in Resources */,
-				B79D79B7184046F300CB68D8 /* power-b.png in Resources */,
-				B79D798F183FE58A00CB68D8 /* grid-4-selected.png in Resources */,
-				B79D79BD1840514900CB68D8 /* power-b2.png in Resources */,
-				B79D7972183FD4BF00CB68D8 /* bridge.png in Resources */,
-				B79D799D184009BC00CB68D8 /* hardware.png in Resources */,
+				B7AE65E51842C215007C45A3 /* notifications.png in Resources */,
 				B79D7931183E904200CB68D8 /* arrow-left@2x.png in Resources */,
-				B79D79B3184046F300CB68D8 /* lcd-b.png in Resources */,
 				B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */,
+				B7AE65F9184307C7007C45A3 /* hardware.png in Resources */,
+				B7AE65FF184307C7007C45A3 /* settings@2x.png in Resources */,
+				B7AE65FA184307C7007C45A3 /* hardware@2x.png in Resources */,
 				B79D792E183E904200CB68D8 /* arrow-down.png in Resources */,
 				B7B73BFC17F256B3008E6769 /* InfoPlist.strings in Resources */,
-				B79D7982183FD4BF00CB68D8 /* power.png in Resources */,
 				B79D793D183E90D000CB68D8 /* yellow-b.png in Resources */,
-				B79D79B5184046F300CB68D8 /* notifications-b.png in Resources */,
-				B79D79BB1840509000CB68D8 /* led-b3.png in Resources */,
 				B79D7934183E904200CB68D8 /* arrow-up.png in Resources */,
-				B79D7973183FD4BF00CB68D8 /* bridge@2x.png in Resources */,
-				B79D7975183FD4BF00CB68D8 /* controller@2x.png in Resources */,
+				B7AE65FB184307C7007C45A3 /* contact@2x.png in Resources */,
 				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
-				B765076718418E9400ACE0A2 /* menu-2.png in Resources */,
-				B7AE65E71842C215007C45A3 /* controller-b5.png in Resources */,
-				B7AE65D61842BF2E007C45A3 /* car-b4.png in Resources */,
-				B79D79AF184046F300CB68D8 /* bridge-selected.png in Resources */,
-				B79D7979183FD4BF00CB68D8 /* lcd@2x.png in Resources */,
+				B7AE65E71842C215007C45A3 /* controller.png in Resources */,
+				B7AE65D61842BF2E007C45A3 /* car.png in Resources */,
+				B7AE65FE184307C7007C45A3 /* manager@2x.png in Resources */,
 				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
-				B79D79B2184046F300CB68D8 /* laptop-b.png in Resources */,
-				B79D797C183FD4BF00CB68D8 /* menu-t.png in Resources */,
-				B79D7978183FD4BF00CB68D8 /* lcd.png in Resources */,
-				B79D7983183FD4BF00CB68D8 /* power@2x.png in Resources */,
-				B79D7980183FD4BF00CB68D8 /* notifications.png in Resources */,
-				B79D7991183FE58A00CB68D8 /* grid-4.png in Resources */,
-				B79D797F183FD4BF00CB68D8 /* menu@2x.png in Resources */,
-				B79D79B91840502500CB68D8 /* led-b2.png in Resources */,
-				B79D799B184009BC00CB68D8 /* contact.png in Resources */,
+				B7AE65FD184307C7007C45A3 /* manager.png in Resources */,
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
-				B79D799F184009BC00CB68D8 /* search.png in Resources */,
-				B765076818418E9400ACE0A2 /* menu-2@2x.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
-				B79D797D183FD4BF00CB68D8 /* menu-t@2x.png in Resources */,
 				B79D7954183F238B00CB68D8 /* blue-bg.jpg in Resources */,
-				B79D7984183FD4BF00CB68D8 /* rc.png in Resources */,
-				B7AE65D11842B977007C45A3 /* car-b3.png in Resources */,
-				B79D7976183FD4BF00CB68D8 /* keyboard.png in Resources */,
-				B7AE65EB1842CBB6007C45A3 /* bridge-s5.png in Resources */,
-				B79D79A0184009BC00CB68D8 /* search3.png in Resources */,
-				B79D7981183FD4BF00CB68D8 /* notifications@2x.png in Resources */,
-				B79D7977183FD4BF00CB68D8 /* keyboard@2x.png in Resources */,
+				B7AE6601184307C7007C45A3 /* modules.png in Resources */,
+				B7AE65EB1842CBB6007C45A3 /* bridge-s.png in Resources */,
 				B79D794B183ECF1D00CB68D8 /* VerticalJoystickView.xib in Resources */,
-				B7AE65EC1842CBB6007C45A3 /* notifications-s5.png in Resources */,
+				B7AE65EC1842CBB6007C45A3 /* notifications-s.png in Resources */,
 				B79D7959183F238B00CB68D8 /* silver-bg.jpg in Resources */,
-				B79D7974183FD4BF00CB68D8 /* controller.png in Resources */,
-				B7AE65E21842C215007C45A3 /* laptop-b5.png in Resources */,
-				B79D797A183FD4BF00CB68D8 /* led.png in Resources */,
-				B79D79A1184009BC00CB68D8 /* settings.png in Resources */,
+				B7AE65E21842C215007C45A3 /* keyboard.png in Resources */,
+				B7AE6600184307C7007C45A3 /* settings.png in Resources */,
+				B7AE6602184307C7007C45A3 /* modules@2x.png in Resources */,
 				B79D7947183EA81B00CB68D8 /* joystick-hold.png in Resources */,
-				B79D79B6184046F300CB68D8 /* notifications-selected.png in Resources */,
 				B79D7946183EA81B00CB68D8 /* joystick-neutral.png in Resources */,
-				B79D79A3184009BC00CB68D8 /* tutorials2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

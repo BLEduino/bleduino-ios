@@ -10,12 +10,23 @@
 #import "ModulesCollectionViewController.h"
 
 @implementation SideMenuTableViewController
+{
+    NSArray *_titles;
+    NSArray *_images;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _titles = @[@"Modules", @"BLE Manager", @"Settings", @"BLEduino Hardware", @"Kytelabs"];
+    _images = @[@"grid.png", @"search.png", @"settings.png", @"hardware.png", @"contact.png"];
+    
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 10) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:
+                                  CGRectMake(0, (self.view.frame.size.height - 54 * 10) / 2.0f, self.view.frame.size.width, 54 * 10)
+                                                              style:UITableViewStyleGrouped];
+        
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -40,20 +51,37 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UINavigationController *navigationController = (UINavigationController *)self.sideMenuViewController.contentViewController;
     
-    switch (indexPath.row) {
-        case 0:
-            navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"modulesController"]];
-            [self.sideMenuViewController hideMenuViewController];
-            break;
-        case 1:
-            navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"bleController"]];
-            [self.sideMenuViewController hideMenuViewController];
-            break;
-        case 2:
-            navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"settingsController"]];
-            [self.sideMenuViewController hideMenuViewController];
-            break;
+    //App functionality, i.e. Modules, BLE Manager, Settings.
+    if(indexPath.section == 0)
+    {
+        switch (indexPath.row) {
+            case 0:
+                navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"modulesController"]];
+                [self.sideMenuViewController hideMenuViewController];
+                break;
+            case 1:
+                navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"bleController"]];
+                [self.sideMenuViewController hideMenuViewController];
+                break;
+            case 2:
+                navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"settingsController"]];
+                [self.sideMenuViewController hideMenuViewController];
+                break;
+        }
     }
+    
+    //BLEduino hardware.
+    else if (indexPath.section == 1)
+    {
+        //Webview, bleduino.cc
+    }
+    
+    //Contact Kytelabs
+    else if (indexPath.section == 2)
+    {
+            //open email to help@bleduino.cc
+    }
+
 }
 
 #pragma mark -
@@ -61,7 +89,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 54;
+    return 48;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -77,7 +105,7 @@
             rows = 3;
             break;
         case 1:
-            rows = 2;
+            rows = 1;
             break;
         case 2:
             rows = 1;
@@ -87,26 +115,55 @@
     return rows;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *title;
+
+    switch (section) {
+        case 0:
+            title = @"General";
+            break;
+        case 1:
+            title = @"Hardware";
+            break;
+        case 2:
+            title = @"Contact";
+            break;
+    }
+    
+    return title;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:21];
-        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+        cell.textLabel.textColor = [UIColor blackColor];
         cell.textLabel.highlightedTextColor = [UIColor lightGrayColor];
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     
-    NSArray *titles = @[@"Modules", @"BLE Manager", @"Settings", @"Tutorials" @"Hardware", @"Kytelabs"];
-    NSArray *images = @[@"modules.png", @"search.png", @"settings.png", @"hardware.png", @"contact"];
-    cell.textLabel.text = titles[indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
-    
+    //Configure cell.
+    switch (indexPath.section) {
+        case 0:
+            cell.textLabel.text = _titles[indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            break;
+        case 1:
+            cell.textLabel.text = _titles[indexPath.row+3];
+            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            break;
+        case 2:
+            cell.textLabel.text = _titles[indexPath.row+4];
+            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            break;
+    }
+
     return cell;
 }
 
