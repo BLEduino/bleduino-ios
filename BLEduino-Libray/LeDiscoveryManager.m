@@ -44,13 +44,17 @@ static LeDiscoveryManager *sharedInstance = NULL;
     return self;
 }
 
-+ (LeDiscoveryManager *)sharedLeManager {
-    @synchronized(self) {
-        if (sharedInstance == nil)
-            sharedInstance=[[LeDiscoveryManager alloc] init];
-    }
-    return sharedInstance;
+
++ (LeDiscoveryManager *)sharedLeManager
+{
+    static id sharedData = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedData = [[[self class] alloc] init];
+    });
+    return sharedData;
 }
+
 
 - (void)dismiss
 {

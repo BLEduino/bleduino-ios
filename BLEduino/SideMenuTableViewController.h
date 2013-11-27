@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "RESideMenu.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface SideMenuTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, RESideMenuDelegate>
+@interface SideMenuTableViewController : UIViewController
+<
+UITableViewDataSource,
+UITableViewDelegate,
+RESideMenuDelegate,
+MFMailComposeViewControllerDelegate
+>
 
 @property (strong, readwrite, nonatomic) UITableView *tableView;
 

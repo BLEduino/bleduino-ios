@@ -20,11 +20,11 @@
     [super viewDidLoad];
     
     _titles = @[@"Modules", @"BLE Manager", @"Settings", @"BLEduino Hardware", @"Kytelabs"];
-    _images = @[@"grid.png", @"search.png", @"settings.png", @"hardware.png", @"contact.png"];
+    _images = @[@"modules.png", @"manager.png", @"settings.png", @"hardware.png", @"contact.png"];
     
     self.tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:
-                                  CGRectMake(0, (self.view.frame.size.height - 54 * 10) / 2.0f, self.view.frame.size.width, 54 * 10)
+                                  CGRectMake(0, (self.view.frame.size.height - 54 * 7) / 2.0f, self.view.frame.size.width, 54 * 10)
                                                               style:UITableViewStyleGrouped];
         
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
@@ -73,15 +73,44 @@
     //BLEduino hardware.
     else if (indexPath.section == 1)
     {
-        //Webview, bleduino.cc
+        //Open bleduino.cc
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://bleduino.cc"]];
     }
     
     //Contact Kytelabs
     else if (indexPath.section == 2)
     {
-            //open email to help@bleduino.cc
+        if([MFMailComposeViewController canSendMail])
+        {
+            MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+            controller.mailComposeDelegate = self;
+            [controller setSubject:@"Hello Kytelabs from BLEduino App"];
+            [controller setToRecipients:@[@"help@bleduino.cc"]];
+            if(controller) [self presentViewController:controller
+                                              animated:YES
+                                            completion:nil];
+        }
+        else
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Email"
+                                                            message:@"Your phone is not configure for sending emails. Add your email account on settings."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }
 
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -
@@ -142,9 +171,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.textLabel.highlightedTextColor = [UIColor lightGrayColor];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.highlightedTextColor = [UIColor blueColor];
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     
@@ -156,16 +185,40 @@
             break;
         case 1:
             cell.textLabel.text = _titles[indexPath.row+3];
-            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row+3]];
             break;
         case 2:
             cell.textLabel.text = _titles[indexPath.row+4];
-            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row+4]];
             break;
     }
 
     return cell;
 }
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    NSString *title;
+//    
+//    switch (section) {
+//        case 0:
+//            title = @"GENERAL";
+//            break;
+//        case 1:
+//            title = @"HARDWARE";
+//            break;
+//        case 2:
+//            title = @"CONTACT";
+//            break;
+//    }
+//    
+//    /* Create custom view to display section header... */
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, tableView.frame.size.width - 100, 18)];
+//    [label setFont:[UIFont boldSystemFontOfSize:12]];
+//    label.textColor = [UIColor whiteColor];
+//    [label setText:title];
+//    return label;
+//}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

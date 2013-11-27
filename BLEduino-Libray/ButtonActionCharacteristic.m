@@ -15,24 +15,28 @@
  */
 - (id) initWithData:(NSData *)buttonActionData
 {
-    Byte *buttonIDByte = (Byte*)malloc(1);
-    NSRange buttonIDRange = NSMakeRange(0, 1);
-    [buttonActionData getBytes:buttonIDByte range:buttonIDRange];
-    NSData *buttonIDData = [[NSData alloc] initWithBytes:buttonIDByte length:1];
-    self.buttonID = *(int*)([buttonIDData bytes]);
-    
-    Byte *buttonStatusByte = (Byte*)malloc(1);
-    NSRange buttonStatusRange = NSMakeRange(1, 1);
-    [buttonActionData getBytes:buttonStatusByte range:buttonStatusRange];
-    NSData *buttonStatusData = [[NSData alloc] initWithBytes:buttonStatusByte length:1];
-    self.buttonStatus = *(int*)([buttonStatusData bytes]);
-    
-    Byte *buttonValueByte = (Byte*)malloc(1);
-    NSRange buttonValueRange = NSMakeRange(2, 1);
-    [buttonActionData getBytes:buttonValueByte range:buttonValueRange];
-    NSData *buttonValueData = [[NSData alloc] initWithBytes:buttonValueByte length:1];
-    self.buttonValue = *(int*)([buttonValueData bytes]);
-    
+    self = [super init];
+    if (self)
+    {
+        Byte *buttonIDByte = (Byte*)malloc(1);
+        NSRange buttonIDRange = NSMakeRange(0, 1);
+        [buttonActionData getBytes:buttonIDByte range:buttonIDRange];
+        NSData *buttonIDData = [[NSData alloc] initWithBytes:buttonIDByte length:1];
+        _buttonID = *(int*)([buttonIDData bytes]);
+        
+        Byte *buttonStatusByte = (Byte*)malloc(1);
+        NSRange buttonStatusRange = NSMakeRange(1, 1);
+        [buttonActionData getBytes:buttonStatusByte range:buttonStatusRange];
+        NSData *buttonStatusData = [[NSData alloc] initWithBytes:buttonStatusByte length:1];
+        _buttonStatus = *(int*)([buttonStatusData bytes]);
+        
+        Byte *buttonValueByte = (Byte*)malloc(1);
+        NSRange buttonValueRange = NSMakeRange(2, 1);
+        [buttonActionData getBytes:buttonValueByte range:buttonValueRange];
+        NSData *buttonValueData = [[NSData alloc] initWithBytes:buttonValueByte length:1];
+        _buttonValue = *(int*)([buttonValueData bytes]);
+    }
+
     return self;
 }
 

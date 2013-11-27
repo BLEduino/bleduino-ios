@@ -15,12 +15,16 @@
  */
 - (id) initWithData:(NSData *)attributesData
 {
-    NSString *attributesString = [[NSString alloc] initWithData:attributesData
-                                                  encoding:NSUTF8StringEncoding];
-
-    NSArray *attributes = [attributesString componentsSeparatedByString:@"#"];
-    self.title = [attributes objectAtIndex:0];
-    self.message = [attributes objectAtIndex:1];
+    self = [super init];
+    if(self)
+    {
+        NSString *attributesString = [[NSString alloc] initWithData:attributesData
+                                                           encoding:NSUTF8StringEncoding];
+        
+        NSArray *attributes = [attributesString componentsSeparatedByString:@"#"];
+        _title = [attributes objectAtIndex:0];
+        _message = [attributes objectAtIndex:1];
+    }
 
     return self;
 }

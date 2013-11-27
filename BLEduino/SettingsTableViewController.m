@@ -197,14 +197,14 @@
             //Configure cell
             cell.settingDescription.text = @"LCD Total Available Characters";
             NSInteger value = [prefs integerForKey:SETTINGS_LCD_TOTAL_CHARS];
-            cell.settingsNumber.text = [NSString stringWithFormat:@"%d", value];
+            cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
 
         }
         else if(indexPath.row == 1)
         {
             cell.settingDescription.text = @"Power Realay Pin";
             NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
-            cell.settingsNumber.text = [NSString stringWithFormat:@"%d", value];
+            cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
         }
         else
         {
@@ -219,7 +219,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Cell Index: s%i r%i", indexPath.section, indexPath.row);
+    NSLog(@"Cell Index: s%li r%li", (long)indexPath.section, (long)indexPath.row);
     
     //LCD screen size.
     if(indexPath.section == 2 && indexPath.row == 0)

@@ -15,27 +15,30 @@
  */
 - (id) initWithData:(NSData *)firmataCommandData
 {
-    //Converting pinNumber byte to integer.
-    Byte *pinNumberByte = (Byte*)malloc(1);
-    NSRange pinNumberRange = NSMakeRange(0, 1);
-    [firmataCommandData getBytes:pinNumberByte range:pinNumberRange];
-    NSData *pinNumberData = [[NSData alloc] initWithBytes:pinNumberByte length:1];
-    self.pinNumber = *(int*)([pinNumberData bytes]);
-    
-    //Converting pinState byte to corresponding FirmataCommandPinState.
-    Byte *pinStateByte = (Byte*)malloc(1);
-    NSRange pinStateRange = NSMakeRange(1, 1);
-    [firmataCommandData getBytes:pinStateByte range:pinStateRange];
-    NSData *pinStateData = [[NSData alloc] initWithBytes:pinStateByte length:1];
-    self.pinState = *(int*)([pinStateData bytes]);
-
-    //Converting pinValue byte to integer.
-    Byte *pinValueByte = (Byte*)malloc(1);
-    NSRange pinValueRange = NSMakeRange(2, 1);
-    [firmataCommandData getBytes:pinValueByte range:pinValueRange];
-    NSData *pinValueData = [[NSData alloc] initWithBytes:pinValueByte length:1];
-    self.pinValue = *(int*)([pinValueData bytes]);
-    
+    self = [super init];
+    if(self)
+    {
+        //Converting pinNumber byte to integer.
+        Byte *pinNumberByte = (Byte*)malloc(1);
+        NSRange pinNumberRange = NSMakeRange(0, 1);
+        [firmataCommandData getBytes:pinNumberByte range:pinNumberRange];
+        NSData *pinNumberData = [[NSData alloc] initWithBytes:pinNumberByte length:1];
+        self.pinNumber = *(int*)([pinNumberData bytes]);
+        
+        //Converting pinState byte to corresponding FirmataCommandPinState.
+        Byte *pinStateByte = (Byte*)malloc(1);
+        NSRange pinStateRange = NSMakeRange(1, 1);
+        [firmataCommandData getBytes:pinStateByte range:pinStateRange];
+        NSData *pinStateData = [[NSData alloc] initWithBytes:pinStateByte length:1];
+        self.pinState = *(int*)([pinStateData bytes]);
+        
+        //Converting pinValue byte to integer.
+        Byte *pinValueByte = (Byte*)malloc(1);
+        NSRange pinValueRange = NSMakeRange(2, 1);
+        [firmataCommandData getBytes:pinValueByte range:pinValueRange];
+        NSData *pinValueData = [[NSData alloc] initWithBytes:pinValueByte length:1];
+        self.pinValue = *(int*)([pinValueData bytes]);
+    }
     return self;
 }
 

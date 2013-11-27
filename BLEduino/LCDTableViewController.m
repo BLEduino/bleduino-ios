@@ -46,7 +46,7 @@
     
     //Load total available characters.
     _totalAvailableChars = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_LCD_TOTAL_CHARS];
-    self.charCountView.text = [NSString stringWithFormat:@"%d", _totalAvailableChars];
+    self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)_totalAvailableChars];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +83,7 @@
                                                     blue:51/255
                                                    alpha:1.0];
     }
-    self.charCountView.text = [NSString stringWithFormat:@"%d", charsLeft];
+    self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)charsLeft];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
