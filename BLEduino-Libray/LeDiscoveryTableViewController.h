@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "LeDiscoveryManager.h"
+#import "BDLeDiscoveryManager.h"
 
 @interface LeDiscoveryTableViewController : UITableViewController <LeDiscoveryManagerDelegate>
 @property (strong, nonatomic) NSArray *connectedBleduinos;

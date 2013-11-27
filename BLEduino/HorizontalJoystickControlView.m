@@ -8,20 +8,20 @@
 
 #import "HorizontalJoystickControlView.h"
 
+@interface HorizontalJoystickControlView ()
+@property (strong) UIImage *joystickNeutralImage;
+@property (strong) UIImage *joystickHoldImage;
+@property  CGPoint offset;
+
+@property (weak) IBOutlet UIImageView *joystickView;
+@end
+
 @implementation HorizontalJoystickControlView
-{
-    UIImage *joystickNeutralImage;
-    UIImage *joystickHoldImage;
-    CGPoint _offset;
-    
-    //Joystick view.
-@protected IBOutlet UIImageView *joystickView;
-}
 
 - (void) initJoystick
 {
-    joystickNeutralImage = [UIImage imageNamed:@"joystick-neutral.png"];
-    joystickHoldImage = [UIImage imageNamed:@"joystick-hold.png"];
+    self.joystickNeutralImage = [UIImage imageNamed:@"joystick-neutral.png"];
+    self.joystickHoldImage = [UIImage imageNamed:@"joystick-hold.png"];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -55,10 +55,10 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //Update joystick image to hold state image.
-    joystickView.image = joystickHoldImage;
+    self.joystickView.image = self.joystickHoldImage;
     
     UITouch *aTouch = [touches anyObject];
-    _offset = [aTouch locationInView:joystickView];
+    self.offset = [aTouch locationInView:self.joystickView];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -83,7 +83,7 @@
         
         //Execute movement.
         [UIView beginAnimations:@"Moving Joystick" context:nil];
-        joystickView.frame = CGRectMake(destination.x, joystickView.frame.origin.y, 90, 90);
+        self.joystickView.frame = CGRectMake(destination.x, self.joystickView.frame.origin.y, 90, 90);
         [UIView commitAnimations];
     }
 }
@@ -97,14 +97,14 @@
     [self.delegate horizontalJoystickDidUpdate:center];
     
     [UIView beginAnimations:@"Moving Joystick" context:nil];
-    joystickView.frame = centerFrame;
+    self.joystickView.frame = centerFrame;
     [UIView setAnimationDuration:0.1];
     [UIView commitAnimations];
     
     //Update joystick image to neutral state image.
-    joystickView.image = joystickNeutralImage;
+    self.joystickView.image = self.joystickNeutralImage;
     
-    NSLog(@"X: %f", joystickView.center.x);
+    NSLog(@"X: %f", self.joystickView.center.x);
 }
 
 @end

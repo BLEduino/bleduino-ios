@@ -7,18 +7,18 @@
 //
 
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BleService.h"
-#import "ThrottleYawRollPitchCharacteristic.h"
+#import "BDBleService.h"
+#import "BDThrottleYawRollPitchCharacteristic.h"
 
 #pragma mark -
 #pragma mark Vehicle Motion Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-extern NSString *kVehicleMotionServiceUUIDString;
+extern NSString * const kVehicleMotionServiceUUIDString;
 //8C6B1125-A312-681D-025B-0032C0D16A2D  VehicleMotion Service
 
-extern NSString *kThrottleYawRollPitchCharacteristicUUIDString;
+extern NSString * const kThrottleYawRollPitchCharacteristicUUIDString;
 //8C6B9806-A312-681D-025B-0032C0D16A2D  Throttle-Yaw-Roll-Pitch Characteristic
 
 
@@ -27,34 +27,35 @@ extern NSString *kThrottleYawRollPitchCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class VehicleMotionService;
+@class BDVehicleMotionService;
 @protocol VehicleMotionServiceDelegate <NSObject>
 @optional
-- (void)vehicleMotionService:(VehicleMotionService *)service
-            didReceiveMotion:(ThrottleYawRollPitchCharacteristic *)motionUpdate
+- (void)vehicleMotionService:(BDVehicleMotionService *)service
+            didReceiveMotion:(BDThrottleYawRollPitchCharacteristic *)motionUpdate
                        error:(NSError *)error;
 
-- (void)vehicleMotionService:(VehicleMotionService *)service
-              didWriteMotion:(ThrottleYawRollPitchCharacteristic *)motionUpdate
+- (void)vehicleMotionService:(BDVehicleMotionService *)service
+              didWriteMotion:(BDThrottleYawRollPitchCharacteristic *)motionUpdate
                        error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopRecivingMotionUpdatesFor:(VehicleMotionService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingMotionUpdatesFor:(BDVehicleMotionService *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingMotionUpdatesFor:(BDVehicleMotionService *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                      Vehicle Motion Service                              */
 /****************************************************************************/
-@interface VehicleMotionService : BleService <CBPeripheralDelegate>
-@property (nonatomic, strong) ThrottleYawRollPitchCharacteristic *lastMotionUpdate;
+@interface BDVehicleMotionService : BDBleService <CBPeripheralDelegate>
+@property (nonatomic, strong) BDThrottleYawRollPitchCharacteristic *lastMotionUpdate;
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<VehicleMotionServiceDelegate>)aController;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<VehicleMotionServiceDelegate>)aController;
 
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write motion update to BLEduino.
-- (void) writeMotionUpdate:(ThrottleYawRollPitchCharacteristic *)motion withAck:(BOOL)enabled;
-- (void) writeMotionUpdate:(ThrottleYawRollPitchCharacteristic *)motion;
+- (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion withAck:(BOOL)enabled;
+- (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

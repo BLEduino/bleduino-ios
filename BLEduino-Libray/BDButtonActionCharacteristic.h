@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ButtonActionCharacteristic : NSObject
+@interface BDButtonActionCharacteristic : NSObject
 
 /*
  * Identifies the button.
  */
-@property (nonatomic) NSInteger buttonID;
+@property NSInteger buttonID;
 
 /*
  * For push buttons. 
  * State: 1 denotes pushed down.
  * State: 0 denotes neutral
  */
-@property (nonatomic) NSInteger buttonStatus;
+@property NSInteger buttonStatus;
 
 /*
  * For joystick buttons.
@@ -31,7 +31,7 @@
  * State: -90 < X < 0  denotes down, represented as 0 < X < 127.
  * State:   0 < X < 90 denotes up, represented as 127 < X < 255.
  */
-@property (nonatomic) NSInteger buttonValue;
+@property NSInteger buttonValue;
 
 /*
  * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.

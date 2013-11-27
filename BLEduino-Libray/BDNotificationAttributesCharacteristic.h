@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NotificationAttributesCharacteristic : NSObject
+@interface BDNotificationAttributesCharacteristic : NSObject
 
 //Notifications have two attributes: title and message;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *message;
+@property (strong) NSString *title;
+@property (strong) NSString *message;
 
 /*
  * Create Notification Attributes characteristic from NSData object.

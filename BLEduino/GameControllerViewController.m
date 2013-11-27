@@ -7,9 +7,9 @@
 //
 
 #import "GameControllerViewController.h"
-#import "LeDiscoveryManager.h"
-#import "ControllerService.h"
-#import "ButtonActionCharacteristic.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDControllerService.h"
+#import "BDButtonActionCharacteristic.h"
 #import "OBShapedButton.h"
 
 #pragma mark -
@@ -17,16 +17,18 @@
 /****************************************************************************/
 /*                                  Setup                                   */
 /****************************************************************************/
+
+@interface GameControllerViewController ()
+@property (weak) IBOutlet OBShapedButton *yButton;
+@property (weak) IBOutlet OBShapedButton *xButton;
+@property (weak) IBOutlet OBShapedButton *aButton;
+@property (weak) IBOutlet OBShapedButton *bButton;
+
+@property (weak) IBOutlet UIButton *start;
+@property (weak) IBOutlet UIButton *select;
+@end
+
 @implementation GameControllerViewController
-{
-    IBOutlet OBShapedButton *yButton;
-    IBOutlet OBShapedButton *xButton;
-    IBOutlet OBShapedButton *aButton;
-    IBOutlet OBShapedButton *bButton;
-    
-    IBOutlet UIButton *start;
-    IBOutlet UIButton *select;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,20 +64,20 @@
     
     //Setup push buttons.
     //Button Pressing Down Observer
-    [xButton addTarget:self action:@selector(xButton:) forControlEvents:UIControlEventTouchDown];
-    [yButton addTarget:self action:@selector(yButton:) forControlEvents:UIControlEventTouchDown];
-    [aButton addTarget:self action:@selector(aButton:) forControlEvents:UIControlEventTouchDown];
-    [bButton addTarget:self action:@selector(bButton:) forControlEvents:UIControlEventTouchDown];
+    [self.xButton addTarget:self action:@selector(xButton:) forControlEvents:UIControlEventTouchDown];
+    [self.yButton addTarget:self action:@selector(yButton:) forControlEvents:UIControlEventTouchDown];
+    [self.aButton addTarget:self action:@selector(aButton:) forControlEvents:UIControlEventTouchDown];
+    [self.bButton addTarget:self action:@selector(bButton:) forControlEvents:UIControlEventTouchDown];
     
     //Button Released Observer
-    [xButton addTarget:self action:@selector(xButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
-    [yButton addTarget:self action:@selector(yButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
-    [aButton addTarget:self action:@selector(aButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
-    [bButton addTarget:self action:@selector(bButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [self.xButton addTarget:self action:@selector(xButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [self.yButton addTarget:self action:@selector(yButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [self.aButton addTarget:self action:@selector(aButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bButton addTarget:self action:@selector(bButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
     
     //Start/Select buttons.
-    [start addTarget:self action:@selector(startButton:) forControlEvents:UIControlEventTouchDown];
-    [select addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchDown];
+    [self.start addTarget:self action:@selector(startButton:) forControlEvents:UIControlEventTouchDown];
+    [self.select addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchDown];
     
 }
 
@@ -106,22 +108,22 @@
 - (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
 {
     //Create Vertical Joystick action.
-    ButtonActionCharacteristic *vJoystickUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *vJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
     vJoystickUpdate.buttonValue = dir.y;
     vJoystickUpdate.buttonID = 0;
     
     //Create Horizontal Joystick action.
-    ButtonActionCharacteristic *hJoystickUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *hJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
     hJoystickUpdate.buttonValue = dir.x;
     hJoystickUpdate.buttonID = 1;
 
     //Send joystick action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino                                             
+                                                                                 delegate:self];
         [gameController writeButtonAction:vJoystickUpdate]; //Vertical
         [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
     }
@@ -182,17 +184,17 @@
 - (void)ySendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    ButtonActionCharacteristic *yButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *yButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     yButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     yButtonUpdate.buttonID = 2;
     
     //Send button action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                 delegate:self];
         [gameController writeButtonAction:yButtonUpdate];
     }
     
@@ -202,17 +204,17 @@
 - (void)xSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    ButtonActionCharacteristic *xButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *xButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     xButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     xButtonUpdate.buttonID = 3;
     
     //Send button action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                 delegate:self];
         [gameController writeButtonAction:xButtonUpdate];
     }
     
@@ -222,13 +224,13 @@
 - (void)aSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    ButtonActionCharacteristic *aButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *aButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     aButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     aButtonUpdate.buttonID = 4;
     
     //Send button action.
-    ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:nil
-                                                                           controller:self];
+    BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:nil
+                                                                             delegate:self];
     [gameController writeButtonAction:aButtonUpdate];
     
     NSLog(@"GameController, sent button *A* action update, state: %i", selected);
@@ -237,17 +239,17 @@
 - (void)bSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    ButtonActionCharacteristic *bButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *bButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     bButtonUpdate.buttonID = 5;
     
     //Send button action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                 delegate:self];
         [gameController writeButtonAction:bButtonUpdate];
     }
     
@@ -260,17 +262,17 @@
 - (void)startButton:(id)sender
 {
     //Create button action.
-    ButtonActionCharacteristic *startButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *startButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     startButtonUpdate.buttonStatus = 1;
     startButtonUpdate.buttonID = 6;
     
     //Send button action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                 delegate:self];
         [gameController writeButtonAction:startButtonUpdate];
     }
     
@@ -280,17 +282,17 @@
 - (void)selectButton:(id)sender
 {
     //Create button action.
-    ButtonActionCharacteristic *selectButtonUpdate = [[ButtonActionCharacteristic alloc] init];
+    BDButtonActionCharacteristic *selectButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
     selectButtonUpdate.buttonStatus = 1;
     selectButtonUpdate.buttonID = 6;
     
     //Send button action.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        ControllerService *gameController = [[ControllerService alloc] initWithPeripheral:bleduino
-                                                                               controller:self];
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                 delegate:self];
         [gameController writeButtonAction:selectButtonUpdate];
     }
     

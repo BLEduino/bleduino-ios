@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BleService.h"
-#import "FirmataCommandCharacteristic.h"
+#import "BDBleService.h"
+#import "BDFirmataCommandCharacteristic.h"
 
 #pragma mark -
 #pragma mark Firmata Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-extern NSString *kFirmataServiceUUIDString;
+extern NSString * const kFirmataServiceUUIDString;
 //8C6B1ED1-A312-681D-025B-0032C0D16A2D  Firmata Service
 
-extern NSString *kFirmataCommandCharacteristicUUIDString;
+extern NSString * const kFirmataCommandCharacteristicUUIDString;
 //8C6B2551-A312-681D-025B-0032C0D16A2D  Firmata Command Characteristic
 
 #pragma mark -
@@ -25,35 +25,36 @@ extern NSString *kFirmataCommandCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class FirmataService;
+@class BDFirmataService;
 @protocol FirmataServiceDelegate <NSObject>
 @optional
-- (void) firmataService:(FirmataService *)service
- didWriteFirmataCommand:(FirmataCommandCharacteristic *)firmataCommand
+- (void) firmataService:(BDFirmataService *)service
+ didWriteFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
                   error:(NSError *)error;
 
-- (void) firmataService:(FirmataService *)service
-didReceiveFirmataCommand:(FirmataCommandCharacteristic *)firmataCommand
+- (void) firmataService:(BDFirmataService *)service
+didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
                   error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingFirmataCommandsFor:(FirmataService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopReceivingFirmataCommandsFor:(FirmataService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingFirmataCommandsFor:(BDFirmataService *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopReceivingFirmataCommandsFor:(BDFirmataService *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                          Firmata Service                                 */
 /****************************************************************************/
-@interface FirmataService : BleService <CBPeripheralDelegate>
-@property (nonatomic, strong) FirmataCommandCharacteristic *lastSentFirmataCommand;
-@property (nonatomic, strong) FirmataCommandCharacteristic *lastReceivedFirmataCommand;
+@interface BDFirmataService : BDBleService <CBPeripheralDelegate>
+@property (nonatomic, strong) BDFirmataCommandCharacteristic *lastSentFirmataCommand;
+@property (nonatomic, strong) BDFirmataCommandCharacteristic *lastReceivedFirmataCommand;
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<FirmataServiceDelegate>)aController;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<FirmataServiceDelegate>)aController;
 
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write firmata command to BLEduino.
-- (void) writeFirmataCommand:(FirmataCommandCharacteristic *)firmataCommand withAck:(BOOL)enabled;
-- (void) writeFirmataCommand:(FirmataCommandCharacteristic *)firmataCommand;
+- (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand withAck:(BOOL)enabled;
+- (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

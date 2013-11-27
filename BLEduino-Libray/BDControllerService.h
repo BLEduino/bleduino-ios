@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BleService.h"
-#import "ButtonActionCharacteristic.h"
+#import "BDBleService.h"
+#import "BDButtonActionCharacteristic.h"
 
 #pragma mark -
 #pragma mark Controller Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-extern NSString *kControllerServiceUUIDString;
+extern NSString * const kControllerServiceUUIDString;
 //8C6BF001-A312-681D-025B-0032C0D16A2D  Controller Service
 
-extern NSString *kButtonActionCharacteristicUUIDString;
+extern NSString * const kButtonActionCharacteristicUUIDString;
 //8C6BD00D-A312-681D-025B-0032C0D16A2D  Button Action Characteristic
 
 
@@ -26,34 +26,35 @@ extern NSString *kButtonActionCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class ControllerService;
+@class BDControllerService;
 @protocol ControllerServiceDelegate <NSObject>
 @optional
-- (void)controllerService:(ControllerService *)service
-   didReceiveButtonAction:(ButtonActionCharacteristic *)buttonAction
+- (void)controllerService:(BDControllerService *)service
+   didReceiveButtonAction:(BDButtonActionCharacteristic *)buttonAction
                     error:(NSError *)error;
 
-- (void)controllerService:(ControllerService *)service
-     didWriteButtonAction:(ButtonActionCharacteristic *)buttonAction
+- (void)controllerService:(BDControllerService *)service
+     didWriteButtonAction:(BDButtonActionCharacteristic *)buttonAction
                     error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingButtonActionsFor:(ControllerService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopRecivingButtonActionsFor:(ControllerService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingButtonActionsFor:(BDControllerService *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingButtonActionsFor:(BDControllerService *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                          Controller Service                              */
 /****************************************************************************/
-@interface ControllerService : BleService <CBPeripheralDelegate>
-@property (nonatomic, strong) ButtonActionCharacteristic *lastButtonAction;
+@interface BDControllerService : BDBleService <CBPeripheralDelegate>
+@property (nonatomic, strong) BDButtonActionCharacteristic *lastButtonAction;
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<ControllerServiceDelegate>)aController;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<ControllerServiceDelegate>)aController;
 
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write button actions to BLEduino.
-- (void) writeButtonAction:(ButtonActionCharacteristic *)buttonAction withAck:(BOOL)enabled;
-- (void) writeButtonAction:(ButtonActionCharacteristic *)buttonAction;
+- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction withAck:(BOOL)enabled;
+- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

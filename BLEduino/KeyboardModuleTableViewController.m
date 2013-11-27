@@ -7,8 +7,8 @@
 //
 
 #import "KeyboardModuleTableViewController.h"
-#import "UARTService.h"
-#import "LeDiscoveryManager.h"
+#import "BDUartService.h"
+#import "BDLeDiscoveryManager.h"
 
 #pragma mark -
 #pragma mark Setup
@@ -59,12 +59,12 @@
 {
     if([text isEqualToString:@"\n"])
     {
-        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
 
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
             NSString *message = self.messageView.text;
-            UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
+            BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
             [messageService writeMessage:message];
         }
 

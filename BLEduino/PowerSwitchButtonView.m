@@ -7,17 +7,18 @@
 //
 
 #import "PowerSwitchButtonView.h"
-#import "LeDiscoveryManager.h"
-#import "FirmataService.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDFirmataService.h"
+
+@interface PowerSwitchButtonView ()
+@property CGPoint offset;
+
+//Setttings
+@property (strong) UIColor *statusColor;
+@property PowerSwitchStatusColor colorCode;
+@end
 
 @implementation PowerSwitchButtonView
-{
-    CGPoint _offset;
-    
-    //Setttings
-    UIColor *_statusColor;
-    PowerSwitchStatusColor _colorCode;
-}
 
 - (void) initPowerSwitch
 {
@@ -26,20 +27,20 @@
     self.layer.borderWidth = 0.8f;
     
     //Update module based on settings.
-    _colorCode = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
-    if(_colorCode == PowerSwitchStatusColorBlue)
+    self.colorCode = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+    if(self.colorCode == PowerSwitchStatusColorBlue)
     {
         UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:.90];
-        _statusColor = lightBlue;
+        self.statusColor = lightBlue;
     }
     else
     {
         UIColor *lightGreen = [UIColor colorWithRed:0 green:200/255.0 blue:0 alpha:1.0];
-        _statusColor = lightGreen;
+        self.statusColor = lightGreen;
     }
     
     UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
-    [switchMessage setTextColor:_statusColor];
+    [switchMessage setTextColor:self.statusColor];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -76,7 +77,7 @@
 {
     UITouch *aTouch = [touches anyObject];
     
-    _offset = [aTouch locationInView: self];
+    self.offset = [aTouch locationInView: self];
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -85,7 +86,7 @@
     [UIView beginAnimations:@"Dragging Power Switch" context:nil];
     
     
-    self.frame = CGRectMake(self.frame.origin.x, location.y - _offset.y,
+    self.frame = CGRectMake(self.frame.origin.x, location.y - self.offset.y,
                             self.frame.size.width, self.frame.size.height);
     [UIView commitAnimations];
 }
@@ -110,7 +111,7 @@
     {
         [self switchPowerOn];
         text = @"ON";
-        color = _statusColor;
+        color = self.statusColor;
         newFrame = CGRectMake(self.frame.origin.x, 10,
                               self.frame.size.width, self.frame.size.height);
         
@@ -119,7 +120,7 @@
     {
         [self switchPowerOff];
         text = @"OFF";
-        color = (_colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:_statusColor;
+        color = (self.colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:self.statusColor;
         newFrame = CGRectMake(self.frame.origin.x, 568 - (self.frame.size.height) - 10 - 63,
                               self.frame.size.width, self.frame.size.height);
     }
@@ -144,12 +145,12 @@
     if(isOn)
     {
         text = @"ON";
-        color = _statusColor;
+        color = self.statusColor;
     }
     else
     {
         text = @"OFF";
-        color = (_colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:_statusColor;
+        color = (self.colorCode == PowerSwitchStatusColorGreenRed)?[UIColor redColor]:self.statusColor;
     }
     
     //Execute update.

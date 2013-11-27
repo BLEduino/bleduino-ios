@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface BLEduinoPeripheral : NSObject
+@interface BDPeripheral : NSObject
 @property (strong) CBPeripheral *bleduino;
 @property (strong) NSNumber *RSSI;
 @property NSInteger bridgeDeviceID;

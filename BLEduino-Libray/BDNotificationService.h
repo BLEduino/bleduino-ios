@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BleService.h"
-#import "NotificationAttributesCharacteristic.h"
+#import "BDBleService.h"
+#import "BDNotificationAttributesCharacteristic.h"
 
 #pragma mark -
 #pragma mark Notification Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-extern NSString *kNotificationServiceUUIDString;
+extern NSString * const kNotificationServiceUUIDString;
 //8C6B3141-A312-681D-025B-0032C0D16A2D  Notification Service
 
-extern NSString *kNotificationAttributesCharacteristicUUIDString;
+extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 //8C6B1618-A312-681D-025B-0032C0D16A2D  Notification Attributes Characteristic
 
 
@@ -26,27 +26,27 @@ extern NSString *kNotificationAttributesCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class NotificationService;
+@class BDNotificationService;
 @protocol NotificationServiceDelegate <NSObject>
 @optional
-- (void)notificationService:(NotificationService *)service
-     didReceiveNotification:(NotificationAttributesCharacteristic *)notification
+- (void)notificationService:(BDNotificationService *)service
+     didReceiveNotification:(BDNotificationAttributesCharacteristic *)notification
                       error:(NSError *)error;
 
-- (void)notificationService:(NotificationService *)service
-       didWriteNotification:(NotificationAttributesCharacteristic *)notification
+- (void)notificationService:(BDNotificationService *)service
+       didWriteNotification:(BDNotificationAttributesCharacteristic *)notification
                       error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingNotificationsFor:(NotificationService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopRecivingNotificationsFor:(NotificationService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingNotificationsFor:(BDNotificationService *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingNotificationsFor:(BDNotificationService *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                        Notification Service                              */
 /****************************************************************************/
-@interface NotificationService : BleService <CBPeripheralDelegate>
+@interface BDNotificationService : BDBleService <CBPeripheralDelegate>
 
-@property (nonatomic, strong) NotificationAttributesCharacteristic *lastNotification;
+@property (nonatomic, strong) BDNotificationAttributesCharacteristic *lastNotification;
 @property BOOL isListening;
 
 /*
@@ -68,13 +68,21 @@ extern NSString *kNotificationAttributesCharacteristicUUIDString;
  */
 - (void)stopListening;
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<NotificationServiceDelegate>)aController;
+
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<NotificationServiceDelegate>)aController;
+
+/****************************************************************************/
+/*              Access to notificication listener instance			  	    */
+/****************************************************************************/
++ (BDNotificationService *)sharedListener;
+
 
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write notifications to BLEduino.
-- (void) writeNotification:(NotificationAttributesCharacteristic *)notification withAck:(BOOL)enabled;
-- (void) writeNotification:(NotificationAttributesCharacteristic *)notification;
+- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification withAck:(BOOL)enabled;
+- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

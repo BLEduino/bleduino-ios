@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ControllerService.h"
+#import "BDControllerService.h"
 #import "MFLJoystick.h"
 
 @class GameControllerViewController;
@@ -20,6 +20,6 @@
 ControllerServiceDelegate,
 JoystickDelegate
 >
-@property (weak, nonatomic) id <GameControllerViewControllerDelegate> delegate;
+@property (weak) id <GameControllerViewControllerDelegate> delegate;
 - (void)dismissModule;
 @end

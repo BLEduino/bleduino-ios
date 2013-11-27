@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UARTService.h"
+#import "BDUartService.h"
 
 @class KeyboardModuleTableViewController;
 @protocol KeyboardModuleTableViewControllerDelegate <NSObject>
@@ -19,7 +19,7 @@
 UITextViewDelegate,
 UARTServiceDelegate
 >
-@property (strong, nonatomic) IBOutlet UITextView *messageView;
-@property (weak, nonatomic) id <KeyboardModuleTableViewControllerDelegate> delegate;
+@property (weak) IBOutlet UITextView *messageView;
+@property (weak) id <KeyboardModuleTableViewControllerDelegate> delegate;
 - (IBAction)dismissModule;
 @end

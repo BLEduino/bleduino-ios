@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "PowerOtherStateView.h"
+#import "PowerNextStateView.h"
 
-@implementation PowerOtherStateView
+@implementation PowerNextStateView
 
 - (id)initWithFrame:(CGRect)frame
 {

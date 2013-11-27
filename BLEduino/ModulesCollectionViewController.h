@@ -15,8 +15,8 @@
 #import "RadioControlledViewController.h"
 #import "PowerRelayViewController.h"
 #import "LEDModuleTableViewController.h"
-#import "NotificationService.h"
-#import "BleBridgeService.h"
+#import "BDNotificationService.h"
+#import "BDBleBridgeService.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
@@ -32,8 +32,8 @@ LEDModuleTableViewControllerDelegate
 @property (nonatomic, strong) NSArray *modulesImages;
 
 //Services that run in the background.
-@property (strong, nonatomic) NotificationService *notifications;
-@property (strong, nonatomic) BleBridgeService *bleBridge;
+@property (strong) BDNotificationService *notifications;
+@property (strong) BDBleBridgeService *bleBridge;
 
 - (IBAction)showMenu;
 - (void)showStatusBar;

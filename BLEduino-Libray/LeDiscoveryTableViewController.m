@@ -7,7 +7,7 @@
 //
 
 #import "LeDiscoveryTableViewController.h"
-#import "LeDiscoveryManager.h"
+#import "BDLeDiscoveryManager.h"
 #import "RESideMenu.h"
 
 @interface LeDiscoveryTableViewController ()
@@ -42,7 +42,7 @@
     [super viewDidLoad];
     
     //Setup LeDiscovery manager.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
     
     //Start scanning for BLE devices.
@@ -71,7 +71,7 @@
 
 - (void)scanForBleDevices:(id)sender
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     [leManager startScanning];
     
     [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
@@ -79,7 +79,7 @@
 
 - (void)stopScanForBleDevices:(id)sender
 {
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     [leManager stopScanning];
     
     [self.refreshControl endRefreshing];
@@ -111,12 +111,12 @@
     
     if(section == 0)
     {//Connected Peripherals
-        LeDiscoveryManager *manager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
         rows = manager.connectedBleduinos.count;
     }
     else
     {//Found Peripherals
-        LeDiscoveryManager *manager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
         rows = manager.foundBleduinos.count;
     }
     return rows;
@@ -137,7 +137,7 @@
     static NSString *CellIdentifier = @"BlePeripheralCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     //Connected Peripherals
     if(indexPath.section == 0)
@@ -170,7 +170,7 @@
     }
     else
     {
-        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
     }
 }
@@ -186,7 +186,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete && indexPath.section == 0)
     {
-        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         [leManager disconnectBleduino:leManager.connectedBleduinos[indexPath.row]];
     }
 }

@@ -7,27 +7,28 @@
 //
 
 #import "RadioControlledViewController.h"
-#import "LeDiscoveryManager.h"
-#import "VehicleMotionService.h"
-#import "ThrottleYawRollPitchCharacteristic.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDVehicleMotionService.h"
+#import "BDThrottleYawRollPitchCharacteristic.h"
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
 
+@interface RadioControlledViewController ()
+@property (strong) BDThrottleYawRollPitchCharacteristic *lastThrottleYawUpdate;
+@property (weak) IBOutlet VerticalJoystickControlView *vJoystick;
+@property (weak) IBOutlet HorizontalJoystickControlView *hJoystick;
+@end
+
 @implementation RadioControlledViewController
-{
-    ThrottleYawRollPitchCharacteristic *_lastThrottleYawUpdate;
-    IBOutlet VerticalJoystickControlView *vJoystick;
-    IBOutlet HorizontalJoystickControlView *hJoystick;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _lastThrottleYawUpdate = [[ThrottleYawRollPitchCharacteristic alloc] init];
-        _lastThrottleYawUpdate.throttle = 135; //0 speed.
-        _lastThrottleYawUpdate.yaw = 135; //0 turn.
+        self.lastThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+        self.lastThrottleYawUpdate.throttle = 135; //0 speed.
+        self.lastThrottleYawUpdate.yaw = 135; //0 turn.
     }
     return self;
 }
@@ -38,8 +39,8 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
-    vJoystick.delegate = self;
-    hJoystick.delegate = self;
+    self.vJoystick.delegate = self;
+    self.hJoystick.delegate = self;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -70,18 +71,18 @@
 - (void)horizontalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    ThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[ThrottleYawRollPitchCharacteristic alloc] init];
-    newThrottleYawUpdate.throttle = _lastThrottleYawUpdate.throttle;
+    BDThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+    newThrottleYawUpdate.throttle = self.lastThrottleYawUpdate.throttle;
     newThrottleYawUpdate.yaw = position.x;
-    _lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
+    self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:bleduino
-                                                                                    controller:self];
+        BDVehicleMotionService *motionService = [[BDVehicleMotionService alloc] initWithPeripheral:bleduino
+                                                                                      delegate:self];
         [motionService writeMotionUpdate:newThrottleYawUpdate];
     }
     
@@ -94,18 +95,18 @@
 - (void)verticalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    ThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[ThrottleYawRollPitchCharacteristic alloc] init];
+    BDThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
     newThrottleYawUpdate.throttle = position.y;
-    newThrottleYawUpdate.yaw = _lastThrottleYawUpdate.yaw;
-    _lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
+    newThrottleYawUpdate.yaw = self.lastThrottleYawUpdate.yaw;
+    self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        VehicleMotionService *motionService = [[VehicleMotionService alloc] initWithPeripheral:bleduino
-                                                                                    controller:self];
+        BDVehicleMotionService *motionService = [[BDVehicleMotionService alloc] initWithPeripheral:bleduino
+                                                                                      delegate:self];
         [motionService writeMotionUpdate:newThrottleYawUpdate];
     }
     

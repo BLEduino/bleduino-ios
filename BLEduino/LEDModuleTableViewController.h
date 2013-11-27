@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FirmataService.h"
+#import "BDFirmataService.h"
 
 @class LEDModuleTableViewController;
 @protocol LEDModuleTableViewControllerDelegate <NSObject>
@@ -15,6 +15,6 @@
 @end
 
 @interface LEDModuleTableViewController : UITableViewController <FirmataServiceDelegate>
-@property (weak, nonatomic) id <LEDModuleTableViewControllerDelegate> delegate;
+@property (weak) id <LEDModuleTableViewControllerDelegate> delegate;
 - (IBAction)dismissModule;
 @end

@@ -33,8 +33,8 @@
 - (void) didDisconnectFromDevices:(NSArray *)devicesList error:(NSError *)error;
 @end
 
-@interface LeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
-@property (nonatomic, weak) id <LeDiscoveryManagerDelegate> delegate;
+@interface BDLeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
+@property (weak) id <LeDiscoveryManagerDelegate> delegate;
 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
@@ -42,12 +42,12 @@
 
 //PENDING: Stretched goal.
 //Add support to persist devices.
-@property (retain, nonatomic) NSMutableOrderedSet *foundBleduinos;
-@property (retain, nonatomic) NSMutableOrderedSet *connectedBleduinos;
+@property (strong) NSMutableOrderedSet *foundBleduinos;
+@property (strong) NSMutableOrderedSet *connectedBleduinos;
 
 //PENDING: Stretched goal.
 //Add more context to discovered devices (e.g. RSSI).
-@property (retain, nonatomic) NSMutableOrderedSet *bleduinos;
+@property (strong) NSMutableOrderedSet *bleduinos;
 
 
 /****************************************************************************/

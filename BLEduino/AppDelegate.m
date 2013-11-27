@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "LeDiscoveryManager.h"
-#import "NotificationService.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDNotificationService.h"
 #import "PowerSwitchButtonView.h"
 
 @implementation AppDelegate
@@ -16,7 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Launch LeDiscovery manager.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     //Configure settings.
     //Is this the first launch ever of this application?

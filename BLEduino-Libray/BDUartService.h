@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BleService.h"
+#import "BDBleService.h"
 
 #pragma mark -
 #pragma mark UART Service UUIDs
@@ -36,35 +36,36 @@ typedef NSUInteger RxTxTransmissionState;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class UARTService;
+@class BDUartService;
 @protocol UARTServiceDelegate <NSObject>
 @optional
-- (void)uartService:(UARTService *)service didReceiveData:(NSData *)data error:(NSError *)error;
-- (void)uartService:(UARTService *)service didReceiveMessage:(NSString *)message error:(NSError *)error;
+- (void)uartService:(BDUartService *)service didReceiveData:(NSData *)data error:(NSError *)error;
+- (void)uartService:(BDUartService *)service didReceiveMessage:(NSString *)message error:(NSError *)error;
 
-- (void)uartService:(UARTService *)service didWriteData:(NSData *)data error:(NSError *)error;
-- (void)uartService:(UARTService *)service didWriteMessage:(NSString *)message error:(NSError *)error;
+- (void)uartService:(BDUartService *)service didWriteData:(NSData *)data error:(NSError *)error;
+- (void)uartService:(BDUartService *)service didWriteMessage:(NSString *)message error:(NSError *)error;
 
-- (void)didSubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveDataFor:(UARTService *)service error:(NSError *)error;
+- (void)didSubscribeToReceiveDataFor:(BDUartService *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveDataFor:(BDUartService *)service error:(NSError *)error;
 
-- (void)didSubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveMessagesFor:(UARTService *)service error:(NSError *)error;
+- (void)didSubscribeToReceiveMessagesFor:(BDUartService *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveMessagesFor:(BDUartService *)service error:(NSError *)error;
 @end
 
 
 /****************************************************************************/
 /*						 UART Service                                       */
 /****************************************************************************/
-@interface UARTService : BleService <CBPeripheralDelegate>
+@interface BDUartService : BDBleService <CBPeripheralDelegate>
 
-@property (nonatomic, strong) NSString *messageSent;
-@property (nonatomic, strong) NSString *messageReceived;
+@property (strong) NSString *messageSent;
+@property (strong) NSString *messageReceived;
 
-@property (nonatomic, strong) NSData *dataSent;
-@property (nonatomic, strong) NSData *dataReceived;
+@property (strong) NSData *dataSent;
+@property (strong) NSData *dataReceived;
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<UARTServiceDelegate>)aController;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<UARTServiceDelegate>)aController;
 
 #pragma mark -
 #pragma mark Writing to BLEduino

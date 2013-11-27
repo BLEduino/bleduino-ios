@@ -6,20 +6,22 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "LeDiscoveryManager.h"
-#import "UARTService.h"
-#import "VehicleMotionService.h"
-#import "NotificationService.h"
-#import "FirmataService.h"
-#import "ControllerService.h"
-#import "BleBridgeService.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDUartService.h"
+#import "BDVehicleMotionService.h"
+#import "BDNotificationService.h"
+#import "BDFirmataService.h"
+#import "BDControllerService.h"
+#import "BDBleBridgeService.h"
 
-@implementation LeDiscoveryManager
-{
-    CBCentralManager *_centralManager;
-}
 
-static LeDiscoveryManager *sharedInstance = NULL;
+@interface BDLeDiscoveryManager ()
+@property  CBCentralManager *centralManager;
+@end
+
+@implementation BDLeDiscoveryManager
+
+static BDLeDiscoveryManager *sharedInstance = NULL;
 
 #pragma mark -
 #pragma mark Access to Central Manager
@@ -31,7 +33,7 @@ static LeDiscoveryManager *sharedInstance = NULL;
         
         NSDictionary *options = @{@"CBCentralManagerOptionShowPowerAlertKey" : @YES};
         dispatch_queue_t bleQueue = dispatch_queue_create("ble-central", DISPATCH_QUEUE_SERIAL);
-		_centralManager = [[CBCentralManager alloc] initWithDelegate:self
+		self.centralManager = [[CBCentralManager alloc] initWithDelegate:self
                                                               queue:bleQueue
                                                             options:options];
                           
@@ -45,14 +47,14 @@ static LeDiscoveryManager *sharedInstance = NULL;
 }
 
 
-+ (LeDiscoveryManager *)sharedLeManager
++ (BDLeDiscoveryManager *)sharedLeManager
 {
-    static id sharedData = nil;
+    static id sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedData = [[[self class] alloc] init];
+        sharedManager = [[[self class] alloc] init];
     });
-    return sharedData;
+    return sharedManager;
 }
 
 
@@ -105,14 +107,14 @@ static LeDiscoveryManager *sharedInstance = NULL;
 - (void) startScanningForBleDevices
 {
     //Scan for BLEduino service.
-    [_centralManager scanForPeripheralsWithServices:nil options:nil];
+    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
 }
 
 - (void) startScanningForBleduinos
 {
     //Scan for BLEduino service.
     NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
-    [_centralManager scanForPeripheralsWithServices:services options:nil];
+    [self.centralManager scanForPeripheralsWithServices:services options:nil];
 }
 
 - (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout
@@ -124,7 +126,7 @@ static LeDiscoveryManager *sharedInstance = NULL;
 
 - (void) stopScanning
 {
-    [_centralManager stopScan];
+    [self.centralManager stopScan];
 }
 
 - (void)connectBleduino:(CBPeripheral *)bleduino
@@ -133,12 +135,12 @@ static LeDiscoveryManager *sharedInstance = NULL;
     @{@"CBConnectPeripheralOptionNotifyOnConnectionKey" : (self.notifyConnect)?@YES:@NO,
       @"CBConnectPeripheralOptionNotifyOnDisconnectionKey" : (self.notifyDisconnect)?@YES:@NO};
     
-    [_centralManager connectPeripheral:bleduino options:connectBleOptions];
+    [self.centralManager connectPeripheral:bleduino options:connectBleOptions];
 }
 
 - (void) disconnectBleduino:(CBPeripheral *)bleduino
 {
-    [_centralManager cancelPeripheralConnection:bleduino];
+    [self.centralManager cancelPeripheralConnection:bleduino];
 }
 
 //Central Manager Delegate

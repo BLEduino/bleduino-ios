@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ThrottleYawRollPitchCharacteristic : NSObject
-@property (nonatomic) NSInteger throttle;
-@property (nonatomic) NSInteger pitch;
-@property (nonatomic) NSInteger roll;
-@property (nonatomic) NSInteger yaw;
+@interface BDThrottleYawRollPitchCharacteristic : NSObject
+@property  NSInteger throttle;
+@property  NSInteger pitch;
+@property  NSInteger roll;
+@property  NSInteger yaw;
 
 /*
  * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object. 

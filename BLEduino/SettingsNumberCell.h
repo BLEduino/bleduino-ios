@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsNumberCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *settingDescription;
-@property (strong, nonatomic) IBOutlet UILabel *settingsNumber;
+@property (weak) IBOutlet UILabel *settingDescription;
+@property (weak) IBOutlet UILabel *settingsNumber;
 @end

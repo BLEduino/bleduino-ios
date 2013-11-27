@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsSwitchCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *settingDescription;
-@property (strong, nonatomic) IBOutlet UISwitch *settingsStatus;
+@property (weak) IBOutlet UILabel *settingDescription;
+@property (weak) IBOutlet UISwitch *settingsStatus;
 @end

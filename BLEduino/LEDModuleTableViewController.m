@@ -7,38 +7,38 @@
 //
 
 #import "LEDModuleTableViewController.h"
-#import "LeDiscoveryManager.h"
+#import "BDLeDiscoveryManager.h"
 
 @implementation LEDModuleTableViewController
 {
     //21 GPIO pins.
     
     //Digital pins.
-    IBOutlet UITableViewCell *digital0Cell;
-    IBOutlet UITableViewCell *digital1Cell;
-    IBOutlet UITableViewCell *digital2Cell;
-    IBOutlet UITableViewCell *digital3Cell;
-    IBOutlet UITableViewCell *digital4Cell;
-    IBOutlet UITableViewCell *digital5Cell;
-    IBOutlet UITableViewCell *digital6Cell;
-    IBOutlet UITableViewCell *digital7Cell;
-    IBOutlet UITableViewCell *digital8Cell;
-    IBOutlet UITableViewCell *digital9Cell;
-    IBOutlet UITableViewCell *digital10Cell;
-    IBOutlet UITableViewCell *digital13Cell;
+    __weak IBOutlet UITableViewCell *digital0Cell;
+    __weak IBOutlet UITableViewCell *digital1Cell;
+    __weak IBOutlet UITableViewCell *digital2Cell;
+    __weak IBOutlet UITableViewCell *digital3Cell;
+    __weak IBOutlet UITableViewCell *digital4Cell;
+    __weak IBOutlet UITableViewCell *digital5Cell;
+    __weak IBOutlet UITableViewCell *digital6Cell;
+    __weak IBOutlet UITableViewCell *digital7Cell;
+    __weak IBOutlet UITableViewCell *digital8Cell;
+    __weak IBOutlet UITableViewCell *digital9Cell;
+    __weak IBOutlet UITableViewCell *digital10Cell;
+    __weak IBOutlet UITableViewCell *digital13Cell;
 
     //Analog pins.
-    IBOutlet UITableViewCell *analog0Cell;
-    IBOutlet UITableViewCell *analog1Cell;
-    IBOutlet UITableViewCell *analog2Cell;
-    IBOutlet UITableViewCell *analog3Cell;
-    IBOutlet UITableViewCell *analog4Cell;
-    IBOutlet UITableViewCell *analog5Cell;
+    __weak IBOutlet UITableViewCell *analog0Cell;
+    __weak IBOutlet UITableViewCell *analog1Cell;
+    __weak IBOutlet UITableViewCell *analog2Cell;
+    __weak IBOutlet UITableViewCell *analog3Cell;
+    __weak IBOutlet UITableViewCell *analog4Cell;
+    __weak IBOutlet UITableViewCell *analog5Cell;
     
     //MISO, MOSI, SCK pins.
-    IBOutlet UITableViewCell *misoCell;
-    IBOutlet UITableViewCell *mosiCell;
-    IBOutlet UITableViewCell *sckCell;
+    __weak IBOutlet UITableViewCell *misoCell;
+    __weak IBOutlet UITableViewCell *mosiCell;
+    __weak IBOutlet UITableViewCell *sckCell;
     
 }
 
@@ -328,17 +328,17 @@
     UISwitch *ledSwitch = (UISwitch *)sender;
        
     //Create firmata command.
-    FirmataCommandCharacteristic *ledToggleCommand = [[FirmataCommandCharacteristic alloc] init];
+    BDFirmataCommandCharacteristic *ledToggleCommand = [[BDFirmataCommandCharacteristic alloc] init];
     ledToggleCommand.pinNumber = ledSwitch.tag - 100;
     ledToggleCommand.pinState = FirmataCommandPinStateOutput;
     ledToggleCommand.pinValue = [[NSNumber numberWithBool:ledSwitch.on] integerValue];
     
     //Send command.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:self];
+        BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:ledToggleCommand];
     }
     

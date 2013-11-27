@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "NotificationService.h"
-#import "LeDiscoveryManager.h"
-#import "BLEduinoPeripheral.h"
+#import "BDNotificationService.h"
+#import "BDLeDiscoveryManager.h"
+#import "BDPeripheral.h"
 
 #pragma mark -
 #pragma mark Notification Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-NSString *kNotificationServiceUUIDString = @"8C6B3141-A312-681D-025B-0032C0D16A2D";
-NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D-025B-0032C0D16A2D";
+NSString * const kNotificationServiceUUIDString = @"8C6B3141-A312-681D-025B-0032C0D16A2D";
+NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D-025B-0032C0D16A2D";
 
 
 #pragma mark -
@@ -24,33 +24,45 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@implementation NotificationService
-{
-    @private
-    CBUUID              *_notificationServiceUUID;
-    CBUUID              *_notificationAttributesCharacteristicUUID;
-    
-    id <NotificationServiceDelegate> _delegate;
-    
-    NotificationAttributesCharacteristic *_lastNotification;
-    
-    NSMutableOrderedSet     *_servicePeripherals;
-}
+@interface BDNotificationService ()
 
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral controller:(id<NotificationServiceDelegate>)aController
+@property (strong) CBUUID *notificationServiceUUID;
+@property (strong) CBUUID *notificationAttributesCharacteristicUUID;
+
+@property (weak) id <NotificationServiceDelegate> delegate;
+@property (strong) BDNotificationAttributesCharacteristic *lastSentNotification;
+
+@property (strong) NSMutableOrderedSet *servicePeripherals;
+@end
+
+@implementation BDNotificationService
+
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<NotificationServiceDelegate>)aController
 {
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
         _servicePeripheral.delegate = self;
-		_delegate = aController;
+		self.delegate = aController;
         
-        _notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
-        _notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
+        self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
+        self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
     }
     
     return self;
 }
+
++ (BDNotificationService *)sharedListener
+{
+    static id sharedNotificationListener = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedNotificationListener = [[[self class] alloc] init];
+    });
+    return sharedNotificationListener;
+}
+
 
 #pragma mark -
 #pragma mark - Listening Methods
@@ -69,22 +81,21 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 - (void)startListening
 {
     self.isListening = YES;
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
-    _servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    self.servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
         CBPeripheral *bleduinoPeripheral = [bleduino copy];
         bleduinoPeripheral.delegate = self;
         
-        BLEduinoPeripheral *device = [[BLEduinoPeripheral alloc] init];
+        BDPeripheral *device = [[BDPeripheral alloc] init];
         device.bleduino = bleduinoPeripheral;
         
-        [_servicePeripherals addObject:device];
+        [self.servicePeripherals addObject:device];
         
-        [self setNotificationForPeripheral:device.bleduino
-                               serviceUUID:_notificationServiceUUID
-                        characteristicUUID:_notificationAttributesCharacteristicUUID
+        [self setNotificationForServiceUUID:self.notificationServiceUUID
+                        characteristicUUID:self.notificationAttributesCharacteristicUUID
                                notifyValue:YES];
     }
     
@@ -100,16 +111,15 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
  */
 - (void)stopListening
 {
-    for(BLEduinoPeripheral *device in _servicePeripherals)
+    for(BDPeripheral *device in self.servicePeripherals)
     {
-        [self setNotificationForPeripheral:device.bleduino
-                               serviceUUID:_notificationServiceUUID
-                        characteristicUUID:_notificationAttributesCharacteristicUUID
+        [self setNotificationForServiceUUID:self.notificationServiceUUID
+                        characteristicUUID:self.notificationAttributesCharacteristicUUID
                                notifyValue:NO];
     }
  
     //Remove all BLEduinos.
-    [_servicePeripherals removeAllObjects];
+    [self.servicePeripherals removeAllObjects];
     
     self.isListening = NO;
     
@@ -121,18 +131,17 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 /****************************************************************************/
 /*				       Write notification to BLEduino                       */
 /****************************************************************************/
-- (void) writeNotification:(NotificationAttributesCharacteristic *)notification
+- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
                    withAck:(BOOL)enabled
 {
-    _lastNotification = notification;
-    [self writeDataToPeripheral:_servicePeripheral
-                    serviceUUID:_notificationServiceUUID
-             characteristicUUID:_notificationAttributesCharacteristicUUID
-                           data:[notification data]
-                        withAck:enabled];
+    self.lastSentNotification = notification;
+    [self writeDataToServiceUUID:self.notificationServiceUUID
+              characteristicUUID:self.notificationAttributesCharacteristicUUID
+                            data:[notification data]
+                         withAck:enabled];
 }
 
-- (void) writeNotification:(NotificationAttributesCharacteristic *)notification
+- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
 {
     self.lastNotification = notification;
     [self writeNotification:notification withAck:NO];
@@ -146,25 +155,22 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 /****************************************************************************/
 - (void) readNotification
 {
-    [self readDataFromPeripheral:_servicePeripheral
-                     serviceUUID:_notificationServiceUUID
-              characteristicUUID:_notificationAttributesCharacteristicUUID];
+    [self readDataFromServiceUUID:self.notificationServiceUUID
+               characteristicUUID:self.notificationAttributesCharacteristicUUID];
 }
 
 - (void) subscribeToStartReceivingNotifications
 {
-    [self setNotificationForPeripheral:_servicePeripheral
-                           serviceUUID:_notificationServiceUUID
-                    characteristicUUID:_notificationAttributesCharacteristicUUID
-                           notifyValue:YES];
+    [self setNotificationForServiceUUID:self.notificationServiceUUID
+                     characteristicUUID:self.notificationAttributesCharacteristicUUID
+                            notifyValue:YES];
 }
 
 - (void) unsubscribeToStopReiceivingNotifications
 {
-    [self setNotificationForPeripheral:_servicePeripheral
-                           serviceUUID:_notificationServiceUUID
-                    characteristicUUID:_notificationAttributesCharacteristicUUID
-                           notifyValue:NO];
+    [self setNotificationForServiceUUID:self.notificationServiceUUID
+                     characteristicUUID:self.notificationAttributesCharacteristicUUID
+                            notifyValue:NO];
 }
 
 #pragma mark -
@@ -175,18 +181,18 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastNotification = _lastNotification;
-    if([_delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
+    self.lastNotification = self.lastSentNotification;
+    if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
     {
-        [_delegate notificationService:self
-                didReceiveNotification:self.lastNotification
-                                 error:error];
+        [self.delegate notificationService:self
+                    didReceiveNotification:self.lastNotification
+                                     error:error];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastNotification = [[NotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
+    self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
 
     if(self.isListening)
     {
@@ -207,11 +213,11 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
     }
     else
     {
-        if([_delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
+        if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
         {
-            [_delegate notificationService:self
-                    didReceiveNotification:self.lastNotification
-                                     error:error];
+            [self.delegate notificationService:self
+                        didReceiveNotification:self.lastNotification
+                                         error:error];
         }
     }
 }
@@ -220,16 +226,16 @@ NSString *kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A312-681D
 {
     if(characteristic.isNotifying)
     {
-        if([_delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
+        if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
         {
-            [_delegate didSubscribeToStartReceivingNotificationsFor:self error:error];
+            [self.delegate didSubscribeToStartReceivingNotificationsFor:self error:error];
         }
     }
     else
     {
-        if([_delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingNotificationsFor:error:)])
+        if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingNotificationsFor:error:)])
         {
-            [_delegate didUnsubscribeToStopRecivingNotificationsFor:self error:error];
+            [self.delegate didUnsubscribeToStopRecivingNotificationsFor:self error:error];
         }
     }
 }

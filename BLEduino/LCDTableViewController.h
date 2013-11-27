@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "UARTService.h"
+#import "BDUartService.h"
 
 @class LCDTableViewController;
 @protocol LCDTableViewControllerDelegate <NSObject>
@@ -20,9 +20,9 @@
 UITextViewDelegate,
 UARTServiceDelegate
 >
-@property (strong, nonatomic) IBOutlet UITextView *messageView;
-@property (strong, nonatomic) IBOutlet UILabel *charCountView;
-@property (weak, nonatomic) id <LCDTableViewControllerDelegate> delegate;
+@property (weak) IBOutlet UITextView *messageView;
+@property (weak) IBOutlet UILabel *charCountView;
+@property (weak) id <LCDTableViewControllerDelegate> delegate;
 - (IBAction)dismissModule;
 
 @end

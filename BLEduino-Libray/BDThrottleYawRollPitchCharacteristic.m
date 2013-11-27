@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "ThrottleYawRollPitchCharacteristic.h"
+#import "BDThrottleYawRollPitchCharacteristic.h"
 
-@implementation ThrottleYawRollPitchCharacteristic
+@implementation BDThrottleYawRollPitchCharacteristic
 
 /*
  * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.

@@ -45,8 +45,8 @@
     [super viewDidLoad];
     
     //Set services that run in the background.
-    self.notifications = [[NotificationService alloc] init];
-    self.bleBridge = [[BleBridgeService alloc] init];
+    self.notifications = [BDNotificationService sharedListener];
+    self.bleBridge = [BDBleBridgeService sharedBridge];
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

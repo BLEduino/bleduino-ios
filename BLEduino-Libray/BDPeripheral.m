@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BLEduinoPeripheral.h"
+#import "BDPeripheral.h"
 
-@implementation BLEduinoPeripheral
-
+@implementation BDPeripheral
 @end

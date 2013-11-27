@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class PowerOtherStateView;
-@protocol PowerOtherStateViewDelegate <NSObject>
+@class PowerNextStateView;
+@protocol PowerNextStateViewDelegate <NSObject>
 - (void)powerOtherStateDidUpdateWithStateOn:(BOOL)state;
 @end
 
-@interface PowerOtherStateView : UILabel
-@property (weak, nonatomic) id <PowerOtherStateViewDelegate> delegate;
+@interface PowerNextStateView : UILabel
+@property (weak) id <PowerNextStateViewDelegate> delegate;
 
 @end

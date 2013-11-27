@@ -6,26 +6,26 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BleService.h"
+#import "BDBleService.h"
 
 #pragma mark -
 #pragma mark BLE Bridge Service UUIDs
 /****************************************************************************/
 /*						Service & Characteristics							*/
 /****************************************************************************/
-extern NSString *kBleBridgeServiceUUIDString;
+extern NSString * const kBleBridgeServiceUUIDString;
 //8C6BB1EB-A312-681D-025B-0032C0D16A2D  BLE Bridge Service
 
-extern NSString *kBridgeRxCharacteristicUUIDString;
+extern NSString * const kBridgeRxCharacteristicUUIDString;
 //8C6B5778-A312-681D-025B-0032C0D16A2D  Bridge Read (Rx) Characteristic
 
-extern NSString *kBridgeTxCharacteristicUUIDString;
+extern NSString * const kBridgeTxCharacteristicUUIDString;
 //8C6B454B-A312-681D-025B-0032C0D16A2D  Bridge Write (Tx) Characteristic
 
-extern NSString *kDeviceIDCharacteristicUUIDString;
+extern NSString * const kDeviceIDCharacteristicUUIDString;
 //8C6BD1D0-A312-681D-025B-0032C0D16A2D  Device ID Characteristic
 
-@interface BleBridgeService : BleService <CBPeripheralDelegate>
+@interface BDBleBridgeService : BDBleService <CBPeripheralDelegate>
 @property BOOL isOpen;
 
 /*
@@ -46,5 +46,10 @@ extern NSString *kDeviceIDCharacteristicUUIDString;
  *
  */
 - (void)closeBridge;
+
+/****************************************************************************/
+/*				       Access to Ble Bridge instance			     	    */
+/****************************************************************************/
++ (BDBleBridgeService *)sharedBridge;
 
 @end

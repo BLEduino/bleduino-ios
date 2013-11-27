@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "NotificationAttributesCharacteristic.h"
+#import "BDNotificationAttributesCharacteristic.h"
 
-@implementation NotificationAttributesCharacteristic
+@implementation BDNotificationAttributesCharacteristic
 
 /*
  * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.

@@ -7,18 +7,18 @@
 //
 
 #import "PowerRelayViewController.h"
-#import "LeDiscoveryManager.h"
-#import "PowerOtherStateView.h"
+#import "BDLeDiscoveryManager.h"
+#import "PowerNextStateView.h"
+
+@interface PowerRelayViewController ()
+@property (strong) BDFirmataCommandCharacteristic *lastPowerSwitchCommand;
+@property (weak) IBOutlet PowerSwitchButtonView *powerSwitch;
+@property (weak) IBOutlet PowerNextStateView *otherStateIsOn;
+@property (weak) IBOutlet PowerNextStateView *otherStateIsOff;
+@property NSInteger pinNumber;
+@end
 
 @implementation PowerRelayViewController
-{
-    FirmataCommandCharacteristic *_lastPowerSwitchCommand;
-    IBOutlet PowerSwitchButtonView *powerSwitch;
-    IBOutlet PowerOtherStateView *otherStateIsOn;
-    IBOutlet PowerOtherStateView *otherStateIsOff;
-    
-    NSInteger _pinNumber;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,12 +33,12 @@
 {
     [super viewDidLoad];
 
-    powerSwitch.delegate = self;
-    otherStateIsOff.delegate = self;
-    otherStateIsOn.delegate = self;
+    self.powerSwitch.delegate = self;
+    self.otherStateIsOff.delegate = self;
+    self.otherStateIsOn.delegate = self;
     
     //Update module based on settings.
-    _pinNumber = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
+    self.pinNumber = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -72,7 +72,6 @@
     {
         //Move it to top half position.
         newFrame = CGRectMake(10, 10, 300, 245);
-
     }
     else
     {
@@ -82,8 +81,8 @@
 
     //Execute view update.
     [UIView beginAnimations:@"Dragging Power Switch" context:nil];
-    powerSwitch.frame = newFrame;
-    [powerSwitch updatePowerSwitchTextWithStateOn:state];
+    self.powerSwitch.frame = newFrame;
+    [self.powerSwitch updatePowerSwitchTextWithStateOn:state];
     [UIView setAnimationDuration:0.3];
     [UIView commitAnimations];
 }
@@ -92,18 +91,18 @@
 - (void)powerSwitchDidUpdateWithStateOn:(BOOL)state
 {
     //Create firmata command.
-    FirmataCommandCharacteristic *powerSwitchCommand = [[FirmataCommandCharacteristic alloc] init];
+    BDFirmataCommandCharacteristic *powerSwitchCommand = [[BDFirmataCommandCharacteristic alloc] init];
     powerSwitchCommand.pinState = FirmataCommandPinStateOutput;
     powerSwitchCommand.pinValue = (state)?255:0; //255 > High, 0 > Low
     powerSwitchCommand.pinNumber = _pinNumber;
     _lastPowerSwitchCommand = powerSwitchCommand;
 
     //Send command.
-    LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        FirmataService *firmataService = [[FirmataService alloc] initWithPeripheral:bleduino controller:self];
+        BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:powerSwitchCommand];
     }
 

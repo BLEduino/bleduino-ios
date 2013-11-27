@@ -16,11 +16,10 @@ enum {
 };
 typedef NSUInteger FirmataCommandPinState;
 
-@interface FirmataCommandCharacteristic : NSObject
-
-@property (nonatomic) FirmataCommandPinState pinState;
-@property (nonatomic) NSInteger pinNumber;
-@property (nonatomic) NSInteger pinValue;
+@interface BDFirmataCommandCharacteristic : NSObject
+@property FirmataCommandPinState pinState;
+@property NSInteger pinNumber;
+@property NSInteger pinValue;
 
 /*
  * Create Firmata Command characteristic from NSData object.

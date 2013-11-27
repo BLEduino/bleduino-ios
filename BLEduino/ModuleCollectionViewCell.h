@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ModuleCollectionViewCell : UICollectionViewCell
-@property (strong, nonatomic) IBOutlet UIButton *moduleIcon;
-@property (strong, nonatomic) IBOutlet UILabel *moduleName;
-
+@property (weak) IBOutlet UIButton *moduleIcon;
+@property (weak) IBOutlet UILabel *moduleName;
 @end

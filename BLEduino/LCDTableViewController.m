@@ -7,17 +7,18 @@
 //
 
 #import "LCDTableViewController.h"
-#import "LeDiscoveryManager.h"
+#import "BDLeDiscoveryManager.h"
 
 #pragma mark -
 #pragma mark Setup
 /****************************************************************************/
 /*                                  Setup                                   */
 /****************************************************************************/
+@interface LCDTableViewController ()
+@property NSInteger totalAvailableChars;
+@end
+
 @implementation LCDTableViewController
-{
-    NSInteger _totalAvailableChars;
-}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -45,8 +46,8 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Load total available characters.
-    _totalAvailableChars = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_LCD_TOTAL_CHARS];
-    self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)_totalAvailableChars];
+    self.totalAvailableChars = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_LCD_TOTAL_CHARS];
+    self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)self.totalAvailableChars];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,7 +69,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     //How many chars left?
-    NSInteger charsLeft = _totalAvailableChars - textView.text.length;
+    NSInteger charsLeft = self.totalAvailableChars - textView.text.length;
     
     //Over the limit?
     if(charsLeft < 0)
@@ -90,12 +91,12 @@
 {
     if([text isEqualToString:@"\n"])
     {
-        LeDiscoveryManager *leManager = [LeDiscoveryManager sharedLeManager];
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
             NSString *message = self.messageView.text;
-            UARTService *messageService = [[UARTService alloc] initWithPeripheral:bleduino controller:self];
+            BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
             [messageService writeMessage:message];
         }
     

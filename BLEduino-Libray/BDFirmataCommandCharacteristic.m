@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "FirmataCommandCharacteristic.h"
+#import "BDFirmataCommandCharacteristic.h"
 
-@implementation FirmataCommandCharacteristic
+@implementation BDFirmataCommandCharacteristic
 
 /*
  * Create Firmata Command characteristic from NSData object.
@@ -62,8 +62,6 @@
     [firmataCommandData appendData:pinValueData];
     
     return firmataCommandData;
-    
-    return nil;
 }
 
 

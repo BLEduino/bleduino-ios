@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "UARTService.h"
-#import "LeDiscoveryManager.h"
+#import "BDUartService.h"
+#import "BDLeDiscoveryManager.h"
 
 #pragma mark -
 #pragma mark - UART Service UUIDs
@@ -18,9 +18,17 @@ NSString * const kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D
 NSString * const kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B-0032C0D16A2D";
 NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 
-@interface UARTService ()
+@interface BDUartService ()
 
+@property (strong) CBUUID *uartServiceUUID;
+@property (strong) CBUUID *rxCharacteristicUUID;
+@property (strong) CBUUID *txCharacteristicUUID;
 
+@property BOOL longTransmission;
+@property BOOL textTransmission;
+@property BOOL textSubscription;
+
+@property (weak) id <UARTServiceDelegate> delegate;
 
 @end
 
@@ -29,32 +37,20 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@implementation UARTService
-{
-    @private    
-    CBUUID              *_uartServiceUUID;
-    CBUUID              *_rxCharacteristicUUID;
-    CBUUID              *_txCharacteristicUUID;
-    
-    id <UARTServiceDelegate> _delegate;
-    
-    BOOL _longTransmission;
-    BOOL _textTransmission;
-    BOOL _textSubscription;
-}
+@implementation BDUartService
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
-               controller:(id<UARTServiceDelegate>)aController
+                 delegate:(id<UARTServiceDelegate>)aController
 {
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
         _servicePeripheral.delegate = self;
-		_delegate = aController;
+		self.delegate = aController;
         
-        _uartServiceUUID = [CBUUID UUIDWithString:kUARTServiceUUIDString];
-        _rxCharacteristicUUID = [CBUUID UUIDWithString:kRxCharacteristicUUIDString];
-        _txCharacteristicUUID = [CBUUID UUIDWithString:kTxCharacteristicUUIDString];
+        self.uartServiceUUID = [CBUUID UUIDWithString:kUARTServiceUUIDString];
+        self.rxCharacteristicUUID = [CBUUID UUIDWithString:kRxCharacteristicUUIDString];
+        self.txCharacteristicUUID = [CBUUID UUIDWithString:kTxCharacteristicUUIDString];
     }
     
     return self;
@@ -84,7 +80,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             
             NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
             NSData *dataSubset = [data subdataWithRange:dataRange];
-            _longTransmission = !lastPacket;
+            self.longTransmission = !lastPacket;
             
 
             NSMutableData *finalData = [[NSMutableData alloc] initWithCapacity:[dataSubset length]+1];
@@ -115,11 +111,10 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             //Append message data.
             [finalData appendData:dataSubset];
             
-            [self writeDataToPeripheral:_servicePeripheral
-                            serviceUUID:_uartServiceUUID
-                     characteristicUUID:_rxCharacteristicUUID
-                                   data:finalData
-                                withAck:enabled];
+            [self writeDataToServiceUUID:self.uartServiceUUID
+                      characteristicUUID:self.rxCharacteristicUUID
+                                    data:finalData
+                                 withAck:enabled];
             
             //Move dataIndex to the beginning of next packet.
             dataIndex += 19;
@@ -127,11 +122,10 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
     }
     else
     {
-        [self writeDataToPeripheral:_servicePeripheral
-                        serviceUUID:_uartServiceUUID
-                 characteristicUUID:_rxCharacteristicUUID
-                               data:data
-                            withAck:enabled];
+        [self writeDataToServiceUUID:self.uartServiceUUID
+                  characteristicUUID:self.rxCharacteristicUUID
+                                data:data
+                             withAck:enabled];
     }
 }
 
@@ -143,7 +137,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void) writeMessage:(NSString *)message withAck:(BOOL)enabled
 {
-    _textTransmission = YES;
+    self.textTransmission = YES;
     
     NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
     [self writeData:messageData withAck:enabled];
@@ -164,42 +158,39 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void) readData
 {
-    [self readDataFromPeripheral:_servicePeripheral
-                     serviceUUID:_uartServiceUUID
-              characteristicUUID:_txCharacteristicUUID];
+    [self readDataFromServiceUUID:self.uartServiceUUID
+               characteristicUUID:self.txCharacteristicUUID];
 }
 
 - (void) readMessage
 {
-    _textTransmission = YES;
+    self.textTransmission = YES;
     [self readData];
 }
 
 - (void) subscribeToStartReceivingData
 {
-    [self setNotificationForPeripheral:_servicePeripheral
-                           serviceUUID:_uartServiceUUID
-                    characteristicUUID:_txCharacteristicUUID
-                           notifyValue:YES];
+    [self setNotificationForServiceUUID:self.uartServiceUUID
+                     characteristicUUID:self.txCharacteristicUUID
+                            notifyValue:YES];
 }
 
 - (void) unsubscribeToStopReiceivingData
 {
-    [self setNotificationForPeripheral:_servicePeripheral
-                           serviceUUID:_uartServiceUUID
-                    characteristicUUID:_txCharacteristicUUID
-                           notifyValue:NO];
+    [self setNotificationForServiceUUID:self.uartServiceUUID
+                     characteristicUUID:self.txCharacteristicUUID
+                            notifyValue:NO];
 }
 
 - (void) subscribeToStartReceivingMessages
 {
-    _textSubscription = YES;
+    self.textSubscription = YES;
     [self subscribeToStartReceivingData];
 }
 
 - (void) unsubscribeToStopReiceivingMessages
 {
-    _textSubscription = NO;
+    self.textSubscription = NO;
     [self unsubscribeToStopReiceivingData];
 }
 
@@ -211,11 +202,11 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if(!_longTransmission)
+    if(!self.longTransmission)
     {
-        if(_textTransmission)
+        if(self.textTransmission)
         {
-            _textTransmission = NO;
+            self.textTransmission = NO;
             self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
         }
         else
@@ -223,20 +214,20 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             self.dataSent = characteristic.value;
         }
         
-        if([_delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
+        if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
         {
-            [_delegate uartService:self didWriteMessage:self.messageSent error:error];
+            [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
         }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if(!_longTransmission)
+    if(!self.longTransmission)
     {
-        if(_textTransmission)
+        if(self.textTransmission)
         {
-            _textTransmission = NO;
+            self.textTransmission = NO;
             self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
         }
         else
@@ -244,9 +235,9 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             self.dataReceived = characteristic.value;
         }
         
-        if([_delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
+        if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
         {
-            [_delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
         }
     }
 }
@@ -255,37 +246,37 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     if(characteristic.isNotifying)
     {
-        if(_textSubscription)
+        if(self.textSubscription)
         {
-            _textSubscription = NO;
-            if([_delegate respondsToSelector:@selector(didSubscribeToReceiveMessagesFor:error:)])
+            self.textSubscription = NO;
+            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveMessagesFor:error:)])
             {
-                [_delegate didSubscribeToReceiveMessagesFor:self error:error];
+                [self.delegate didSubscribeToReceiveMessagesFor:self error:error];
             }
         }
         else
         {
-            if([_delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
+            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
             {
-                [_delegate didSubscribeToReceiveDataFor:self error:error];
+                [self.delegate didSubscribeToReceiveDataFor:self error:error];
             }
         }
     }
     else
     {
-        if(_textSubscription)
+        if(self.textSubscription)
         {
-            _textSubscription = NO;
-            if([_delegate respondsToSelector:@selector(didUnsubscribeToReceiveMessagesFor:error:)])
+            self.textSubscription = NO;
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToReceiveMessagesFor:error:)])
             {
-                [_delegate didUnsubscribeToReceiveMessagesFor:self error:error];
+                [self.delegate didUnsubscribeToReceiveMessagesFor:self error:error];
             }
         }
         else
         {
-            if([_delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
+            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
             {
-                [_delegate didSubscribeToReceiveDataFor:self error:error];
+                [self.delegate didSubscribeToReceiveDataFor:self error:error];
             }
         }
     }

@@ -14,5 +14,5 @@
 @end
 
 @interface VerticalJoystickControlView : UIView
-@property (weak, nonatomic) id <VerticalJoystickControlViewDelegate> delegate;
+@property (weak) id <VerticalJoystickControlViewDelegate> delegate;
 @end
