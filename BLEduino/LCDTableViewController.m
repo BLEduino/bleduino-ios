@@ -48,6 +48,11 @@
     //Load total available characters.
     self.totalAvailableChars = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_LCD_TOTAL_CHARS];
     self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)self.totalAvailableChars];
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 }
 
 - (void)didReceiveMemoryWarning

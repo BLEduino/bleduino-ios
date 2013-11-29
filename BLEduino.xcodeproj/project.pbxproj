@@ -13,6 +13,7 @@
 		B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BDBleBridgeService.m */; };
 		B72D18651826FED500BD1A2D /* BDControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* BDControllerService.m */; };
 		B72E580118104B8F00745BD8 /* BDBleService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BDBleService.m */; };
+		B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B730E76A18481D9C00EF06EA /* rotate-left.png */; };
 		B73447C318305596006F76C2 /* BDButtonActionCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B73447C218305596006F76C2 /* BDButtonActionCharacteristic.m */; };
 		B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
@@ -20,6 +21,8 @@
 		B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */; };
 		B7650771184264A900ACE0A2 /* SettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */; };
 		B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7650773184264C300ACE0A2 /* SettingsNumberCell.m */; };
+		B7736CD8184706C3007B0BFF /* tutorials@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7736CD4184706C3007B0BFF /* tutorials@2x.png */; };
+		B7736CD9184706C3007B0BFF /* tutorials.png in Resources */ = {isa = PBXBuildFile; fileRef = B7736CD5184706C3007B0BFF /* tutorials.png */; };
 		B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */; };
 		B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B78D3FC71832CCC00058BFD6 /* Images.xcassets */; };
 		B79D7863183C5F3000CB68D8 /* VerticalJoystickControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D7862183C5F2F00CB68D8 /* VerticalJoystickControlView.m */; };
@@ -126,6 +129,7 @@
 		B72D18641826FED500BD1A2D /* BDControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDControllerService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B72E57FF18104B8F00745BD8 /* BDBleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleService.h; sourceTree = "<group>"; };
 		B72E580018104B8F00745BD8 /* BDBleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleService.m; sourceTree = "<group>"; };
+		B730E76A18481D9C00EF06EA /* rotate-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotate-left.png"; sourceTree = "<group>"; };
 		B73447C118305596006F76C2 /* BDButtonActionCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDButtonActionCharacteristic.h; sourceTree = "<group>"; };
 		B73447C218305596006F76C2 /* BDButtonActionCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDButtonActionCharacteristic.m; sourceTree = "<group>"; };
 		B75EC50717FA85EE000309FF /* BDLeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDLeDiscoveryManager.h; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 		B7650770184264A900ACE0A2 /* SettingsSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSwitchCell.m; sourceTree = "<group>"; };
 		B7650772184264C300ACE0A2 /* SettingsNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsNumberCell.h; sourceTree = "<group>"; };
 		B7650773184264C300ACE0A2 /* SettingsNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsNumberCell.m; sourceTree = "<group>"; };
+		B7736CD4184706C3007B0BFF /* tutorials@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorials@2x.png"; sourceTree = "<group>"; };
+		B7736CD5184706C3007B0BFF /* tutorials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorials.png; sourceTree = "<group>"; };
 		B7851D4217FDFDAB00181C53 /* LeDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeDiscoveryTableViewController.h; sourceTree = "<group>"; };
 		B7851D4317FDFDAB00181C53 /* LeDiscoveryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeDiscoveryTableViewController.m; sourceTree = "<group>"; };
 		B78D3FC71832CCC00058BFD6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BLEduino/Images.xcassets; sourceTree = "<group>"; };
@@ -389,6 +395,9 @@
 		B7AE65ED1843074C007C45A3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B730E76A18481D9C00EF06EA /* rotate-left.png */,
+				B7736CD4184706C3007B0BFF /* tutorials@2x.png */,
+				B7736CD5184706C3007B0BFF /* tutorials.png */,
 				B7D322601844839D008F53AE /* led-small.png */,
 				B7D322611844839D008F53AE /* led-small@2x.png */,
 				B7AE65E91842CBB6007C45A3 /* bridge-s.png */,
@@ -735,6 +744,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B79D7932183E904200CB68D8 /* arrow-right.png in Resources */,
+				B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */,
 				B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */,
 				B7AE65D81842BFC3007C45A3 /* led.png in Resources */,
 				B7AE65E61842C215007C45A3 /* bridge.png in Resources */,
@@ -761,9 +771,11 @@
 				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
 				B7AE65E71842C215007C45A3 /* controller.png in Resources */,
 				B7AE65D61842BF2E007C45A3 /* car.png in Resources */,
+				B7736CD8184706C3007B0BFF /* tutorials@2x.png in Resources */,
 				B7AE65FE184307C7007C45A3 /* manager@2x.png in Resources */,
 				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
 				B7AE65FD184307C7007C45A3 /* manager.png in Resources */,
+				B7736CD9184706C3007B0BFF /* tutorials.png in Resources */,
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B7D322621844839D008F53AE /* led-small.png in Resources */,

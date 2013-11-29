@@ -19,8 +19,8 @@
 {
     [super viewDidLoad];
     
-    _titles = @[@"Modules", @"BLE Manager", @"Settings", @"BLEduino Hardware", @"Kytelabs"];
-    _images = @[@"modules.png", @"manager.png", @"settings.png", @"hardware.png", @"contact.png"];
+    _titles = @[@"Modules", @"BLE Manager", @"Settings", @"Tutorials", @"BLEduino Hardware", @"Kytelabs"];
+    _images = @[@"modules.png", @"manager.png", @"settings.png", @"tutorials.png", @"hardware.png", @"contact.png"];
     
     self.tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:
@@ -74,7 +74,12 @@
     else if (indexPath.section == 1)
     {
         //Open bleduino.cc
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://bleduino.cc"]];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"BLEduino Website"
+                                                        message:@"This will open the BLEduino website in Safari. There you will find more information (e.g. video, documentation, source code) about the BLEduino. You can also access our BLEduino store from there."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Ok", nil];
+        [alert show];
     }
     
     //Contact Kytelabs
@@ -101,6 +106,15 @@
         }
     }
 
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Open bleduino website in safari.
+    if(buttonIndex == 1) //Done button.
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://bleduino.cc"]];
+    }
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller
@@ -131,7 +145,7 @@
     int rows = 0;
     switch (sectionIndex) {
         case 0:
-            rows = 3;
+            rows = 4;
             break;
         case 1:
             rows = 1;
@@ -169,11 +183,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
         cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.highlightedTextColor = [UIColor blueColor];
+        cell.textLabel.highlightedTextColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:95/255.0 alpha:1.0];
+        
+        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.highlightedTextColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:95/255.0 alpha:1.0];
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     
@@ -184,41 +202,18 @@
             cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
             break;
         case 1:
-            cell.textLabel.text = _titles[indexPath.row+3];
-            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row+3]];
+            cell.textLabel.text = _titles[4];
+            cell.imageView.image = [UIImage imageNamed:_images[4]];
+            cell.detailTextLabel.text = @"bleduino.cc";
             break;
         case 2:
-            cell.textLabel.text = _titles[indexPath.row+4];
-            cell.imageView.image = [UIImage imageNamed:_images[indexPath.row+4]];
+            cell.textLabel.text = _titles[5];
+            cell.imageView.image = [UIImage imageNamed:_images[5]];
             break;
     }
 
     return cell;
 }
-
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    NSString *title;
-//    
-//    switch (section) {
-//        case 0:
-//            title = @"GENERAL";
-//            break;
-//        case 1:
-//            title = @"HARDWARE";
-//            break;
-//        case 2:
-//            title = @"CONTACT";
-//            break;
-//    }
-//    
-//    /* Create custom view to display section header... */
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 5, tableView.frame.size.width - 100, 18)];
-//    [label setFont:[UIFont boldSystemFontOfSize:12]];
-//    label.textColor = [UIColor whiteColor];
-//    [label setText:title];
-//    return label;
-//}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

@@ -22,6 +22,20 @@ typedef NSUInteger FirmataCommandPinState;
 @property NSInteger pinValue;
 
 /*
+ * Create Firmata Command.
+ */
+- (id) initWithPinState:(FirmataCommandPinState)state
+              pinNumber:(NSInteger)number
+               pinValue:(NSInteger)value;
+
+/*
+ * Create Firmata Command.
+ */
++ (id) commandPinState:(FirmataCommandPinState)state
+             pinNumber:(NSInteger)number
+              pinValue:(NSInteger)value;
+
+/*
  * Create Firmata Command characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)firmataData;

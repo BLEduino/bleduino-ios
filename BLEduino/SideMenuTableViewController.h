@@ -15,7 +15,8 @@
 UITableViewDataSource,
 UITableViewDelegate,
 RESideMenuDelegate,
-MFMailComposeViewControllerDelegate
+MFMailComposeViewControllerDelegate,
+UIAlertViewDelegate
 >
 
 @property (strong, readwrite, nonatomic) UITableView *tableView;

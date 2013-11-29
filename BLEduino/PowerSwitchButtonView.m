@@ -80,15 +80,21 @@
     self.offset = [aTouch locationInView: self];
 }
 
--(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
     UITouch *aTouch = [touches anyObject];
     CGPoint location = [aTouch locationInView:self.superview];
-    [UIView beginAnimations:@"Dragging Power Switch" context:nil];
     
+    CGRect newFrame = CGRectMake(self.frame.origin.x, location.y - self.offset.y,
+                                 self.frame.size.width, self.frame.size.height);
     
-    self.frame = CGRectMake(self.frame.origin.x, location.y - self.offset.y,
-                            self.frame.size.width, self.frame.size.height);
-    [UIView commitAnimations];
+    //Verify new location is within dragging space.
+    if(newFrame.origin.y >= 10 && newFrame.origin.y <= 250)
+    {
+        [UIView beginAnimations:@"Dragging Power Switch" context:nil];
+        self.frame =newFrame;
+        [UIView commitAnimations];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

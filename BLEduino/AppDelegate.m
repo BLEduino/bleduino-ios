@@ -44,7 +44,7 @@
     {
         [defaults setInteger:32 forKey:SETTINGS_LCD_TOTAL_CHARS];
         [defaults setInteger:11 forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
-        [defaults setInteger:PowerSwitchStatusColorBlue forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+        [defaults setInteger:PowerSwitchStatusColorGreenRed forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
     }
     [defaults synchronize];
     

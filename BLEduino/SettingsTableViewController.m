@@ -208,7 +208,7 @@
         }
         else
         {
-            cell.settingDescription.text = @"Power Relay Status";
+            cell.settingDescription.text = @"Power Relay Status Color";
             NSInteger statusColorValue = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
             NSString *colorString = (statusColorValue == PowerSwitchStatusColorGreenRed)?@"Green/Red":@"Blue";
             cell.settingsNumber.text = colorString;

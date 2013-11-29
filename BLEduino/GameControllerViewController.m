@@ -7,6 +7,7 @@
 //
 
 #import "GameControllerViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import "BDLeDiscoveryManager.h"
 #import "BDControllerService.h"
 #import "BDButtonActionCharacteristic.h"
@@ -26,6 +27,10 @@
 
 @property (weak) IBOutlet UIButton *start;
 @property (weak) IBOutlet UIButton *select;
+
+@property (strong) UIImageView *orientationIndicator;
+@property (strong) UIView *orientationIndicatorMask;
+
 @end
 
 @implementation GameControllerViewController
@@ -52,9 +57,26 @@
     [joystick setDelegate:self];
     [self.view addSubview:joystick];
     
+    //Setup orientation tracking and alert.
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+    
+    self.orientationIndicatorMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 568, 320)];
+    self.orientationIndicatorMask.backgroundColor = [UIColor lightTextColor];
+    self.orientationIndicatorMask.alpha = 1.0;
+    
+    self.orientationIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(259, 80, 50, 160)];
+    self.orientationIndicator.image = [UIImage imageNamed:@"rotate-left.png"];
+    
+    [self.view addSubview:self.orientationIndicatorMask];
+    [self.view addSubview:self.orientationIndicator];
+    
     //Setup dismiss button.
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    dismissButton.frame = CGRectMake(34, 20, 14, 28);
+    dismissButton.frame = CGRectMake(0, 0, 60, 50);
     [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
     [dismissButton addTarget:self
                       action:@selector(dismissModule)
@@ -97,6 +119,44 @@
     [self.delegate gameControllerModuleViewControllerDismissed:self];
 }
 
+
+- (void) orientationChanged:(NSNotification *)note
+{
+    UIDevice * device = note.object;
+    switch(device.orientation)
+    {
+        case UIDeviceOrientationPortrait:
+            /* start rotate left animation */
+
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 1.0;
+            self.orientationIndicatorMask.alpha = 1.0;
+            [UIView commitAnimations];
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            /* start rotate left animation */
+        
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 1.0;
+            self.orientationIndicatorMask.alpha = 1.0;
+            [UIView commitAnimations];
+            break;
+            
+        case UIDeviceOrientationLandscapeLeft:
+            //This is the orientation we want.
+            
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 0;
+            self.orientationIndicatorMask.alpha = 0;
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            break;
+            
+        default:
+            break;
+    };
+}
 /****************************************************************************/
 /*                       Button Action Updates                              */
 /****************************************************************************/

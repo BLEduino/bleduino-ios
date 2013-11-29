@@ -11,6 +11,39 @@
 @implementation BDFirmataCommandCharacteristic
 
 /*
+ * Create Firmata Command.
+ */
+- (id) initWithPinState:(FirmataCommandPinState)state
+              pinNumber:(NSInteger)number
+               pinValue:(NSInteger)value
+{
+    self = [super init];
+    if(self)
+    {
+        self.pinState = state;
+        self.pinNumber = number;
+        self.pinValue = value;
+    }
+
+    return self;
+}
+
+/*
+ * Create Firmata Command.
+ */
++ (id) commandPinState:(FirmataCommandPinState)state
+             pinNumber:(NSInteger)number
+              pinValue:(NSInteger)value
+{
+    BDFirmataCommandCharacteristic *command =
+    [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
+                                                   pinNumber:number
+                                                    pinValue:value];
+    
+    return command;
+}
+
+/*
  * Create Firmata Command characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)firmataCommandData

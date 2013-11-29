@@ -17,6 +17,9 @@
 @property (strong) BDThrottleYawRollPitchCharacteristic *lastThrottleYawUpdate;
 @property (weak) IBOutlet VerticalJoystickControlView *vJoystick;
 @property (weak) IBOutlet HorizontalJoystickControlView *hJoystick;
+
+@property (strong) UIImageView *orientationIndicator;
+@property (strong) UIView *orientationIndicatorMask;
 @end
 
 @implementation RadioControlledViewController
@@ -41,6 +44,33 @@
     
     self.vJoystick.delegate = self;
     self.hJoystick.delegate = self;
+    
+    //Setup orientation tracking and alert.
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+    
+    self.orientationIndicatorMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 568, 320)];
+    self.orientationIndicatorMask.backgroundColor = [UIColor lightTextColor];
+    self.orientationIndicatorMask.alpha = 1.0;
+    
+    self.orientationIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(259, 80, 50, 160)];
+    self.orientationIndicator.image = [UIImage imageNamed:@"rotate-left.png"];
+    
+    [self.view addSubview:self.orientationIndicatorMask];
+    [self.view addSubview:self.orientationIndicator];
+    
+    //Setup dismiss button.
+    UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    dismissButton.frame = CGRectMake(0, 0, 60, 50);
+    [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
+    [dismissButton addTarget:self
+                      action:@selector(dismissModule)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:dismissButton];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -58,13 +88,47 @@
     [self.delegate radioControlledModuleViewControllerDismissed:self];
 }
 
+- (void) orientationChanged:(NSNotification *)note
+{
+    UIDevice * device = note.object;
+    switch(device.orientation)
+    {
+        case UIDeviceOrientationPortrait:
+            /* start rotate left animation */
+            
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 1.0;
+            self.orientationIndicatorMask.alpha = 1.0;
+            [UIView commitAnimations];
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            /* start rotate left animation */
+            
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 1.0;
+            self.orientationIndicatorMask.alpha = 1.0;
+            [UIView commitAnimations];
+            break;
+            
+        case UIDeviceOrientationLandscapeLeft:
+            //This is the orientation we want.
+            
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 0;
+            self.orientationIndicatorMask.alpha = 0;
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            break;
+    };
+}
+
 //Joystick Delegates
 #pragma mark -
 #pragma mark - Joystick Delegates
 /****************************************************************************/
 /*				         Joystick Delegates                                 */
 /****************************************************************************/
-
 
 //Yaw Joystick.
 //Resolution: 180, 135 > neutral, 45 > -90 (Max left), 225 > 90 (Max right)
