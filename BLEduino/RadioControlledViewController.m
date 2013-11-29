@@ -120,6 +120,9 @@
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             break;
+            
+        default:
+            break;
     };
 }
 

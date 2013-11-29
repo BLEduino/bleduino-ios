@@ -7,6 +7,7 @@
 //
 
 #import "BDFirmataService.h"
+#import "BDFirmataCommandCharacteristic.h"
 
 #pragma mark -
 #pragma mark - Firmata Service UUIDs
