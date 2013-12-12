@@ -143,13 +143,13 @@
     if(indexPath.section == 0)
     {
         CBPeripheral *connectedBleduino = [leManager.connectedBleduinos objectAtIndex:indexPath.row];
-        cell.textLabel.text = connectedBleduino.name;
+        cell.textLabel.text = (connectedBleduino.name)?connectedBleduino.name:@"BLE Peripheral";
     }
     //Found Peripherals
     else
     {
         CBPeripheral *foundBleduino = [leManager.foundBleduinos objectAtIndex:indexPath.row];
-        cell.textLabel.text = foundBleduino.name;
+        cell.textLabel.text = (foundBleduino.name)?foundBleduino.name:@"BLE Peripheral";
     }
     
     //PENDING: Streatched goal. Add more context to found/connected devcies.
@@ -210,14 +210,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
-    NSLog(@"Discovered peripheral: %@", bleduino.name);
+    
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Discovered peripheral: %@", name);
 }
 
 - (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI
 {
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
-    NSLog(@"Discovered peripheral: %@", bleDevice.name);
+    
+    NSString *name = ([bleDevice.name isEqualToString:@""])?@"BLE Peripheral":bleDevice.name;
+    NSLog(@"Discovered peripheral: %@", name);
 }
 
 //Connected to BLEduino and BLE devices.
@@ -225,23 +229,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
-    NSLog(@"Connected to peripheral: %@", bleduino.name);
+    
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Connected to peripheral: %@", name);
 
-    //Push local notification.
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.soundName = UILocalNotificationDefaultSoundName;
+    //Verify if notify setting is enabled.
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL notifyConnect = [prefs integerForKey:SETTINGS_NOTIFY_CONNECT];
     
-    //Is application on the foreground?
-    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    if(notifyConnect)
     {
-        //Application is on the foreground, store notification attributes to present alert view.
-        notification.userInfo = @{@"title"  : @"BLEduino",
-                                  @"message": @"The BLE device `%@` has connected to the BLEduino app.",
-                                  @"connect": @"connect"};
+        //Push local notification.
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        
+        //Is application on the foreground?
+        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+        {
+            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has connected to the BLEduino app.", name];
+            //Application is on the foreground, store notification attributes to present alert view.
+            notification.userInfo = @{@"title"  : @"BLEduino",
+                                      @"message": message,
+                                      @"connect": @"connect"};
+        }
+        
+        //Present notification.
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
-    
-    //Present notification.
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 //Disconnected from BLEduino and BLE devices.
@@ -249,23 +263,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
-    NSLog(@"Disconnected from peripheral: %@", bleduino.name);
     
-    //Push local notification.
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.soundName = UILocalNotificationDefaultSoundName;
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Disconnected from peripheral: %@", name);
     
-    //Is application on the foreground?
-    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    //Verify if notify setting is enabled.
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
+    
+    if(notifyDisconnect)
     {
-        //Application is on the foreground, store notification attributes to present alert view.
-        notification.userInfo = @{@"title"  : @"BLEduino",
-                                  @"message": @"The BLE device `%@` has disconnected from the BLEduino app.",
-                                  @"disconnect": @"disconnect"};
+        //Push local notification.
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        
+        //Is application on the foreground?
+        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+        {
+            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
+            //Application is on the foreground, store notification attributes to present alert view.
+            notification.userInfo = @{@"title"  : @"BLEduino",
+                                      @"message": message,
+                                      @"disconnect": @"disconnect"};
+        }
+        
+        //Present notification.
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
-    
-    //Present notification.
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 @end

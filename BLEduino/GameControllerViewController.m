@@ -289,9 +289,14 @@
     aButtonUpdate.buttonID = 4;
     
     //Send button action.
-    BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:nil
-                                                                             delegate:self];
-    [gameController writeButtonAction:aButtonUpdate];
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    
+    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    {
+        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                     delegate:self];
+        [gameController writeButtonAction:aButtonUpdate];
+    }
     
     NSLog(@"GameController, sent button *A* action update, state: %i", selected);
 }

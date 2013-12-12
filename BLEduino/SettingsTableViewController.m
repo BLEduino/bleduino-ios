@@ -202,7 +202,7 @@
         }
         else if(indexPath.row == 1)
         {
-            cell.settingDescription.text = @"Power Realay Pin";
+            cell.settingDescription.text = @"Power Relay Pin";
             NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
             cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
         }
@@ -321,7 +321,7 @@
             title = @"Device Scan";
             break;
         case 1:
-            title = @"Decive Connection";
+            title = @"Device Connection";
             break;
         case 2:
             title = @"Modules";

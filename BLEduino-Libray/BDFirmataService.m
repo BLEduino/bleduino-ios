@@ -36,7 +36,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
         _servicePeripheral.delegate = self;
 		self.delegate = aController;
         
-        self.firmataServiceUUID = [CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString];
+        self.firmataServiceUUID = [CBUUID UUIDWithString:kFirmataServiceUUIDString];
         self.firmataCommandCharacteristicUUID = [CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString];
     }
     
