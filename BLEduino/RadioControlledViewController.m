@@ -52,13 +52,18 @@
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
     
+    //What's initial orientation?
+    UIDeviceOrientation currentOrientation = [[UIDevice currentDevice] orientation];
+    BOOL isLandscape = (currentOrientation == UIDeviceOrientationLandscapeLeft);
+    
     self.orientationIndicatorMask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 568, 320)];
     self.orientationIndicatorMask.backgroundColor = [UIColor lightTextColor];
-    self.orientationIndicatorMask.alpha = 1.0;
+    self.orientationIndicatorMask.alpha = (isLandscape)?0:1.0;
     
     self.orientationIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(259, 80, 50, 160)];
     self.orientationIndicator.image = [UIImage imageNamed:@"rotate-left.png"];
-    
+    self.orientationIndicator.alpha = (isLandscape)?0:1.0;
+
     [self.view addSubview:self.orientationIndicatorMask];
     [self.view addSubview:self.orientationIndicator];
     
@@ -117,6 +122,16 @@
             [UIView beginAnimations:@"Orientation Indicator" context:nil];
             self.orientationIndicator.alpha = 0;
             self.orientationIndicatorMask.alpha = 0;
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            break;
+            
+        case UIDeviceOrientationLandscapeRight:
+            /* start rotate left animation */
+            
+            [UIView beginAnimations:@"Orientation Indicator" context:nil];
+            self.orientationIndicator.alpha = 1.0;
+            self.orientationIndicatorMask.alpha = 1.0;
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             break;
