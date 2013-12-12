@@ -21,5 +21,6 @@ ControllerServiceDelegate,
 JoystickDelegate
 >
 @property (weak) id <GameControllerViewControllerDelegate> delegate;
+@property CGPoint lastPosition;
 - (void)dismissModule;
 @end

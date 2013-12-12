@@ -51,11 +51,16 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     //Setup joystick.
-    MFLJoystick *joystick = [[MFLJoystick alloc] initWithFrame:CGRectMake(10, 25, 270, 270)];
+    CGRect originFrame = CGRectMake(10, 25, 270, 270);
+    MFLJoystick *joystick = [[MFLJoystick alloc] initWithFrame:originFrame];
     [joystick setThumbImage:[UIImage imageNamed:@"joystick-neutral.png"]
                  andBGImage:[UIImage imageNamed:@"joystick-bg.png"]];
     [joystick setDelegate:self];
     [self.view addSubview:joystick];
+    
+    //Initiate last position.
+    CGPoint center = CGPointMake(CGRectGetMidX(originFrame), CGRectGetMidY(originFrame));
+    self.lastPosition = center;
     
     //Setup orientation tracking and alert.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -165,31 +170,43 @@
 #pragma mark - Joystick Updates
 //Vertical Resolution: 200, 135 > neutral, 35 > 90 (Max up), 235 > -90 (Max down)
 //Horizontal Resolution: 200, 135 > neutral, 35 > 90 (Max left), 235 > -90 (Max right)
+
+//Adopted - Vertical Resolution: 25, 1 > 90 (Max up), 26 > -90 (Max down), 13 > neutral
+//Adopted - Horizontal Resolution: 25, 1 > 90 (Max left), 26 > -90 (Max right), 13 > neutral
 - (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
 {
-    //Create Vertical Joystick action.
-    BDButtonActionCharacteristic *vJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
-    vJoystickUpdate.buttonValue = dir.y;
-    vJoystickUpdate.buttonID = 0;
-    
-    //Create Horizontal Joystick action.
-    BDButtonActionCharacteristic *hJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
-    hJoystickUpdate.buttonValue = dir.x;
-    hJoystickUpdate.buttonID = 1;
-
-    //Send joystick action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    //Lowering resolution to 25. If change is 8px then send data update.
+    if(labs(self.lastPosition.x - dir.x) > 7 || labs(self.lastPosition.y - dir.y) > 7)
     {
-        BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino                                             
-                                                                                 delegate:self];
-        [gameController writeButtonAction:vJoystickUpdate]; //Vertical
-        [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
-    }
+        self.lastPosition = dir;
+        CGFloat adaptedX = ceil((dir.x-34)/8);
+        CGFloat adaptedY = ceil((dir.y-34)/8);
+        CGPoint adaptedPoint = CGPointMake(adaptedX, adaptedY);
     
-    NSLog(@"GameController, sent *Vertical Joystick* action update, state: %f", dir.y);
-    NSLog(@"GameController, sent *Horizontal Joystick* action update, state: %f", dir.x);
+        //Create Vertical Joystick action.
+        BDButtonActionCharacteristic *vJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
+        vJoystickUpdate.buttonValue = adaptedPoint.y;
+        vJoystickUpdate.buttonID = 0;
+        
+        //Create Horizontal Joystick action.
+        BDButtonActionCharacteristic *hJoystickUpdate = [[BDButtonActionCharacteristic alloc] init];
+        hJoystickUpdate.buttonValue = adaptedPoint.x;
+        hJoystickUpdate.buttonID = 1;
+        
+        //Send joystick action.
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        
+        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        {
+            BDControllerService *gameController = [[BDControllerService alloc] initWithPeripheral:bleduino
+                                                                                         delegate:self];
+            [gameController writeButtonAction:vJoystickUpdate]; //Vertical
+            [gameController writeButtonAction:hJoystickUpdate]; //Horizontal
+        }
+        
+        NSLog(@"GameController, sent *Vertical Joystick* action update, state: %f", adaptedPoint.y);
+        NSLog(@"GameController, sent *Horizontal Joystick* action update, state: %f", adaptedPoint.x);
+    }
 }
 
 #pragma mark -
