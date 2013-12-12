@@ -15,4 +15,5 @@
 
 @interface VerticalJoystickControlView : UIView
 @property (weak) id <VerticalJoystickControlViewDelegate> delegate;
+@property CGPoint lastPosition;
 @end

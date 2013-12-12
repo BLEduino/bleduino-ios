@@ -22,6 +22,10 @@
 {
     self.joystickNeutralImage = [UIImage imageNamed:@"joystick-neutral.png"];
     self.joystickHoldImage = [UIImage imageNamed:@"joystick-hold.png"];
+    
+    CGRect centerFrame = CGRectMake(90, 90, 90, 90); //Center position.
+    CGPoint center = CGPointMake(CGRectGetMidX(centerFrame), CGRectGetMidY(centerFrame));
+    self.lastPosition = center;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -79,8 +83,14 @@
     if(maxDistance < 90)
     {
         //Send yaw data.
-        [self.delegate horizontalJoystickDidUpdate:center];
-        
+        //Lowering resolution to 30. If change is 6px then send data update.
+        if(labs(self.lastPosition.x - center.x) > 5)
+        {
+            self.lastPosition = center;
+            CGPoint adaptedPoint = CGPointMake((center.x-45)/6, 0);
+            [self.delegate horizontalJoystickDidUpdate:adaptedPoint];
+        }
+
         //Execute movement.
         [UIView beginAnimations:@"Moving Joystick" context:nil];
         self.joystickView.frame = CGRectMake(destination.x, self.joystickView.frame.origin.y, 90, 90);
@@ -91,7 +101,8 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGRect centerFrame = CGRectMake(90, 90, 90, 90); //Center position.
-    CGPoint center = CGPointMake(CGRectGetMidX(centerFrame), CGRectGetMidY(centerFrame));
+    CGPoint center = CGPointMake(15, 0); //Center position.
+    self.lastPosition = center;
     
     //Send throttle data.
     [self.delegate horizontalJoystickDidUpdate:center];
@@ -103,8 +114,6 @@
     
     //Update joystick image to neutral state image.
     self.joystickView.image = self.joystickNeutralImage;
-    
-    NSLog(@"X: %f", self.joystickView.center.x);
 }
 
 @end

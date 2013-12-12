@@ -135,6 +135,7 @@
 
 //Yaw Joystick.
 //Resolution: 180, 135 > neutral, 45 > -90 (Max left), 225 > 90 (Max right)
+//Resolution:  30, 0 > 90 (Max up), 30 > -90 (Max down) <- Adapted to this resolution.
 - (void)horizontalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
@@ -159,6 +160,7 @@
 
 //Throttle Joystick.
 //Resolution: 180, 135 > neutral, 45 > 90 (Max up), 225 > -90 (Max down)
+//Resolution:  30, 0 > 90 (Max up), 30 > -90 (Max down) <- Adapted to this resolution.
 - (void)verticalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
