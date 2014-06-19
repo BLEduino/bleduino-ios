@@ -179,7 +179,6 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     
     //Move peripheral to connected devices.
     [self.connectedBleduinos removeObject:peripheral];
-    [self.foundBleduinos insertObject:peripheral atIndex:0];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate didDisconnectFromBleduino:peripheral error:error];

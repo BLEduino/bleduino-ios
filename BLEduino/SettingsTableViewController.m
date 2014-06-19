@@ -204,7 +204,7 @@
         {
             cell.settingDescription.text = @"Power Relay Pin";
             NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
-            cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
+            cell.settingsNumber.text = [SettingsTableViewController firmataPinNames:value];
         }
         else
         {
@@ -330,6 +330,52 @@
     
     return title;
 }
+
++ (NSString *) firmataPinNames:(NSInteger)pinNumber
+{
+    NSString *name;
+    if(pinNumber < 12)
+    {
+        if(pinNumber == 11) pinNumber = pinNumber+2; //Fix for pin 13.
+        name = [NSString stringWithFormat:@"%ld", (long)pinNumber];
+    }
+    else
+    {
+        switch (pinNumber) {
+            case 12:
+                name = @"A0";
+                break;
+            case 13:
+                name = @"A1";
+                break;
+            case 14:
+                name = @"A2";
+                break;
+            case 15:
+                name = @"A3";
+                break;
+            case 16:
+                name = @"A4";
+                break;
+            case 17:
+                name = @"A5";
+                break;
+            case 18:
+                name = @"MISO";
+                break;
+            case 19:
+                name = @"MOSI";
+                break;
+            case 20:
+                name = @"SCK";
+                break;
+                
+        }
+    }
+    
+    return name;
+}
+
 
 
 @end

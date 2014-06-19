@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7050201194F5060004E820D /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B70501FF194F5060004E820D /* add@2x.png */; };
+		B7050202194F5060004E820D /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = B7050200194F5060004E820D /* add.png */; };
+		B71B62FE185AC83700511FE0 /* FirmataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */; };
 		B72D18591826FBBF00BD1A2D /* BDVehicleMotionService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18581826FBBF00BD1A2D /* BDVehicleMotionService.m */; };
 		B72D185C1826FC4F00BD1A2D /* BDNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185B1826FC4F00BD1A2D /* BDNotificationService.m */; };
 		B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185E1826FE8100BD1A2D /* BDFirmataService.m */; };
@@ -87,6 +90,11 @@
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
 		B7B73C2D17F25A58008E6769 /* BDUartService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* BDUartService.m */; };
+		B7BA0E2019479F2B000D81BC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E1F19479F2B000D81BC /* Default-568h@2x.png */; };
+		B7BA0E221948C20D000D81BC /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E211948C20D000D81BC /* button.png */; };
+		B7BA0E241948C4DF000D81BC /* button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E231948C4DF000D81BC /* button-2.png */; };
+		B7BE751F193E436A00EE759E /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BE751E193E436A00EE759E /* launch.png */; };
+		B7BE7521193E442600EE759E /* launch-small.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BE7520193E442600EE759E /* launch-small.png */; };
 		B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BEFC2A18332E7600EA6E78 /* LEDModuleTableViewController.m */; };
 		B7D322621844839D008F53AE /* led-small.png in Resources */ = {isa = PBXBuildFile; fileRef = B7D322601844839D008F53AE /* led-small.png */; };
 		B7D322631844839D008F53AE /* led-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7D322611844839D008F53AE /* led-small@2x.png */; };
@@ -97,6 +105,9 @@
 		B7D3227918456BEA008F53AE /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D3227118456BEA008F53AE /* UIViewController+RESideMenu.m */; };
 		B7D3227A18456BEA008F53AE /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D3227418456BEA008F53AE /* UIImage+ColorAtPixel.m */; };
 		B7D3227C18456DC4008F53AE /* ModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D3227B18456DC4008F53AE /* ModuleCollectionViewCell.m */; };
+		B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4136185F9425006A91C5 /* FirmataAnalogCell.m */; };
+		B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */; };
+		B7DD413D185F9465006A91C5 /* FirmataDigitalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */; };
 		B7EB1CED1830972A0060441E /* BDPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEC1830972A0060441E /* BDPeripheral.m */; };
 		B7EB1CF01830D6010060441E /* BDNotificationAttributesCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */; };
 		B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */; };
@@ -104,6 +115,9 @@
 		B7EDFDFE1835C22E002FECA0 /* GameControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDFD1835C22E002FECA0 /* GameControllerViewController.m */; };
 		B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFE001835C2A0002FECA0 /* RadioControlledViewController.m */; };
 		B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m */; };
+		B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */; };
+		B7FF2AFE194F362D00D484B4 /* delay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FF2AFC194F362D00D484B4 /* delay@2x.png */; };
+		B7FF2AFF194F362D00D484B4 /* delay.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FF2AFD194F362D00D484B4 /* delay.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +131,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B70501FF194F5060004E820D /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
+		B7050200194F5060004E820D /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		B71B62FC185AC83700511FE0 /* FirmataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataTableViewController.h; sourceTree = "<group>"; };
+		B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataTableViewController.m; sourceTree = "<group>"; };
 		B72D18571826FBBF00BD1A2D /* BDVehicleMotionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDVehicleMotionService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B72D18581826FBBF00BD1A2D /* BDVehicleMotionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDVehicleMotionService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B72D185A1826FC4F00BD1A2D /* BDNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDNotificationService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -225,6 +243,11 @@
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7B73C2B17F25A58008E6769 /* BDUartService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDUartService.h; sourceTree = "<group>"; };
 		B7B73C2C17F25A58008E6769 /* BDUartService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDUartService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B7BA0E1F19479F2B000D81BC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		B7BA0E211948C20D000D81BC /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
+		B7BA0E231948C4DF000D81BC /* button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-2.png"; sourceTree = "<group>"; };
+		B7BE751E193E436A00EE759E /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
+		B7BE7520193E442600EE759E /* launch-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch-small.png"; sourceTree = "<group>"; };
 		B7BEFC2918332E7600EA6E78 /* LEDModuleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDModuleTableViewController.h; sourceTree = "<group>"; };
 		B7BEFC2A18332E7600EA6E78 /* LEDModuleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDModuleTableViewController.m; sourceTree = "<group>"; };
 		B7D322601844839D008F53AE /* led-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "led-small.png"; sourceTree = "<group>"; };
@@ -242,6 +265,12 @@
 		B7D3227318456BEA008F53AE /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
 		B7D3227418456BEA008F53AE /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
 		B7D3227B18456DC4008F53AE /* ModuleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModuleCollectionViewCell.m; path = BLEduino/ModuleCollectionViewCell.m; sourceTree = "<group>"; };
+		B7DD4135185F9425006A91C5 /* FirmataAnalogCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataAnalogCell.h; sourceTree = "<group>"; };
+		B7DD4136185F9425006A91C5 /* FirmataAnalogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataAnalogCell.m; sourceTree = "<group>"; };
+		B7DD4138185F944B006A91C5 /* FirmataPWMCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataPWMCell.h; sourceTree = "<group>"; };
+		B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataPWMCell.m; sourceTree = "<group>"; };
+		B7DD413B185F9465006A91C5 /* FirmataDigitalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataDigitalCell.h; sourceTree = "<group>"; };
+		B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataDigitalCell.m; sourceTree = "<group>"; };
 		B7EB1CEB1830972A0060441E /* BDPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPeripheral.h; sourceTree = "<group>"; };
 		B7EB1CEC1830972A0060441E /* BDPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPeripheral.m; sourceTree = "<group>"; };
 		B7EB1CEE1830D6010060441E /* BDNotificationAttributesCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotificationAttributesCharacteristic.h; sourceTree = "<group>"; };
@@ -256,6 +285,10 @@
 		B7EDFE001835C2A0002FECA0 /* RadioControlledViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioControlledViewController.m; sourceTree = "<group>"; };
 		B7FAC244182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDFirmataCommandCharacteristic.h; sourceTree = "<group>"; };
 		B7FAC245182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDFirmataCommandCharacteristic.m; sourceTree = "<group>"; };
+		B7FF2AF8194B769F00D484B4 /* SequencerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTableViewController.h; sourceTree = "<group>"; };
+		B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerTableViewController.m; sourceTree = "<group>"; };
+		B7FF2AFC194F362D00D484B4 /* delay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delay@2x.png"; sourceTree = "<group>"; };
+		B7FF2AFD194F362D00D484B4 /* delay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delay.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +349,8 @@
 				B7E3A798183C135500DD3926 /* PowerRelay */,
 				B7E3A794183C0B3800DD3926 /* GameController */,
 				B79D7860183C5CE400CB68D8 /* RadioControlled */,
+				B7DD413E185F9478006A91C5 /* Firmata */,
+				B7FF2AFB194B76A800D484B4 /* Sequencer */,
 				B79D795B183FC5BD00CB68D8 /* OrientationNavigationController.h */,
 				B79D795C183FC5BD00CB68D8 /* OrientationNavigationController.m */,
 			);
@@ -363,7 +398,12 @@
 				B7AE6603184307D7007C45A3 /* Menu */,
 				B7AE65ED1843074C007C45A3 /* Modules */,
 				B7AE65EE18430763007C45A3 /* Controllers */,
+				B7BA0E1F19479F2B000D81BC /* Default-568h@2x.png */,
+				B7BE751E193E436A00EE759E /* launch.png */,
+				B7BE7520193E442600EE759E /* launch-small.png */,
 				B7AE660E18433C56007C45A3 /* midnight-bg.jpg */,
+				B7BA0E211948C20D000D81BC /* button.png */,
+				B7BA0E231948C4DF000D81BC /* button-2.png */,
 			);
 			name = Images;
 			path = ../Images;
@@ -395,6 +435,10 @@
 		B7AE65ED1843074C007C45A3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				B70501FF194F5060004E820D /* add@2x.png */,
+				B7050200194F5060004E820D /* add.png */,
+				B7FF2AFC194F362D00D484B4 /* delay@2x.png */,
+				B7FF2AFD194F362D00D484B4 /* delay.png */,
 				B730E76A18481D9C00EF06EA /* rotate-left.png */,
 				B7736CD4184706C3007B0BFF /* tutorials@2x.png */,
 				B7736CD5184706C3007B0BFF /* tutorials.png */,
@@ -645,6 +689,21 @@
 			path = "UIImage+ColorAtPixel";
 			sourceTree = "<group>";
 		};
+		B7DD413E185F9478006A91C5 /* Firmata */ = {
+			isa = PBXGroup;
+			children = (
+				B71B62FC185AC83700511FE0 /* FirmataTableViewController.h */,
+				B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */,
+				B7DD4135185F9425006A91C5 /* FirmataAnalogCell.h */,
+				B7DD4136185F9425006A91C5 /* FirmataAnalogCell.m */,
+				B7DD4138185F944B006A91C5 /* FirmataPWMCell.h */,
+				B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */,
+				B7DD413B185F9465006A91C5 /* FirmataDigitalCell.h */,
+				B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */,
+			);
+			name = Firmata;
+			sourceTree = "<group>";
+		};
 		B7E3A794183C0B3800DD3926 /* GameController */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,6 +724,15 @@
 				B7AE660B18431451007C45A3 /* PowerNextStateView.m */,
 			);
 			name = PowerRelay;
+			sourceTree = "<group>";
+		};
+		B7FF2AFB194B76A800D484B4 /* Sequencer */ = {
+			isa = PBXGroup;
+			children = (
+				B7FF2AF8194B769F00D484B4 /* SequencerTableViewController.h */,
+				B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */,
+			);
+			name = Sequencer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -746,6 +814,7 @@
 				B79D7932183E904200CB68D8 /* arrow-right.png in Resources */,
 				B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */,
 				B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */,
+				B7BE7521193E442600EE759E /* launch-small.png in Resources */,
 				B7AE65D81842BFC3007C45A3 /* led.png in Resources */,
 				B7AE65E61842C215007C45A3 /* bridge.png in Resources */,
 				B79D793C183E90D000CB68D8 /* joystick-bg.png in Resources */,
@@ -762,11 +831,17 @@
 				B78D3FC81832CCC00058BFD6 /* Images.xcassets in Resources */,
 				B7AE65F9184307C7007C45A3 /* hardware.png in Resources */,
 				B7AE65FF184307C7007C45A3 /* settings@2x.png in Resources */,
+				B7050201194F5060004E820D /* add@2x.png in Resources */,
 				B7AE65FA184307C7007C45A3 /* hardware@2x.png in Resources */,
+				B7BA0E221948C20D000D81BC /* button.png in Resources */,
 				B79D792E183E904200CB68D8 /* arrow-down.png in Resources */,
 				B7B73BFC17F256B3008E6769 /* InfoPlist.strings in Resources */,
 				B79D793D183E90D000CB68D8 /* yellow-b.png in Resources */,
 				B79D7934183E904200CB68D8 /* arrow-up.png in Resources */,
+				B7BE751F193E436A00EE759E /* launch.png in Resources */,
+				B7050202194F5060004E820D /* add.png in Resources */,
+				B7BA0E2019479F2B000D81BC /* Default-568h@2x.png in Resources */,
+				B7FF2AFE194F362D00D484B4 /* delay@2x.png in Resources */,
 				B7AE65FB184307C7007C45A3 /* contact@2x.png in Resources */,
 				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
 				B7AE65E71842C215007C45A3 /* controller.png in Resources */,
@@ -776,6 +851,7 @@
 				B79D793B183E90D000CB68D8 /* green-y.png in Resources */,
 				B7AE65FD184307C7007C45A3 /* manager.png in Resources */,
 				B7736CD9184706C3007B0BFF /* tutorials.png in Resources */,
+				B7FF2AFF194F362D00D484B4 /* delay.png in Resources */,
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B7D322621844839D008F53AE /* led-small.png in Resources */,
@@ -787,6 +863,7 @@
 				B7AE6600184307C7007C45A3 /* settings.png in Resources */,
 				B7AE661018433C56007C45A3 /* midnight-bg.jpg in Resources */,
 				B7AE6602184307C7007C45A3 /* modules@2x.png in Resources */,
+				B7BA0E241948C4DF000D81BC /* button-2.png in Resources */,
 				B79D7947183EA81B00CB68D8 /* joystick-hold.png in Resources */,
 				B79D7946183EA81B00CB68D8 /* joystick-neutral.png in Resources */,
 			);
@@ -826,9 +903,11 @@
 				B73447C318305596006F76C2 /* BDButtonActionCharacteristic.m in Sources */,
 				B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */,
 				B7EB1CED1830972A0060441E /* BDPeripheral.m in Sources */,
+				B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */,
 				B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
+				B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */,
 				B7AE660C18431451007C45A3 /* PowerNextStateView.m in Sources */,
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
@@ -836,8 +915,10 @@
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */,
 				B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */,
+				B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */,
 				B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */,
 				B79D7863183C5F3000CB68D8 /* VerticalJoystickControlView.m in Sources */,
+				B7DD413D185F9465006A91C5 /* FirmataDigitalCell.m in Sources */,
 				B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */,
 				B79D795D183FC5BD00CB68D8 /* OrientationNavigationController.m in Sources */,
 				B7650771184264A900ACE0A2 /* SettingsSwitchCell.m in Sources */,
@@ -847,6 +928,7 @@
 				B7D3227718456BEA008F53AE /* RECommonFunctions.m in Sources */,
 				B79D79C018405F3200CB68D8 /* LCDTableViewController.m in Sources */,
 				B7D3227918456BEA008F53AE /* UIViewController+RESideMenu.m in Sources */,
+				B71B62FE185AC83700511FE0 /* FirmataTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -970,12 +1052,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6B7DD203-45F3-46A8-ADAF-373E3C5B9CB2";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -985,12 +1067,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6B7DD203-45F3-46A8-ADAF-373E3C5B9CB2";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};

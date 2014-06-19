@@ -17,6 +17,8 @@
 #import "LEDModuleTableViewController.h"
 #import "BDNotificationService.h"
 #import "BDBleBridgeService.h"
+#import "FirmataTableViewController.h"
+#import "SequencerTableViewController.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
@@ -26,7 +28,9 @@ KeyboardModuleTableViewControllerDelegate,
 GameControllerViewControllerDelegate,
 RadioControlledViewControllerDelegate,
 PowerRelayViewControllerDelegate,
-LEDModuleTableViewControllerDelegate
+LEDModuleTableViewControllerDelegate,
+FirmataTableViewControllerDelegate,
+SequencerTableViewControllerDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;

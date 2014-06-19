@@ -61,6 +61,8 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                     {
                         [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
                     }
+                    
+                    NSLog(@"Data was sent to characteristic %@", [cUUID description]);
                 }
             }
         }

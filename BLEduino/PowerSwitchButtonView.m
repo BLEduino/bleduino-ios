@@ -58,6 +58,7 @@
     if ((self = [super initWithCoder:coder])) {
         // Initialization code
         [self initPowerSwitch];
+        //[self setFrame:CGRectMake(10, 10, 300, 245)];
     }
     return self;
 }
@@ -95,6 +96,8 @@
         self.frame =newFrame;
         [UIView commitAnimations];
     }
+    
+    NSLog(@"height: %f", self.frame.size.height);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

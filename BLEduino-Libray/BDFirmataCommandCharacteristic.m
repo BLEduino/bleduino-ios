@@ -90,7 +90,7 @@
     NSMutableData *pinStateData = [NSMutableData dataWithBytes:&pinStateByte length:sizeof(pinStateByte)];
     [firmataCommandData appendData:pinStateData];
     
-    Byte pinValueByte = (self.pinState >> (0)) & 0xff;
+    Byte pinValueByte = (self.pinValue >> (0)) & 0xff;
     NSMutableData *pinValueData = [NSMutableData dataWithBytes:&pinValueByte length:sizeof(pinValueByte)];
     [firmataCommandData appendData:pinValueData];
     

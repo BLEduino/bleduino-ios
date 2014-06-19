@@ -78,7 +78,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 8;
+    return 10;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -117,6 +117,14 @@
         case 7:
             //BleBridge Module
             cellIdentifier = @"BleBridgeModuleCell";
+            break;
+        case 8:
+            //Firmata Module
+            cellIdentifier = @"FirmataModuleCell";
+            break;
+        case 9:
+            //Sequencer Module
+            cellIdentifier = @"SequencerModuleCell";
             break;
     }
     
@@ -210,11 +218,11 @@
             break;
             
         case 8:
-            //Extra Module
+            [self performSegueWithIdentifier:@"FirmataModuleSegue" sender:self];
             break;
             
         case 9:
-            //Extra Module
+            [self performSegueWithIdentifier:@"SequencerModuleSegue" sender:self];
             break;
             
         case 10:
@@ -304,6 +312,18 @@ referenceSizeForFooterInSection:(NSInteger)section
         LEDModuleTableViewController *ledController = [[navigationController viewControllers] objectAtIndex:0];
         ledController.delegate = self;
     }
+    else if([segue.identifier isEqualToString:@"FirmataModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        FirmataTableViewController *firmataController = [[navigationController viewControllers] objectAtIndex:0];
+        firmataController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"SequencerModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        SequencerTableViewController *sequencerController = [[navigationController viewControllers] objectAtIndex:0];
+        sequencerController.delegate = self;
+    }
 }
 
 #pragma mark -
@@ -311,6 +331,16 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                         Modules Dismiss' Delegate                        */
 /****************************************************************************/
+- (void)sequencerTableViewControllerDismissed:(SequencerTableViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)firmataTableViewControllerDismissed:(FirmataTableViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)lcdModuleTableViewControllerDismissed:(LCDTableViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];

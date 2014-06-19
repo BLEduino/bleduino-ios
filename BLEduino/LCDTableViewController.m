@@ -96,17 +96,37 @@
 {
     if([text isEqualToString:@"\n"])
     {
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        if(self.messageView.text.length <= self.totalAvailableChars)
         {
-            NSString *message = self.messageView.text;
-            BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
-            [messageService writeMessage:message];
+            BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+            
+            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+            {
+                NSString *message = self.messageView.text;
+                BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+                [messageService writeMessage:message];
+            }
+            
+            [textView setContentOffset:CGPointMake(0, 0) animated:YES];
+            self.messageView.text = @"";
         }
-    
-        //Clear text view.
-        self.messageView.text = @"";
+        else
+        {
+            NSString *message = [NSString stringWithFormat:
+                                 @"The text you are trying to send to the BLEduino is too long. You entered %lu characters and you have set your total available characters to %li. If you want to send more characters please go to the Settings section and update the LCD total available characters.",
+                                 (unsigned long)self.messageView.text.length,
+                                 (long)self.totalAvailableChars];
+            UIAlertView *textTooLongAlert = [[UIAlertView alloc]initWithTitle:@"Text is too long"
+                                                                       message:message
+                                                                      delegate:nil
+                                                             cancelButtonTitle:@"Ok"
+                                                             otherButtonTitles:nil];
+            
+            [textTooLongAlert show];
+            
+            //Return cursor.
+            self.messageView.text = [self.messageView.text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        }
     }
     
     return YES;

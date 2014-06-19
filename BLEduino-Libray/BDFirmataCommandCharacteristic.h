@@ -8,18 +8,51 @@
 
 #import <Foundation/Foundation.h>
 
+//PIN NUMBER LOOKUP TABLE
+//FIRMATA_PIN0 = 0
+//FIRMATA_PIN1 = 1
+//FIRMATA_PIN2 = 2
+//FIRMATA_PIN3 = 3
+//FIRMATA_PIN4 = 4
+//FIRMATA_PIN5 = 5
+//FIRMATA_PIN6 = 6
+//FIRMATA_PIN7 = 7
+//FIRMATA_PIN8 = 8
+//FIRMATA_PIN9 = 9
+//FIRMATA_PIN10 = 10
+//FIRMATA_PIN13 = 11
+//FIRMATA_PINA0 = 12
+//FIRMATA_PINA1 = 13
+//FIRMATA_PINA2 = 14
+//FIRMATA_PINA3 = 15
+//FIRMATA_PINA4 = 16
+//FIRMATA_PINA5 = 17
+//FIRMATA_PIN_MISO = 18
+//FIRMATA_PIN_MOSI = 19
+//FIRMATA_PIN_SCK = 20
+
 enum {
     FirmataCommandPinStateOutput = 0,
     FirmataCommandPinStateInput = 1,
-    FirmataCommandPinStatePWM = 2,
-    FirmataCommandPinStateAnalog = 3
+    FirmataCommandPinStateAnalog = 2,
+    FirmataCommandPinStatePWM = 3
+    
+    //Work-around, only for sequencer module.
+    //Begining (of sequence) = 4
+    //End (of sequence) = 5
+    //Time delay in seconds = 6
+    //Time delay in minutes = 7
 };
 typedef NSUInteger FirmataCommandPinState;
 
 @interface BDFirmataCommandCharacteristic : NSObject
 @property FirmataCommandPinState pinState;
 @property NSInteger pinNumber;
+
 @property NSInteger pinValue;
+
+//Work-around, only for sequencer module.
+@property NSInteger rowNumber;
 
 /*
  * Create Firmata Command.

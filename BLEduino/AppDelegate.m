@@ -46,6 +46,64 @@
         [defaults setInteger:9 forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
         [defaults setInteger:PowerSwitchStatusColorGreenRed forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
     }
+    
+    //Firmata
+    if([defaults objectForKey:FIRMATA_PIN0_STATE] == nil)
+    {
+        NSInteger defaultState = 0;
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN0_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN1_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN2_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN3_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN4_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN5_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN6_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN7_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN8_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN9_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN10_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN13_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA0_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA1_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA2_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA3_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA4_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PINA5_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN_MISO_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN_MOSI_STATE];
+        [defaults setInteger:defaultState forKey:FIRMATA_PIN_SCK_STATE];
+    }
+    
+    if([defaults objectForKey:FIRMATA_PIN0_STATE_TYPES] == nil)
+    {
+        NSInteger digital = 0;
+        NSInteger analog = 1;
+        NSInteger pwm = 2;
+        NSInteger allTypes = 3;
+        
+        [defaults setInteger:digital  forKey:FIRMATA_PIN0_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN1_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN2_STATE_TYPES];
+        [defaults setInteger:pwm      forKey:FIRMATA_PIN3_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PIN4_STATE_TYPES];
+        [defaults setInteger:pwm      forKey:FIRMATA_PIN5_STATE_TYPES];
+        [defaults setInteger:allTypes forKey:FIRMATA_PIN6_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN7_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PIN8_STATE_TYPES];
+        [defaults setInteger:allTypes forKey:FIRMATA_PIN9_STATE_TYPES];
+        [defaults setInteger:allTypes forKey:FIRMATA_PIN10_STATE_TYPES];
+        [defaults setInteger:pwm      forKey:FIRMATA_PIN13_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA0_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA1_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA2_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA3_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA4_STATE_TYPES];
+        [defaults setInteger:analog   forKey:FIRMATA_PINA5_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_MISO_STATE];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_MOSI_STATE];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_SCK_STATE];
+    }
+    
     [defaults synchronize];
     
     return YES;

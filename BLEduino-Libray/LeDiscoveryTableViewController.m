@@ -47,8 +47,6 @@
     
     //Start scanning for BLE devices.
     [self scanForBleDevices:self];
-    UIApplication* app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = YES;
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -71,6 +69,10 @@
 
 - (void)scanForBleDevices:(id)sender
 {
+    //Show network activity indicator.
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+    
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     [leManager startScanning];
     
@@ -84,6 +86,7 @@
     
     [self.refreshControl endRefreshing];
     
+    //Hide network activity indicator.
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = NO;
 }
@@ -290,6 +293,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         //Present notification.
         [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
+    
+    [self scanForBleDevices:self];
 }
 
 @end
