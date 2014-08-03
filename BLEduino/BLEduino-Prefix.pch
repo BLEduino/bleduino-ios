@@ -17,6 +17,8 @@
 #define SETTINGS_LCD_TOTAL_CHARS @"LCD-TotalChars"
 #define SETTINGS_POWERRELAY_PIN_NUMBER @"PowerRelayPinNumber"
 #define SETTINGS_POWERRELAY_STATUS_COLOR @"PowerRelayStatusColor"
+#define SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT @"ProximityDistanceFormatFt"
+#define SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED @"ProximityDistanceAlertEnabled"
 
 //Firmata
 #define FIRMATA_PIN0_STATE @"firmata-pin0-state"
@@ -62,6 +64,26 @@
 #define FIRMATA_PIN_MISO_STATE_TYPES @"firmata-pin-MISO-state-types"
 #define FIRMATA_PIN_MOSI_STATE_TYPES @"firmata-pin-MOSI-state-types"
 #define FIRMATA_PIN_SCK_STATE_TYPES @"firmata-pin-SCK-state-types"
+
+//Sequencer
+#define SEQUENCE @"sequence"
+#define SEQUENCE_STATES @"sequence-states"
+#define SEQUENCE_VALUES @"sequence-values"
+#define SEQUENCE_DELAY_FORMATS @"sequence-delays-formats"
+#define SEQUENCE_DELAY_VALUES @"sequence-delays-values"
+
+//Proximity
+#define PROXIMITY_MESSAGES @"proximity-messages"
+#define PROXIMITY_DISTANCES @"proximity-distances"
+#define PROXIMITY_CLOSER @"proximity-closer"
+#define PROXIMITY_FARTHER @"proximity-farther"
+#define PROXIMITY_FIRST_CALIBRATION @"proximity-calibration"
+#define PROXIMITY_DISTANCE_CALIBRATION_VALUE @"proximity-distance-calibration-value"
+
+//Global
+#define LAST_SENT_TIMESTAMP @"last-sent-timestamp"
+#define WRITE_TIME_CAP @"write-time-cap"
+
 
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."

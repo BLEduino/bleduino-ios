@@ -37,6 +37,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *
  */
 - (void)openBridge;
+//FIXME: MAKE SURE THIS IS SENDING THE DATA. 
 
 /*
  *  @method                 closeBridge

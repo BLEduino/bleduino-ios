@@ -16,26 +16,35 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Launch LeDiscovery manager.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+//    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    
+    //FIXME: MAKE SURE MANAGER TRIES TO RECONNECT AFTER LOSING CONNECTION.
+    //FIXME: /s/projects/748777/stories/57861620
     
     //Configure settings.
     //Is this the first launch ever of this application?
     //Verify if keys exists prior to this launch.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    //Scanning and connection
-    if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||
-       [defaults objectForKey:SETTINGS_NOTIFY_CONNECT] == nil ||
-       [defaults objectForKey:SETTINGS_NOTIFY_DISCONNECT] == nil)
+    
+    //Global
+    if([defaults doubleForKey:WRITE_TIME_CAP])
     {
-        leManager.scanOnlyForBLEduinos = YES;
-        leManager.notifyConnect = NO;
-        leManager.notifyDisconnect = YES;
-        
-        [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
-        [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
-        [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
+        [defaults setDouble:200 forKey:WRITE_TIME_CAP];
     }
+    
+//    //Scanning and connection
+//    if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||
+//       [defaults objectForKey:SETTINGS_NOTIFY_CONNECT] == nil ||
+//       [defaults objectForKey:SETTINGS_NOTIFY_DISCONNECT] == nil)
+//    {
+//        leManager.scanOnlyForBLEduinos = YES;
+//        leManager.notifyConnect = NO;
+//        leManager.notifyDisconnect = YES;
+//        
+//        [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
+//        [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
+//        [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
+//    }
     
     //Modules
     if([defaults objectForKey:SETTINGS_LCD_TOTAL_CHARS] == nil ||
@@ -43,14 +52,18 @@
        [defaults objectForKey:SETTINGS_POWERRELAY_STATUS_COLOR] == nil)
     {
         [defaults setInteger:32 forKey:SETTINGS_LCD_TOTAL_CHARS];
+        
         [defaults setInteger:9 forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
         [defaults setInteger:PowerSwitchStatusColorGreenRed forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+        
+        [defaults setBool:NO forKey:SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED];
+        [defaults setBool:YES forKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
     }
     
     //Firmata
     if([defaults objectForKey:FIRMATA_PIN0_STATE] == nil)
     {
-        NSInteger defaultState = 0;
+        NSInteger defaultState = 1;
         [defaults setInteger:defaultState forKey:FIRMATA_PIN0_STATE];
         [defaults setInteger:defaultState forKey:FIRMATA_PIN1_STATE];
         [defaults setInteger:defaultState forKey:FIRMATA_PIN2_STATE];
@@ -104,6 +117,12 @@
         [defaults setInteger:digital  forKey:FIRMATA_PIN_SCK_STATE];
     }
     
+    //Proximity
+    if([defaults objectForKey:PROXIMITY_FIRST_CALIBRATION] == nil)
+    {
+        [defaults setBool:YES forKey:PROXIMITY_FIRST_CALIBRATION];
+    }
+    
     [defaults synchronize];
     
     return YES;
@@ -115,6 +134,7 @@
     NSString *serviceUUIDString = [notification.userInfo objectForKey:@"service"];
     NSString *connectNotification = [notification.userInfo objectForKey:@"connect"];
     NSString *disconnectNotification = [notification.userInfo objectForKey:@"disconnect"];
+    NSString *proximityNotification = [notification.userInfo objectForKey:@"ProximityModule"];
     
 
     if(serviceUUIDString)
@@ -135,8 +155,21 @@
             [notificationAlert show];
         }
     }
-
     else if(connectNotification || disconnectNotification)
+    {
+        NSString *message = [notification.userInfo objectForKey:@"message"];
+        NSString *title   = [notification.userInfo objectForKey:@"title"];
+        
+        
+        UIAlertView *notificationAlert = [[UIAlertView alloc]initWithTitle:title
+                                                                   message:message
+                                                                  delegate:nil
+                                                         cancelButtonTitle:@"Close"
+                                                         otherButtonTitles:nil];
+        
+        [notificationAlert show];
+    }
+    else if (proximityNotification)
     {
         NSString *message = [notification.userInfo objectForKey:@"message"];
         NSString *title   = [notification.userInfo objectForKey:@"title"];

@@ -44,6 +44,7 @@
 //Add support to persist devices.
 @property (strong) NSMutableOrderedSet *foundBleduinos;
 @property (strong) NSMutableOrderedSet *connectedBleduinos;
+@property NSInteger totalServices;
 
 //PENDING: Stretched goal.
 //Add more context to discovered devices (e.g. RSSI).

@@ -54,11 +54,23 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 - (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction
                    withAck:(BOOL)enabled
 {
-    self.lastSentButtonAction = buttonAction;
-    [self writeDataToServiceUUID:self.controllerServiceUUID
-              characteristicUUID:self.buttonActionCharacteristicUUID
-                            data:[buttonAction data]
-                         withAck:enabled];
+    //Write only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+    
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
+    {
+        self.lastSentButtonAction = buttonAction;
+        [self writeDataToServiceUUID:self.controllerServiceUUID
+                  characteristicUUID:self.buttonActionCharacteristicUUID
+                                data:[buttonAction data]
+                             withAck:enabled];
+        
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
+    }
 }
 
 - (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction
@@ -74,8 +86,20 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 /****************************************************************************/
 - (void) readButtonAction
 {
-    [self readDataFromServiceUUID:self.controllerServiceUUID
-               characteristicUUID:self.buttonActionCharacteristicUUID];
+    //Read only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+    
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
+    {
+        [self readDataFromServiceUUID:self.controllerServiceUUID
+                   characteristicUUID:self.buttonActionCharacteristicUUID];
+        
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
+    }
 }
 
 - (void) subscribeToStartReceivingButtonActions

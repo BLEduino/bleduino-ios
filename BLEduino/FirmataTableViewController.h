@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDFirmataService.h"
 
 
@@ -21,7 +22,8 @@
 FirmataServiceDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
-UITextFieldDelegate
+UITextFieldDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) id <FirmataTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sync;

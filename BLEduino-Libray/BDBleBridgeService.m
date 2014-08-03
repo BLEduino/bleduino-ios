@@ -152,10 +152,22 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             //Found destination device. Relay message.
             if(device.bridgeDeviceID == deviceID)
             {
-                [self writeDataToServiceUUID:self.bleBridgeServiceUUID
-                          characteristicUUID:self.bridgeRxCharacteristicUUID
-                                        data:characteristic.value
-                                     withAck:NO];
+                //Write only once every 100ms at the most.
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+                double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+                
+                double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+                if(timePassed_ms >= timeCap || lastSent == nil)
+                {
+                    [self writeDataToServiceUUID:self.bleBridgeServiceUUID
+                              characteristicUUID:self.bridgeRxCharacteristicUUID
+                                            data:characteristic.value
+                                         withAck:NO];
+                
+                    [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+                    [defaults synchronize];
+                }
             }
         }
     }

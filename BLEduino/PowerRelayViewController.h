@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDFirmataService.h"
 #import "PowerSwitchButtonView.h"
 #import "PowerNextStateView.h"
@@ -21,8 +22,10 @@
 CBPeripheralDelegate,
 FirmataServiceDelegate,
 PowerSwitchButtonViewDelegate,
-PowerNextStateViewDelegate
+PowerNextStateViewDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) id <PowerRelayViewControllerDelegate> delegate;
+@property BOOL isLastPowerRelayStateON;
 - (IBAction)dismissModule;
 @end

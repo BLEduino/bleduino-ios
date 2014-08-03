@@ -61,7 +61,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                     {
                         [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
                     }
-                    
+
                     NSLog(@"Data was sent to characteristic %@", [cUUID description]);
                 }
             }
@@ -72,7 +72,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
 /*
  *  @method                 readCharacteristic:serviceUUID:characteristicUUID:
  *
- *  @discussion             This method reads and verifies that a specific characteristic/service 
+ *  @discussion             This method reads and verifies that a specific characteristic/service
  *                          is supported by the peripheral before requesting value.
  *
  *  @param bleduino			Peripheral to write.
@@ -124,7 +124,10 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                 if([characteristic.UUID isEqual:cUUID])
                 {//Found characteristic.
                     [_servicePeripheral setNotifyValue:value forCharacteristic:characteristic];
+                    NSLog(@"Subcribe was sent to characteristic %@", [cUUID description]);
                 }
+                
+                
             }
         }
     }

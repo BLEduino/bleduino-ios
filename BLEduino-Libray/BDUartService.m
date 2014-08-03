@@ -44,7 +44,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     self = [super init];
     if (self) {
-        _servicePeripheral = [aPeripheral copy];
+        _servicePeripheral = aPeripheral; //[aPeripheral copy];
         _servicePeripheral.delegate = self;
 		self.delegate = aController;
         
@@ -64,68 +64,80 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void) writeData:(NSData *)data withAck:(BOOL)enabled
 {
-    int dataLength = (int)data.length;
+    //Write only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
     
-    if(dataLength > 20)
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
     {
-        BOOL lastPacket = false;
-        int dataIndex = 0;
-        int totalPackets = ceil(dataLength / 19);
+        int dataLength = (int)data.length;
         
-        for (int packetIndex = 0; packetIndex <= totalPackets; packetIndex++)
+        if(dataLength > 20)
         {
+            BOOL lastPacket = false;
+            int dataIndex = 0;
+            int totalPackets = ceil(dataLength / 19);
             
-            lastPacket = (packetIndex == totalPackets);
-            int rangeLength = (lastPacket)?(dataLength - dataIndex):19;
-            
-            NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
-            NSData *dataSubset = [data subdataWithRange:dataRange];
-            self.longTransmission = !lastPacket;
-            
-
-            NSMutableData *finalData = [[NSMutableData alloc] initWithCapacity:[dataSubset length]+1];
-
-            //Include state data.
-            if (dataIndex == 0)
-            {//Starting transmission.
+            for (int packetIndex = 0; packetIndex <= totalPackets; packetIndex++)
+            {
                 
-                Byte startByte = (0 >> (0)) & 0xff;
-                NSMutableData *startData = [NSMutableData dataWithBytes:&startByte length:sizeof(startByte)];
-                [finalData appendData:startData];
-            }
-            else if(lastPacket)
-            {//Ending transmission.
+                lastPacket = (packetIndex == totalPackets);
+                int rangeLength = (lastPacket)?(dataLength - dataIndex):19;
                 
-                Byte endByte = (2 >> (0)) & 0xff;
-                NSMutableData *endData = [NSMutableData dataWithBytes:&endByte length:sizeof(endByte)];
-                [finalData appendData:endData];
-            }
-            else if (dataIndex > 0)
-            {//Transmission is in transit.
+                NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
+                NSData *dataSubset = [data subdataWithRange:dataRange];
+                self.longTransmission = !lastPacket;
                 
-                Byte transitByte = (1 >> (0)) & 0xff;
-                NSMutableData *transitData = [NSMutableData dataWithBytes:&transitByte length:sizeof(transitByte)];
-                [finalData appendData:transitData];
+                
+                NSMutableData *finalData = [[NSMutableData alloc] initWithCapacity:[dataSubset length]+1];
+                
+                //Include state data.
+                if (dataIndex == 0)
+                {//Starting transmission.
+                    
+                    Byte startByte = (0 >> (0)) & 0xff;
+                    NSMutableData *startData = [NSMutableData dataWithBytes:&startByte length:sizeof(startByte)];
+                    [finalData appendData:startData];
+                }
+                else if(lastPacket)
+                {//Ending transmission.
+                    
+                    Byte endByte = (2 >> (0)) & 0xff;
+                    NSMutableData *endData = [NSMutableData dataWithBytes:&endByte length:sizeof(endByte)];
+                    [finalData appendData:endData];
+                }
+                else if (dataIndex > 0)
+                {//Transmission is in transit.
+                    
+                    Byte transitByte = (1 >> (0)) & 0xff;
+                    NSMutableData *transitData = [NSMutableData dataWithBytes:&transitByte length:sizeof(transitByte)];
+                    [finalData appendData:transitData];
+                }
+                
+                //Append message data.
+                [finalData appendData:dataSubset];
+                
+                [self writeDataToServiceUUID:self.uartServiceUUID
+                          characteristicUUID:self.rxCharacteristicUUID
+                                        data:finalData
+                                     withAck:enabled];
+                
+                //Move dataIndex to the beginning of next packet.
+                dataIndex += 19;
             }
-            
-            //Append message data.
-            [finalData appendData:dataSubset];
-            
+        }
+        else
+        {
             [self writeDataToServiceUUID:self.uartServiceUUID
                       characteristicUUID:self.rxCharacteristicUUID
-                                    data:finalData
+                                    data:data
                                  withAck:enabled];
-            
-            //Move dataIndex to the beginning of next packet.
-            dataIndex += 19;
         }
-    }
-    else
-    {
-        [self writeDataToServiceUUID:self.uartServiceUUID
-                  characteristicUUID:self.rxCharacteristicUUID
-                                data:data
-                             withAck:enabled];
+        
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
     }
 }
 
@@ -157,9 +169,20 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 /****************************************************************************/
 
 - (void) readData
-{
-    [self readDataFromServiceUUID:self.uartServiceUUID
-               characteristicUUID:self.txCharacteristicUUID];
+{    //Write only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+    
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
+    {
+        [self readDataFromServiceUUID:self.uartServiceUUID
+                   characteristicUUID:self.txCharacteristicUUID];
+        
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
+    }
 }
 
 - (void) readMessage
@@ -225,9 +248,8 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     if(!self.longTransmission)
     {
-        if(self.textTransmission)
+        if(self.textSubscription)
         {
-            self.textTransmission = NO;
             self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
         }
         else
@@ -248,7 +270,6 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
     {
         if(self.textSubscription)
         {
-            self.textSubscription = NO;
             if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveMessagesFor:error:)])
             {
                 [self.delegate didSubscribeToReceiveMessagesFor:self error:error];

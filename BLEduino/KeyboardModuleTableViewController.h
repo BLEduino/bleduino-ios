@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDUartService.h"
 
 @class KeyboardModuleTableViewController;
@@ -17,7 +18,8 @@
 @interface KeyboardModuleTableViewController : UITableViewController
 <
 UITextViewDelegate,
-UARTServiceDelegate
+UARTServiceDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) IBOutlet UITextView *messageView;
 @property (weak) id <KeyboardModuleTableViewControllerDelegate> delegate;

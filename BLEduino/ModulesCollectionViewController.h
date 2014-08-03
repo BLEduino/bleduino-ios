@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 //Modules
+#import "BDLeDiscoveryManager.h"
 #import "LCDTableViewController.h"
 #import "KeyboardModuleTableViewController.h"
 #import "GameControllerViewController.h"
@@ -19,10 +20,14 @@
 #import "BDBleBridgeService.h"
 #import "FirmataTableViewController.h"
 #import "SequencerTableViewController.h"
+#import "ProximityViewController.h"
+#import "ConsoleTableViewController.h"
+#import "BDNotificationService.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
 UICollectionViewDelegateFlowLayout,
+CBPeripheralDelegate,
 LCDTableViewControllerDelegate,
 KeyboardModuleTableViewControllerDelegate,
 GameControllerViewControllerDelegate,
@@ -30,14 +35,31 @@ RadioControlledViewControllerDelegate,
 PowerRelayViewControllerDelegate,
 LEDModuleTableViewControllerDelegate,
 FirmataTableViewControllerDelegate,
-SequencerTableViewControllerDelegate
+SequencerTableViewControllerDelegate,
+ProximityViewControllerDelegate,
+ConsoleTableViewControllerDelegate,
+NotificationServiceDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;
 
 //Services that run in the background.
-@property (strong) BDNotificationService *notifications;
 @property (strong) BDBleBridgeService *bleBridge;
+@property (strong) BDNotificationService *notificationService;
+
+//Proximity
+//Alerts
+@property (strong) NSMutableArray *distanceAlerts;
+@property BOOL distanceAlertsEnabled;
+
+//Current Distance
+@property (strong) NSMutableArray *currentReadings;
+@property NSInteger currentDistance;
+
+@property (strong) NSMutableArray *calibrationReadings;
+@property (strong) NSNumber *measuredPower; //Calibrated RSSI. 
+@property BOOL isCalibrating;
 
 - (IBAction)showMenu;
 - (void)showStatusBar;

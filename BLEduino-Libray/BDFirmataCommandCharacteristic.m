@@ -70,7 +70,17 @@
         NSRange pinValueRange = NSMakeRange(2, 1);
         [firmataCommandData getBytes:pinValueByte range:pinValueRange];
         NSData *pinValueData = [[NSData alloc] initWithBytes:pinValueByte length:1];
-        self.pinValue = *(int*)([pinValueData bytes]);
+        NSInteger msb = *(int*)([pinValueData bytes]);
+        
+        Byte *pinValueByteLSB = (Byte*)malloc(1);
+        NSRange pinValueRangeLSB = NSMakeRange(3, 1);
+        [firmataCommandData getBytes:pinValueByteLSB range:pinValueRangeLSB];
+        NSData *pinValueDataLSB = [[NSData alloc] initWithBytes:pinValueByteLSB length:1];
+        NSInteger lsb = *(int*)([pinValueDataLSB bytes]);
+        
+        //Shift MSB and OR it with LSB to get final value.
+        NSInteger msb_shifted = msb << 8;
+        self.pinValue = (lsb | msb_shifted);
     }
     return self;
 }

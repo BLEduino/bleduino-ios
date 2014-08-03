@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDControllerService.h"
 #import "MFLJoystick.h"
 
@@ -18,7 +19,8 @@
 @interface GameControllerViewController : UIViewController
 <
 ControllerServiceDelegate,
-JoystickDelegate
+JoystickDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) id <GameControllerViewControllerDelegate> delegate;
 @property CGPoint lastPosition;

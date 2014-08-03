@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9713717919805F8C00E1B53D /* ConsoleCell.m */; };
+		972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA450197DBB2600CEEC18 /* PSPDFTextView.m */; };
+		972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */; };
+		9779C5B21979819300302C50 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B11979819300302C50 /* ProximityViewController.m */; };
+		9779C5B51979871800302C50 /* DistanceAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B41979871800302C50 /* DistanceAlert.m */; };
+		9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B7197995BF00302C50 /* DistanceAlertController.m */; };
+		97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB51401976C7D100290859 /* TimeDelayTableViewCell.m */; };
+		97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB5143197765B700290859 /* ConsoleTableViewController.m */; };
 		B7050201194F5060004E820D /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B70501FF194F5060004E820D /* add@2x.png */; };
 		B7050202194F5060004E820D /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = B7050200194F5060004E820D /* add.png */; };
 		B71B62FE185AC83700511FE0 /* FirmataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */; };
@@ -131,6 +139,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9713717819805F8C00E1B53D /* ConsoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCell.h; sourceTree = "<group>"; };
+		9713717919805F8C00E1B53D /* ConsoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleCell.m; sourceTree = "<group>"; };
+		972DA44F197DBB2600CEEC18 /* PSPDFTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPDFTextView.h; sourceTree = "<group>"; };
+		972DA450197DBB2600CEEC18 /* PSPDFTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPDFTextView.m; sourceTree = "<group>"; };
+		972DA452197ECC2D00CEEC18 /* ConsoleEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleEntries.h; sourceTree = "<group>"; };
+		972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleEntries.m; sourceTree = "<group>"; };
+		9779C5B01979819300302C50 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
+		9779C5B11979819300302C50 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
+		9779C5B31979871800302C50 /* DistanceAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlert.h; sourceTree = "<group>"; };
+		9779C5B41979871800302C50 /* DistanceAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceAlert.m; sourceTree = "<group>"; };
+		9779C5B6197995BF00302C50 /* DistanceAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlertController.h; sourceTree = "<group>"; };
+		9779C5B7197995BF00302C50 /* DistanceAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceAlertController.m; sourceTree = "<group>"; };
+		97DB513F1976C7D100290859 /* TimeDelayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayTableViewCell.h; sourceTree = "<group>"; };
+		97DB51401976C7D100290859 /* TimeDelayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeDelayTableViewCell.m; sourceTree = "<group>"; };
+		97DB5142197765B700290859 /* ConsoleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleTableViewController.h; sourceTree = "<group>"; };
+		97DB5143197765B700290859 /* ConsoleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleTableViewController.m; sourceTree = "<group>"; };
 		B70501FF194F5060004E820D /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		B7050200194F5060004E820D /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		B71B62FC185AC83700511FE0 /* FirmataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataTableViewController.h; sourceTree = "<group>"; };
@@ -318,6 +342,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		972DA44E197DBB2600CEEC18 /* PSPDFTextView */ = {
+			isa = PBXGroup;
+			children = (
+				972DA44F197DBB2600CEEC18 /* PSPDFTextView.h */,
+				972DA450197DBB2600CEEC18 /* PSPDFTextView.m */,
+			);
+			path = PSPDFTextView;
+			sourceTree = "<group>";
+		};
+		97DB5145197765CD00290859 /* Console */ = {
+			isa = PBXGroup;
+			children = (
+				97DB5142197765B700290859 /* ConsoleTableViewController.h */,
+				97DB5143197765B700290859 /* ConsoleTableViewController.m */,
+				972DA452197ECC2D00CEEC18 /* ConsoleEntries.h */,
+				972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */,
+				9713717819805F8C00E1B53D /* ConsoleCell.h */,
+				9713717919805F8C00E1B53D /* ConsoleCell.m */,
+			);
+			name = Console;
+			sourceTree = "<group>";
+		};
+		97DB5149197765E700290859 /* Proximity */ = {
+			isa = PBXGroup;
+			children = (
+				9779C5B01979819300302C50 /* ProximityViewController.h */,
+				9779C5B11979819300302C50 /* ProximityViewController.m */,
+				9779C5B31979871800302C50 /* DistanceAlert.h */,
+				9779C5B41979871800302C50 /* DistanceAlert.m */,
+				9779C5B6197995BF00302C50 /* DistanceAlertController.h */,
+				9779C5B7197995BF00302C50 /* DistanceAlertController.m */,
+			);
+			name = Proximity;
+			sourceTree = "<group>";
+		};
 		B75EC51517FB415F000309FF /* ModulesConrtoller */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +410,8 @@
 				B79D7860183C5CE400CB68D8 /* RadioControlled */,
 				B7DD413E185F9478006A91C5 /* Firmata */,
 				B7FF2AFB194B76A800D484B4 /* Sequencer */,
+				97DB5145197765CD00290859 /* Console */,
+				97DB5149197765E700290859 /* Proximity */,
 				B79D795B183FC5BD00CB68D8 /* OrientationNavigationController.h */,
 				B79D795C183FC5BD00CB68D8 /* OrientationNavigationController.m */,
 			);
@@ -641,6 +702,7 @@
 		B7D3226418456BEA008F53AE /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				972DA44E197DBB2600CEEC18 /* PSPDFTextView */,
 				B7D3226518456BEA008F53AE /* MFLJoystick */,
 				B7D3226818456BEA008F53AE /* OBShapedButton */,
 				B7D3226B18456BEA008F53AE /* RESideMenu */,
@@ -731,6 +793,8 @@
 			children = (
 				B7FF2AF8194B769F00D484B4 /* SequencerTableViewController.h */,
 				B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */,
+				97DB513F1976C7D100290859 /* TimeDelayTableViewCell.h */,
+				97DB51401976C7D100290859 /* TimeDelayTableViewCell.m */,
 			);
 			name = Sequencer;
 			sourceTree = "<group>";
@@ -782,6 +846,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Kytelabs;
 				TargetAttributes = {
+					B7B73BED17F256B3008E6769 = {
+						DevelopmentTeam = 92D2ZH95HX;
+					};
 					B7B73C0E17F256B3008E6769 = {
 						TestTargetID = B7B73BED17F256B3008E6769;
 					};
@@ -886,6 +953,10 @@
 			files = (
 				B7B73C2D17F25A58008E6769 /* BDUartService.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
+				9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */,
+				97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */,
+				9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */,
+				972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */,
 				B72D18591826FBBF00BD1A2D /* BDVehicleMotionService.m in Sources */,
 				B72D18651826FED500BD1A2D /* BDControllerService.m in Sources */,
 				B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */,
@@ -904,17 +975,21 @@
 				B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */,
 				B7EB1CED1830972A0060441E /* BDPeripheral.m in Sources */,
 				B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */,
+				97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */,
 				B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
+				9779C5B21979819300302C50 /* ProximityViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
 				B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */,
 				B7AE660C18431451007C45A3 /* PowerNextStateView.m in Sources */,
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
 				B7D3227618456BEA008F53AE /* OBShapedButton.m in Sources */,
+				9779C5B51979871800302C50 /* DistanceAlert.m in Sources */,
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */,
 				B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */,
+				972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */,
 				B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */,
 				B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */,
 				B79D7863183C5F3000CB68D8 /* VerticalJoystickControlView.m in Sources */,
@@ -1052,12 +1127,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6E19EE36-B3C6-428D-A719-AC9FBA26FD5F";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1067,12 +1144,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6E19EE36-B3C6-428D-A719-AC9FBA26FD5F";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};

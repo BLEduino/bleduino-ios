@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDUartService.h"
 
 @class LCDTableViewController;
@@ -18,7 +19,8 @@
 @interface LCDTableViewController : UITableViewController
 <
 UITextViewDelegate,
-UARTServiceDelegate
+UARTServiceDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) IBOutlet UITextView *messageView;
 @property (weak) IBOutlet UILabel *charCountView;

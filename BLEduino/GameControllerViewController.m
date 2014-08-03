@@ -57,7 +57,7 @@
                  andBGImage:[UIImage imageNamed:@"joystick-bg.png"]];
     [joystick setDelegate:self];
     [self.view addSubview:joystick];
-    
+        
     //Initiate last position.
     CGPoint center = CGPointMake(CGRectGetMidX(originFrame), CGRectGetMidY(originFrame));
     self.lastPosition = center;
@@ -68,6 +68,10 @@
      addObserver:self selector:@selector(orientationChanged:)
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
+    
+    //Manager Delegate
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    leManager.delegate = self;
     
     //What's initial orientation?
     UIDeviceOrientation currentOrientation = [[UIDevice currentDevice] orientation];
@@ -109,7 +113,9 @@
     
     //Start/Select buttons.
     [self.start addTarget:self action:@selector(startButton:) forControlEvents:UIControlEventTouchDown];
+    [self.start addTarget:self action:@selector(startButtonReleased:) forControlEvents:UIControlEventTouchDown];
     [self.select addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchDown];
+    [self.select addTarget:self action:@selector(selectButtonReleased:) forControlEvents:UIControlEventTouchDown];
     
 }
 
@@ -186,8 +192,8 @@
 //Vertical Resolution: 200, 135 > neutral, 35 > 90 (Max up), 235 > -90 (Max down)
 //Horizontal Resolution: 200, 135 > neutral, 35 > 90 (Max left), 235 > -90 (Max right)
 
-//Adopted - Vertical Resolution: 25, 1 > 90 (Max up), 26 > -90 (Max down), 13 > neutral
-//Adopted - Horizontal Resolution: 25, 1 > 90 (Max left), 26 > -90 (Max right), 13 > neutral
+//Adapted - Vertical Resolution: 25, 1 > 90 (Max up), 26 > -90 (Max down), 13 > neutral
+//Adapted - Horizontal Resolution: 25, 1 > 90 (Max left), 26 > -90 (Max right), 13 > neutral
 - (void)joystick:(MFLJoystick *)aJoystick didUpdate:(CGPoint)dir
 {
     //Lowering resolution to 25. If change is 8px then send data update.
@@ -356,11 +362,32 @@
 #pragma mark -
 #pragma mark Start/Select buttons
 //Send start/select action.
+
 - (void)startButton:(id)sender
+{
+    [self startSendUpdateWithStateSelected:YES];
+}
+
+- (void)startButtonReleased:(id)sender
+{
+    [self startSendUpdateWithStateSelected:NO];
+}
+
+- (void)selectButton:(id)sender
+{
+    [self selectSendUpdateWithStateSelected:YES];
+}
+
+- (void)selectButtonReleased:(id)sender
+{
+    [self selectSendUpdateWithStateSelected:NO];
+}
+
+- (void)startSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
     BDButtonActionCharacteristic *startButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
-    startButtonUpdate.buttonStatus = 1;
+    startButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     startButtonUpdate.buttonID = 6;
     
     //Send button action.
@@ -376,12 +403,12 @@
     NSLog(@"GameController, sent button *Start* action update");
 }
 
-- (void)selectButton:(id)sender
+- (void)selectSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
     BDButtonActionCharacteristic *selectButtonUpdate = [[BDButtonActionCharacteristic alloc] init];
-    selectButtonUpdate.buttonStatus = 1;
-    selectButtonUpdate.buttonID = 6;
+    selectButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];;
+    selectButtonUpdate.buttonID = 7;
     
     //Send button action.
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
@@ -394,6 +421,42 @@
     }
     
     NSLog(@"GameController, sent button *Select* action update");
+}
+
+#pragma mark -
+#pragma mark - LeManager Delegate
+/****************************************************************************/
+/*                            LeManager Delegate                            */
+/****************************************************************************/
+//Disconnected from BLEduino and BLE devices.
+- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+{
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Disconnected from peripheral: %@", name);
+    
+    //Verify if notify setting is enabled.
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
+    
+    if(notifyDisconnect)
+    {
+        //Push local notification.
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        
+        //Is application on the foreground?
+        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+        {
+            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
+            //Application is on the foreground, store notification attributes to present alert view.
+            notification.userInfo = @{@"title"  : @"BLEduino",
+                                      @"message": message,
+                                      @"disconnect": @"disconnect"};
+        }
+        
+        //Present notification.
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    }
 }
 
 @end

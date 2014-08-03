@@ -14,10 +14,11 @@
 /****************************************************************************/
 extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B-0032C0D16A2D"
 
-
+//FIXME: VERIFY AGAIN WRITING TO MULTIPLE BLE DEVICES.
 @interface BDBleService : NSObject
 {
     @protected CBPeripheral *_servicePeripheral;
+    @protected NSDate *_lastWriteTimestamp;
 }
 
 @property (readonly) CBPeripheral *peripheral;

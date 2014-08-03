@@ -20,10 +20,11 @@
     {
         NSString *attributesString = [[NSString alloc] initWithData:attributesData
                                                            encoding:NSUTF8StringEncoding];
-        
-        NSArray *attributes = [attributesString componentsSeparatedByString:@"#"];
-        _title = [attributes objectAtIndex:0];
-        _message = [attributes objectAtIndex:1];
+
+//        NSArray *attributes = [attributesString componentsSeparatedByString:@"#"];
+//        _title = [attributes objectAtIndex:0];
+//        _message = [attributes objectAtIndex:1];
+        _message = attributesString;
     }
 
     return self;
@@ -34,8 +35,8 @@
  */
 - (NSData *)data
 {
-    NSString *attributesString = [NSString stringWithFormat:@"%@#%@", self.title, self.message];
-    NSData *attributesData = [attributesString dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *attributesString = [NSString stringWithFormat:@"%@#%@", self.title, self.message];
+    NSData *attributesData = [self.message dataUsingEncoding:NSUTF8StringEncoding];
     
     return attributesData;
 }

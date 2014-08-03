@@ -15,6 +15,7 @@
 #import "FirmataAnalogCell.h"
 #import "FirmataDigitalCell.h"
 #import "FirmataPWMCell.h"
+#import "TimeDelayTableViewCell.h"
 
 @class SequencerTableViewController;
 @protocol SequencerTableViewControllerDelegate <NSObject>
@@ -26,7 +27,8 @@
 FirmataServiceDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
-UITextFieldDelegate
+UITextFieldDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) id <SequencerTableViewControllerDelegate> delegate;
 @property (strong) NSMutableArray *sequence;
@@ -35,6 +37,7 @@ UITextFieldDelegate
 @property (strong) BDFirmataCommandCharacteristic *end;
 @property IBOutlet UIBarButtonItem *edit;
 @property IBOutlet UIBarButtonItem *addCommand;
+@property IBOutlet UIBarButtonItem *addDelay;
 
 - (IBAction)addCommand:(id)sender;
 - (IBAction)addDelay:(id)sender;

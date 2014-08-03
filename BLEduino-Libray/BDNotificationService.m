@@ -32,7 +32,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 @property (weak) id <NotificationServiceDelegate> delegate;
 @property (strong) BDNotificationAttributesCharacteristic *lastSentNotification;
 
-@property (strong) NSMutableOrderedSet *servicePeripherals;
+@property (strong) NSMutableOrderedSet *notifications;
 @end
 
 @implementation BDNotificationService
@@ -52,6 +52,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     
     return self;
 }
+
 
 + (BDNotificationService *)sharedListener
 {
@@ -78,25 +79,19 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
  *                          data the iOS device then pushes a local notification.
  *
  */
-- (void)startListening
+- (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController
 {
-    self.isListening = YES;
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    self.servicePeripherals = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
+    self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        CBPeripheral *bleduinoPeripheral = [bleduino copy];
-        bleduinoPeripheral.delegate = self;
+        BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
+                                                                                       delegate:aController];
         
-        BDPeripheral *device = [[BDPeripheral alloc] init];
-        device.bleduino = bleduinoPeripheral;
-        
-        [self.servicePeripherals addObject:device];
-        
-        [self setNotificationForServiceUUID:self.notificationServiceUUID
-                        characteristicUUID:self.notificationAttributesCharacteristicUUID
-                               notifyValue:YES];
+        [notification subscribeToStartReceivingNotifications];
+        notification.isListening = YES;
+        [self.notifications addObject:notification];
     }
     
     NSLog(@"Notifications: Startted listening.");
@@ -109,20 +104,16 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)stopListening
+- (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController
 {
-    for(BDPeripheral *device in self.servicePeripherals)
+    for(BDNotificationService *service in self.notifications)
     {
-        [self setNotificationForServiceUUID:self.notificationServiceUUID
-                        characteristicUUID:self.notificationAttributesCharacteristicUUID
-                               notifyValue:NO];
+        [service unsubscribeToStopReiceivingNotifications];
+        service.isListening = NO;
     }
  
     //Remove all BLEduinos.
-    [self.servicePeripherals removeAllObjects];
-    
-    self.isListening = NO;
-    
+    [self.notifications removeAllObjects];    
     NSLog(@"Notifications: Stopped listening.");
 }
 
@@ -134,11 +125,23 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 - (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
                    withAck:(BOOL)enabled
 {
-    self.lastSentNotification = notification;
-    [self writeDataToServiceUUID:self.notificationServiceUUID
-              characteristicUUID:self.notificationAttributesCharacteristicUUID
-                            data:[notification data]
-                         withAck:enabled];
+    //Write only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+    
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
+    {
+        self.lastSentNotification = notification;
+        [self writeDataToServiceUUID:self.notificationServiceUUID
+                  characteristicUUID:self.notificationAttributesCharacteristicUUID
+                                data:[notification data]
+                             withAck:enabled];
+        
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
+    }
 }
 
 - (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
@@ -155,8 +158,20 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 /****************************************************************************/
 - (void) readNotification
 {
-    [self readDataFromServiceUUID:self.notificationServiceUUID
-               characteristicUUID:self.notificationAttributesCharacteristicUUID];
+    //Write only once every 100ms at the most.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
+    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+    
+    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
+    if(timePassed_ms >= timeCap || lastSent == nil)
+    {
+        [self readDataFromServiceUUID:self.notificationServiceUUID
+                   characteristicUUID:self.notificationAttributesCharacteristicUUID];
+     
+        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
+        [defaults synchronize];
+    }
 }
 
 - (void) subscribeToStartReceivingNotifications
@@ -198,6 +213,8 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     {
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = self.lastNotification.message;
+        notification.alertAction = @"Close";
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)

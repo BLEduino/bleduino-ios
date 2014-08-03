@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 
 @interface SettingsTableViewController : UITableViewController
 <
 UIAlertViewDelegate,
 UITextFieldDelegate,
-UIActionSheetDelegate
+UIActionSheetDelegate,
+LeDiscoveryManagerDelegate
 >
 - (IBAction)showMenu;
 - (void)showStatusBar;

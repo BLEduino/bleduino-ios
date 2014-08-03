@@ -57,8 +57,7 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
  *                          data the iOS device then pushes a local notification.
  *
  */
-- (void)startListening;
-
+- (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController;
 /*
  *  @method                 stopListening
  *
@@ -66,7 +65,7 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)stopListening;
+- (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController;
 
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral

@@ -173,9 +173,51 @@
     }
     else
     {
+        [self presentBleduinoInterrogationView];
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
     }
+}
+
+- (void)presentBleduinoInterrogationView
+{
+    UIColor *textColor = [UIColor darkGrayColor];
+    UIColor *backgroundColor = [UIColor whiteColor];
+    
+    UIView *interrogationView = [[UIView alloc] initWithFrame:CGRectMake(60, 200, 200, 100)];
+    interrogationView.backgroundColor = backgroundColor;
+    
+    //Indicator
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]
+                                         initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activity.color = textColor;
+    activity.frame = CGRectMake(80, 30, 40, 40);
+    [activity startAnimating];
+    
+    //Label
+    UILabel *indicatorText = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 200, 20)];
+    [indicatorText setTextAlignment:NSTextAlignmentCenter];
+    [indicatorText setFont:[UIFont systemFontOfSize:15]];
+    [indicatorText setTextColor:textColor];
+    indicatorText.text = @"Discovering Services";
+    
+    //Interrogation View Background
+    CGRect tableViewFrame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.width);
+    UIView *interrogationBackgroundView = [[UIView alloc] initWithFrame:tableViewFrame];
+    interrogationBackgroundView.backgroundColor = [UIColor colorWithRed:70/255.0 green:70/255.0 blue:70/255.0 alpha:0.8];
+    interrogationBackgroundView.tag = 1320;
+
+    //Complete view
+    [interrogationView addSubview:activity];
+    [interrogationView addSubview:indicatorText];
+    [interrogationBackgroundView addSubview:interrogationView];
+    [self.tableView addSubview:interrogationBackgroundView];
+}
+
+- (void)removeBleduinoInterrogationView
+{
+    [self.tableView setHidden:NO];
+    [[self.tableView viewWithTag:1320] removeFromSuperview];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -230,6 +272,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 //Connected to BLEduino and BLE devices.
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
+    //Remove Bleduino interrogation view.
+//    [self removeBleduinoInterrogationView];
+    
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     

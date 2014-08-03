@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDFirmataService.h"
 
 @class LEDModuleTableViewController;
@@ -14,7 +15,7 @@
 - (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller;
 @end
 
-@interface LEDModuleTableViewController : UITableViewController <FirmataServiceDelegate>
+@interface LEDModuleTableViewController : UITableViewController <FirmataServiceDelegate, LeDiscoveryManagerDelegate>
 @property (weak) id <LEDModuleTableViewControllerDelegate> delegate;
 - (IBAction)dismissModule;
 @end

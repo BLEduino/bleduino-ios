@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BDLeDiscoveryManager.h"
 #import "BDVehicleMotionService.h"
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
@@ -20,7 +21,8 @@
 <
 VehicleMotionServiceDelegate,
 VerticalJoystickControlViewDelegate,
-HorizontalJoystickControlViewDelegate
+HorizontalJoystickControlViewDelegate,
+LeDiscoveryManagerDelegate
 >
 @property (weak) id <RadioControlledViewControllerDelegate> delegate;
 - (IBAction)dismissModule;

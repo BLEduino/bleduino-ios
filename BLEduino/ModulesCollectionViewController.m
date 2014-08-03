@@ -6,9 +6,13 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "ModulesCollectionViewController.h"
 #import "ModuleCollectionViewCell.h"
 #import "RESideMenu.h"
+#import "DistanceAlert.h"
+#import "BDLeDiscoveryManager.h"
+#import "ProximityViewController.h"
 
 @implementation ModulesCollectionViewController
 
@@ -45,8 +49,12 @@
     [super viewDidLoad];
     
     //Set services that run in the background.
-    self.notifications = [BDNotificationService sharedListener];
+    self.notificationService = [BDNotificationService sharedListener];
     self.bleBridge = [BDBleBridgeService sharedBridge];
+//    [self monitorBleduinoDistances]; //FIXME: CHANGE BACK
+    
+    self.calibrationReadings = [[NSMutableArray alloc] initWithCapacity:20];
+    self.currentReadings = [[NSMutableArray alloc] initWithCapacity:20];
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -56,13 +64,203 @@
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
+    
+    //Manager Delegate
+//    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+//    leManager.delegate = self;
+    
+    //Monitor distances from bleduino here (to be able to monitor in the background).
+    
+    //Set notifications to monitor Alerts Enabled control, and distance calibration.
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"DistanceAlertsEnabled" object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"DistanceAlertsDisabled" object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"NewDistanceAlert" object:nil];
+    [center addObserver:self selector:@selector(beginDistanceCalibration:)  name:@"BeginCalibration" object:nil];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark - Proximity Module Logic
+/****************************************************************************/
+/*                          Proximity Module Logic                          */
+/****************************************************************************/
+// Proximity module logic is located here to be able to monitor distances
+// and alerts on the background.
+
+- (void)loadDistanceAlerts
+{
+    //Load sequence.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *proximityMessages = (NSArray *)[defaults objectForKey:PROXIMITY_MESSAGES];
+    NSArray *proximityDistances = (NSArray *)[defaults objectForKey:PROXIMITY_DISTANCES];
+    NSArray *proximityCloser = (NSArray *)[defaults objectForKey:PROXIMITY_CLOSER];
+    NSArray *proximityFarther = (NSArray *)[defaults objectForKey:PROXIMITY_FARTHER];
+    [defaults synchronize];
+    
+    self.distanceAlerts = [[NSMutableArray alloc] initWithCapacity:proximityMessages.count];
+    
+    for (int i=0; i<proximityMessages.count; i++)
+    {
+        DistanceAlert *alert = [[DistanceAlert alloc] init];
+        alert.message = (NSString *)[proximityMessages objectAtIndex:i];
+        alert.distance = (NSInteger)[proximityDistances objectAtIndex:i];
+        alert.bleduinoIsCloser = (BOOL)[proximityCloser objectAtIndex:i];
+        alert.bleduinoIsFarther = (BOOL)[proximityFarther objectAtIndex:i];
+        
+        [self.distanceAlerts addObject:alert];
+    }
+}
+
+- (void)monitorBleduinoDistances
+{
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    BOOL isProximityControllerPresent = [appDelegate.window.rootViewController isKindOfClass:[ProximityViewController class]];
+    
+    self.distanceAlertsEnabled = YES; //FIXME: REMOVE LATER
+    
+    if(self.distanceAlertsEnabled || isProximityControllerPresent)
+    {
+        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+        CBPeripheral *bleduino = [manager.connectedBleduinos lastObject];
+        bleduino.delegate = self;
+        [bleduino readRSSI];
+        
+        [self performSelector:@selector(monitorBleduinoDistances) withObject:nil afterDelay:1];
+        
+        if(self.distanceAlertsEnabled)
+        {
+            [self verifyDistanceAlerts];
+        }
+    }
+}
+
+- (void)verifyDistanceAlerts
+{
+    NSInteger currentDistance = 0;
+    
+    //Set margin of error.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL distanceFormatIsFeet = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
+    [defaults synchronize];
+    NSInteger distanceOffset = (distanceFormatIsFeet)?6:2;
+    
+    //Check alerts.
+    for(DistanceAlert *alert in self.distanceAlerts)
+    {
+        if(currentDistance >= (alert.distance - distanceOffset) && currentDistance <= (alert.distance + distanceOffset))
+        {
+            //FIXME: VALIDATE IF CLOSER/FARTHER.
+            [self pushDistanceAlertLocalNotification:alert];
+        }
+    }
+}
+
+- (void)pushDistanceAlertLocalNotification:(DistanceAlert *)alert
+{
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = alert.message;
+    notification.alertAction = @"Close";
+    notification.userInfo = @{@"title"  : @"Distance Alert",
+                              @"message": alert.message,
+                              @"ProximityModule": @"ProximityModule"};
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+}
+
+- (void)distanceAlertNotification:(NSNotification *)notification
+{
+    NSString *name = [notification name];
+    if([name isEqualToString:@"DistanceAlertsEnabled"])
+    {
+        self.distanceAlertsEnabled = YES;
+        [self monitorBleduinoDistances];
+    }
+    else if([name isEqualToString:@"DistanceAlertsDisabled"])
+    {
+        self.distanceAlertsEnabled = NO;
+    }
+    else //New distance alert, load alerts again.
+    {
+        [self loadDistanceAlerts];
+    }
+}
+
+- (void)beginDistanceCalibration:(NSNotification *)notification
+{
+    self.isCalibrating = YES;
+    [self performSelector:@selector(sendFinishedDistanceCalibrationNotification) withObject:nil afterDelay:10];
+}
+
+- (void)sendFinishedDistanceCalibrationNotification
+{
+    //Calibration is over.
+    self.isCalibrating = NO;
+    self.measuredPower = [self.calibrationReadings valueForKeyPath:@"@avg.self"];
+    
+    //FIXME: TESTING REMOVE LATER
+    NSLog(@"Measured Power: %@\n", [self.measuredPower description]);
+    NSLog(@"Max: %@\n", [[self.calibrationReadings valueForKeyPath:@"@max.self"] description]);
+    NSLog(@"Min: %@\n", [[self.calibrationReadings valueForKeyPath:@"@min.self"] description]);
+    NSLog(@"Count: %@\n\n", [[self.calibrationReadings valueForKeyPath:@"@count.self"] description]);
+    
+//    NSLog(@"Readings: %@", [self.calibrationReadings description]);
+    
+    [self.calibrationReadings removeAllObjects];
+    
+    
+    //Notify proximity controller so the veiw can be updated back to displaying current distance.
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:@"FinishedCalibration" object:self];
+}
+
+- (void)peripheralDidUpdateRSSI:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    NSNumber *currentRSSI = peripheral.RSSI;
+    BOOL isValidReading = [self validateReading:currentRSSI];
+    
+    if(isValidReading && currentRSSI != nil)
+    {
+        //Collect reading.
+        [self.currentReadings addObject:currentRSSI];
+        self.currentDistance = [self calculateCurrentDistance];
+        
+        //Is user calibrating rignt now?
+        if(self.isCalibrating)[self.calibrationReadings addObject:currentRSSI];
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        BOOL isProximityControllerPresent = [appDelegate.window.rootViewController isKindOfClass:[ProximityViewController class]];
+        
+        //Do we need to push current distance to proximity controller?
+        if(isProximityControllerPresent)
+        {
+            NSDictionary *distanceInfo = @{@"CurrentDistance":[NSNumber numberWithLong:self.currentDistance]};
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center postNotificationName:@"NewDistanceNotification" object:self userInfo:distanceInfo];
+        }
+    }
+}
+
+- (BOOL) validateReading:(NSNumber *)rssi
+{
+    //FIXME: Validate RSSI i.e. no spikes, not larger than 127dBm
+    return YES;
+}
+
+- (NSInteger) calculateCurrentDistance
+{
+    //FIXME: how to aggregate? determine how many packages, when to get rid of other packages
+    //FIXME: calculate current RSSI (from aggregated);
+    //FIXME: Convert RSSI to distance with Formula
+    return 900;
 }
 
 #pragma mark -
@@ -78,7 +276,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return 12;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -125,6 +323,14 @@
         case 9:
             //Sequencer Module
             cellIdentifier = @"SequencerModuleCell";
+            break;
+        case 10:
+            //Proximity Module
+            cellIdentifier = @"ProximityModuleCell";
+            break;
+        case 11:
+            //Console Module
+            cellIdentifier = @"ConsoleModuleCell";
             break;
     }
     
@@ -178,10 +384,12 @@
             break;
             
         case 6:
+            //FIXME: NOT WORKING ! MIGHT HAVE FIXED IT
             //Toggle notification service.
-            if(self.notifications.isListening)
+            if(self.notificationService.isListening)
             {
-                [self.notifications stopListening];
+                self.notificationService.isListening = NO;
+                [self.notificationService stopListeningWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -189,7 +397,8 @@
             }
             else
             {
-                [self.notifications startListening];
+                self.notificationService.isListening = YES;
+                [self.notificationService startListeningWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -198,6 +407,7 @@
             break;
             
         case 7:
+            //FIXME: NOT WORKING ! NO IDEA WHY NEEDS MORE TESTING
             //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
@@ -226,11 +436,11 @@
             break;
             
         case 10:
-            //Extra Module
+            [self performSegueWithIdentifier:@"ProximityModuleSegue" sender:self];
             break;
             
         case 11:
-            //Extra Module
+            [self performSegueWithIdentifier:@"ConsoleModuleSegue" sender:self];
             break;
 
     }
@@ -324,6 +534,24 @@ referenceSizeForFooterInSection:(NSInteger)section
         SequencerTableViewController *sequencerController = [[navigationController viewControllers] objectAtIndex:0];
         sequencerController.delegate = self;
     }
+    else if([segue.identifier isEqualToString:@"SequencerModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        SequencerTableViewController *sequencerController = [[navigationController viewControllers] objectAtIndex:0];
+        sequencerController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"ProximityModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        ProximityViewController *proximityController = [[navigationController viewControllers] objectAtIndex:0];
+        proximityController.delegate = self;
+    }
+    else if([segue.identifier isEqualToString:@"ConsoleModuleSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        ConsoleTableViewController *consoleController = [[navigationController viewControllers] objectAtIndex:0];
+        consoleController.delegate = self;
+    }
 }
 
 #pragma mark -
@@ -375,5 +603,52 @@ referenceSizeForFooterInSection:(NSInteger)section
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)proximityControllerDismissed:(ProximityViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)consoleControllerDismissed:(ConsoleTableViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+#pragma mark -
+#pragma mark - LeManager Delegate
+/****************************************************************************/
+/*                            LeManager Delegate                            */
+/****************************************************************************/
+//Disconnected from BLEduino and BLE devices.
+- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+{
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Disconnected from peripheral: %@", name);
+    
+    //Verify if notify setting is enabled.
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
+    
+    if(notifyDisconnect)
+    {
+        //Push local notification.
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        
+        //Is application on the foreground?
+        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+        {
+            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
+            //Application is on the foreground, store notification attributes to present alert view.
+            notification.userInfo = @{@"title"  : @"BLEduino",
+                                      @"message": message,
+                                      @"disconnect": @"disconnect"};
+        }
+        
+        //Present notification.
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    }
+}
 
 @end
