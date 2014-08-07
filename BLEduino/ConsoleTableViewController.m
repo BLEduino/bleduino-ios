@@ -32,14 +32,6 @@
     
     [self setConsoleTextField];
     
-    //Set manager and service
-    BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
-    manager.delegate = self;
-    
-    CBPeripheral *bleduino = [manager.connectedBleduinos lastObject];
-    self.console = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
-    [self.console subscribeToStartReceivingMessages];
-    
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
@@ -50,37 +42,38 @@
     self.navigationController.navigationBar.translucent = NO;
     
     self.iOSTextColor = [UIColor colorWithRed:77/255.0f green:0/255.0f blue:158/255.0f alpha:1];
-    self.bleduinoTextColor = lightBlue;//[UIColor colorWithRed:0/255.0f green:11/255.0f blue:255/255.0f alpha:1];
+    self.bleduinoTextColor = lightBlue;
+    
+    //Dummy TableView footer/header for scrolling purposes.
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 8)];
+    
+    //Setup comunication.
+    [self setupConsole];
     
     //Setup delegate
     self.consoleTextField.delegate = self;
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardWillShowNotification object:nil];
-    
     //Setup data model
     self.entries = [[NSMutableArray alloc] initWithCapacity:10];
-    
-    
-    
 }
-- (void)keyboardOnScreen:(NSNotification *)notification
+
+
+- (void)setupConsole
 {
-    NSDictionary *info  = notification.userInfo;
-    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    //Set manager and service
+    BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+    manager.delegate = self;
     
-    CGRect rawFrame      = [value CGRectValue];
-    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
-    self.keyboardHeight =  keyboardFrame.size.height;
-    self.keyboardWidth = keyboardFrame.size.width;
+    //Setup console hub.
+    self.consoleHub = [[NSMutableArray alloc] initWithCapacity:manager.connectedBleduinos.count];
     
-    //Update textfield location.
-    UIView *consoleTextFieldView = [self.view viewWithTag:2013];
-    CGFloat height = consoleTextFieldView.frame.size.height;
-    CGFloat width = consoleTextFieldView.frame.size.width;
-    CGFloat y = self.view.frame.size.height - self.keyboardHeight - height;
-    [consoleTextFieldView setFrame:CGRectMake(0, y, width, height)];
-    
+    for(CBPeripheral *bleduino in manager.connectedBleduinos)
+    {
+        BDUartService *newConsole = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+        [newConsole subscribeToStartReceivingMessages];
+        [self.consoleHub addObject:newConsole];
+    }
 }
 
 - (void)setConsoleTextField
@@ -112,7 +105,7 @@
     footerView.tag = 2013;
     
     //Set new footer view.
-    [self.view addSubview:footerView];
+    [self.navigationController.view addSubview:footerView];
 }
 
 
@@ -157,7 +150,7 @@
                                         attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16.0f]}
                                            context:ctx];
     
-    CGFloat height = ceilf(rect.size.height + timeLabelSize.height + 10.0f);
+    CGFloat height = ceilf(rect.size.height + timeLabelSize.height) + 5.0f;
     return height;
 }
 
@@ -181,18 +174,22 @@
     entry.time = [NSDate date];
     entry.isBLEduino = NO;
     
-    //Send data to BLEduino.
-    [self.console writeMessage:entry.text];
+    //Send data to BLEduinos.
+    for(BDUartService *console in self.consoleHub)
+    {
+        [console writeMessage:entry.text];
+    }
     
     //Add entry to model and tableview.
     [self.entries insertObject:entry atIndex:self.entries.count];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.entries.count-1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
     
-    self.consoleTextField.text = @"";
     //Scroll to make last entry visible.
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+    
+    self.consoleTextField.text = @"";
+    
     return NO;
 }
 
@@ -210,7 +207,7 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
     
     //Scroll to make last entry visible.
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
 
 - (IBAction)dismissModule:(id)sender
@@ -277,14 +274,17 @@
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,

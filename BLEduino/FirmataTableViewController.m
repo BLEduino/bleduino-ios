@@ -51,8 +51,6 @@
     self.firmata =[[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
     [self.firmata subscribeToStartReceivingFirmataCommands];
     
-    
-    
     //Load previous state.
     [self setPreviousState];
 }
@@ -583,6 +581,18 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
         }
         
         [defaults synchronize];
+        
+        if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
+        {
+            //Send command.
+            BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+            
+            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+            {
+                BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+                [firmataService writeFirmataCommand:pin];
+            }
+        }
         [self.tableView reloadData];
     }
 }
@@ -615,7 +625,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     NSLog(@"Firmata sync with the BLEduino has been stopped.");
     
     //Reset pin state storage.
-    NSInteger defaultState = 0;
+    NSInteger defaultState = 1;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:defaultState forKey:FIRMATA_PIN0_STATE];
     [defaults setInteger:defaultState forKey:FIRMATA_PIN1_STATE];
@@ -643,8 +653,8 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     //Reset view.
     for(BDFirmataCommandCharacteristic *command in self.commands)
     {
-        command.pinState = FirmataCommandPinStateOutput;
-        command.pinValue = 0;
+        command.pinState = FirmataCommandPinStateInput;
+        command.pinValue = -1;
     }
 
     [self.tableView reloadData];
@@ -868,14 +878,17 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+        
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,

@@ -39,7 +39,8 @@ SequencerTableViewControllerDelegate,
 ProximityViewControllerDelegate,
 ConsoleTableViewControllerDelegate,
 NotificationServiceDelegate,
-LeDiscoveryManagerDelegate
+LeDiscoveryManagerDelegate,
+BleBridgeServiceDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;

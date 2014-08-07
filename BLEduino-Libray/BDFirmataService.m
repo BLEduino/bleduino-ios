@@ -50,32 +50,16 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 /****************************************************************************/
 - (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand withAck:(BOOL)enabled
 {
-    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        self.lastSentCommand = firmataCommand;
-        [self writeDataToServiceUUID:self.firmataServiceUUID
-                  characteristicUUID:self.firmataCommandCharacteristicUUID
-                                data:[firmataCommand data]
-                             withAck:enabled];
-     
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    self.lastSentCommand = firmataCommand;
+    [self writeDataToServiceUUID:self.firmataServiceUUID
+              characteristicUUID:self.firmataCommandCharacteristicUUID
+                            data:[firmataCommand data]
+                         withAck:enabled];
 }
 
 - (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 {
-    self.lastSentFirmataCommand = firmataCommand;
-    [self writeDataToServiceUUID:self.firmataServiceUUID
-              characteristicUUID:self.firmataCommandCharacteristicUUID
-                            data:[firmataCommand data]
-                         withAck:NO];
+    [self writeFirmataCommand:firmataCommand withAck:NO];
 }
 
 #pragma mark -
@@ -85,20 +69,8 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 /****************************************************************************/
 - (void) readFirmataCommand
 {
-    //Read only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        [self readDataFromServiceUUID:self.firmataServiceUUID
+    [self readDataFromServiceUUID:self.firmataServiceUUID
                characteristicUUID:self.firmataCommandCharacteristicUUID];
-     
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
 }
 
 - (void) subscribeToStartReceivingFirmataCommands

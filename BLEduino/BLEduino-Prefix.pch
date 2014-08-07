@@ -80,7 +80,16 @@
 #define PROXIMITY_FIRST_CALIBRATION @"proximity-calibration"
 #define PROXIMITY_DISTANCE_CALIBRATION_VALUE @"proximity-distance-calibration-value"
 
+#define PROXIMITY_BEGIN_CALIBRATION @"Begin-Calibration"
+#define PROXIMITY_FINISHED_CALIBRATION @"Finished-Calibration"
+#define PROXIMITY_NEW_DISTANCE @"New-Distance-Notification"
+#define PROXIMITY_NEW_DISTANCE_ALERTS @"New-Distance-Alerts-Notification"
+#define PROXIMITY_DISTANCE_ALERTS_ENABLED @"Distance-Alerts-Enabled"
+#define PROXIMITY_DISTANCE_ALERTS_DISABLED @"Distance-Alerts-Disabled"
+
 //Global
+#define BLE_MANAGER_NOT_POWERED_ON @"ble-manager-not-powered-on"
+#define CHARACTERISTIC_UPDATE @"characteristic-update"
 #define LAST_SENT_TIMESTAMP @"last-sent-timestamp"
 #define WRITE_TIME_CAP @"write-time-cap"
 

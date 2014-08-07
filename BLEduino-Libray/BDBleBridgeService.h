@@ -25,6 +25,17 @@ extern NSString * const kBridgeTxCharacteristicUUIDString;
 extern NSString * const kDeviceIDCharacteristicUUIDString;
 //8C6BD1D0-A312-681D-025B-0032C0D16A2D  Device ID Characteristic
 
+#pragma mark -
+#pragma mark Notification Service Protocol
+/****************************************************************************/
+/*								Protocol									*/
+/****************************************************************************/
+@class BDBleBridgeService;
+@protocol BleBridgeServiceDelegate <NSObject>
+- (void)didOpenBridge:(BDBleBridgeService *)service;
+- (void)didFailToOpenBridge:(BDBleBridgeService *)service;
+@end
+
 @interface BDBleBridgeService : BDBleService <CBPeripheralDelegate>
 @property BOOL isOpen;
 
@@ -36,7 +47,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-- (void)openBridge;
+- (void)openBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
 //FIXME: MAKE SURE THIS IS SENDING THE DATA. 
 
 /*
@@ -46,7 +57,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)closeBridge;
+- (void)closeBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
 
 /****************************************************************************/
 /*				       Access to Ble Bridge instance			     	    */

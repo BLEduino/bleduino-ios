@@ -81,20 +81,25 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
  */
 - (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController
 {
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    //Start listening only if there is not another notification (service) already listening.
+    if(!self.isListening)
     {
-        BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
-                                                                                       delegate:aController];
+        self.isListening = YES; //Notifications started listening.
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
         
-        [notification subscribeToStartReceivingNotifications];
-        notification.isListening = YES;
-        [self.notifications addObject:notification];
+        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        {
+            BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
+                                                                                           delegate:aController];
+            
+            [notification subscribeToStartReceivingNotifications];
+            notification.isListening = YES;
+            [self.notifications addObject:notification];
+        }
+        
+        NSLog(@"Notifications: Startted listening.");
     }
-    
-    NSLog(@"Notifications: Startted listening.");
 }
 
 /*
@@ -106,14 +111,16 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
  */
 - (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController
 {
-    for(BDNotificationService *service in self.notifications)
+    for(BDNotificationService *notification in self.notifications)
     {
-        [service unsubscribeToStopReiceivingNotifications];
-        service.isListening = NO;
+        [notification dismissPeripheral];
+        [notification unsubscribeToStopReiceivingNotifications];
     }
  
     //Remove all BLEduinos.
-    [self.notifications removeAllObjects];    
+    [self.notifications removeAllObjects];
+    
+    self.isListening = NO;
     NSLog(@"Notifications: Stopped listening.");
 }
 
@@ -125,23 +132,11 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 - (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
                    withAck:(BOOL)enabled
 {
-    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        self.lastSentNotification = notification;
-        [self writeDataToServiceUUID:self.notificationServiceUUID
-                  characteristicUUID:self.notificationAttributesCharacteristicUUID
-                                data:[notification data]
-                             withAck:enabled];
-        
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    self.lastSentNotification = notification;
+    [self writeDataToServiceUUID:self.notificationServiceUUID
+              characteristicUUID:self.notificationAttributesCharacteristicUUID
+                            data:[notification data]
+                         withAck:enabled];
 }
 
 - (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
@@ -158,20 +153,8 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 /****************************************************************************/
 - (void) readNotification
 {
-    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        [self readDataFromServiceUUID:self.notificationServiceUUID
-                   characteristicUUID:self.notificationAttributesCharacteristicUUID];
-     
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    [self readDataFromServiceUUID:self.notificationServiceUUID
+               characteristicUUID:self.notificationAttributesCharacteristicUUID];
 }
 
 - (void) subscribeToStartReceivingNotifications
@@ -214,14 +197,13 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
         notification.alertBody = self.lastNotification.message;
-        notification.alertAction = @"Close";
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
             //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : self.lastNotification.title,
-                                      @"message": self.lastNotification.message,
+            notification.userInfo = @{@"message": self.lastNotification.message,
                                       @"service": kNotificationAttributesCharacteristicUUIDString};
         }
     

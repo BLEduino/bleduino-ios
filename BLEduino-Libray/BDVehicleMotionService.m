@@ -56,28 +56,15 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 - (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion
                    withAck:(BOOL)enabled
 {
-    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        self.lastMotion = motion;
-        [self writeDataToServiceUUID:self.vehicleMotionServiceUUID
-                  characteristicUUID:self.throttleYawRollPitchCharacteristicUUID
-                                data:[motion data]
-                             withAck:enabled];
-        
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    self.lastMotion = motion;
+    [self writeDataToServiceUUID:self.vehicleMotionServiceUUID
+              characteristicUUID:self.throttleYawRollPitchCharacteristicUUID
+                            data:[motion data]
+                         withAck:enabled];
 }
 
 - (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion
 {
-    self.lastMotionUpdate = motion;
     [self writeMotionUpdate:motion withAck:NO];
 }
 
@@ -88,20 +75,8 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 /****************************************************************************/
 - (void) readMotionUpdate
 {
-    //Read only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        [self readDataFromServiceUUID:self.vehicleMotionServiceUUID
-                   characteristicUUID:self.throttleYawRollPitchCharacteristicUUID];
-        
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    [self readDataFromServiceUUID:self.vehicleMotionServiceUUID
+               characteristicUUID:self.throttleYawRollPitchCharacteristicUUID];
 }
 
 - (void) subscribeToStartReceivingMotionUpdates

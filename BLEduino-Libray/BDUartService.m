@@ -44,7 +44,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     self = [super init];
     if (self) {
-        _servicePeripheral = aPeripheral; //[aPeripheral copy];
+        _servicePeripheral = [aPeripheral copy];
         _servicePeripheral.delegate = self;
 		self.delegate = aController;
         
@@ -64,81 +64,10 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void) writeData:(NSData *)data withAck:(BOOL)enabled
 {
-    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        int dataLength = (int)data.length;
-        
-        if(dataLength > 20)
-        {
-            BOOL lastPacket = false;
-            int dataIndex = 0;
-            int totalPackets = ceil(dataLength / 19);
-            
-            for (int packetIndex = 0; packetIndex <= totalPackets; packetIndex++)
-            {
-                
-                lastPacket = (packetIndex == totalPackets);
-                int rangeLength = (lastPacket)?(dataLength - dataIndex):19;
-                
-                NSRange dataRange = NSMakeRange(dataIndex, rangeLength);
-                NSData *dataSubset = [data subdataWithRange:dataRange];
-                self.longTransmission = !lastPacket;
-                
-                
-                NSMutableData *finalData = [[NSMutableData alloc] initWithCapacity:[dataSubset length]+1];
-                
-                //Include state data.
-                if (dataIndex == 0)
-                {//Starting transmission.
-                    
-                    Byte startByte = (0 >> (0)) & 0xff;
-                    NSMutableData *startData = [NSMutableData dataWithBytes:&startByte length:sizeof(startByte)];
-                    [finalData appendData:startData];
-                }
-                else if(lastPacket)
-                {//Ending transmission.
-                    
-                    Byte endByte = (2 >> (0)) & 0xff;
-                    NSMutableData *endData = [NSMutableData dataWithBytes:&endByte length:sizeof(endByte)];
-                    [finalData appendData:endData];
-                }
-                else if (dataIndex > 0)
-                {//Transmission is in transit.
-                    
-                    Byte transitByte = (1 >> (0)) & 0xff;
-                    NSMutableData *transitData = [NSMutableData dataWithBytes:&transitByte length:sizeof(transitByte)];
-                    [finalData appendData:transitData];
-                }
-                
-                //Append message data.
-                [finalData appendData:dataSubset];
-                
-                [self writeDataToServiceUUID:self.uartServiceUUID
-                          characteristicUUID:self.rxCharacteristicUUID
-                                        data:finalData
-                                     withAck:enabled];
-                
-                //Move dataIndex to the beginning of next packet.
-                dataIndex += 19;
-            }
-        }
-        else
-        {
-            [self writeDataToServiceUUID:self.uartServiceUUID
-                      characteristicUUID:self.rxCharacteristicUUID
-                                    data:data
-                                 withAck:enabled];
-        }
-        
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+    [self writeDataToServiceUUID:self.uartServiceUUID
+              characteristicUUID:self.rxCharacteristicUUID
+                            data:data
+                         withAck:enabled];
 }
 
 - (void) writeData:(NSData *)data
@@ -169,20 +98,9 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 /****************************************************************************/
 
 - (void) readData
-{    //Write only once every 100ms at the most.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastSent = [defaults objectForKey:LAST_SENT_TIMESTAMP];
-    double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-    
-    double timePassed_ms = [lastSent timeIntervalSinceNow] * -1000;
-    if(timePassed_ms >= timeCap || lastSent == nil)
-    {
-        [self readDataFromServiceUUID:self.uartServiceUUID
-                   characteristicUUID:self.txCharacteristicUUID];
-        
-        [defaults setObject:[NSDate date] forKey:LAST_SENT_TIMESTAMP];
-        [defaults synchronize];
-    }
+{
+    [self readDataFromServiceUUID:self.uartServiceUUID
+               characteristicUUID:self.txCharacteristicUUID];
 }
 
 - (void) readMessage
@@ -246,20 +164,24 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if(!self.longTransmission)
+    //Only pay attention if characteristic update is UART's Tx.
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString]])
     {
-        if(self.textSubscription)
+        if(!self.longTransmission)
         {
-            self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
-        }
-        else
-        {
-            self.dataReceived = characteristic.value;
-        }
-        
-        if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
-        {
-            [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            if(self.textSubscription)
+            {
+                self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
+            }
+            else
+            {
+                self.dataReceived = characteristic.value;
+            }
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
+            {
+                [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            }
         }
     }
 }

@@ -51,7 +51,9 @@
     //Set services that run in the background.
     self.notificationService = [BDNotificationService sharedListener];
     self.bleBridge = [BDBleBridgeService sharedBridge];
-//    [self monitorBleduinoDistances]; //FIXME: CHANGE BACK
+    
+    //Monitor distances from bleduino here (to be able to monitor in the background).
+//    [self monitorBleduinoDistances];
     
     self.calibrationReadings = [[NSMutableArray alloc] initWithCapacity:20];
     self.currentReadings = [[NSMutableArray alloc] initWithCapacity:20];
@@ -66,17 +68,17 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Manager Delegate
-//    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-//    leManager.delegate = self;
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    leManager.delegate = self;
     
-    //Monitor distances from bleduino here (to be able to monitor in the background).
+
     
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"DistanceAlertsEnabled" object:nil];
-    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"DistanceAlertsDisabled" object:nil];
-    [center addObserver:self selector:@selector(distanceAlertNotification:) name:@"NewDistanceAlert" object:nil];
-    [center addObserver:self selector:@selector(beginDistanceCalibration:)  name:@"BeginCalibration" object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_ENABLED object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_DISABLED object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE_ALERTS object:nil];
+    [center addObserver:self selector:@selector(beginDistanceCalibration:)  name:PROXIMITY_BEGIN_CALIBRATION object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,7 +169,7 @@
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.soundName = UILocalNotificationDefaultSoundName;
     notification.alertBody = alert.message;
-    notification.alertAction = @"Close";
+    notification.alertAction = nil;
     notification.userInfo = @{@"title"  : @"Distance Alert",
                               @"message": alert.message,
                               @"ProximityModule": @"ProximityModule"};
@@ -219,7 +221,7 @@
     
     //Notify proximity controller so the veiw can be updated back to displaying current distance.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:@"FinishedCalibration" object:self];
+    [center postNotificationName:PROXIMITY_FINISHED_CALIBRATION object:self];
 }
 
 - (void)peripheralDidUpdateRSSI:(CBPeripheral *)peripheral error:(NSError *)error
@@ -244,7 +246,7 @@
         {
             NSDictionary *distanceInfo = @{@"CurrentDistance":[NSNumber numberWithLong:self.currentDistance]};
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-            [center postNotificationName:@"NewDistanceNotification" object:self userInfo:distanceInfo];
+            [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
         }
     }
 }
@@ -384,11 +386,9 @@
             break;
             
         case 6:
-            //FIXME: NOT WORKING ! MIGHT HAVE FIXED IT
             //Toggle notification service.
             if(self.notificationService.isListening)
             {
-                self.notificationService.isListening = NO;
                 [self.notificationService stopListeningWithDelegate:self];
                 
                 //Update icon.
@@ -397,7 +397,6 @@
             }
             else
             {
-                self.notificationService.isListening = YES;
                 [self.notificationService startListeningWithDelegate:self];
                 
                 //Update icon.
@@ -407,11 +406,10 @@
             break;
             
         case 7:
-            //FIXME: NOT WORKING ! NO IDEA WHY NEEDS MORE TESTING
             //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
-                [self.bleBridge closeBridge];
+                [self.bleBridge closeBridgeForDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -419,7 +417,7 @@
             }
             else
             {
-                [self.bleBridge openBridge];
+                [self.bleBridge openBridgeForDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -632,14 +630,17 @@ referenceSizeForFooterInSection:(NSInteger)section
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,
@@ -649,6 +650,50 @@ referenceSizeForFooterInSection:(NSInteger)section
         //Present notification.
         [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
+}
+
+#pragma mark -
+#pragma mark - BLE Bridge Delegate
+/****************************************************************************/
+/*                           BLE-Bridge Delegate                            */
+/****************************************************************************/
+- (void)didFailToOpenBridge:(BDBleBridgeService *)service
+{
+    //Something went wrong, close the bridge.
+    [self.bleBridge closeBridgeForDelegate:self];
+    
+    //BLE-Bridge index path.
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:1];
+    
+    //Update icon.
+    ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge.png"] forState:UIControlStateNormal];
+    
+    //Present notification.
+    NSString *message = [NSString stringWithFormat:@"The BLEduino app was unable to open a ble-bridge."];
+    
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = message;
+    notification.alertAction = nil;
+    
+    //Is application on the foreground?
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        //Application is on the foreground, store notification attributes to present alert view.
+        notification.userInfo = @{@"title"  : @"BLEduino",
+                                  @"message": message,
+                                  @"BleBridge": @"BleBridge"};
+    }
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+}
+
+- (void)didOpenBridge:(BDBleBridgeService *)service
+{
+    NSLog(@"BLE-Bridge opened succesfully.");
 }
 
 @end

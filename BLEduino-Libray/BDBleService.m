@@ -7,6 +7,7 @@
 //
 
 #import "BDBleService.h"
+#import "BDLeDiscoveryManager.h"
 
 /****************************************************************************/
 /*                            BLEduino Service				     			*/
@@ -22,7 +23,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
 - (void) dismissPeripheral
 {
 	if (_servicePeripheral) {
-		_servicePeripheral = nil;
+        _servicePeripheral.delegate = nil;
 	}
 }
 
@@ -55,14 +56,37 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                     //Send with Acknowledgement?
                     if(enabled)
                     {
-                        [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+                        //Create ble command.
+                        void (^command)(void) =
+                            ^ {
+                                [_servicePeripheral writeValue:data
+                                             forCharacteristic:characteristic
+                                                          type:CBCharacteristicWriteWithResponse];
+                                NSLog(@"Data was sent to characteristic %@", [cUUID description]);
+                            };
+                        
+                        //Store ble command on execution queue.
+                        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                        [manager.bleCommands enqueue:command];
+                        
                     }
                     else
                     {
-                        [_servicePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
+                        //Create ble command.
+                        void (^command)(void) =
+                        ^ {
+                            [_servicePeripheral writeValue:data
+                                         forCharacteristic:characteristic
+                                                      type:CBCharacteristicWriteWithoutResponse];
+
+                            NSLog(@"Data was sent to characteristic %@", [cUUID description]);
+                        };
+                        
+                        //Store ble command on execution queue.
+                        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                        [manager.bleCommands enqueue:command];
                     }
 
-                    NSLog(@"Data was sent to characteristic %@", [cUUID description]);
                 }
             }
         }
@@ -75,9 +99,8 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
  *  @discussion             This method reads and verifies that a specific characteristic/service
  *                          is supported by the peripheral before requesting value.
  *
- *  @param bleduino			Peripheral to write.
- *  @param sUUID            UUID for Service to write.
- *  @param cUUID            UUID for Characteristic to write.
+ *  @param sUUID            UUID for Service to be read.
+ *  @param cUUID            UUID for Characteristic to be read.
  *
  */
 - (void)readDataFromServiceUUID:(CBUUID *)sUUID
@@ -91,7 +114,18 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
             {
                 if ([characteristic.UUID isEqual:cUUID])
                 {//Found characteristic.
-                    [_servicePeripheral readValueForCharacteristic:characteristic];
+
+                    //Create ble command.
+                    void (^command)(void) =
+                    ^ {
+                        [_servicePeripheral readValueForCharacteristic:characteristic];
+                        NSLog(@"Read request was sent to characteristic %@", [cUUID description]);
+
+                    };
+                    
+                    //Store ble command on execution queue.
+                    BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                    [manager.bleCommands enqueue:command];
                 }
             }
         }
@@ -105,10 +139,9 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
  *                          a specific characteristic/service is supported by the peripheral before 
  *                          requesting subscription.
  *
- *  @param bleduino			Peripheral to write.
- *  @param sUUID            UUID for Service to write.
- *  @param cUUID            UUID for Characteristic to write.
- *  @param data				The value to write.
+ *  @param sUUID            UUID for Service to request/remove notifications from.
+ *  @param cUUID            UUID for Characteristic to request/remove notifications from.
+ *  @param data				Value to indicate to if requesting or removing notifications.
  *
  */
 - (void)setNotificationForServiceUUID:(CBUUID *)sUUID
@@ -123,14 +156,22 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
             {
                 if([characteristic.UUID isEqual:cUUID])
                 {//Found characteristic.
+
                     [_servicePeripheral setNotifyValue:value forCharacteristic:characteristic];
                     NSLog(@"Subcribe was sent to characteristic %@", [cUUID description]);
+                   
                 }
-                
-                
             }
         }
     }
+}
+
++ (void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+{
+    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:CHARACTERISTIC_UPDATE object:self userInfo:update];
 }
 
 @end

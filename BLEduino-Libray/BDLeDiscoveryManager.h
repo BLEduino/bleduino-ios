@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BDQueue.h"
 
 @protocol LeDiscoveryManagerDelegate <NSObject>
 @optional
@@ -25,6 +26,9 @@
 - (void) didConnectToDevices:(NSArray *)devicesList;
 
 - (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
+- (void) didFailToAttemptConnectionToBleduino:(CBCentralManagerState)sharedManagerSate;
+- (void) didFailToAttemptScannigForBleduinos:(CBCentralManagerState)sharedManagerSate;
+
 
 //Disconnecting from BLEduino and BLE devices.
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
@@ -35,6 +39,7 @@
 
 @interface BDLeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (weak) id <LeDiscoveryManagerDelegate> delegate;
+@property BDQueue *bleCommands;
 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
@@ -44,6 +49,7 @@
 //Add support to persist devices.
 @property (strong) NSMutableOrderedSet *foundBleduinos;
 @property (strong) NSMutableOrderedSet *connectedBleduinos;
+@property (strong) NSMutableOrderedSet *reConnectBleduinos;
 @property NSInteger totalServices;
 
 //PENDING: Stretched goal.

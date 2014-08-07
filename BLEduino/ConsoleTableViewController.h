@@ -31,7 +31,7 @@ LeDiscoveryManagerDelegate
 @property NSMutableArray *entries;
 @property UIColor *bleduinoTextColor;
 @property UIColor *iOSTextColor;
-@property BDUartService *console;
+@property NSMutableArray *consoleHub;
 - (IBAction)clear:(id)sender;
 - (IBAction)dismissModule:(id)sender;
 @end

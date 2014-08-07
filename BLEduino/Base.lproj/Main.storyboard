@@ -389,7 +389,7 @@
         <scene sceneID="0m6-Cv-qsQ">
             <objects>
                 <tableViewController id="HMG-46-omc" customClass="ConsoleTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" alpha="0.29999999999999999" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3v3-Ad-jtq">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3v3-Ad-jtq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2257,7 +2257,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="145"/>
-                                        <color key="textColor" red="0.14901960780000001" green="0.42745098040000001" blue="0.92156862750000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -2339,10 +2339,10 @@
             </objects>
             <point key="canvasLocation" x="3022" y="-1400"/>
         </scene>
-        <!--Orientation Navigation Controller-->
+        <!--Console Navigation View Controller-->
         <scene sceneID="Qfk-Rp-3zy">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7s7-73-VVw" customClass="OrientationNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7s7-73-VVw" customClass="ConsoleNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nDG-UX-shf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

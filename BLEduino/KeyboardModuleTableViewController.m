@@ -64,7 +64,6 @@
     if([text isEqualToString:@"\n"])
     {
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
             NSString *message = self.messageView.text;
@@ -73,12 +72,11 @@
         }
 
         //Clear text view.
-
         [textView setContentOffset:CGPointMake(0, 0) animated:YES];
         self.messageView.text = @"";
     }
     
-    return YES;
+    return ([text isEqualToString:@"\n"])?NO:YES;
 }
 
 - (IBAction)dismissModule
@@ -103,14 +101,17 @@
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,

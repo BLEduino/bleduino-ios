@@ -10,6 +10,8 @@
 		9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9713717919805F8C00E1B53D /* ConsoleCell.m */; };
 		972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA450197DBB2600CEEC18 /* PSPDFTextView.m */; };
 		972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */; };
+		974FA32F1990888100951E12 /* ConsoleNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */; };
+		974FA3321992B31A00951E12 /* BDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA3311992B31A00951E12 /* BDQueue.m */; };
 		9779C5B21979819300302C50 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B11979819300302C50 /* ProximityViewController.m */; };
 		9779C5B51979871800302C50 /* DistanceAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B41979871800302C50 /* DistanceAlert.m */; };
 		9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B7197995BF00302C50 /* DistanceAlertController.m */; };
@@ -145,6 +147,10 @@
 		972DA450197DBB2600CEEC18 /* PSPDFTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPDFTextView.m; sourceTree = "<group>"; };
 		972DA452197ECC2D00CEEC18 /* ConsoleEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleEntries.h; sourceTree = "<group>"; };
 		972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleEntries.m; sourceTree = "<group>"; };
+		974FA32D1990888100951E12 /* ConsoleNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleNavigationViewController.h; sourceTree = "<group>"; };
+		974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleNavigationViewController.m; sourceTree = "<group>"; };
+		974FA3301992B31A00951E12 /* BDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDQueue.h; sourceTree = "<group>"; };
+		974FA3311992B31A00951E12 /* BDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDQueue.m; sourceTree = "<group>"; };
 		9779C5B01979819300302C50 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		9779C5B11979819300302C50 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
 		9779C5B31979871800302C50 /* DistanceAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlert.h; sourceTree = "<group>"; };
@@ -360,6 +366,8 @@
 				972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */,
 				9713717819805F8C00E1B53D /* ConsoleCell.h */,
 				9713717919805F8C00E1B53D /* ConsoleCell.m */,
+				974FA32D1990888100951E12 /* ConsoleNavigationViewController.h */,
+				974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */,
 			);
 			name = Console;
 			sourceTree = "<group>";
@@ -694,6 +702,8 @@
 				B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */,
 				B7EB1CEB1830972A0060441E /* BDPeripheral.h */,
 				B7EB1CEC1830972A0060441E /* BDPeripheral.m */,
+				974FA3301992B31A00951E12 /* BDQueue.h */,
+				974FA3311992B31A00951E12 /* BDQueue.m */,
 			);
 			name = "BLEduino-Library";
 			path = "BLEduino-Libray";
@@ -952,6 +962,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7B73C2D17F25A58008E6769 /* BDUartService.m in Sources */,
+				974FA3321992B31A00951E12 /* BDQueue.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
 				9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */,
 				97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */,
@@ -981,6 +992,7 @@
 				9779C5B21979819300302C50 /* ProximityViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
 				B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */,
+				974FA32F1990888100951E12 /* ConsoleNavigationViewController.m in Sources */,
 				B7AE660C18431451007C45A3 /* PowerNextStateView.m in Sources */,
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
@@ -1069,7 +1081,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramon Gonzalez (92D2ZH95HX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ramon Gonzalez (92D2ZH95HX)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1107,7 +1120,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramon Gonzalez (92D2ZH95HX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ramon Gonzalez (92D2ZH95HX)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1127,14 +1141,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6E19EE36-B3C6-428D-A719-AC9FBA26FD5F";
+				PROVISIONING_PROFILE = "300A7888-946F-4DD7-A717-38E8AED2D8B7";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1144,14 +1158,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ramon Gonzalez (NH9KR92RYZ)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6E19EE36-B3C6-428D-A719-AC9FBA26FD5F";
+				PROVISIONING_PROFILE = "300A7888-946F-4DD7-A717-38E8AED2D8B7";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};

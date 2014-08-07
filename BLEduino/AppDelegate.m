@@ -16,35 +16,33 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Launch LeDiscovery manager.
-//    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    
-    //FIXME: MAKE SURE MANAGER TRIES TO RECONNECT AFTER LOSING CONNECTION.
-    //FIXME: /s/projects/748777/stories/57861620
-    
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        
     //Configure settings.
     //Is this the first launch ever of this application?
     //Verify if keys exists prior to this launch.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //Global
-    if([defaults doubleForKey:WRITE_TIME_CAP])
+    if([defaults doubleForKey:WRITE_TIME_CAP] == 0)
     {
-        [defaults setDouble:200 forKey:WRITE_TIME_CAP];
+        double timeCap = 1000.0;
+        [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
     }
     
-//    //Scanning and connection
-//    if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||
-//       [defaults objectForKey:SETTINGS_NOTIFY_CONNECT] == nil ||
-//       [defaults objectForKey:SETTINGS_NOTIFY_DISCONNECT] == nil)
-//    {
-//        leManager.scanOnlyForBLEduinos = YES;
-//        leManager.notifyConnect = NO;
-//        leManager.notifyDisconnect = YES;
-//        
-//        [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
-//        [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
-//        [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
-//    }
+    //Scanning and connection
+    if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||
+       [defaults objectForKey:SETTINGS_NOTIFY_CONNECT] == nil ||
+       [defaults objectForKey:SETTINGS_NOTIFY_DISCONNECT] == nil)
+    {
+        leManager.scanOnlyForBLEduinos = YES;
+        leManager.notifyConnect = NO;
+        leManager.notifyDisconnect = YES;
+        
+        [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
+        [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
+        [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
+    }
     
     //Modules
     if([defaults objectForKey:SETTINGS_LCD_TOTAL_CHARS] == nil ||
@@ -112,9 +110,34 @@
         [defaults setInteger:analog   forKey:FIRMATA_PINA3_STATE_TYPES];
         [defaults setInteger:analog   forKey:FIRMATA_PINA4_STATE_TYPES];
         [defaults setInteger:analog   forKey:FIRMATA_PINA5_STATE_TYPES];
-        [defaults setInteger:digital  forKey:FIRMATA_PIN_MISO_STATE];
-        [defaults setInteger:digital  forKey:FIRMATA_PIN_MOSI_STATE];
-        [defaults setInteger:digital  forKey:FIRMATA_PIN_SCK_STATE];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_MISO_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_MOSI_STATE_TYPES];
+        [defaults setInteger:digital  forKey:FIRMATA_PIN_SCK_STATE_TYPES];
+    }
+    
+    //Sequencer
+    if([defaults objectForKey:SEQUENCE] == nil)
+    {
+        //Store default sequence.
+        NSMutableArray *sequence = [[NSMutableArray alloc] initWithCapacity:4];
+        NSMutableArray *sequenceStates = [[NSMutableArray alloc] initWithCapacity:4];
+        NSMutableArray *sequenceValues = [[NSMutableArray alloc] initWithCapacity:4];
+        NSMutableArray *sequenceDelayFormats = [[NSMutableArray alloc] initWithCapacity:4];
+        NSMutableArray *sequenceDelayValues = [[NSMutableArray alloc] initWithCapacity:4];
+        
+        //Add sequence to blink the led connected to pin 13.
+        [sequence addObjectsFromArray:@[@11, @100, @11, @100]]; //pin 13, delay, pin 13, delay
+        [sequenceStates addObjectsFromArray:@[@0, @0]]; // both state 0 i.e. digital out
+        [sequenceValues addObjectsFromArray:@[@1, @0]]; // first digital out high, then digital out low
+        [sequenceDelayFormats addObjectsFromArray:@[@6, @6]]; //delay in seconds format
+        [sequenceDelayValues addObjectsFromArray:@[@1, @1]]; //both delays just 1 second
+        
+        //Archive everything.
+        [defaults setObject:sequence             forKey:SEQUENCE];
+        [defaults setObject:sequenceStates       forKey:SEQUENCE_STATES];
+        [defaults setObject:sequenceValues       forKey:SEQUENCE_VALUES];
+        [defaults setObject:sequenceDelayFormats forKey:SEQUENCE_DELAY_FORMATS];
+        [defaults setObject:sequenceDelayValues  forKey:SEQUENCE_DELAY_VALUES];
     }
     
     //Proximity
@@ -135,6 +158,7 @@
     NSString *connectNotification = [notification.userInfo objectForKey:@"connect"];
     NSString *disconnectNotification = [notification.userInfo objectForKey:@"disconnect"];
     NSString *proximityNotification = [notification.userInfo objectForKey:@"ProximityModule"];
+    NSString *bleBridgeNotification = [notification.userInfo objectForKey:@"BleBridge"];
     
 
     if(serviceUUIDString)
@@ -169,7 +193,7 @@
         
         [notificationAlert show];
     }
-    else if (proximityNotification)
+    else if (proximityNotification || bleBridgeNotification)
     {
         NSString *message = [notification.userInfo objectForKey:@"message"];
         NSString *title   = [notification.userInfo objectForKey:@"title"];
@@ -183,7 +207,6 @@
         
         [notificationAlert show];
     }
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

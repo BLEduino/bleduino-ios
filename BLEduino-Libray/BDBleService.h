@@ -74,4 +74,19 @@ extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B
                   characteristicUUID:(CBUUID *)cUUID
                          notifyValue:(BOOL)value;
 
+
+/*
+ *  @method                 peripheral:didUpdateValueForCharacteristic:
+ *
+ *  @discussion             CBPeripherals can have but one delegate (even after copying them). Thus,
+ *                          this method serves as a gateway to forward updates been sent from BLEduinos
+ *                          to all services listening for updates.
+ *
+ *  @param bleduino         Peripheral sending the update.
+ *  @param characteristic   The characteristic that whose value was updated.
+ *
+ */
++(void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic;
+
+
 @end

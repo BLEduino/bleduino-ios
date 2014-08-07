@@ -61,8 +61,8 @@
     
     //Receive distance notifications.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(distanceNotifications:) name:@"NewDistanceNotification" object:nil];
-    [center addObserver:self selector:@selector(finishedDistanceCalibration:) name:@"FinishedCalibration" object:nil];
+    [center addObserver:self selector:@selector(distanceNotifications:) name:PROXIMITY_NEW_DISTANCE object:nil];
+    [center addObserver:self selector:@selector(finishedDistanceCalibration:) name:PROXIMITY_FINISHED_CALIBRATION object:nil];
 }
 
 - (void)distanceNotifications:(NSNotification *)notification
@@ -139,11 +139,11 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     if(isAlertEnabled)
     {
-        [center postNotificationName:@"DistanceAlertsEnabled" object:self];
+        [center postNotificationName:PROXIMITY_DISTANCE_ALERTS_ENABLED object:self];
     }
     else
     {
-        [center postNotificationName:@"DistanceAlertsDisabled" object:self];
+        [center postNotificationName:PROXIMITY_DISTANCE_ALERTS_DISABLED object:self];
     }
 }
 
@@ -219,7 +219,7 @@
     [self.calibrationLabel setHidden:NO];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:@"BeginCalibration" object:self];
+    [center postNotificationName:PROXIMITY_BEGIN_CALIBRATION object:self];
 }
 
 - (void)finishedDistanceCalibration:(NSNotification *)notification
@@ -255,7 +255,7 @@
     [defaults synchronize];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:@"NewDistanceAlert" object:self];
+    [center postNotificationName:PROXIMITY_NEW_DISTANCE_ALERTS object:self];
 }
 
 - (void)updateDistanceIndicator:(NSInteger)distance
@@ -406,14 +406,17 @@
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,

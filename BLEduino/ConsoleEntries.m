@@ -2,7 +2,7 @@
 //  ConsoleEntries.m
 //  BLEduino
 //
-//  Created by Valerie Ann Rodriguez on 7/22/14.
+//  Created by Ramon Gonzalez on 7/22/14.
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 

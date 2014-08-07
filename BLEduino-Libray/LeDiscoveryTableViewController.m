@@ -67,6 +67,30 @@
                   forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)didFailToAttemptScannigForBleduinos:(CBCentralManagerState)sharedManagerSate
+{
+    NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
+    UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
+                                                                  message:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:nil
+                                                        otherButtonTitles:@"Ok", nil];
+    
+    [bleNotificationAlert show];
+}
+
+- (void)didFailToAttemptConnectionToBleduino:(CBCentralManagerState)sharedManagerSate
+{
+    NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
+    UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
+                                                                  message:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:nil
+                                                        otherButtonTitles:@"Ok", nil];
+    
+    [bleNotificationAlert show];
+}
+
 - (void)scanForBleDevices:(id)sender
 {
     //Show network activity indicator.
@@ -184,14 +208,15 @@
     UIColor *textColor = [UIColor darkGrayColor];
     UIColor *backgroundColor = [UIColor whiteColor];
     
-    UIView *interrogationView = [[UIView alloc] initWithFrame:CGRectMake(60, 200, 200, 100)];
+    //Main view
+    UIView *interrogationView = [[UIView alloc] initWithFrame:CGRectMake(60, 150, 200, 100)];
     interrogationView.backgroundColor = backgroundColor;
     
     //Indicator
     UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]
                                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activity.color = textColor;
-    activity.frame = CGRectMake(80, 30, 40, 40);
+    activity.frame = CGRectMake(80, 25, 35, 35);
     [activity startAnimating];
     
     //Label
@@ -202,7 +227,11 @@
     indicatorText.text = @"Discovering Services";
     
     //Interrogation View Background
-    CGRect tableViewFrame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.width);
+    UIView *theView = [self.tableView superview];
+    
+    CGRect tableViewFrame = CGRectMake(0, 0,
+                                       theView.frame.size.width,
+                                       theView.frame.size.height);
     UIView *interrogationBackgroundView = [[UIView alloc] initWithFrame:tableViewFrame];
     interrogationBackgroundView.backgroundColor = [UIColor colorWithRed:70/255.0 green:70/255.0 blue:70/255.0 alpha:0.8];
     interrogationBackgroundView.tag = 1320;
@@ -211,13 +240,14 @@
     [interrogationView addSubview:activity];
     [interrogationView addSubview:indicatorText];
     [interrogationBackgroundView addSubview:interrogationView];
-    [self.tableView addSubview:interrogationBackgroundView];
+    [theView addSubview:interrogationBackgroundView];
+    
 }
 
 - (void)removeBleduinoInterrogationView
 {
-    [self.tableView setHidden:NO];
-    [[self.tableView viewWithTag:1320] removeFromSuperview];
+    UIView *theView = [self.tableView superview];
+    [[theView viewWithTag:1320] removeFromSuperview];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -273,7 +303,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
     //Remove Bleduino interrogation view.
-//    [self removeBleduinoInterrogationView];
+    [self removeBleduinoInterrogationView];
     
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
@@ -287,14 +317,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     
     if(notifyConnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has connected to the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has connected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,
@@ -310,6 +343,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
 {
     //PENDING: Stretched goal. Add row animations for smoothness.
+    
+    //Remove Bleduino interrogation view.
+    [self removeBleduinoInterrogationView];
+    
     [self.tableView reloadData];
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
@@ -321,14 +358,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+        
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,
@@ -338,6 +378,39 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         //Present notification.
         [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
+    
+    [self scanForBleDevices:self];
+}
+
+- (void)didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+{
+    //Remove Bleduino interrogation view.
+    [self removeBleduinoInterrogationView];
+    
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Faild to connect to peripheral: %@", name);
+    
+
+    NSString *message = [NSString stringWithFormat:@"The BLE device '%@' failed to connect to the BLEduino Max ## app.", name];
+    
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = message;
+    notification.alertAction = nil;
+    
+    //Is application on the foreground?
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        //Application is on the foreground, store notification attributes to present alert view.
+        notification.userInfo = @{@"title"  : @"BLEduino",
+                                  @"message": message,
+                                  @"disconnect": @"disconnect"};
+    }
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+
     
     [self scanForBleDevices:self];
 }

@@ -14,19 +14,11 @@
 #import "BDControllerService.h"
 #import "BDBleBridgeService.h"
 
-///****************************************************************************/
-///*						Service & Characteristics							*/
-///****************************************************************************/
-//NSString * const kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D";
-//NSString * const kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B-0032C0D16A2D";
-//NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
-
 @interface BDLeDiscoveryManager ()
-@property  CBCentralManager *centralManager;
+@property CBCentralManager *centralManager;
 @end
 
 @implementation BDLeDiscoveryManager
-//static BDLeDiscoveryManager *sharedInstance = nil;
 
 #pragma mark -
 #pragma mark Access to Central Manager
@@ -37,11 +29,31 @@
     if (self = [super init]) {
         
         NSDictionary *options = @{@"CBCentralManagerOptionShowPowerAlertKey" : @YES};
-        dispatch_queue_t bleQueue = dispatch_queue_create("ble-central", DISPATCH_QUEUE_SERIAL);
         self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:options];
         
+        //Peripheral storage.
         self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
+        self.reConnectBleduinos = [[NSMutableOrderedSet alloc] init];
+        
+        //Ble commands storage.
+        self.bleCommands = [BDQueue queue];
+        
+        //Create and launch queue for executing ble-commands.
+        dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        dispatch_async(bleQueue, ^{
+            while(1)
+            {
+                BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                void (^command)(void) = [manager.bleCommands dequeue]; //Get ble command.
+                if(command)command(); //Run ble command.
+                
+                //Sleep
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+                [NSThread sleepForTimeInterval:timeCap/1000.0];
+            }
+        });
         
         //Set configuration.
         [self configureLeDiscoveryManager:YES];
@@ -62,13 +74,8 @@
 
 - (void)dismiss
 {
-//    sharedInstance = nil; //Destroy central manager.
-    
     //Destroy all stored devices and services.
     self.foundBleduinos = self.connectedBleduinos = nil;
-    
-    //PENDING: Stretched goal.
-    //Add support to destroy persisted information.
 }
 
 - (BOOL)getScanOnlyForBLEduinos
@@ -108,22 +115,61 @@
 
 - (void) startScanningForBleDevices
 {
-    //Scan for BLEduino service.
-    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+    if(self.centralManager.state == CBCentralManagerStatePoweredOn)
+    {
+        //Scan for BLEduino service.
+        [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(didFailToAttemptScannigForBleduinos:)])
+        {
+            [self.delegate didFailToAttemptScannigForBleduinos:self.centralManager.state];
+        }
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
+    }
 }
 
 - (void) startScanningForBleduinos
 {
-    //Scan for BLEduino service.
-//    NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
-    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+    if(self.centralManager.state == CBCentralManagerStatePoweredOn)
+    {
+        //Scan for BLEduino service.
+        NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
+        [self.centralManager scanForPeripheralsWithServices:services options:nil];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(didFailToAttemptScannigForBleduinos:)])
+        {
+            [self.delegate didFailToAttemptScannigForBleduinos:self.centralManager.state];
+        }
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
+    }
 }
 
 - (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout
 {
-    [self startScanningForBleduinos];
-    
-    [self performSelector:@selector(stopScanning) withObject:self afterDelay:timeout];
+    if(self.centralManager.state == CBCentralManagerStatePoweredOn)
+    {
+        [self startScanningForBleduinos];
+        
+        [self performSelector:@selector(stopScanning) withObject:self afterDelay:timeout];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(didFailToAttemptScannigForBleduinos:)])
+        {
+            [self.delegate didFailToAttemptScannigForBleduinos:self.centralManager.state];
+        }
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
+    }
 }
 
 - (void) stopScanning
@@ -133,11 +179,24 @@
 
 - (void)connectBleduino:(CBPeripheral *)bleduino
 {
-    NSDictionary *connectBleOptions =
-    @{@"CBConnectPeripheralOptionNotifyOnConnectionKey" : (self.notifyConnect)?@YES:@NO,
-      @"CBConnectPeripheralOptionNotifyOnDisconnectionKey" : (self.notifyDisconnect)?@YES:@NO};
-    
-    [self.centralManager connectPeripheral:bleduino options:connectBleOptions];
+    if(self.centralManager.state == CBCentralManagerStatePoweredOn)
+    {
+        NSDictionary *connectBleOptions =
+        @{@"CBConnectPeripheralOptionNotifyOnConnectionKey" : (self.notifyConnect)?@YES:@NO,
+          @"CBConnectPeripheralOptionNotifyOnDisconnectionKey" : (self.notifyDisconnect)?@YES:@NO};
+        
+        [self.centralManager connectPeripheral:bleduino options:connectBleOptions];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(didFailToAttemptConnectionToBleduino:)])
+        {
+            [self.delegate didFailToAttemptConnectionToBleduino:self.centralManager.state];
+        }
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
+    }
 }
 
 - (void) disconnectBleduino:(CBPeripheral *)bleduino
@@ -156,8 +215,9 @@
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    if(![self.foundBleduinos containsObject:peripheral] &&
-       ![self.connectedBleduinos containsObject:peripheral])
+    
+    NSLog(@"Peripheral UUID: %@", [peripheral.identifier UUIDString]);
+    if(![self.connectedBleduinos containsObject:peripheral])
     {
         //Store device.
         [self.foundBleduinos insertObject:peripheral atIndex:0];
@@ -165,13 +225,19 @@
         if(self.scanOnlyForBLEduinos)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+                if([self.delegate respondsToSelector:@selector(didDiscoverBleduino:withRSSI:)])
+                {
+                    [self.delegate didDiscoverBleduino:peripheral withRSSI:RSSI];
+                }
             });
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+                if([self.delegate respondsToSelector:@selector(didDiscoverBleDevice:withRSSI:)])
+                {
+                    [self.delegate didDiscoverBleDevice:peripheral withRSSI:RSSI];
+                }
             });
         }
     }
@@ -184,11 +250,7 @@
 /****************************************************************************/
 - (void)centralManager:(CBCentralManager *)central
   didConnectPeripheral:(CBPeripheral *)peripheral
-{
-    //Move peripheral to connected devices.
-    [self.foundBleduinos removeObject:peripheral];
-    [self.connectedBleduinos insertObject:peripheral atIndex:0];
-    
+{    
     CBUUID *uart = [CBUUID UUIDWithString:kUARTServiceUUIDString];
     CBUUID *vehicleMotion = [CBUUID UUIDWithString:kVehicleMotionServiceUUIDString];
     CBUUID *firmata = [CBUUID UUIDWithString:kFirmataServiceUUIDString];
@@ -209,8 +271,23 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     [self.connectedBleduinos removeObject:peripheral];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate didDisconnectFromBleduino:peripheral error:error];
+        if([self.delegate respondsToSelector:@selector(didDisconnectFromBleduino:error:)])
+        {
+            [self.delegate didDisconnectFromBleduino:peripheral error:error];
+        }
     });
+    
+    //Did BLEduino got disconnected unxpectedly?
+    if(error)
+    {
+//        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.5];
+    }
+}
+
+- (void)reconnectToBleduino:(CBPeripheral *)bleduino
+{
+    [self.reConnectBleduinos addObject:bleduino];
+    [self.centralManager connectPeripheral:bleduino options:nil];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -218,7 +295,11 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate didFailToConnectToBleduino:peripheral error:error];
+        
+        if([self.delegate respondsToSelector:@selector(didFailToAttemptConnectionToBleduino:)])
+        {
+            [self.delegate didFailToConnectToBleduino:peripheral error:error];
+        }
     });
 }
 
@@ -245,7 +326,6 @@ didRetrievePeripherals:(NSArray *)peripherals
 /****************************************************************************/
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    //PENDING: Stretched goal.
     NSLog(@"Central manager state was updated.");
 }
 
@@ -443,30 +523,20 @@ didRetrievePeripherals:(NSArray *)peripherals
         self.totalServices = self.totalServices - 1;
     }
     
+    //This peripheral is connected and has been interrogated.
     if(self.totalServices == 0)
     {
+        //Move peripheral to connected devices.
+        [self.foundBleduinos removeObject:peripheral];
+        [self.connectedBleduinos insertObject:peripheral atIndex:0];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate didConnectToBleduino:peripheral];
+            if([self.delegate respondsToSelector:@selector(didConnectToBleduino:)])
+            {
+                [self.delegate didConnectToBleduino:peripheral];
+            }
         });
     }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    CBUUID *tx = [CBUUID UUIDWithString:kTxCharacteristicUUIDString];
-    if([characteristic.UUID isEqual:tx])
-    {
-        NSLog(@"Notify update for TX: %d", characteristic.isNotifying);
-    }
-    else
-    {
-        NSLog(@"Char update for UNKOWN UUID: %@\n Value: %d", [characteristic.UUID description], characteristic.isNotifying);
-    }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    NSLog(@"Received something on TX: %@", [characteristic.value description]);
 }
 
 //Helper methods

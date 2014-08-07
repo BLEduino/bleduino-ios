@@ -121,9 +121,16 @@
     //Update LCD settings.
     if(buttonIndex == 1) //Done button.
     {
+
+        
         NSInteger lcdSize = [[alertView textFieldAtIndex:0].text integerValue];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setInteger:lcdSize forKey:SETTINGS_LCD_TOTAL_CHARS];
+        
+        //FIXME: REMOVE ONLY FOR TEST
+        double timeCap = [[alertView textFieldAtIndex:0].text doubleValue];
+        [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
+        
         [defaults synchronize];
         
         //Update the data.
@@ -421,14 +428,17 @@
     
     if(notifyDisconnect)
     {
+        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
+
         //Push local notification.
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = message;
+        notification.alertAction = nil;
         
         //Is application on the foreground?
         if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected to the BLEduino app.", name];
             //Application is on the foreground, store notification attributes to present alert view.
             notification.userInfo = @{@"title"  : @"BLEduino",
                                       @"message": message,
