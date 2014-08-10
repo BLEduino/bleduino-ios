@@ -100,7 +100,9 @@
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     [leManager startScanning];
     
-    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
+//    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
+    
+    [self.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:3.5];
 }
 
 - (void)stopScanForBleDevices:(id)sender
@@ -286,8 +288,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Discovered peripheral: %@", name);
+//    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+//    NSLog(@"Discovered peripheral: %@", name);
 }
 
 - (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI

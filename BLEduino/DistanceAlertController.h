@@ -7,25 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DistanceAlert.h"
+#import "ProximityAlert.h"
 
 @class DistanceAlertController;
 @protocol DistanceAlertControllerDelegate <NSObject>
 - (void) distanceAlertControllerDismissed:(DistanceAlertController *)controller;
-- (void) didCreateDistanceAlert:(DistanceAlert *)alert fromController:(DistanceAlertController *)controller;
-- (void) didUpdateDistanceAlert:(DistanceAlert *)alert fromController:(DistanceAlertController *)controller;
+- (void) didCreateDistanceAlert:(ProximityAlert *)alert fromController:(DistanceAlertController *)controller;
+- (void) didUpdateDistanceAlert:(ProximityAlert *)alert fromController:(DistanceAlertController *)controller;
 @end
 
 @interface DistanceAlertController : UITableViewController <UITextFieldDelegate>
 @property (weak) id <DistanceAlertControllerDelegate> delegate;
-@property DistanceAlert *alert;
+@property ProximityAlert *alert;
 @property BOOL isNewAlert;
-@property IBOutlet UITextField *messageLabel;
-@property IBOutlet UISlider *distanceSlider;
-@property IBOutlet UILabel *distanceIndicator;
+@property IBOutlet UITextField *message;
+@property IBOutlet UISegmentedControl *distanceControl;
 @property IBOutlet UISwitch *alertWhenCloser;
 @property IBOutlet UISwitch *alertWhenFarther;
-@property NSString *distanceFormat;
 
 - (IBAction)dismissModule:(id)sender;
 - (IBAction)updateDistanceAlert:(id)sender;

@@ -39,7 +39,9 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+//    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:19/255.0 green:147/255.0 blue:191/255.0 alpha:1.0];
+
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
@@ -825,13 +827,17 @@
 didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
                    error:(NSError *)error
 {
-    BDFirmataCommandCharacteristic *command = [self.sequence objectAtIndex:firmataCommand.pinNumber];
-    if(command.pinState == firmataCommand.pinState)
+    //Update data to all pins that it applies to.
+    for(BDFirmataCommandCharacteristic *pin in self.sequence)
     {
-        command.pinValue = firmataCommand.pinValue;
-        [self.tableView reloadData];
+        if(pin.pinNumber == firmataCommand.pinNumber &&
+           pin.pinState == firmataCommand.pinState)
+        {
+            pin.pinValue = firmataCommand.pinValue;
+        }
     }
     
+    [self.tableView reloadData];
 }
 
 //Changing PIN state.

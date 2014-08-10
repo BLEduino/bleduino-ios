@@ -7,8 +7,9 @@
 //
 
 #import "ProximityViewController.h"
-#import "DistanceAlert.h"
 #import "DistanceAlertController.h"
+#import "RSSIAlertController.h"
+#import "ProximityAlert.h"
 
 @interface ProximityViewController ()
 
@@ -51,14 +52,6 @@
     [self setPreviousState];
     [self setAlertSwitch];
     
-    //Distance format?
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.distanceFormatIsFeet = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
-    [defaults synchronize];
-    self.distanceFormat = (self.distanceFormatIsFeet)?@"ft":@"m";
-    
-    [self updateDistanceIndicator:0];
-    
     //Receive distance notifications.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(distanceNotifications:) name:PROXIMITY_NEW_DISTANCE object:nil];
@@ -80,6 +73,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *proximityMessages = (NSArray *)[defaults objectForKey:PROXIMITY_MESSAGES];
     NSArray *proximityDistances = (NSArray *)[defaults objectForKey:PROXIMITY_DISTANCES];
+    NSArray *proximityDistancesTypes = (NSArray *)[defaults objectForKey:PROXIMITY_DISTANCES_TYPES];
     NSArray *proximityCloser = (NSArray *)[defaults objectForKey:PROXIMITY_CLOSER];
     NSArray *proximityFarther = (NSArray *)[defaults objectForKey:PROXIMITY_FARTHER];
     [defaults synchronize];
@@ -88,11 +82,12 @@
     
     for (int i=0; i<proximityMessages.count; i++)
     {
-        DistanceAlert *alert = [[DistanceAlert alloc] init];
+        ProximityAlert *alert = [[ProximityAlert alloc] init];
         alert.message = (NSString *)[proximityMessages objectAtIndex:i];
-        alert.distance = (NSInteger)[proximityDistances objectAtIndex:i];
-        alert.bleduinoIsCloser = (BOOL)[proximityCloser objectAtIndex:i];
-        alert.bleduinoIsFarther = (BOOL)[proximityFarther objectAtIndex:i];
+        alert.distance = [(NSNumber *)[proximityDistances objectAtIndex:i] integerValue];
+        alert.isDistanceAlert = [(NSNumber *)[proximityDistancesTypes objectAtIndex:i] boolValue];
+        alert.bleduinoIsCloser = [(NSNumber *)[proximityCloser objectAtIndex:i] boolValue];
+        alert.bleduinoIsFarther = [(NSNumber *)[proximityFarther objectAtIndex:i] boolValue];
         
         [self.alerts addObject:alert];
     }
@@ -124,6 +119,66 @@
     
     //Set new header view.
     [self.view addSubview:headerView];
+}
+
+- (void)updateDistanceIndicator:(NSInteger)strengthLevel
+{
+    NSString *strengthName;
+    switch (strengthLevel) {
+        case 0:
+            strengthName = @"strength-0.png";
+            break;
+        case 1:
+            strengthName = @"strength-1.png";
+            break;
+        case 2:
+            strengthName = @"strength-2.png";
+            break;
+        case 3:
+            strengthName = @"strength-3.png";
+            break;
+        case 4:
+            strengthName = @"strength-4.png";
+            break;
+        case 5:
+            strengthName = @"strength-5.png";
+            break;
+        default:
+            strengthName = @"strength-0.png";
+            break;
+    }
+    
+    //Update image.
+    [UIView beginAnimations:@"Update Strength Image" context:nil];
+    self.distanceIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:strengthName]];
+    [UIView commitAnimations];
+}
+
+- (NSString *)stringForDistanceAlertDetailTextLabel:(ProximityAlert *)alert
+{
+    NSString *detailText;
+    if(alert.isDistanceAlert)
+    {
+        switch (alert.distance) {
+            case 0:
+                detailText = @"Immediate";
+                break;
+            case 1:
+                detailText = @"Near";
+                break;
+            case 2:
+                detailText = @"Far";
+                break;
+            default:
+                detailText = @"Error";
+                break;
+        }
+    }
+    else
+    {
+        detailText = [NSString stringWithFormat:@"%ld dBm", (long)alert.distance];
+    }
+    return detailText;
 }
 
 - (void)toggleGlobalDistanceAlertSwitch:(id)sender
@@ -159,6 +214,21 @@
     [self.delegate proximityControllerDismissed:self];
 }
 
+- (IBAction)addAlert:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"Cancel"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"Distance Alert", @"RSSI Alert", nil];
+
+
+    //Show pin options.
+    actionSheet.tag = (200 + 0);
+    [actionSheet showInView:self.view];
+}
+
 - (IBAction)calibrate:(id)sender
 {
     //First time calibrating distance?
@@ -188,6 +258,23 @@
         [alert show];
     }
 
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        if(buttonIndex)
+        {
+            //RSSI Alert
+            [self performSegueWithIdentifier:@"RSSIAlertSegue" sender:self];
+        }
+        else
+        {
+            //Distance Alert
+            [self performSegueWithIdentifier:@"DistanceAlertSegue" sender:self];
+        }
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -236,47 +323,29 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *proximityMessages = [[NSMutableArray alloc] initWithCapacity:self.alerts.count];
     NSMutableArray *proximityDistances = [[NSMutableArray alloc] initWithCapacity:self.alerts.count];
+    NSMutableArray *proximityTypes = [[NSMutableArray alloc] initWithCapacity:self.alerts.count];
     NSMutableArray *proximityCloser = [[NSMutableArray alloc] initWithCapacity:self.alerts.count];
     NSMutableArray *proximityFarther = [[NSMutableArray alloc] initWithCapacity:self.alerts.count];
     
-    for (DistanceAlert *alert in self.alerts)
+    for (ProximityAlert *alert in self.alerts)
     {
         [proximityMessages  addObject:alert.message];
-        [proximityDistances addObject:[NSNumber numberWithLong:alert.distance]];
-        [proximityCloser    addObject:[NSNumber numberWithLong:alert.bleduinoIsCloser]];
-        [proximityFarther   addObject:[NSNumber numberWithLong:alert.bleduinoIsFarther]];
+        [proximityDistances addObject:[NSNumber numberWithInteger:alert.distance]];
+        [proximityTypes     addObject:[NSNumber numberWithBool:alert.isDistanceAlert]];
+        [proximityCloser    addObject:[NSNumber numberWithBool:alert.bleduinoIsCloser]];
+        [proximityFarther   addObject:[NSNumber numberWithBool:alert.bleduinoIsFarther]];
     }
     
     //Archive everything.
     [defaults setObject:proximityMessages   forKey:PROXIMITY_MESSAGES];
     [defaults setObject:proximityDistances  forKey:PROXIMITY_DISTANCES];
+    [defaults setObject:proximityTypes      forKey:PROXIMITY_DISTANCES_TYPES];
     [defaults setObject:proximityCloser     forKey:PROXIMITY_CLOSER];
     [defaults setObject:proximityFarther    forKey:PROXIMITY_FARTHER];
     [defaults synchronize];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:PROXIMITY_NEW_DISTANCE_ALERTS object:self];
-}
-
-- (void)updateDistanceIndicator:(NSInteger)distance
-{
-    NSString *distanceString = [NSString stringWithFormat:@"%ld %@", (long)distance, self.distanceFormat];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-   
-    BOOL distanceFormatIsFeet = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
-    NSInteger offset = (distanceFormatIsFeet)?3:2;
-    NSRange distanceValueRange = NSMakeRange(0, distanceString.length - offset);
-    NSRange distanceFormatRange = NSMakeRange(distanceString.length - offset, offset);
-    
-    NSMutableAttributedString *distanceStringFinal = [[NSMutableAttributedString alloc] initWithString:distanceString];
-    [distanceStringFinal addAttribute:NSFontAttributeName
-                                value:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:120.0f]
-                                range:distanceValueRange];
-    [distanceStringFinal addAttribute:NSFontAttributeName
-                                value:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30.0f]
-                                range:distanceFormatRange];
-    
-    self.distanceIndicator.attributedText = distanceStringFinal;
 }
 
 #pragma mark - Table view data source
@@ -304,24 +373,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DistanceAlert *alert = [self.alerts objectAtIndex:indexPath.row];
+    ProximityAlert *alert = [self.alerts objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProximityAlertCell"
                                                             forIndexPath:indexPath];
     
     cell.textLabel.text = alert.message;
-    NSString *distanceFormatString = (self.distanceFormatIsFeet)?@"ft":@"m";
-    NSString *distance = [NSString stringWithFormat:@"%ld %@", (long)alert.distance, distanceFormatString];
-
-    cell.detailTextLabel.text = distance;
+    cell.detailTextLabel.text = [self stringForDistanceAlertDetailTextLabel:alert];
     return cell;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"EditAlertSegue"])
+    if([segue.identifier isEqualToString:@"EditDistanceAlertSegue"])
     {
         //Find alert.
-        NSInteger index = [self.tableView indexPathForSelectedRow].row;
+        NSInteger index = ((NSIndexPath *)[self.tableView indexPathForSelectedRow]).row;
         self.indexOfLastAlertUpdated = index;
         
         UINavigationController *navigationController = segue.destinationViewController;
@@ -330,10 +396,29 @@
         alertController.alert = [self.alerts objectAtIndex:index];
         alertController.isNewAlert = NO;
     }
-    else if([segue.identifier isEqualToString:@"AddAlertSegue"])
+    else if([segue.identifier isEqualToString:@"EditRSSIAlertSegue"])
+    {
+        //Find alert.
+        NSInteger index = ((NSIndexPath *)[self.tableView indexPathForSelectedRow]).row;
+        self.indexOfLastAlertUpdated = index;
+        
+        UINavigationController *navigationController = segue.destinationViewController;
+        RSSIAlertController *alertController = [[navigationController viewControllers] objectAtIndex:0];
+        alertController.delegate = self;
+        alertController.alert = [self.alerts objectAtIndex:index];
+        alertController.isNewAlert = NO;
+    }
+    else if([segue.identifier isEqualToString:@"DistanceAlertSegue"])
     {
         UINavigationController *navigationController = segue.destinationViewController;
         DistanceAlertController *alertController = [[navigationController viewControllers] objectAtIndex:0];
+        alertController.delegate = self;
+        alertController.isNewAlert = YES;
+    }
+    else if([segue.identifier isEqualToString:@"RSSIAlertSegue"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        RSSIAlertController *alertController = [[navigationController viewControllers] objectAtIndex:0];
         alertController.delegate = self;
         alertController.isNewAlert = YES;
     }
@@ -359,6 +444,19 @@
     return NO;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProximityAlert *alert = [self.alerts objectAtIndex:indexPath.row];
+    if(alert.isDistanceAlert)
+    {
+        [self performSegueWithIdentifier:@"EditDistanceAlertSegue" sender:self];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"EditRSSIAlertSegue" sender:self];
+    }
+}
+
 //Alert Delegates
 - (void)distanceAlertControllerDismissed:(DistanceAlertController *)controller
 {
@@ -367,12 +465,12 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didUpdateDistanceAlert:(DistanceAlert *)alert fromController:(DistanceAlertController *)controller
+- (void)didUpdateDistanceAlert:(ProximityAlert *)alert fromController:(DistanceAlertController *)controller
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.indexOfLastAlertUpdated inSection:0];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    DistanceAlert *distanceAlert = [self.alerts objectAtIndex:self.indexOfLastAlertUpdated];
+    ProximityAlert *distanceAlert = [self.alerts objectAtIndex:self.indexOfLastAlertUpdated];
     distanceAlert = alert;
     [self storeDistanceAlerts];
     
@@ -380,7 +478,7 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didCreateDistanceAlert:(DistanceAlert *)alert fromController:(DistanceAlertController *)controller
+- (void)didCreateDistanceAlert:(ProximityAlert *)alert fromController:(DistanceAlertController *)controller
 {
     [self.alerts addObject:alert];
     [self storeDistanceAlerts];
@@ -388,6 +486,37 @@
     [self.tableView reloadData];
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)rssiAlertControllerDismissed:(RSSIAlertController *)controller
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.indexOfLastAlertUpdated inSection:0];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didUpdateRSSIAlert:(ProximityAlert *)alert fromController:(RSSIAlertController *)controller
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.indexOfLastAlertUpdated inSection:0];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    ProximityAlert *distanceAlert = [self.alerts objectAtIndex:self.indexOfLastAlertUpdated];
+    distanceAlert = alert;
+    [self storeDistanceAlerts];
+    
+    [self.tableView reloadData];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCreateRSSIAlert:(ProximityAlert *)alert fromController:(RSSIAlertController *)controller
+{
+    [self.alerts addObject:alert];
+    [self storeDistanceAlerts];
+    
+    [self.tableView reloadData];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 #pragma mark -
 #pragma mark - LeManager Delegate

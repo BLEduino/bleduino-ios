@@ -40,7 +40,8 @@
     }
     
     UILabel *switchMessage = (UILabel*)[self viewWithTag:100];
-    [switchMessage setTextColor:self.statusColor];
+    //Red because we are starting on OFF (red) state. 
+    [switchMessage setTextColor:[UIColor redColor]];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -74,7 +75,7 @@
     [self.delegate powerSwitchDidUpdateWithStateOn:NO];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *aTouch = [touches anyObject];
     

@@ -34,7 +34,6 @@
         //Peripheral storage.
         self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
-        self.reConnectBleduinos = [[NSMutableOrderedSet alloc] init];
         
         //Ble commands storage.
         self.bleCommands = [BDQueue queue];
@@ -42,16 +41,29 @@
         //Create and launch queue for executing ble-commands.
         dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         dispatch_async(bleQueue, ^{
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
+            [defaults synchronize];
+            
+            BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+            BDQueue *bleCommands = manager.bleCommands;
+
             while(1)
             {
-                BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
-                void (^command)(void) = [manager.bleCommands dequeue]; //Get ble command.
-                if(command)command(); //Run ble command.
-                
-                //Sleep
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-                [NSThread sleepForTimeInterval:timeCap/1000.0];
+                @try
+                {
+                    //Execute commands off the queue.
+                    void (^command)(void) = [bleCommands dequeue]; //Get ble command.
+                    if(command)command(); //Run ble command.
+                    
+                    //Sleep
+                    [NSThread sleepForTimeInterval:timeCap/1000.0];
+                }
+                @catch (NSException *exception)
+                {
+                    NSLog(@"Caught something, %@", exception.reason);
+                }
             }
         });
         
@@ -134,9 +146,13 @@
 
 - (void) startScanningForBleduinos
 {
+    [self stopScanning];
     if(self.centralManager.state == CBCentralManagerStatePoweredOn)
     {
         //Scan for BLEduino service.
+        [self.foundBleduinos removeAllObjects];
+        [self.delegate didDiscoverBleduino:nil withRSSI:nil];
+        
         NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
         [self.centralManager scanForPeripheralsWithServices:services options:nil];
     }
@@ -150,6 +166,8 @@
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
     }
+    
+//    [self caca];
 }
 
 - (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout
@@ -243,6 +261,11 @@
     }
 }
 
+- (void)caca
+{
+    [self performSelector:@selector(startScanningForBleduinos) withObject:nil afterDelay:5];
+}
+
 #pragma mark -
 #pragma mark CM - Connection Delegate
 /****************************************************************************/
@@ -278,15 +301,14 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     });
     
     //Did BLEduino got disconnected unxpectedly?
-    if(error)
+    if(error && self.isReconnecting)
     {
-//        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.5];
+        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.1];
     }
 }
 
 - (void)reconnectToBleduino:(CBPeripheral *)bleduino
 {
-    [self.reConnectBleduinos addObject:bleduino];
     [self.centralManager connectPeripheral:bleduino options:nil];
 }
 
@@ -312,13 +334,13 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 - (void)centralManager:(CBCentralManager *)central
 didRetrieveConnectedPeripherals:(NSArray *)peripherals
 {
-    //PENDING: Stretched goal.
+    NSLog(@"Peripherals: %@", [peripherals description]);
 }
 
 - (void)centralManager:(CBCentralManager *)central
 didRetrievePeripherals:(NSArray *)peripherals
 {
-    //PENDING: Stretched goal.
+    NSLog(@"Peripherals: %@", [peripherals description]);
 }
 
 /****************************************************************************/

@@ -1,18 +1,18 @@
 //
-//  EditDistanceAlertController.m
+//  RSSIDistanceAlertController.m
 //  BLEduino
 //
-//  Created by Ramon Gonzalez on 7/18/14.
+//  Created by Ramon Gonzalez on 8/9/14.
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
-#import "DistanceAlertController.h"
+#import "RSSIAlertController.h"
 
-@interface DistanceAlertController ()
+@interface RSSIAlertController ()
 
 @end
 
-@implementation DistanceAlertController
+@implementation RSSIAlertController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -38,16 +38,26 @@
     
     //Set message delegate
     self.message.delegate = self;
+        
+    //Setup slider update method.
+    self.rssiSlider.value = -75;
+    self.rssiSlider.continuous = YES;
+    [self.rssiSlider addTarget:self
+                        action:@selector(updateRSSIIndicator:)
+              forControlEvents:UIControlEventValueChanged];
     
     //If it is an update
     if(!self.isNewAlert)
     {
         //Populate with data of alert to be updated.
         self.message.text = self.alert.message;
-        self.distanceControl.selectedSegmentIndex = self.alert.distance;
+        self.rssiSlider.value = self.alert.distance;
         [self.alertWhenCloser setOn:self.alert.bleduinoIsCloser animated:NO];
         [self.alertWhenFarther setOn:self.alert.bleduinoIsFarther animated:NO];
     }
+    
+    NSInteger currentDistanceValue = self.rssiSlider.value;
+    self.rssiIndicator.text = [NSString stringWithFormat:@"%ld dBm", (long)currentDistanceValue];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,7 +68,7 @@
 
 - (IBAction)dismissModule:(id)sender
 {
-    [self.delegate distanceAlertControllerDismissed:self];
+    [self.delegate rssiAlertControllerDismissed:self];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -67,7 +77,7 @@
     return NO;
 }
 
-- (IBAction)updateDistanceAlert:(id)sender
+- (IBAction)updateRSSIAlert:(id)sender
 {
     if(self.message.text.length > 0)
     {
@@ -75,22 +85,22 @@
         {
             self.alert = [[ProximityAlert alloc] init];
             self.alert.message = self.message.text;
-            self.alert.distance = self.distanceControl.selectedSegmentIndex;
+            self.alert.distance = self.rssiSlider.value;
             self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
             self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
-            self.alert.isDistanceAlert = YES;
+            self.alert.isDistanceAlert = NO;
             
-            [self.delegate didCreateDistanceAlert:self.alert fromController:self];
+            [self.delegate didCreateRSSIAlert:self.alert fromController:self];
         }
         else
         {
             self.alert.message = self.message.text;
             self.alert.message = self.message.text;
-            self.alert.distance = self.distanceControl.selectedSegmentIndex;
+            self.alert.distance = self.rssiSlider.value;
             self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
             self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
             
-            [self.delegate didUpdateDistanceAlert:self.alert fromController:self];
+            [self.delegate didUpdateRSSIAlert:self.alert fromController:self];
         }
     }
     else
@@ -105,5 +115,12 @@
         [notificationAlert show];
     }
 }
+
+- (void)updateRSSIIndicator:(id)sender
+{
+    NSInteger currentRSSIValue = self.rssiSlider.value;
+    self.rssiIndicator.text = [NSString stringWithFormat:@"%ld dBm", (long)currentRSSIValue];
+}
+
 
 @end

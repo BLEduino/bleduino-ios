@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DistanceAlert : NSObject
+@interface ProximityAlert : NSObject
 @property NSInteger distance;
 @property NSString *message;
+@property BOOL isDistanceAlert;
 @property BOOL bleduinoIsCloser;
 @property BOOL bleduinoIsFarther;
-//Streched Goal
-//Add sound. 
 @end

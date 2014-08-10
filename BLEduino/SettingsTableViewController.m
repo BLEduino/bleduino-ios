@@ -121,8 +121,6 @@
     //Update LCD settings.
     if(buttonIndex == 1) //Done button.
     {
-
-        
         NSInteger lcdSize = [[alertView textFieldAtIndex:0].text integerValue];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setInteger:lcdSize forKey:SETTINGS_LCD_TOTAL_CHARS];
@@ -130,6 +128,7 @@
         //FIXME: REMOVE ONLY FOR TEST
         double timeCap = [[alertView textFieldAtIndex:0].text doubleValue];
         [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
+        //<<<<<<<
         
         [defaults synchronize];
         

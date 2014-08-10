@@ -48,7 +48,6 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *
  */
 - (void)openBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
-//FIXME: MAKE SURE THIS IS SENDING THE DATA. 
 
 /*
  *  @method                 closeBridge

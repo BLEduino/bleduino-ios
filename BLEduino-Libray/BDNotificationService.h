@@ -29,6 +29,9 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 @class BDNotificationService;
 @protocol NotificationServiceDelegate <NSObject>
 @optional
+- (void)didStatedListening:(BDNotificationService *)service;
+- (void)didFailToStartListening:(BDNotificationService *)service;
+
 - (void)notificationService:(BDNotificationService *)service
      didReceiveNotification:(BDNotificationAttributesCharacteristic *)notification
                       error:(NSError *)error;

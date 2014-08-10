@@ -18,13 +18,9 @@
     self = [super init];
     if(self)
     {
-        NSString *attributesString = [[NSString alloc] initWithData:attributesData
-                                                           encoding:NSUTF8StringEncoding];
+        _message =  [[NSString alloc] initWithData:attributesData
+                                          encoding:NSUTF8StringEncoding];
 
-//        NSArray *attributes = [attributesString componentsSeparatedByString:@"#"];
-//        _title = [attributes objectAtIndex:0];
-//        _message = [attributes objectAtIndex:1];
-        _message = attributesString;
     }
 
     return self;

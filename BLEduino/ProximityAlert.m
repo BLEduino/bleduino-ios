@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
-#import "DistanceAlert.h"
+#import "ProximityAlert.h"
 
-@implementation DistanceAlert
+@implementation ProximityAlert
 
 @end

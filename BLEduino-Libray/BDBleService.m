@@ -8,6 +8,12 @@
 
 #import "BDBleService.h"
 #import "BDLeDiscoveryManager.h"
+#import "BDUartService.h"
+#import "BDVehicleMotionService.h"
+#import "BDNotificationService.h"
+#import "BDFirmataService.h"
+#import "BDControllerService.h"
+#import "BDBleBridgeService.h"
 
 /****************************************************************************/
 /*                            BLEduino Service				     			*/
@@ -166,12 +172,137 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     }
 }
 
-+ (void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+/*
+ * Gateways for forwarding delegate callbacks for characteristic updates and acknowledgements 
+ * when having multiple service objects usingthe same peripheral.
+ */
++ (void)peripheral:(CBPeripheral *)bleduino didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
 {
-    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
     
+    NSString *destination;
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kRxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_UART;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_VEHICLE_MOTION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_FIRMATA;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_CONTROLLER;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_NOTIFICATION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_DEVICE_ID;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_RX;
+    }
+    
+    //Setup payload.
+    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    
+    //Attach payload and senf notification.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:CHARACTERISTIC_UPDATE object:self userInfo:update];
+    [center postNotificationName:destination object:[NSNull null] userInfo:update];
+}
+
++ (void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+
+    NSString *destination;
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_UART;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_VEHICLE_MOTION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_FIRMATA;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_CONTROLLER;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_NOTIFICATION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_BLE_BRIDGE_DEVICE_ID;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_UPDATE_BLE_BRIDGE_TX;
+    }
+    
+    //Setup payload.
+    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    
+    //Attach payload and senf notification.
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:destination object:[NSNull null] userInfo:update];
+}
+
++ (void)peripheral:(CBPeripheral *)bleduino didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    
+    NSString *destination;
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_UART;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_VEHICLE_MOTION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_FIRMATA;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_CONTROLLER;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_NOTIFICATION;
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
+    {
+        destination = CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX;
+    }
+    
+    //Setup payload.
+    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    
+    //Attach payload and senf notification.
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:destination object:[NSNull null] userInfo:update];
 }
 
 @end
+
+
+
+

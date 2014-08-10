@@ -8,7 +8,6 @@
 
 #import "BDBleBridgeService.h"
 #import "BDLeDiscoveryManager.h"
-#import "BDPeripheral.h"
 
 #pragma mark -
 #pragma mark BLE Bridge Service UUIDs
@@ -84,6 +83,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     //Open bridge only if there is not one already opened.
     if(!self.isOpen)
     {
+        self.delegate = aController;
         self.isOpen = YES; //bridge is open.
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         self.totalBridges = leManager.connectedBleduinos.count;
@@ -106,7 +106,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             [bridge readDataFromServiceUUID:bridge.bleBridgeServiceUUID characteristicUUID:bridge.deviceIDCharacteristicUUID];
         }
         
-        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:30];
+        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:10];
         NSLog(@"BLE-Bridge: bridge is open.");
     }
 }
@@ -186,6 +186,20 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         
         NSLog(@"Total Bytes: %ld", (long)[characteristic.value length]);
         
+        //Update payload with the sender's deviceID.
+        NSMutableData *updatedPayload = [[NSMutableData alloc] initWithCapacity:characteristic.value.length];
+        
+        //Collect and store the sender's deviceID.
+        NSInteger senderDeviceID = [((NSNumber *)[self.deviceIDs objectForKey:[peripheral.identifier UUIDString]]) integerValue];
+        Byte senderDeviceIDByte = (senderDeviceID >> (0)) & 0xff;
+        NSMutableData *senderDeviceIDData = [NSMutableData dataWithBytes:&senderDeviceIDByte length:sizeof(senderDeviceIDByte)];
+        [updatedPayload appendData:senderDeviceIDData];
+        
+        //Complete payload.
+        NSUInteger payloadLength = characteristic.value.length - 1;
+        NSData *payload = [characteristic.value subdataWithRange:NSMakeRange(1, payloadLength)];
+        [updatedPayload appendData:payload];
+        
         //Find destination device.
         for(BDBleBridgeService *bridge in self.bridges)
         {
@@ -194,7 +208,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             {
                 [bridge writeDataToServiceUUID:bridge.bleBridgeServiceUUID
                             characteristicUUID:bridge.bridgeRxCharacteristicUUID
-                                          data:characteristic.value
+                                          data:updatedPayload
                                        withAck:NO];
             }
         }

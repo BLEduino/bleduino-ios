@@ -29,9 +29,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.lastThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
-        self.lastThrottleYawUpdate.throttle = 135; //0 speed.
-        self.lastThrottleYawUpdate.yaw = 135; //0 turn.
     }
     return self;
 }
@@ -80,6 +77,10 @@
             forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:dismissButton];
+    
+    self.lastThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+    self.lastThrottleYawUpdate.throttle = 15; //0 speed.
+    self.lastThrottleYawUpdate.yaw = 15; //0 turn.
 }
 
 - (NSUInteger)supportedInterfaceOrientations

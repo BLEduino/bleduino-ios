@@ -75,6 +75,7 @@
 //Proximity
 #define PROXIMITY_MESSAGES @"proximity-messages"
 #define PROXIMITY_DISTANCES @"proximity-distances"
+#define PROXIMITY_DISTANCES_TYPES @"proximity-distances-types"
 #define PROXIMITY_CLOSER @"proximity-closer"
 #define PROXIMITY_FARTHER @"proximity-farther"
 #define PROXIMITY_FIRST_CALIBRATION @"proximity-calibration"
@@ -89,9 +90,31 @@
 
 //Global
 #define BLE_MANAGER_NOT_POWERED_ON @"ble-manager-not-powered-on"
-#define CHARACTERISTIC_UPDATE @"characteristic-update"
-#define LAST_SENT_TIMESTAMP @"last-sent-timestamp"
 #define WRITE_TIME_CAP @"write-time-cap"
+
+#define CHARACTERISTIC_UPDATE_UART @"characteristic-update-uart"
+#define CHARACTERISTIC_UPDATE_VEHICLE_MOTION @"characteristic-update-vehicle-motion"
+#define CHARACTERISTIC_UPDATE_FIRMATA @"characteristic-update-firmata"
+#define CHARACTERISTIC_UPDATE_CONTROLLER @"characteristic-update-controller"
+#define CHARACTERISTIC_UPDATE_NOTIFICATION @"characteristic-update-notification"
+#define CHARACTERISTIC_UPDATE_BLE_BRIDGE_TX @"characteristic-update-ble-bridge-tx"
+#define CHARACTERISTIC_UPDATE_BLE_BRIDGE_DEVICE_ID @"characteristic-update-ble-bridge-device-id"
+
+#define CHARACTERISTIC_WRITE_ACK_UART @"characteristic-write-ack-uart"
+#define CHARACTERISTIC_WRITE_ACK_VEHICLE_MOTION @"characteristic-write-ack-vehicle-motion"
+#define CHARACTERISTIC_WRITE_ACK_FIRMATA @"characteristic-write-ack-firmata"
+#define CHARACTERISTIC_WRITE_ACK_CONTROLLER @"characteristic-write-ack-controller"
+#define CHARACTERISTIC_WRITE_ACK_NOTIFICATION @"characteristic-write-ack-notification"
+#define CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_RX @"characteristic-write-ack-ble-bridge-rx"
+#define CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_DEVICE_ID @"characteristic-write-ack-ble-bridge-device-id"
+
+#define CHARACTERISTIC_NOTIFY_UART @"characteristic-notify-uart"
+#define CHARACTERISTIC_NOTIFY_VEHICLE_MOTION @"characteristic-notify-vehicle-motion"
+#define CHARACTERISTIC_NOTIFY_FIRMATA @"characteristic-notify-firmata"
+#define CHARACTERISTIC_NOTIFY_CONTROLLER @"characteristic-notify-controller"
+#define CHARACTERISTIC_NOTIFY_NOTIFICATION @"characteristic-notify-notification"
+#define CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX @"characteristic-notify-ble-bridge-tx"
+#define CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID @"characteristic-notify-ble-bridge-device-id"
 
 
 #ifndef __IPHONE_5_0

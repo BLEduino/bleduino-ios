@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DistanceAlertController.h"
+#import "RSSIAlertController.h"
 #import "BDLeDiscoveryManager.h"
 
 @class ProximityViewController;
@@ -20,16 +21,17 @@
 UITableViewDelegate,
 UITableViewDataSource,
 UIAlertViewDelegate,
+UIActionSheetDelegate,
 DistanceAlertControllerDelegate,
+RSSIAlertControllerDelegate,
 LeDiscoveryManagerDelegate
 >
 @property (weak) id <ProximityViewControllerDelegate> delegate;
 @property IBOutlet UITableView *tableView;
 
 //Distance
-@property IBOutlet UILabel *distanceIndicator;
+@property IBOutlet UIImageView *distanceIndicator;
 @property NSString *distanceFormat;
-@property BOOL distanceFormatIsFeet;
 
 //Alerts
 @property NSInteger indexOfLastAlertUpdated;
@@ -39,6 +41,7 @@ LeDiscoveryManagerDelegate
 @property IBOutlet UIActivityIndicatorView *calibrationIndicator;
 @property IBOutlet UILabel *calibrationLabel;
 
+- (IBAction)addAlert:(id)sender;
 - (IBAction)calibrate:(id)sender;
 - (IBAction)dismissModule:(id)sender;
 @end

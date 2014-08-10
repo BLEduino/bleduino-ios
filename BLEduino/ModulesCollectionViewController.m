@@ -10,7 +10,7 @@
 #import "ModulesCollectionViewController.h"
 #import "ModuleCollectionViewCell.h"
 #import "RESideMenu.h"
-#import "DistanceAlert.h"
+#import "ProximityAlert.h"
 #import "BDLeDiscoveryManager.h"
 #import "ProximityViewController.h"
 
@@ -60,8 +60,11 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+//    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+//    UIColor *lightBlue = [UIColor colorWithRed:19/255.0 green:147/255.0 blue:191/255.0 alpha:1.0];
 
+    UIColor *lightBlue = [UIColor colorWithRed:22/255.0 green:170/255.0 blue:221/255.0 alpha:1.0];
+    
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -70,8 +73,6 @@
     //Manager Delegate
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
-    
-
     
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -109,7 +110,7 @@
     
     for (int i=0; i<proximityMessages.count; i++)
     {
-        DistanceAlert *alert = [[DistanceAlert alloc] init];
+        ProximityAlert *alert = [[ProximityAlert alloc] init];
         alert.message = (NSString *)[proximityMessages objectAtIndex:i];
         alert.distance = (NSInteger)[proximityDistances objectAtIndex:i];
         alert.bleduinoIsCloser = (BOOL)[proximityCloser objectAtIndex:i];
@@ -153,7 +154,7 @@
     NSInteger distanceOffset = (distanceFormatIsFeet)?6:2;
     
     //Check alerts.
-    for(DistanceAlert *alert in self.distanceAlerts)
+    for(ProximityAlert *alert in self.distanceAlerts)
     {
         if(currentDistance >= (alert.distance - distanceOffset) && currentDistance <= (alert.distance + distanceOffset))
         {
@@ -163,7 +164,7 @@
     }
 }
 
-- (void)pushDistanceAlertLocalNotification:(DistanceAlert *)alert
+- (void)pushDistanceAlertLocalNotification:(ProximityAlert *)alert
 {
     //Push local notification.
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -311,28 +312,28 @@
             cellIdentifier = @"LEDModuleCell";
             break;
         case 6:
-            //Notifications Module
-            cellIdentifier = @"NotificationsModuleCell";
-            break;
-        case 7:
-            //BleBridge Module
-            cellIdentifier = @"BleBridgeModuleCell";
-            break;
-        case 8:
             //Firmata Module
             cellIdentifier = @"FirmataModuleCell";
             break;
-        case 9:
+        case 7:
             //Sequencer Module
             cellIdentifier = @"SequencerModuleCell";
             break;
-        case 10:
+        case 8:
             //Proximity Module
             cellIdentifier = @"ProximityModuleCell";
             break;
-        case 11:
+        case 9:
             //Console Module
             cellIdentifier = @"ConsoleModuleCell";
+            break;
+        case 10:
+            //Notifications Module
+            cellIdentifier = @"NotificationsModuleCell";
+            break;
+        case 11:
+            //BleBridge Module
+            cellIdentifier = @"BleBridgeModuleCell";
             break;
     }
     
@@ -340,13 +341,18 @@
     [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                               forIndexPath:indexPath];
     
-    //Setup dismiss button.
-    UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    dismissButton.frame = CGRectMake(34, 20, 14, 28);
-    [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
-    [dismissButton addTarget:self
-                      action:@selector(dismissModule)
-            forControlEvents:UIControlEventTouchUpInside];
+    //Set images for notifications and ble-bridge.
+    if([cellIdentifier isEqualToString:@"NotificationsModuleCell"])
+    {
+        NSString *imageName = (self.notificationService.isListening)?@"notifications-s.png":@"notifications.png";
+        [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    }
+    else if ([cellIdentifier isEqualToString:@"BleBridgeModuleCell"])
+    {
+        NSString *imageName = (self.notificationService.isListening)?@"bridge-s.png":@"bridge.png";
+        [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    }
+    
     return moduleCell;
 }
 
@@ -386,6 +392,22 @@
             break;
             
         case 6:
+            [self performSegueWithIdentifier:@"FirmataModuleSegue" sender:self];
+            break;
+            
+        case 7:
+            [self performSegueWithIdentifier:@"SequencerModuleSegue" sender:self];
+            break;
+            
+        case 8:
+            [self performSegueWithIdentifier:@"ProximityModuleSegue" sender:self];
+            break;
+            
+        case 9:
+            [self performSegueWithIdentifier:@"ConsoleModuleSegue" sender:self];
+            break;
+            
+        case 10:
             //Toggle notification service.
             if(self.notificationService.isListening)
             {
@@ -397,6 +419,7 @@
             }
             else
             {
+                [self presentSetupViewWithMessage:@"Starting listener..."];
                 [self.notificationService startListeningWithDelegate:self];
                 
                 //Update icon.
@@ -405,7 +428,7 @@
             }
             break;
             
-        case 7:
+        case 11:
             //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
@@ -417,6 +440,7 @@
             }
             else
             {
+                [self presentSetupViewWithMessage:@"Opening BLE bridge..."];
                 [self.bleBridge openBridgeForDelegate:self];
                 
                 //Update icon.
@@ -424,25 +448,62 @@
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s.png"] forState:UIControlStateNormal];
             }
             break;
-            
-        case 8:
-            [self performSegueWithIdentifier:@"FirmataModuleSegue" sender:self];
-            break;
-            
-        case 9:
-            [self performSegueWithIdentifier:@"SequencerModuleSegue" sender:self];
-            break;
-            
-        case 10:
-            [self performSegueWithIdentifier:@"ProximityModuleSegue" sender:self];
-            break;
-            
-        case 11:
-            [self performSegueWithIdentifier:@"ConsoleModuleSegue" sender:self];
-            break;
 
     }
 }
+
+#pragma mark -
+#pragma mark - Setup views for Notifications/BLE-Bridge.
+/****************************************************************************/
+/*               Setup Views for Notifications/BLE-Bridge                   */
+/****************************************************************************/
+- (void)presentSetupViewWithMessage:(NSString *)message
+{
+    UIColor *textColor = [UIColor darkGrayColor];
+    UIColor *backgroundColor = [UIColor whiteColor];
+    
+    //Main view
+    UIView *interrogationView = [[UIView alloc] initWithFrame:CGRectMake(60, 150, 200, 100)];
+    interrogationView.backgroundColor = backgroundColor;
+    
+    //Indicator
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]
+                                         initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activity.color = textColor;
+    activity.frame = CGRectMake(80, 25, 35, 35);
+    [activity startAnimating];
+    
+    //Label
+    UILabel *indicatorText = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, 200, 20)];
+    [indicatorText setTextAlignment:NSTextAlignmentCenter];
+    [indicatorText setFont:[UIFont systemFontOfSize:15]];
+    [indicatorText setTextColor:textColor];
+    indicatorText.text = message;
+    
+    //Interrogation View Background
+    UIView *theView = [self.collectionView superview];
+    
+    CGRect tableViewFrame = CGRectMake(0, 0,
+                                       theView.frame.size.width,
+                                       theView.frame.size.height);
+    UIView *interrogationBackgroundView = [[UIView alloc] initWithFrame:tableViewFrame];
+    interrogationBackgroundView.backgroundColor = [UIColor colorWithRed:70/255.0 green:70/255.0 blue:70/255.0 alpha:0.8];
+    interrogationBackgroundView.tag = 1320;
+    
+    //Complete view
+    [interrogationView addSubview:activity];
+    [interrogationView addSubview:indicatorText];
+    [interrogationBackgroundView addSubview:interrogationView];
+    [theView addSubview:interrogationBackgroundView];
+    
+}
+
+- (void)removeSetupView
+{
+    UIView *theView = [self.collectionView superview];
+    [[theView viewWithTag:1320] removeFromSuperview];
+}
+
 
 #pragma mark -
 #pragma mark - Collection Cell Details - Flow Layout Delegate
@@ -612,7 +673,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 }
 
 
-
 #pragma mark -
 #pragma mark - LeManager Delegate
 /****************************************************************************/
@@ -659,18 +719,14 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 - (void)didFailToOpenBridge:(BDBleBridgeService *)service
 {
+    //Remove setup view.
+    [self removeSetupView];
+    
     //Something went wrong, close the bridge.
     [self.bleBridge closeBridgeForDelegate:self];
     
-    //BLE-Bridge index path.
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:1];
-    
-    //Update icon.
-    ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge.png"] forState:UIControlStateNormal];
-    
     //Present notification.
-    NSString *message = [NSString stringWithFormat:@"The BLEduino app was unable to open a ble-bridge."];
+    NSString *message = @"The BLEduino app was unable to open a ble-bridge.";
     
     //Push local notification.
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -689,11 +745,62 @@ referenceSizeForFooterInSection:(NSInteger)section
     
     //Present notification.
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    
+    //Update image.
+    [self.collectionView reloadData];
 }
 
 - (void)didOpenBridge:(BDBleBridgeService *)service
 {
     NSLog(@"BLE-Bridge opened succesfully.");
+    //Remove setup view.
+    [self performSelector:@selector(removeSetupView) withObject:nil afterDelay:1.0];
 }
+
+#pragma mark -
+#pragma mark - Notification Delegate
+/****************************************************************************/
+/*                           Notification Delegate                          */
+/****************************************************************************/
+- (void)didFailToStartListening:(BDNotificationService *)service
+{
+    //Remove setup view.
+    [self removeSetupView];
+    
+    //Something went wrong, close the bridge.
+    [self.notificationService stopListeningWithDelegate:self];
+    
+    //Present notification.
+    NSString *message = @"The BLEduino app was unable to start listening for notifications.";
+    
+    //Push local notification.
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = message;
+    notification.alertAction = nil;
+    
+    //Is application on the foreground?
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+    {
+        //Application is on the foreground, store notification attributes to present alert view.
+        notification.userInfo = @{@"title"  : @"BLEduino",
+                                  @"message": message,
+                                  @"Notification": @"Notification"};
+    }
+    
+    //Present notification.
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    
+    //Update image.
+    [self.collectionView reloadData];
+}
+
+- (void)didStatedListening:(BDNotificationService *)service
+{
+    NSLog(@"Notification is listening.");
+    //Remove setup view.
+    [self performSelector:@selector(removeSetupView) withObject:nil afterDelay:1.0];
+}
+
 
 @end

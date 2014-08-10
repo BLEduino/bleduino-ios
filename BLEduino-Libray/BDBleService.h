@@ -14,11 +14,9 @@
 /****************************************************************************/
 extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B-0032C0D16A2D"
 
-//FIXME: VERIFY AGAIN WRITING TO MULTIPLE BLE DEVICES.
 @interface BDBleService : NSObject
 {
     @protected CBPeripheral *_servicePeripheral;
-    @protected NSDate *_lastWriteTimestamp;
 }
 
 @property (readonly) CBPeripheral *peripheral;
@@ -79,14 +77,22 @@ extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B
  *  @method                 peripheral:didUpdateValueForCharacteristic:
  *
  *  @discussion             CBPeripherals can have but one delegate (even after copying them). Thus,
- *                          this method serves as a gateway to forward updates been sent from BLEduinos
- *                          to all services listening for updates.
+ *                          this method serves as a gateway to forward updates/acks been sent from BLEduinos
+ *                          to all services listening for updates/acks.
  *
  *  @param bleduino         Peripheral sending the update.
- *  @param characteristic   The characteristic that whose value was updated.
- *
+ *  @param characteristic   The characteristic whose value was updated.
+ *  @param error            Error message if any.
  */
-+(void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic;
++ (void)peripheral:(CBPeripheral *)bleduino didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error;
 
+
++ (void)peripheral:(CBPeripheral *)bleduino didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error;
+
+
++ (void)peripheral:(CBPeripheral *)bleduino didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error;
 
 @end

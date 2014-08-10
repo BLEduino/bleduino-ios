@@ -669,13 +669,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="80" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVv-9N-bSA">
-                                        <rect key="frame" x="20" y="20" width="280" height="187"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="strength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xn1-b0-OIP">
+                                        <rect key="frame" x="34" y="34" width="252" height="152"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="120"/>
-                                        <color key="textColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jiT-uH-U9z">
                                         <rect key="frame" x="142" y="95" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -696,17 +693,17 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xTO-sY-hhr">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="298"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="194"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProximityAlertCell" textLabel="Fv5-vC-AxG" detailTextLabel="08Z-8K-BMX" style="IBUITableViewCellStyleValue1" id="yFo-du-C4D">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProximityAlertCell" textLabel="Fv5-vC-AxG" detailTextLabel="08Z-8K-BMX" style="IBUITableViewCellStyleValue1" id="yFo-du-C4D">
                                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yFo-du-C4D" id="WMN-nb-Xvb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Yo! Don't forget your keys" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fv5-vC-AxG">
@@ -715,8 +712,8 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="45 ft" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="08Z-8K-BMX">
-                                                            <rect key="frame" x="250" y="11" width="35" height="21"/>
+                                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="-85 dBm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="08Z-8K-BMX">
+                                                            <rect key="frame" x="238" y="11" width="67" height="21"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -725,9 +722,6 @@
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <connections>
-                                                    <segue destination="aF7-F5-Kr9" kind="modal" identifier="EditAlertSegue" id="yxo-pn-KaF"/>
-                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -744,7 +738,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="gy5-gA-yeU"/>
                         <barButtonItem title="Calibrate" id="Osl-5O-nf5">
                             <connections>
-                                <action selector="calibrate:" destination="ubE-aM-oo4" id="zg1-Za-Gez"/>
+                                <action selector="calibrate:" destination="ubE-aM-oo4" id="ByP-eu-pmA"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -752,33 +746,36 @@
                         <barButtonItem key="leftBarButtonItem" image="arrow-left.png" id="6DN-Ax-tOy">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="dismissModule:" destination="ubE-aM-oo4" id="SuN-Qd-FW2"/>
+                                <action selector="dismissModule:" destination="ubE-aM-oo4" id="AmQ-mb-bCW"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="lON-sv-xY6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="addDistanceAlert:" destination="ubE-aM-oo4" id="4Fs-Ie-JqR"/>
-                                <segue destination="aF7-F5-Kr9" kind="modal" identifier="AddAlertSegue" id="nS6-Qi-7pC"/>
+                                <action selector="addAlert:" destination="ubE-aM-oo4" id="w82-tm-KxF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="calibrationIndicator" destination="jiT-uH-U9z" id="Mpl-fN-gtL"/>
-                        <outlet property="calibrationLabel" destination="biT-ZS-c9a" id="QGs-bi-BHN"/>
-                        <outlet property="distanceIndicator" destination="rVv-9N-bSA" id="ky7-Kb-pSC"/>
-                        <outlet property="tableView" destination="xTO-sY-hhr" id="DFM-ND-rek"/>
+                        <outlet property="calibrationIndicator" destination="jiT-uH-U9z" id="kt8-sE-kE8"/>
+                        <outlet property="calibrationLabel" destination="biT-ZS-c9a" id="Cdp-TY-xnE"/>
+                        <outlet property="distanceIndicator" destination="xn1-b0-OIP" id="Phb-sd-4dE"/>
+                        <outlet property="tableView" destination="xTO-sY-hhr" id="EMV-qe-PLe"/>
+                        <segue destination="aF7-F5-Kr9" kind="modal" identifier="RSSIAlertSegue" id="z1J-aC-175"/>
+                        <segue destination="ynf-yg-ZYt" kind="modal" identifier="DistanceAlertSegue" id="BUG-3u-vEV"/>
+                        <segue destination="aF7-F5-Kr9" kind="modal" identifier="EditRSSIAlertSegue" id="4cQ-4e-dS3"/>
+                        <segue destination="ynf-yg-ZYt" kind="modal" identifier="EditDistanceAlertSegue" id="wdl-8I-7Cp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJ0-cc-gEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3548" y="-2187"/>
         </scene>
-        <!--Distance Alert Controller - Distance Alert-->
+        <!--Alert Controller - RSSI Alert-->
         <scene sceneID="5rr-lT-ZJK">
             <objects>
-                <tableViewController id="Ex0-2Q-5gh" customClass="DistanceAlertController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="viE-08-KGM">
+                <tableViewController id="Ex0-2Q-5gh" customClass="RSSIAlertController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="viE-08-KGM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -803,7 +800,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Distance" footerTitle="This is the distance at which this alert will be triggered." id="fks-d4-cP8">
+                            <tableViewSection headerTitle="RSSI" footerTitle="This is the distance at which this alert will be triggered." id="fks-d4-cP8">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="N99-FP-9oX">
                                         <rect key="frame" x="0.0" y="271" width="320" height="44"/>
@@ -812,12 +809,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="75" minValue="0.0" maxValue="300" translatesAutoresizingMaskIntoConstraints="NO" id="4no-71-Jbe">
-                                                    <rect key="frame" x="18" y="7" width="226" height="31"/>
+                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-75" minValue="-100" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="4no-71-Jbe">
+                                                    <rect key="frame" x="18" y="7" width="194" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="75 ft" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-nI-fpF">
-                                                    <rect key="frame" x="250" y="11" width="52" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-75dBm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-nI-fpF">
+                                                    <rect key="frame" x="231" y="11" width="71" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -879,29 +876,155 @@
                             <outlet property="delegate" destination="Ex0-2Q-5gh" id="S2S-8g-89h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Distance Alert" id="3tC-Fq-26u">
+                    <navigationItem key="navigationItem" title="RSSI Alert" id="3tC-Fq-26u">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yca-T3-8l4">
                             <connections>
-                                <action selector="dismissModule:" destination="Ex0-2Q-5gh" id="Gzu-vp-gfx"/>
+                                <action selector="dismissModule:" destination="Ex0-2Q-5gh" id="Rsr-TU-Z4B"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="ngM-vq-l8P">
                             <connections>
-                                <action selector="updateDistanceAlert:" destination="Ex0-2Q-5gh" id="Hx8-E0-Ogo"/>
+                                <action selector="updateRSSIAlert:" destination="Ex0-2Q-5gh" id="lJl-0X-FO8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="alertWhenCloser" destination="6NS-Hz-HcN" id="b1w-Sa-edr"/>
-                        <outlet property="alertWhenFarther" destination="DU2-fO-2Wr" id="WT6-ne-Whb"/>
-                        <outlet property="distanceIndicator" destination="gOR-nI-fpF" id="pRM-jV-iNP"/>
-                        <outlet property="distanceSlider" destination="4no-71-Jbe" id="3Us-x6-5oF"/>
-                        <outlet property="messageLabel" destination="K24-97-iDq" id="Qnf-Wp-koi"/>
+                        <outlet property="alertWhenCloser" destination="6NS-Hz-HcN" id="SYU-Or-ITf"/>
+                        <outlet property="alertWhenFarther" destination="DU2-fO-2Wr" id="Gfg-7T-zAf"/>
+                        <outlet property="message" destination="K24-97-iDq" id="bNm-pE-LQr"/>
+                        <outlet property="rssiIndicator" destination="gOR-nI-fpF" id="yAW-C2-QAW"/>
+                        <outlet property="rssiSlider" destination="4no-71-Jbe" id="L3J-s2-GIZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jmw-1O-LSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4642" y="-2187"/>
+            <point key="canvasLocation" x="4789" y="-2187"/>
+        </scene>
+        <!--Distance Alert Controller - Distance Alert-->
+        <scene sceneID="km3-b0-PNW">
+            <objects>
+                <tableViewController id="ThU-BM-GVs" customClass="DistanceAlertController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="LVo-YO-pVA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="MESSAGE" footerTitle="This message will be shown via an alert when the iOS device reaches the distance this alert is set for." id="cmd-rv-O2s">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zwJ-gL-du7">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zwJ-gL-du7" id="Xhf-3L-V4w">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. Yo! Don't forget your keys" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zod-cr-o94">
+                                                    <rect key="frame" x="20" y="7" width="280" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Distance" id="8VL-Nt-N5F">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="51" id="eXT-mg-UuS">
+                                        <rect key="frame" x="0.0" y="271" width="320" height="51"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXT-mg-UuS" id="wVD-e7-ZMK">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="0w0-5c-p2q">
+                                                    <rect key="frame" x="20" y="11" width="280" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <segments>
+                                                        <segment title="Immediate"/>
+                                                        <segment title="Near"/>
+                                                        <segment title="Far"/>
+                                                    </segments>
+                                                </segmentedControl>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="8dj-UL-LKc">
+                                <string key="footerTitle">Alerts can be triggered when the BLEduino is about to be closer than the distance specified, or when the BLEduino is about to be farther away than the distance specified, or both.</string>
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="skq-cS-5CY">
+                                        <rect key="frame" x="0.0" y="342" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="skq-cS-5CY" id="eE3-ZG-fiZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZYZ-Fo-xnk">
+                                                    <rect key="frame" x="251" y="6" width="51" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="When BLEduino is farther" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OB6-Dp-in8">
+                                                    <rect key="frame" x="20" y="11" width="196" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="219-0j-imm">
+                                        <rect key="frame" x="0.0" y="386" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="219-0j-imm" id="hPb-Ct-sau">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eUX-F5-glj">
+                                                    <rect key="frame" x="251" y="6" width="51" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="When BLEduino is closer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSc-tf-MNc">
+                                                    <rect key="frame" x="20" y="11" width="192" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ThU-BM-GVs" id="fgl-mn-3MH"/>
+                            <outlet property="delegate" destination="ThU-BM-GVs" id="Iqo-Ql-dK7"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Distance Alert" id="LsA-mq-98i">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="W87-aQ-niX">
+                            <connections>
+                                <action selector="dismissModule:" destination="ThU-BM-GVs" id="Z0N-MW-HKd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="2lV-iQ-fH7">
+                            <connections>
+                                <action selector="updateDistanceAlert:" destination="ThU-BM-GVs" id="rkR-Nc-sPF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="alertWhenCloser" destination="eUX-F5-glj" id="SCW-2j-hL4"/>
+                        <outlet property="alertWhenFarther" destination="ZYZ-Fo-xnk" id="9Vm-jZ-6pG"/>
+                        <outlet property="distanceControl" destination="0w0-5c-p2q" id="UfJ-Oo-qb8"/>
+                        <outlet property="message" destination="zod-cr-o94" id="jCL-cr-otL"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yTq-gC-VSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4789" y="-2961"/>
         </scene>
         <!--Orientation Navigation Controller-->
         <scene sceneID="7sz-Z5-Tam">
@@ -2371,6 +2494,7 @@
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="kZH-b5-nUF">
                         <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </toolbar>
                     <connections>
                         <segue destination="ubE-aM-oo4" kind="relationship" relationship="rootViewController" id="M8u-5l-wAc"/>
@@ -2396,7 +2520,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kwc-p2-H1G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4116" y="-2187"/>
+            <point key="canvasLocation" x="4338" y="-2187"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="L08-DM-264">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ynf-yg-ZYt" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EKh-Ao-NHW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ThU-BM-GVs" kind="relationship" relationship="rootViewController" id="CEu-D5-YOJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XTJ-L0-ZC0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4338" y="-2961"/>
         </scene>
     </scenes>
     <resources>
@@ -2421,6 +2563,7 @@
         <image name="notifications.png" width="120" height="112"/>
         <image name="power.png" width="120" height="94"/>
         <image name="red-a.png" width="250" height="250"/>
+        <image name="strength-0.png" width="560" height="380"/>
         <image name="yellow-b.png" width="250" height="250"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -2429,6 +2572,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yxo-pn-KaF"/>
+        <segue reference="4cQ-4e-dS3"/>
+        <segue reference="BUG-3u-vEV"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,10 +10,18 @@
 		9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9713717919805F8C00E1B53D /* ConsoleCell.m */; };
 		972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA450197DBB2600CEEC18 /* PSPDFTextView.m */; };
 		972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */; };
+		97313CE819968DE20000431D /* strength-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE219968DE20000431D /* strength-0.png */; };
+		97313CE919968DE20000431D /* strength-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE319968DE20000431D /* strength-1.png */; };
+		97313CEA19968DE20000431D /* strength-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE419968DE20000431D /* strength-2.png */; };
+		97313CEB19968DE20000431D /* strength-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE519968DE20000431D /* strength-3.png */; };
+		97313CEC19968DE20000431D /* strength-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE619968DE20000431D /* strength-4.png */; };
+		97313CED19968DE20000431D /* strength-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 97313CE719968DE20000431D /* strength-5.png */; };
+		97313CF01996E58D0000431D /* RSSIAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97313CEF1996E58D0000431D /* RSSIAlertController.m */; };
+		973BD3C71994805700200D83 /* BDWrite.m in Sources */ = {isa = PBXBuildFile; fileRef = 973BD3C61994805700200D83 /* BDWrite.m */; };
 		974FA32F1990888100951E12 /* ConsoleNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */; };
 		974FA3321992B31A00951E12 /* BDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA3311992B31A00951E12 /* BDQueue.m */; };
 		9779C5B21979819300302C50 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B11979819300302C50 /* ProximityViewController.m */; };
-		9779C5B51979871800302C50 /* DistanceAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B41979871800302C50 /* DistanceAlert.m */; };
+		9779C5B51979871800302C50 /* ProximityAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B41979871800302C50 /* ProximityAlert.m */; };
 		9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B7197995BF00302C50 /* DistanceAlertController.m */; };
 		97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB51401976C7D100290859 /* TimeDelayTableViewCell.m */; };
 		97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB5143197765B700290859 /* ConsoleTableViewController.m */; };
@@ -118,7 +126,6 @@
 		B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4136185F9425006A91C5 /* FirmataAnalogCell.m */; };
 		B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */; };
 		B7DD413D185F9465006A91C5 /* FirmataDigitalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */; };
-		B7EB1CED1830972A0060441E /* BDPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEC1830972A0060441E /* BDPeripheral.m */; };
 		B7EB1CF01830D6010060441E /* BDNotificationAttributesCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */; };
 		B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */; };
 		B7EDFDFB1835A788002FECA0 /* PowerSwitchButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDFA1835A788002FECA0 /* PowerSwitchButtonView.m */; };
@@ -147,14 +154,24 @@
 		972DA450197DBB2600CEEC18 /* PSPDFTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPDFTextView.m; sourceTree = "<group>"; };
 		972DA452197ECC2D00CEEC18 /* ConsoleEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleEntries.h; sourceTree = "<group>"; };
 		972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleEntries.m; sourceTree = "<group>"; };
+		97313CE219968DE20000431D /* strength-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-0.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-0.png"; sourceTree = "<group>"; };
+		97313CE319968DE20000431D /* strength-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-1.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-1.png"; sourceTree = "<group>"; };
+		97313CE419968DE20000431D /* strength-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-2.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-2.png"; sourceTree = "<group>"; };
+		97313CE519968DE20000431D /* strength-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-3.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-3.png"; sourceTree = "<group>"; };
+		97313CE619968DE20000431D /* strength-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-4.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-4.png"; sourceTree = "<group>"; };
+		97313CE719968DE20000431D /* strength-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "strength-5.png"; path = "../../../../Downloads/rehelpforproximitymodule/strength-5.png"; sourceTree = "<group>"; };
+		97313CEE1996E58D0000431D /* RSSIAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSIAlertController.h; sourceTree = "<group>"; };
+		97313CEF1996E58D0000431D /* RSSIAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSIAlertController.m; sourceTree = "<group>"; };
+		973BD3C51994805700200D83 /* BDWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWrite.h; sourceTree = "<group>"; };
+		973BD3C61994805700200D83 /* BDWrite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDWrite.m; sourceTree = "<group>"; };
 		974FA32D1990888100951E12 /* ConsoleNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleNavigationViewController.h; sourceTree = "<group>"; };
 		974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleNavigationViewController.m; sourceTree = "<group>"; };
 		974FA3301992B31A00951E12 /* BDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDQueue.h; sourceTree = "<group>"; };
 		974FA3311992B31A00951E12 /* BDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDQueue.m; sourceTree = "<group>"; };
 		9779C5B01979819300302C50 /* ProximityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityViewController.h; sourceTree = "<group>"; };
 		9779C5B11979819300302C50 /* ProximityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityViewController.m; sourceTree = "<group>"; };
-		9779C5B31979871800302C50 /* DistanceAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlert.h; sourceTree = "<group>"; };
-		9779C5B41979871800302C50 /* DistanceAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceAlert.m; sourceTree = "<group>"; };
+		9779C5B31979871800302C50 /* ProximityAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityAlert.h; sourceTree = "<group>"; };
+		9779C5B41979871800302C50 /* ProximityAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAlert.m; sourceTree = "<group>"; };
 		9779C5B6197995BF00302C50 /* DistanceAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlertController.h; sourceTree = "<group>"; };
 		9779C5B7197995BF00302C50 /* DistanceAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceAlertController.m; sourceTree = "<group>"; };
 		97DB513F1976C7D100290859 /* TimeDelayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayTableViewCell.h; sourceTree = "<group>"; };
@@ -301,8 +318,6 @@
 		B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataPWMCell.m; sourceTree = "<group>"; };
 		B7DD413B185F9465006A91C5 /* FirmataDigitalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataDigitalCell.h; sourceTree = "<group>"; };
 		B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataDigitalCell.m; sourceTree = "<group>"; };
-		B7EB1CEB1830972A0060441E /* BDPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPeripheral.h; sourceTree = "<group>"; };
-		B7EB1CEC1830972A0060441E /* BDPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPeripheral.m; sourceTree = "<group>"; };
 		B7EB1CEE1830D6010060441E /* BDNotificationAttributesCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotificationAttributesCharacteristic.h; sourceTree = "<group>"; };
 		B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDNotificationAttributesCharacteristic.m; sourceTree = "<group>"; };
 		B7EDFDF61835A6FD002FECA0 /* PowerRelayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerRelayViewController.h; sourceTree = "<group>"; };
@@ -377,10 +392,12 @@
 			children = (
 				9779C5B01979819300302C50 /* ProximityViewController.h */,
 				9779C5B11979819300302C50 /* ProximityViewController.m */,
-				9779C5B31979871800302C50 /* DistanceAlert.h */,
-				9779C5B41979871800302C50 /* DistanceAlert.m */,
+				9779C5B31979871800302C50 /* ProximityAlert.h */,
+				9779C5B41979871800302C50 /* ProximityAlert.m */,
 				9779C5B6197995BF00302C50 /* DistanceAlertController.h */,
 				9779C5B7197995BF00302C50 /* DistanceAlertController.m */,
+				97313CEE1996E58D0000431D /* RSSIAlertController.h */,
+				97313CEF1996E58D0000431D /* RSSIAlertController.m */,
 			);
 			name = Proximity;
 			sourceTree = "<group>";
@@ -504,6 +521,12 @@
 		B7AE65ED1843074C007C45A3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				97313CE219968DE20000431D /* strength-0.png */,
+				97313CE319968DE20000431D /* strength-1.png */,
+				97313CE419968DE20000431D /* strength-2.png */,
+				97313CE519968DE20000431D /* strength-3.png */,
+				97313CE619968DE20000431D /* strength-4.png */,
+				97313CE719968DE20000431D /* strength-5.png */,
 				B70501FF194F5060004E820D /* add@2x.png */,
 				B7050200194F5060004E820D /* add.png */,
 				B7FF2AFC194F362D00D484B4 /* delay@2x.png */,
@@ -700,10 +723,10 @@
 				B7B3F82617FF5FAC00DCDAF5 /* Services */,
 				B75EC50717FA85EE000309FF /* BDLeDiscoveryManager.h */,
 				B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */,
-				B7EB1CEB1830972A0060441E /* BDPeripheral.h */,
-				B7EB1CEC1830972A0060441E /* BDPeripheral.m */,
 				974FA3301992B31A00951E12 /* BDQueue.h */,
 				974FA3311992B31A00951E12 /* BDQueue.m */,
+				973BD3C51994805700200D83 /* BDWrite.h */,
+				973BD3C61994805700200D83 /* BDWrite.m */,
 			);
 			name = "BLEduino-Library";
 			path = "BLEduino-Libray";
@@ -889,12 +912,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B79D7932183E904200CB68D8 /* arrow-right.png in Resources */,
+				97313CEB19968DE20000431D /* strength-3.png in Resources */,
 				B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */,
 				B79D7935183E904200CB68D8 /* arrow-up@2x.png in Resources */,
 				B7BE7521193E442600EE759E /* launch-small.png in Resources */,
 				B7AE65D81842BFC3007C45A3 /* led.png in Resources */,
 				B7AE65E61842C215007C45A3 /* bridge.png in Resources */,
 				B79D793C183E90D000CB68D8 /* joystick-bg.png in Resources */,
+				97313CEA19968DE20000431D /* strength-2.png in Resources */,
 				B79D793E183E90D000CB68D8 /* blue-x.png in Resources */,
 				B7AE65FC184307C7007C45A3 /* contact.png in Resources */,
 				B7D322631844839D008F53AE /* led-small@2x.png in Resources */,
@@ -919,6 +944,7 @@
 				B7050202194F5060004E820D /* add.png in Resources */,
 				B7BA0E2019479F2B000D81BC /* Default-568h@2x.png in Resources */,
 				B7FF2AFE194F362D00D484B4 /* delay@2x.png in Resources */,
+				97313CEC19968DE20000431D /* strength-4.png in Resources */,
 				B7AE65FB184307C7007C45A3 /* contact@2x.png in Resources */,
 				B79D7933183E904200CB68D8 /* arrow-right@2x.png in Resources */,
 				B7AE65E71842C215007C45A3 /* controller.png in Resources */,
@@ -932,7 +958,10 @@
 				B79D7930183E904200CB68D8 /* arrow-left.png in Resources */,
 				B7B73C0517F256B3008E6769 /* Main.storyboard in Resources */,
 				B7D322621844839D008F53AE /* led-small.png in Resources */,
+				97313CED19968DE20000431D /* strength-5.png in Resources */,
 				B7AE6601184307C7007C45A3 /* modules.png in Resources */,
+				97313CE919968DE20000431D /* strength-1.png in Resources */,
+				97313CE819968DE20000431D /* strength-0.png in Resources */,
 				B7AE660818430CA7007C45A3 /* menu.png in Resources */,
 				B7AE65EB1842CBB6007C45A3 /* bridge-s.png in Resources */,
 				B7AE65EC1842CBB6007C45A3 /* notifications-s.png in Resources */,
@@ -984,7 +1013,6 @@
 				B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */,
 				B73447C318305596006F76C2 /* BDButtonActionCharacteristic.m in Sources */,
 				B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */,
-				B7EB1CED1830972A0060441E /* BDPeripheral.m in Sources */,
 				B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */,
 				97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */,
 				B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */,
@@ -997,10 +1025,12 @@
 				B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */,
 				B79D7866183C60D400CB68D8 /* HorizontalJoystickControlView.m in Sources */,
 				B7D3227618456BEA008F53AE /* OBShapedButton.m in Sources */,
-				9779C5B51979871800302C50 /* DistanceAlert.m in Sources */,
+				9779C5B51979871800302C50 /* ProximityAlert.m in Sources */,
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */,
 				B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */,
+				973BD3C71994805700200D83 /* BDWrite.m in Sources */,
+				97313CF01996E58D0000431D /* RSSIAlertController.m in Sources */,
 				972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */,
 				B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */,
 				B7650774184264C300ACE0A2 /* SettingsNumberCell.m in Sources */,
@@ -1148,7 +1178,7 @@
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "300A7888-946F-4DD7-A717-38E8AED2D8B7";
+				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1165,7 +1195,7 @@
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "300A7888-946F-4DD7-A717-38E8AED2D8B7";
+				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};

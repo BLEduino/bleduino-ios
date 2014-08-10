@@ -9,6 +9,7 @@
 #import "PowerRelayViewController.h"
 #import "BDLeDiscoveryManager.h"
 #import "PowerNextStateView.h"
+#import "BDWrite.h"
 
 @interface PowerRelayViewController ()
 @property (strong) BDFirmataCommandCharacteristic *lastPowerSwitchCommand;
@@ -55,15 +56,6 @@
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
     
-    //Start on OFF.
-    [self startPowerRelaySwitchViewWithStateOn:NO];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    //Start on OFF.
-    [self startPowerRelaySwitchViewWithStateOn:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,8 +132,10 @@
     {
         BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:powerSwitchCommand];
+        
+//        [BDWrite writeData:powerSwitchCommand toChannel:Firmata toDevice:bleduino delegate:self];
     }
-
+    
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",
           (long)_lastPowerSwitchCommand.pinValue,
           (long)_lastPowerSwitchCommand.pinNumber,

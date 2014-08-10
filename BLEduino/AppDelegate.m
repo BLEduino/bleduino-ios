@@ -17,6 +17,7 @@
 {
     //Launch LeDiscovery manager.
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    leManager.isReconnecting = NO;
         
     //Configure settings.
     //Is this the first launch ever of this application?
@@ -26,7 +27,7 @@
     //Global
     if([defaults doubleForKey:WRITE_TIME_CAP] == 0)
     {
-        double timeCap = 1000.0;
+        double timeCap = 20.0;
         [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
     }
     
@@ -159,7 +160,7 @@
     NSString *disconnectNotification = [notification.userInfo objectForKey:@"disconnect"];
     NSString *proximityNotification = [notification.userInfo objectForKey:@"ProximityModule"];
     NSString *bleBridgeNotification = [notification.userInfo objectForKey:@"BleBridge"];
-    
+    NSString *notifications = [notification.userInfo objectForKey:@"Notification"];
 
     if(serviceUUIDString)
     {
@@ -193,7 +194,7 @@
         
         [notificationAlert show];
     }
-    else if (proximityNotification || bleBridgeNotification)
+    else if (proximityNotification || bleBridgeNotification || notifications)
     {
         NSString *message = [notification.userInfo objectForKey:@"message"];
         NSString *title   = [notification.userInfo objectForKey:@"title"];

@@ -40,7 +40,7 @@
 @interface BDLeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (weak) id <LeDiscoveryManagerDelegate> delegate;
 @property BDQueue *bleCommands;
-
+@property BOOL isReconnecting; //Enable re-connect to bleduinos when disconnected unexpectedly. 
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/

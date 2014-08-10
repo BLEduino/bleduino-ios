@@ -8,7 +8,6 @@
 
 #import "BDNotificationService.h"
 #import "BDLeDiscoveryManager.h"
-#import "BDPeripheral.h"
 
 #pragma mark -
 #pragma mark Notification Service UUIDs
@@ -48,6 +47,14 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
         
         self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
         self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
+        
+        if(aPeripheral)
+        {
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_NOTIFICATION object:nil];
+            [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_NOTIFICATION object:nil];
+            [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_NOTIFICATION object:nil];
+        }
     }
     
     return self;
@@ -84,21 +91,32 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     //Start listening only if there is not another notification (service) already listening.
     if(!self.isListening)
     {
+        self.delegate = aController;
         self.isListening = YES; //Notifications started listening.
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
         
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        if(leManager.connectedBleduinos.count > 0)
         {
-            BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
-                                                                                           delegate:aController];
+            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+            {
+                BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
+                                                                                               delegate:aController];
+                
+                [notification subscribeToStartReceivingNotifications];
+                notification.isListening = YES;
+                [self.notifications addObject:notification];
+            }
             
-            [notification subscribeToStartReceivingNotifications];
-            notification.isListening = YES;
-            [self.notifications addObject:notification];
+            NSLog(@"Notifications: Started listening.");
+            [self.delegate didStatedListening:self];
         }
-        
-        NSLog(@"Notifications: Startted listening.");
+        else
+        {
+            NSLog(@"Notifications: Unable to start listening.");
+            [self.delegate didFailToStartListening:self];
+        }
+
     }
 }
 
@@ -179,6 +197,97 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        self.lastNotification = self.lastSentNotification;
+        if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
+        {
+            [self.delegate notificationService:self
+                        didReceiveNotification:self.lastNotification
+                                         error:error];
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
+        
+        if(self.isListening)
+        {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.alertBody = self.lastNotification.message;
+            notification.alertAction = nil;
+            
+            //Is application on the foreground?
+            if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+            {
+                //Application is on the foreground, store notification attributes to present alert view.
+                notification.userInfo = @{@"message": self.lastNotification.message,
+                                          @"service": kNotificationAttributesCharacteristicUUIDString};
+            }
+            
+            //Present notification.
+            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
+            {
+                [self.delegate notificationService:self
+                            didReceiveNotification:self.lastNotification
+                                             error:error];
+            }
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
+    {
+        if(characteristic.isNotifying)
+        {
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingNotificationsFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingNotificationsFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopRecivingNotificationsFor:self error:error];
+            }
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+    }
+}
+
+#pragma mark -
+#pragma mark - Peripheral Delegate Gateways
+/****************************************************************************/
+/*				       Peripheral Delegate Gateways                         */
+/****************************************************************************/
+- (void)didWriteValue:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    NSError *error = [payload objectForKey:@"Error"];
+    
     self.lastNotification = self.lastSentNotification;
     if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
     {
@@ -186,12 +295,17 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
                     didReceiveNotification:self.lastNotification
                                      error:error];
     }
+
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+- (void)didUpdateValue:(NSNotification *)notification
 {
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
     self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
-
+    
     if(self.isListening)
     {
         UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -206,7 +320,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
             notification.userInfo = @{@"message": self.lastNotification.message,
                                       @"service": kNotificationAttributesCharacteristicUUIDString};
         }
-    
+        
         //Present notification.
         [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
     }
@@ -221,8 +335,12 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+- (void)didNotifyUpdate:(NSNotification *)notification
 {
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
     if(characteristic.isNotifying)
     {
         if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
