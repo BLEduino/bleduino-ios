@@ -23,18 +23,21 @@
         [buttonActionData getBytes:buttonIDByte range:buttonIDRange];
         NSData *buttonIDData = [[NSData alloc] initWithBytes:buttonIDByte length:1];
         _buttonID = *(int*)([buttonIDData bytes]);
+        free(buttonIDByte);
         
         Byte *buttonStatusByte = (Byte*)malloc(1);
         NSRange buttonStatusRange = NSMakeRange(1, 1);
         [buttonActionData getBytes:buttonStatusByte range:buttonStatusRange];
         NSData *buttonStatusData = [[NSData alloc] initWithBytes:buttonStatusByte length:1];
         _buttonStatus = *(int*)([buttonStatusData bytes]);
+        free(buttonStatusByte);
         
         Byte *buttonValueByte = (Byte*)malloc(1);
         NSRange buttonValueRange = NSMakeRange(2, 1);
         [buttonActionData getBytes:buttonValueByte range:buttonValueRange];
         NSData *buttonValueData = [[NSData alloc] initWithBytes:buttonValueByte length:1];
         _buttonValue = *(int*)([buttonValueData bytes]);
+        free(buttonValueByte);
     }
 
     return self;

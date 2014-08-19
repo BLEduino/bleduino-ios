@@ -257,47 +257,56 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if(!self.longTransmission)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        if(self.textTransmission)
+        if(!self.longTransmission)
         {
-            self.textTransmission = NO;
-            self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
-        }
-        else
-        {
-            self.dataSent = characteristic.value;
-        }
-        
-        if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
-        {
-            [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
+            if(self.textTransmission)
+            {
+                self.textTransmission = NO;
+                self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
+            }
+            else
+            {
+                self.dataSent = characteristic.value;
+            }
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
+            {
+                [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
+            }
         }
     }
+
 }
 
 - (void)didUpdateValue:(NSNotification *)notification
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if(!self.longTransmission)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        if(self.textSubscription)
+        if(!self.longTransmission)
         {
-            self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
-        }
-        else
-        {
-            self.dataReceived = characteristic.value;
-        }
-        
-        if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
-        {
-            [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            if(self.textSubscription)
+            {
+                self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
+            }
+            else
+            {
+                self.dataReceived = characteristic.value;
+            }
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
+            {
+                [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            }
         }
     }
 }
@@ -306,40 +315,44 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if(characteristic.isNotifying)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        if(self.textSubscription)
+        if(characteristic.isNotifying)
         {
-            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveMessagesFor:error:)])
+            if(self.textSubscription)
             {
-                [self.delegate didSubscribeToReceiveMessagesFor:self error:error];
+                if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveMessagesFor:error:)])
+                {
+                    [self.delegate didSubscribeToReceiveMessagesFor:self error:error];
+                }
+            }
+            else
+            {
+                if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
+                {
+                    [self.delegate didSubscribeToReceiveDataFor:self error:error];
+                }
             }
         }
         else
         {
-            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
+            if(self.textSubscription)
             {
-                [self.delegate didSubscribeToReceiveDataFor:self error:error];
+                self.textSubscription = NO;
+                if([self.delegate respondsToSelector:@selector(didUnsubscribeToReceiveMessagesFor:error:)])
+                {
+                    [self.delegate didUnsubscribeToReceiveMessagesFor:self error:error];
+                }
             }
-        }
-    }
-    else
-    {
-        if(self.textSubscription)
-        {
-            self.textSubscription = NO;
-            if([self.delegate respondsToSelector:@selector(didUnsubscribeToReceiveMessagesFor:error:)])
+            else
             {
-                [self.delegate didUnsubscribeToReceiveMessagesFor:self error:error];
-            }
-        }
-        else
-        {
-            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
-            {
-                [self.delegate didSubscribeToReceiveDataFor:self error:error];
+                if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveDataFor:error:)])
+                {
+                    [self.delegate didSubscribeToReceiveDataFor:self error:error];
+                }
             }
         }
     }

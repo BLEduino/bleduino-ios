@@ -23,24 +23,31 @@
         [motionData getBytes:throttleByte range:throttleRange];
         NSData *throttleData = [[NSData alloc] initWithBytes:throttleByte length:1];
         _throttle = *(int*)([throttleData bytes]);
+        free(throttleByte);
         
         Byte *yawByte = (Byte*)malloc(1);
         NSRange yawRange = NSMakeRange(1, 1);
         [motionData getBytes:yawByte range:yawRange];
         NSData *yawData = [[NSData alloc] initWithBytes:yawByte length:1];
         _yaw = *(int*)([yawData bytes]);
+        free(yawByte);
+
         
         Byte *rollByte = (Byte*)malloc(1);
         NSRange rollRange = NSMakeRange(2, 1);
         [motionData getBytes:rollByte range:rollRange];
         NSData *rollData = [[NSData alloc] initWithBytes:rollByte length:1];
         _roll = *(int*)([rollData bytes]);
+        free(rollByte);
+
         
         Byte *pitchByte = (Byte*)malloc(1);
         NSRange pitchRange = NSMakeRange(3, 1);
         [motionData getBytes:pitchByte range:pitchRange];
         NSData *pitchData = [[NSData alloc] initWithBytes:pitchByte length:1];
         _pitch = *(int*)([pitchData bytes]);
+        free(pitchByte);
+
     }
     return self;
 }

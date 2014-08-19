@@ -36,10 +36,11 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
-    UIColor *lightBlue = [UIColor colorWithRed:19/255.0 green:147/255.0 blue:191/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
 
-    
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -55,6 +56,7 @@
     
     //Load previous state.
     [self setPreviousState];
+    
 }
 
 - (IBAction)dismissModule
@@ -759,7 +761,12 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 + (NSMutableAttributedString *) firmataPinTypesString:(NSInteger)pinNumber
                                           forPinState:(FirmataCommandPinState)state
 {
-    UIColor *selection = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *selection = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
+    
     NSString *digital   = @"Digital-Out • Digital-In";
     NSString *analog    = @"Digital-Out • Digital-In • Analog";
     NSString *pwm       = @"Digital-Out • Digital-In • PWM";

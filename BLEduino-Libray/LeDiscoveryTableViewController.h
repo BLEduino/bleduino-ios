@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BDLeDiscoveryManager.h"
+#import "BleduinoController.h"
 
 /****************************************************************************/
 /*						Service & Characteristics							*/
@@ -18,7 +19,12 @@ extern NSString * const kRxCharacteristicUUIDString;       //8C6BABCD-A312-681D-
 extern NSString * const kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-025B-0032C0D16A2D  Write(Tx) Message Characteristic
 
 
-@interface LeDiscoveryTableViewController : UITableViewController <LeDiscoveryManagerDelegate, UIAlertViewDelegate>
+@interface LeDiscoveryTableViewController : UITableViewController
+<
+LeDiscoveryManagerDelegate,
+BleduinoControllerDelegate,
+UIAlertViewDelegate
+>
 @property (strong, nonatomic) NSArray *connectedBleduinos;
 @property (strong, nonatomic) NSArray *foundBleduinos;
 - (IBAction)showMenu;

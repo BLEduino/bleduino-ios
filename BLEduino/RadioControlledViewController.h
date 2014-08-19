@@ -25,6 +25,7 @@ HorizontalJoystickControlViewDelegate,
 LeDiscoveryManagerDelegate
 >
 @property (weak) id <RadioControlledViewControllerDelegate> delegate;
+
 - (IBAction)dismissModule;
 @end
 

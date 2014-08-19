@@ -35,7 +35,10 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
@@ -66,9 +69,7 @@
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
-            NSString *message = self.messageView.text;
-            BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
-            [messageService writeMessage:message];
+            [self writeMessage:self.messageView.text bleduino:bleduino];
         }
 
         //Clear text view.
@@ -77,6 +78,63 @@
     }
     
     return ([text isEqualToString:@"\n"])?NO:YES;
+}
+
+/*
+ * This method implements the logic to send messages to the BLEduino's LCD module (via the UART pipe/service),
+ * regardless of its length.
+ *
+ * Bluetooth LE caps trasnfers at 20 bytes. That is, the BLEduino can only receive 20 bytes at a time.
+ * Therefore, any transfers bigger than that must be splitted in chunks of 20 bytes. This limitation is not handled
+ * automatically by design. The UART pipe/service is meant to be the most versatile and flexible one, and for that
+ * reason, we have left the decision on how to best use UART, completely upt to the user. The following, is our
+ * decision on how to best use it for the Keyboard module.
+ *
+ */
+- (void) writeMessage:(NSString *)message bleduino:(CBPeripheral *)bleduino
+{
+    
+    BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+    
+    if(message.length > 20)
+    {
+        BOOL lastPacket = false;
+        NSInteger subsstringPointer = 0;
+        NSInteger totalPackets = ceil(message.length / 20.0);
+        
+        NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
+        
+        for (int packetIndex = 0; packetIndex < totalPackets; packetIndex++)
+        {
+            //Check if last (chunk of) transmission.
+            lastPacket = (packetIndex == (totalPackets-1));
+            
+            //Setup range for subset/chunck of data being transfer.
+            NSInteger rangeLength = (lastPacket)?(message.length - subsstringPointer):20;
+            NSRange dataRange = NSMakeRange(subsstringPointer, rangeLength);
+            
+            //Get substring being tranfer.
+            NSData *dataSubset = [messageData subdataWithRange:dataRange];
+            
+            //Write (part of) message.
+            [messageService writeData:dataSubset];
+            
+            NSLog(@"\nWrote date from: %ld to: %ld, of %ld characters. \nSubstring: |%@| \nData length: %ld\nData: %@\n\n",
+                  (long)subsstringPointer,
+                  (long)(subsstringPointer+rangeLength),
+                  (long)message.length,
+                  [message substringWithRange:dataRange],
+                  (unsigned long)dataSubset.length,
+                  [dataSubset description]);
+            
+            //Move pointer to the beginning of next packet.
+            subsstringPointer = subsstringPointer + 20;
+        }
+    }
+    else
+    {
+        [messageService writeMessage:message];
+    }
 }
 
 - (IBAction)dismissModule

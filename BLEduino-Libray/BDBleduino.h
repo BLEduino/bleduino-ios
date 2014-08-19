@@ -19,7 +19,7 @@ enum {
 };
 typedef NSUInteger BlePipe;
 
-@interface BDWrite : NSObject <FirmataServiceDelegate>
+@interface BDBleduino : NSObject <FirmataServiceDelegate>
 
 + (void) writeData:(id)data
               pipe:(BlePipe)pipe
@@ -33,5 +33,7 @@ typedef NSUInteger BlePipe;
 + (instancetype) subscribePipe:(BlePipe)pipe
                         device:(CBPeripheral *)bleduino
                       delegate:(id)delegate;
+
++ (void) updateDeviceName:(CBPeripheral *)bleduino name:(NSString *)name;
 
 @end

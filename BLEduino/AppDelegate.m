@@ -27,7 +27,7 @@
     //Global
     if([defaults doubleForKey:WRITE_TIME_CAP] == 0)
     {
-        double timeCap = 20.0;
+        double timeCap = 60.0;
         [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
     }
     
@@ -145,6 +145,13 @@
     if([defaults objectForKey:PROXIMITY_FIRST_CALIBRATION] == nil)
     {
         [defaults setBool:YES forKey:PROXIMITY_FIRST_CALIBRATION];
+    }
+    
+    if([defaults objectForKey:PROXIMITY_RSSI_IMMEDIATE_RANGE] == nil)
+    {
+        [defaults setFloat:-20.0 forKey:PROXIMITY_RSSI_IMMEDIATE_RANGE];
+        [defaults setFloat:-67.0 forKey:PROXIMITY_RSSI_NEAR_RANGE];
+        [defaults setFloat:-90.0 forKey:PROXIMITY_RSSI_FAR_RANGE];
     }
     
     [defaults synchronize];

@@ -9,7 +9,7 @@
 #import "PowerRelayViewController.h"
 #import "BDLeDiscoveryManager.h"
 #import "PowerNextStateView.h"
-#import "BDWrite.h"
+#import "BDBleduino.h"
 
 @interface PowerRelayViewController ()
 @property (strong) BDFirmataCommandCharacteristic *lastPowerSwitchCommand;
@@ -43,7 +43,10 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;

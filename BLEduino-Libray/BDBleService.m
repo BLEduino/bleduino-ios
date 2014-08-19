@@ -33,6 +33,23 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
 	}
 }
 
+- (id) initWithPeripheral:(CBPeripheral *)peripheral
+{
+    self = [super init];
+    if(self)
+    {
+        _servicePeripheral = peripheral;
+    }
+
+    return self;
+}
+
++ (instancetype)serviceWithBleduino:(CBPeripheral *)bleduino
+{
+    BDBleService *service = [[BDBleService alloc] initWithPeripheral:bleduino];
+    return service;
+}
+
 /*
  *  @method                 writeCharacteristic:serviceUUID:characteristicUUID:data:
  *

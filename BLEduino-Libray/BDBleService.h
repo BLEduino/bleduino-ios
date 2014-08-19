@@ -95,4 +95,5 @@ extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B
 + (void)peripheral:(CBPeripheral *)bleduino didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
              error:(NSError *)error;
 
++ (instancetype)serviceWithBleduino:(CBPeripheral *)bleduino;
 @end

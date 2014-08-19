@@ -6,14 +6,13 @@
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
-#import "BDWrite.h"
-#import "BDFirmataCommandCharacteristic.h"
-#import "BDFirmataService.h"
+#import "BDBleduino.h"
+#import "BDBleBridgeService.h"
 
-@interface BDWrite ()
+@interface BDBleduino ()
 @property id delegate;
 @end
-@implementation BDWrite
+@implementation BDBleduino
 
 
 + (void) writeData:(id)data
@@ -21,7 +20,7 @@
             device:(CBPeripheral *)bleduino
           delegate:(id)delegate
 {
-    BDWrite *write = [[BDWrite alloc] init];
+    BDBleduino *write = [[BDBleduino alloc] init];
     
     if(pipe == Firmata && [data isKindOfClass:[BDFirmataCommandCharacteristic class]])
     {
@@ -69,7 +68,7 @@
                        device:(CBPeripheral *)bleduino
                      delegate:(id)delegate
 {
-    BDWrite *write = [[BDWrite alloc] init];
+    BDBleduino *write = [[BDBleduino alloc] init];
     write.delegate = delegate;
     
     switch (pipe) {
@@ -113,7 +112,7 @@
                         device:(CBPeripheral *)bleduino
                       delegate:(id)delegate
 {
-    BDWrite *write = [[BDWrite alloc] init];
+    BDBleduino *write = [[BDBleduino alloc] init];
     write.delegate = delegate;
     
     switch (pipe) {
@@ -152,4 +151,32 @@
     
     return write;
 }
+
++ (void) updateDeviceName:(CBPeripheral *)bleduino name:(NSString *)name
+{
+    /*
+     * Work-around for updating the bleduino's name (via BLE-Bridge), because iOS
+     * blocks the GAP characteristic for updating the device name.
+     */
+    
+    //Setup data.
+    NSMutableData *updateData = [[NSMutableData alloc] initWithCapacity:name.length+1];
+    
+    //Setup and attache name update command.
+    Byte nameByte = (255 >> (0)) & 0xff;
+    NSMutableData *nameCmdData = [NSMutableData dataWithBytes:&nameByte length:sizeof(nameByte)];
+    [updateData appendData:nameCmdData];
+    
+    //Setup and attach name.
+    NSData *nameData = [name dataUsingEncoding:NSUTF8StringEncoding];
+    [updateData appendData:nameData];
+
+    //Setup transfer and send update.
+    CBUUID *bridge = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
+    CBUUID *bridgeRx = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
+    
+    BDBleService *gap = [BDBleService serviceWithBleduino:bleduino];
+    [gap writeDataToServiceUUID:bridge characteristicUUID:bridgeRx data:updateData withAck:NO];
+}
+
 @end

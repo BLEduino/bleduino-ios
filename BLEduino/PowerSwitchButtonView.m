@@ -30,7 +30,11 @@
     self.colorCode = [[NSUserDefaults standardUserDefaults] integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
     if(self.colorCode == PowerSwitchStatusColorBlue)
     {
-        UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:.90];
+        UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                             green:THEME_COLOR_GREEN/255.0
+                                              blue:THEME_COLOR_BLUE/255.0
+                                             alpha:1.0];
+        
         self.statusColor = lightBlue;
     }
     else

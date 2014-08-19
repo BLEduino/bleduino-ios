@@ -10,6 +10,7 @@
 #import "DistanceAlertController.h"
 #import "RSSIAlertController.h"
 #import "ProximityAlert.h"
+#import "BDProximity.h"
 
 @interface ProximityViewController ()
 
@@ -33,7 +34,10 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
@@ -43,6 +47,11 @@
     //Manager Delegate
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
+    
+    //Proximity Monitor
+    BDProximity *monitor = [BDProximity sharedMonitor];
+    monitor.monitoredBleduino = [leManager.connectedBleduinos lastObject];
+    [monitor startMonitoring];
     
     //Set tableview delegate
     self.tableView.delegate = self;
@@ -62,8 +71,9 @@
 {
     if([[notification name] isEqualToString:@"NewDistanceNotification"])
     {
-        NSNumber *distance = (NSNumber *)[[notification userInfo] objectForKey:@"CurrentDistance"];
-        [self updateDistanceIndicator:[distance integerValue]];
+        DistanceRange distance = (DistanceRange )[[notification userInfo] objectForKey:@"CurrentDistance"];
+        [self updateDistanceIndicator:distance];
+        //FIXME: ADD RSSI, DISTANCE VALUES ON UILABELS
     }
 }
 
@@ -121,26 +131,23 @@
     [self.view addSubview:headerView];
 }
 
-- (void)updateDistanceIndicator:(NSInteger)strengthLevel
+- (void)updateDistanceIndicator:(DistanceRange)range
 {
     NSString *strengthName;
-    switch (strengthLevel) {
-        case 0:
-            strengthName = @"strength-0.png";
-            break;
-        case 1:
+    switch (range) {
+        case VeryFar:
             strengthName = @"strength-1.png";
             break;
-        case 2:
+        case Far:
             strengthName = @"strength-2.png";
             break;
-        case 3:
+        case Near:
             strengthName = @"strength-3.png";
             break;
-        case 4:
+        case VeryNear:
             strengthName = @"strength-4.png";
             break;
-        case 5:
+        case Immediate:
             strengthName = @"strength-5.png";
             break;
         default:
@@ -211,6 +218,20 @@
 - (IBAction)dismissModule:(id)sender
 {
     [self storeDistanceAlerts];
+    
+    //Stop monitoring, unless the user wants to track distance on the background.
+    //Distance alerts enabled?
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isAlertsEnabled = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED];
+    [defaults synchronize];
+    
+    if(!isAlertsEnabled)
+    {
+        //Stop Monitoring
+        BDProximity *monitor = [BDProximity sharedMonitor];
+        [monitor stopMonitoring];
+    }
+    
     [self.delegate proximityControllerDismissed:self];
 }
 
@@ -241,7 +262,7 @@
         [defaults synchronize];
         
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Calibration Explanation"
-                                                        message:@"The distance displayed here is determined by the residual strength of the radio signal sent from the BLEduino after it has travel through the air. Radio signals are suceptible to everything they have to go through (e.g. walls, doors, air, humidity). Thus, calibration is done to have a konwn measurement at a given distance, and environment. Because radio signals are suceptible to so many things the distance provided here is only an estimation, and you should consider calibrating every time the testing environment changes."
+                                                        message:@"The distance displayed here is determined by the strength of the radio signal sent from the BLEduino after it has travelled through the air. Radio signals are susceptible to everything they go through (e.g. walls, doors, air, humidity), so calibration is done to have a point of reference at a given distance, and a given environment. Because of this, the distance provided here is only an estimation, and you should consider calibrating every time the testing environment changes."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Ok", nil];
@@ -305,8 +326,9 @@
     [self.calibrationIndicator startAnimating];
     [self.calibrationLabel setHidden:NO];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:PROXIMITY_BEGIN_CALIBRATION object:self];
+    //Proximity Monitor
+    BDProximity *monitor = [BDProximity sharedMonitor];
+    [monitor startCalibration];
 }
 
 - (void)finishedDistanceCalibration:(NSNotification *)notification
@@ -469,9 +491,6 @@
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.indexOfLastAlertUpdated inSection:0];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-    ProximityAlert *distanceAlert = [self.alerts objectAtIndex:self.indexOfLastAlertUpdated];
-    distanceAlert = alert;
     [self storeDistanceAlerts];
     
     [self.tableView reloadData];
@@ -498,9 +517,6 @@
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.indexOfLastAlertUpdated inSection:0];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-    ProximityAlert *distanceAlert = [self.alerts objectAtIndex:self.indexOfLastAlertUpdated];
-    distanceAlert = alert;
     [self storeDistanceAlerts];
     
     [self.tableView reloadData];

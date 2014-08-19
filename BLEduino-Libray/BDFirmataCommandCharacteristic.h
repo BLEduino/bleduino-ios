@@ -54,6 +54,7 @@ typedef NSUInteger FirmataCommandPinState;
 //Work-around, only for sequencer module.
 @property NSInteger rowNumber;
 
+
 /*
  * Create Firmata Command.
  */

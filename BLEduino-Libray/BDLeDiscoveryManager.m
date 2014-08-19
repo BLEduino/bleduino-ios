@@ -561,6 +561,11 @@ didRetrievePeripherals:(NSArray *)peripherals
     }
 }
 
+- (void)peripheralDidUpdateName:(CBPeripheral *)peripheral
+{    
+    [self.delegate didUpdateBleduinoName:peripheral];
+}
+
 //Helper methods
 - (void) configureLeDiscoveryManager:(BOOL)beginConfiguration
 {

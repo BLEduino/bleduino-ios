@@ -106,7 +106,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             [bridge readDataFromServiceUUID:bridge.bleBridgeServiceUUID characteristicUUID:bridge.deviceIDCharacteristicUUID];
         }
         
-        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:10];
+        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
         NSLog(@"BLE-Bridge: bridge is open.");
     }
 }
@@ -152,6 +152,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
         NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
         int deviceID = *(int*)([deviceIDData bytes]);
+        free(deviceIDByte);
     
         //Store deviceID
         [self.deviceIDs setObject:[NSNumber numberWithInt:deviceID] forKey:[peripheral.identifier UUIDString]];
@@ -183,6 +184,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
         NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
         int deviceID = *(int*)([deviceIDData bytes]);
+        free(deviceIDByte);
         
         NSLog(@"Total Bytes: %ld", (long)[characteristic.value length]);
         

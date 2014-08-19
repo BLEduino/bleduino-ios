@@ -78,7 +78,7 @@
                                                         message:@"This will open the BLEduino website in Safari. There you will find more information (e.g. video, documentation, source code) about the BLEduino. You can also access our BLEduino store from there."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Ok", nil];
+                                              otherButtonTitles:@"Open", nil];
         [alert show];
     }
     

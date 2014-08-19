@@ -12,4 +12,6 @@
 - (void)enqueue:(id)object;
 - (id)dequeue;
 + (instancetype)queue;
+- (id)initWithCapacity:(NSUInteger)capacity;
+- (NSArray *)array;
 @end

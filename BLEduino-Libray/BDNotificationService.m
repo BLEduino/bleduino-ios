@@ -286,14 +286,18 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 - (void)didWriteValue:(NSNotification *)notification
 {
     NSDictionary *payload = notification.userInfo;
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    self.lastNotification = self.lastSentNotification;
-    if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        [self.delegate notificationService:self
-                    didReceiveNotification:self.lastNotification
-                                     error:error];
+        self.lastNotification = self.lastSentNotification;
+        if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
+        {
+            [self.delegate notificationService:self
+                        didReceiveNotification:self.lastNotification
+                                         error:error];
+        }
     }
 
 }
@@ -302,35 +306,39 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
-    
-    if(self.isListening)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = self.lastNotification.message;
-        notification.alertAction = nil;
+        self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
         
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+        if(self.isListening)
         {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"message": self.lastNotification.message,
-                                      @"service": kNotificationAttributesCharacteristicUUIDString};
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.alertBody = self.lastNotification.message;
+            notification.alertAction = nil;
+            
+            //Is application on the foreground?
+            if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
+            {
+                //Application is on the foreground, store notification attributes to present alert view.
+                notification.userInfo = @{@"message": self.lastNotification.message,
+                                          @"service": kNotificationAttributesCharacteristicUUIDString};
+            }
+            
+            //Present notification.
+            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
         }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-    else
-    {
-        if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
+        else
         {
-            [self.delegate notificationService:self
-                        didReceiveNotification:self.lastNotification
-                                         error:error];
+            if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
+            {
+                [self.delegate notificationService:self
+                            didReceiveNotification:self.lastNotification
+                                             error:error];
+            }
         }
     }
 }
@@ -339,20 +347,24 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if(characteristic.isNotifying)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
+        if(characteristic.isNotifying)
         {
-            [self.delegate didSubscribeToStartReceivingNotificationsFor:self error:error];
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingNotificationsFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingNotificationsFor:self error:error];
+            }
         }
-    }
-    else
-    {
-        if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingNotificationsFor:error:)])
+        else
         {
-            [self.delegate didUnsubscribeToStopRecivingNotificationsFor:self error:error];
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingNotificationsFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopRecivingNotificationsFor:self error:error];
+            }
         }
     }
 }

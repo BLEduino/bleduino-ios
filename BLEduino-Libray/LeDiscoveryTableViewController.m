@@ -9,6 +9,7 @@
 #import "LeDiscoveryTableViewController.h"
 #import "BDLeDiscoveryManager.h"
 #import "RESideMenu.h"
+#import "BleduinoController.h"
 
 @interface LeDiscoveryTableViewController ()
 
@@ -50,7 +51,10 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
@@ -173,12 +177,15 @@
     {
         CBPeripheral *connectedBleduino = [leManager.connectedBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = (connectedBleduino.name)?connectedBleduino.name:@"BLE Peripheral";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     //Found Peripherals
     else
     {
         CBPeripheral *foundBleduino = [leManager.foundBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = (foundBleduino.name)?foundBleduino.name:@"BLE Peripheral";
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
     }
     
     //PENDING: Streatched goal. Add more context to found/connected devcies.
@@ -196,12 +203,27 @@
     if(indexPath.section == 0)
     {
         //PENDING: Stretched goal. Add more context information to discovered devcies (e.g. RSSI).
+        [self performSegueWithIdentifier:@"BleduinoSegue" sender:self];
+        
     }
     else
     {
         [self presentBleduinoInterrogationView];
         BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
         [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"BleduinoSegue"])
+    {
+        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+        NSInteger index = self.tableView.indexPathForSelectedRow.row;
+        
+        BleduinoController *controller = (BleduinoController *)segue.destinationViewController;
+        controller.bleduino = [manager.connectedBleduinos objectAtIndex:index];
+        controller.delegate = self;
     }
 }
 
@@ -279,22 +301,38 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 #pragma mark -
+#pragma mark - Bleduino Controller Delegate
+/****************************************************************************/
+/*                  Bleduino Controller Delegate                            */
+/****************************************************************************/
+- (void)didDismissBleduinoController:(BleduinoController *)controller
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didUpateBleduino:(CBPeripheral *)bleduino controller:(BleduinoController *)controller
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.tableView reloadData];
+    
+}
+
+
+#pragma mark -
 #pragma mark - LeManager Delegate
 /****************************************************************************/
 /*                            LeManager Delegate                            */
 /****************************************************************************/
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
-    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     
-//    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-//    NSLog(@"Discovered peripheral: %@", name);
+    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
+    NSLog(@"Discovered peripheral: %@", name);
 }
 
 - (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI
 {
-    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     
     NSString *name = ([bleDevice.name isEqualToString:@""])?@"BLE Peripheral":bleDevice.name;
@@ -307,7 +345,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
     
-    //PENDING: Stretched goal. Add row animations for smoothness.
     [self.tableView reloadData];
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
@@ -344,8 +381,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 //Disconnected from BLEduino and BLE devices.
 - (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
 {
-    //PENDING: Stretched goal. Add row animations for smoothness.
-    
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
     
@@ -415,6 +450,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
     
     [self scanForBleDevices:self];
+}
+
+- (void) didUpdateBleduinoName:(CBPeripheral *)bleduino
+{
+    [self.tableView reloadData];
 }
 
 @end

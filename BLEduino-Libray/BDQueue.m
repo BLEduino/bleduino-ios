@@ -44,4 +44,10 @@
     return headObject;
 }
 
+- (NSArray *)array
+{
+    NSArray *values = [[NSArray alloc] initWithArray:self.queue];
+    return values;
+}
+
 @end

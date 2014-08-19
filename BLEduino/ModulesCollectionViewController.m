@@ -14,6 +14,9 @@
 #import "BDLeDiscoveryManager.h"
 #import "ProximityViewController.h"
 
+@interface ModulesCollectionViewController()
+@property UIColor *themeColor;
+@end
 @implementation ModulesCollectionViewController
 
 #pragma mark -
@@ -51,24 +54,21 @@
     //Set services that run in the background.
     self.notificationService = [BDNotificationService sharedListener];
     self.bleBridge = [BDBleBridgeService sharedBridge];
-    
-    //Monitor distances from bleduino here (to be able to monitor in the background).
-//    [self monitorBleduinoDistances];
-    
-    self.calibrationReadings = [[NSMutableArray alloc] initWithCapacity:20];
-    self.currentReadings = [[NSMutableArray alloc] initWithCapacity:20];
-    
+    self.proximityMonitor = [BDProximity sharedMonitor];
+     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
-//    UIColor *lightBlue = [UIColor colorWithRed:19/255.0 green:147/255.0 blue:191/255.0 alpha:1.0];
-
-    UIColor *lightBlue = [UIColor colorWithRed:22/255.0 green:170/255.0 blue:221/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
+    
+    self.themeColor = lightBlue;
     
     //Manager Delegate
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
@@ -79,7 +79,7 @@
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_ENABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_DISABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE_ALERTS object:nil];
-    [center addObserver:self selector:@selector(beginDistanceCalibration:)  name:PROXIMITY_BEGIN_CALIBRATION object:nil];
+    [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,11 +89,11 @@
 }
 
 #pragma mark -
-#pragma mark - Proximity Module Logic
+#pragma mark - Proximity Distance Alerts
 /****************************************************************************/
-/*                          Proximity Module Logic                          */
+/*                       Proximity Distance Alerts                          */
 /****************************************************************************/
-// Proximity module logic is located here to be able to monitor distances
+// Proximity distance alerts logic is located here to be able to monitor distances
 // and alerts on the background.
 
 - (void)loadDistanceAlerts
@@ -120,46 +120,43 @@
     }
 }
 
-- (void)monitorBleduinoDistances
+- (void)verifyDistanceAlerts:(NSNotification *)notification
 {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    BOOL isProximityControllerPresent = [appDelegate.window.rootViewController isKindOfClass:[ProximityViewController class]];
+ 
+    //FIXME: FINISH THIS
     
-    self.distanceAlertsEnabled = YES; //FIXME: REMOVE LATER
-    
-    if(self.distanceAlertsEnabled || isProximityControllerPresent)
-    {
-        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
-        CBPeripheral *bleduino = [manager.connectedBleduinos lastObject];
-        bleduino.delegate = self;
-        [bleduino readRSSI];
-        
-        [self performSelector:@selector(monitorBleduinoDistances) withObject:nil afterDelay:1];
-        
-        if(self.distanceAlertsEnabled)
-        {
-            [self verifyDistanceAlerts];
-        }
-    }
-}
-
-- (void)verifyDistanceAlerts
-{
-    NSInteger currentDistance = 0;
-    
-    //Set margin of error.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL distanceFormatIsFeet = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
-    [defaults synchronize];
-    NSInteger distanceOffset = (distanceFormatIsFeet)?6:2;
+    NSNumber *rssi = [[notification userInfo] objectForKey:@"RSSI"];
+    NSNumber *range = [[notification userInfo] objectForKey:@"CurrentDistance"];
     
     //Check alerts.
     for(ProximityAlert *alert in self.distanceAlerts)
     {
-        if(currentDistance >= (alert.distance - distanceOffset) && currentDistance <= (alert.distance + distanceOffset))
+        if(alert.isDistanceAlert)
         {
-            //FIXME: VALIDATE IF CLOSER/FARTHER.
-            [self pushDistanceAlertLocalNotification:alert];
+            if(alert.bleduinoIsCloser || alert.bleduinoIsFarther)
+            {
+                if([range integerValue] == alert.distance)
+                {
+                    [self pushDistanceAlertLocalNotification:alert];
+                }
+            }
+        }
+        else
+        {//RSSI Alert
+            if(alert.bleduinoIsCloser)
+            {
+                if([rssi integerValue] > alert.distance)
+                {
+                    [self pushDistanceAlertLocalNotification:alert];
+                }
+            }
+            if(alert.bleduinoIsFarther)
+            {
+                if([rssi integerValue] < alert.distance)
+                {
+                    [self pushDistanceAlertLocalNotification:alert];
+                }
+            }
         }
     }
 }
@@ -182,89 +179,27 @@
 - (void)distanceAlertNotification:(NSNotification *)notification
 {
     NSString *name = [notification name];
-    if([name isEqualToString:@"DistanceAlertsEnabled"])
+    if([name isEqualToString:PROXIMITY_DISTANCE_ALERTS_ENABLED])
     {
         self.distanceAlertsEnabled = YES;
-        [self monitorBleduinoDistances];
     }
-    else if([name isEqualToString:@"DistanceAlertsDisabled"])
+    else if([name isEqualToString:PROXIMITY_DISTANCE_ALERTS_DISABLED])
     {
         self.distanceAlertsEnabled = NO;
     }
-    else //New distance alert, load alerts again.
+    else if([name isEqualToString:PROXIMITY_NEW_DISTANCE_ALERTS])
     {
         [self loadDistanceAlerts];
     }
-}
-
-- (void)beginDistanceCalibration:(NSNotification *)notification
-{
-    self.isCalibrating = YES;
-    [self performSelector:@selector(sendFinishedDistanceCalibrationNotification) withObject:nil afterDelay:10];
-}
-
-- (void)sendFinishedDistanceCalibrationNotification
-{
-    //Calibration is over.
-    self.isCalibrating = NO;
-    self.measuredPower = [self.calibrationReadings valueForKeyPath:@"@avg.self"];
-    
-    //FIXME: TESTING REMOVE LATER
-    NSLog(@"Measured Power: %@\n", [self.measuredPower description]);
-    NSLog(@"Max: %@\n", [[self.calibrationReadings valueForKeyPath:@"@max.self"] description]);
-    NSLog(@"Min: %@\n", [[self.calibrationReadings valueForKeyPath:@"@min.self"] description]);
-    NSLog(@"Count: %@\n\n", [[self.calibrationReadings valueForKeyPath:@"@count.self"] description]);
-    
-//    NSLog(@"Readings: %@", [self.calibrationReadings description]);
-    
-    [self.calibrationReadings removeAllObjects];
-    
-    
-    //Notify proximity controller so the veiw can be updated back to displaying current distance.
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:PROXIMITY_FINISHED_CALIBRATION object:self];
-}
-
-- (void)peripheralDidUpdateRSSI:(CBPeripheral *)peripheral error:(NSError *)error
-{
-    NSNumber *currentRSSI = peripheral.RSSI;
-    BOOL isValidReading = [self validateReading:currentRSSI];
-    
-    if(isValidReading && currentRSSI != nil)
+    else if([name isEqualToString:PROXIMITY_NEW_DISTANCE])
     {
-        //Collect reading.
-        [self.currentReadings addObject:currentRSSI];
-        self.currentDistance = [self calculateCurrentDistance];
-        
-        //Is user calibrating rignt now?
-        if(self.isCalibrating)[self.calibrationReadings addObject:currentRSSI];
-        
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        BOOL isProximityControllerPresent = [appDelegate.window.rootViewController isKindOfClass:[ProximityViewController class]];
-        
-        //Do we need to push current distance to proximity controller?
-        if(isProximityControllerPresent)
+        if(self.distanceAlertsEnabled)
         {
-            NSDictionary *distanceInfo = @{@"CurrentDistance":[NSNumber numberWithLong:self.currentDistance]};
-            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-            [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
+            [self verifyDistanceAlerts:notification];
         }
     }
 }
 
-- (BOOL) validateReading:(NSNumber *)rssi
-{
-    //FIXME: Validate RSSI i.e. no spikes, not larger than 127dBm
-    return YES;
-}
-
-- (NSInteger) calculateCurrentDistance
-{
-    //FIXME: how to aggregate? determine how many packages, when to get rid of other packages
-    //FIXME: calculate current RSSI (from aggregated);
-    //FIXME: Convert RSSI to distance with Formula
-    return 900;
-}
 
 #pragma mark -
 #pragma mark - Collection View Data Source
@@ -353,6 +288,7 @@
         [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
     
+    moduleCell.moduleIcon.tintColor = self.themeColor;
     return moduleCell;
 }
 

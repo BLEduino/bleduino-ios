@@ -68,9 +68,15 @@
     [self.view addSubview:self.orientationIndicatorMask];
     [self.view addSubview:self.orientationIndicator];
     
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
     //Setup dismiss button.
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
     dismissButton.frame = CGRectMake(0, 0, 60, 50);
+    dismissButton.tintColor = lightBlue;
     [dismissButton setImage:[UIImage imageNamed:@"arrow-left.png"] forState:UIControlStateNormal];
     [dismissButton addTarget:self
                       action:@selector(dismissModule)

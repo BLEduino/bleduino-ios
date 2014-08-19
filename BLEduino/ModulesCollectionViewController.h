@@ -23,6 +23,7 @@
 #import "ProximityViewController.h"
 #import "ConsoleTableViewController.h"
 #import "BDNotificationService.h"
+#import "BDProximity.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
 <
@@ -48,19 +49,11 @@ BleBridgeServiceDelegate
 //Services that run in the background.
 @property (strong) BDBleBridgeService *bleBridge;
 @property (strong) BDNotificationService *notificationService;
+@property (strong) BDProximity *proximityMonitor;
 
 //Proximity
-//Alerts
 @property (strong) NSMutableArray *distanceAlerts;
 @property BOOL distanceAlertsEnabled;
-
-//Current Distance
-@property (strong) NSMutableArray *currentReadings;
-@property NSInteger currentDistance;
-
-@property (strong) NSMutableArray *calibrationReadings;
-@property (strong) NSNumber *measuredPower; //Calibrated RSSI. 
-@property BOOL isCalibrating;
 
 - (IBAction)showMenu;
 - (void)showStatusBar;

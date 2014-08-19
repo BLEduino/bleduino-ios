@@ -12,6 +12,11 @@
 #import "RESideMenu.h"
 #import "PowerRelayViewController.h"
 
+
+@interface SettingsTableViewController()
+@property UIColor *themeColor;
+@end
+
 #pragma mark -
 #pragma mark - Setup
 /****************************************************************************/
@@ -31,7 +36,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.themeColor = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                      green:THEME_COLOR_GREEN/255.0
+                                       blue:THEME_COLOR_BLUE/255.0
+                                      alpha:1.0];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -124,12 +134,7 @@
         NSInteger lcdSize = [[alertView textFieldAtIndex:0].text integerValue];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setInteger:lcdSize forKey:SETTINGS_LCD_TOTAL_CHARS];
-        
-        //FIXME: REMOVE ONLY FOR TEST
-        double timeCap = [[alertView textFieldAtIndex:0].text doubleValue];
-        [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
-        //<<<<<<<
-        
+                
         [defaults synchronize];
         
         //Update the data.
@@ -202,38 +207,45 @@
     //MODULES SETTINGS
     else
     {
-        SettingsNumberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsNumberCell"
-                                                                   forIndexPath:indexPath];
+        if(indexPath.row < 3)
+        {
+            SettingsNumberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsNumberCell"
+                                                   forIndexPath:indexPath];
+    
+            if(indexPath.row == 0)
+            {
+                //Configure cell
+                cell.settingDescription.text = @"LCD Total Available Characters";
+                NSInteger value = [prefs integerForKey:SETTINGS_LCD_TOTAL_CHARS];
+                cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
+                cell.settingsNumber.textColor = self.themeColor;
+            }
+            else if(indexPath.row == 1)
+            {
+                cell.settingDescription.text = @"Power Relay Pin";
+                NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
+                cell.settingsNumber.text = [SettingsTableViewController firmataPinNames:value];
+                cell.settingsNumber.textColor = self.themeColor;
 
-        if(indexPath.row == 0)
-        {
-            //Configure cell
-            cell.settingDescription.text = @"LCD Total Available Characters";
-            NSInteger value = [prefs integerForKey:SETTINGS_LCD_TOTAL_CHARS];
-            cell.settingsNumber.text = [NSString stringWithFormat:@"%ld", (long)value];
-
-        }
-        else if(indexPath.row == 1)
-        {
-            cell.settingDescription.text = @"Power Relay Pin";
-            NSInteger value = [prefs integerForKey:SETTINGS_POWERRELAY_PIN_NUMBER];
-            cell.settingsNumber.text = [SettingsTableViewController firmataPinNames:value];
-        }
-        else if(indexPath.row == 2)
-        {
-            cell.settingDescription.text = @"Power Relay Status Color";
-            NSInteger statusColorValue = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
-            NSString *colorString = (statusColorValue == PowerSwitchStatusColorGreenRed)?@"Green/Red":@"Blue";
-            cell.settingsNumber.text = colorString;
+            }
+            else if(indexPath.row == 2)
+            {
+                cell.settingDescription.text = @"Power Relay Status Color";
+                NSInteger statusColorValue = [prefs integerForKey:SETTINGS_POWERRELAY_STATUS_COLOR];
+                NSString *colorString = (statusColorValue == PowerSwitchStatusColorGreenRed)?@"Green/Red":@"Blue";
+                cell.settingsNumber.text = colorString;
+                cell.settingsNumber.textColor = self.themeColor;
+            }
+            
+            return  cell;
         }
         else
         {
-            cell.settingDescription.text = @"Proximity Distance Format";
-            BOOL isDistanceFormatFeet = [prefs boolForKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
-            NSString *distanceFormatString = (isDistanceFormatFeet)?@"ft":@"m";
-            cell.settingsNumber.text = distanceFormatString;
+            UITableViewCell *proximityCell = [tableView dequeueReusableCellWithIdentifier:@"ProximitySettingsCell"
+                                                                             forIndexPath:indexPath];
+            
+            return proximityCell;
         }
-        return  cell;
     }
 }
 
@@ -287,20 +299,6 @@
         actionSheet.tag = 101;
         [actionSheet showInView:self.view];
     }
-    //PowerRelay status color.
-    else if(indexPath.section == 2 && indexPath.row == 3)
-    {
-        //Show color options.
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:@"Distance Format"
-                                      delegate:self
-                                      cancelButtonTitle:@"Cancel"
-                                      destructiveButtonTitle:nil
-                                      otherButtonTitles:@"Feets", @"Meters", nil];
-        
-        actionSheet.tag = 102;
-        [actionSheet showInView:self.view];
-    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -322,6 +320,8 @@
         case 2:
             rows = 4;
             break;
+        default:
+            rows = 0;
     }
     
     return rows;

@@ -39,14 +39,20 @@
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-//    UIColor *lightBlue = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
-    UIColor *lightBlue = [UIColor colorWithRed:19/255.0 green:147/255.0 blue:191/255.0 alpha:1.0];
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
 
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor = lightBlue;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
+    
+    self.edit.tintColor = lightBlue;
+    self.addCommand.tintColor = lightBlue;
+    self.addDelay.tintColor = lightBlue;
     
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
@@ -435,6 +441,11 @@
     [self.tableView setEditing:NO animated:YES];
     [self.tableView reloadData];
     
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
     UIBarButtonItem *delay = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"delay.png"]
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
@@ -452,11 +463,17 @@
                                                                            target:nil
                                                                            action:nil];
     
+    delay.tintColor = add.tintColor = edit.tintColor = lightBlue;
     [self setToolbarItems:@[delay, space, add, space, edit]];
 }
 
 - (IBAction)editSequence:(id)sender
 {
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
     if(self.tableView.isEditing)
     {
         [self.tableView setEditing:NO animated:YES];
@@ -477,6 +494,7 @@
                                                                                target:nil
                                                                                action:nil];
         
+        add.tintColor = delay.tintColor = edit.tintColor = lightBlue;
         [self setToolbarItems:@[delay, space, add, space, edit]];
     }
     else
@@ -494,6 +512,7 @@
                                                                                target:nil
                                                                                action:nil];
         
+        trash.tintColor = done.tintColor = lightBlue;
         [self setToolbarItems:@[space, trash, space, done]];
     }
 }
@@ -631,6 +650,11 @@
     FirmataCommandPinState state = pin.pinState;
     NSInteger types = (state > 3)?4:[SequencerTableViewController firmataPinTypes:pinNumber];
     
+    UIColor *lightBlue = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
     UIActionSheet *actionSheet;
     switch (types) {
         case 0:
@@ -698,6 +722,7 @@
     
     //Show pin/delay options.
     actionSheet.tag = (types > 3)?(400 + indexPath.row):(200 + indexPath.row);
+    actionSheet.tintColor = lightBlue;
     [actionSheet showInView:self.view];
 }
 
@@ -1034,7 +1059,12 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 + (NSMutableAttributedString *) firmataPinTypesString:(NSInteger)pinNumber
                                           forPinState:(FirmataCommandPinState)state
 {
-    UIColor *selection = [UIColor colorWithRed:38/255.0 green:109/255.0 blue:235/255.0 alpha:1.0];
+    UIColor *selection = [UIColor colorWithRed:THEME_COLOR_RED/255.0
+                                         green:THEME_COLOR_GREEN/255.0
+                                          blue:THEME_COLOR_BLUE/255.0
+                                         alpha:1.0];
+    
+    
     NSString *digital   = @"Digital-Out • Digital-In";
     NSString *analog    = @"Digital-Out • Digital-In • Analog";
     NSString *pwm       = @"Digital-Out • Digital-In • PWM";

@@ -88,6 +88,11 @@
 #define PROXIMITY_DISTANCE_ALERTS_ENABLED @"Distance-Alerts-Enabled"
 #define PROXIMITY_DISTANCE_ALERTS_DISABLED @"Distance-Alerts-Disabled"
 
+#define PROXIMITY_RSSI_IMMEDIATE_RANGE @"proximity-rssi-immediate-range"
+#define PROXIMITY_RSSI_NEAR_RANGE @"proximity-rssi-near-range"
+#define PROXIMITY_RSSI_FAR_RANGE @"proximity-rssi-far-range"
+#define PROXIMITY_NEW_RSSI_READING @"proximity-new-rssi-reading"
+
 //Global
 #define BLE_MANAGER_NOT_POWERED_ON @"ble-manager-not-powered-on"
 #define WRITE_TIME_CAP @"write-time-cap"
@@ -115,6 +120,10 @@
 #define CHARACTERISTIC_NOTIFY_NOTIFICATION @"characteristic-notify-notification"
 #define CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX @"characteristic-notify-ble-bridge-tx"
 #define CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID @"characteristic-notify-ble-bridge-device-id"
+
+#define THEME_COLOR_RED 19.0
+#define THEME_COLOR_GREEN 147.0
+#define THEME_COLOR_BLUE 191.0
 
 
 #ifndef __IPHONE_5_0

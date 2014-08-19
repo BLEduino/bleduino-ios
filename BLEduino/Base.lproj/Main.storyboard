@@ -63,10 +63,68 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="5yU-Ko-I5N" kind="push" identifier="BleduinoSegue" id="JKh-Ki-Pyp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Dy-Gf-mxL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1043" y="988"/>
+        </scene>
+        <!--Bleduino Controller - BLEduino-->
+        <scene sceneID="OHz-4d-iVd">
+            <objects>
+                <tableViewController id="5yU-Ko-I5N" customClass="BleduinoController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="F14-nj-PzA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="c5p-Gi-Upl">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="48" id="kB0-mG-sHt">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="48"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kB0-mG-sHt" id="OSy-xU-HaW">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BLEduino" minimumFontSize="18" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="cFB-OB-p7b">
+                                                    <rect key="frame" x="20" y="9" width="280" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="5yU-Ko-I5N" id="ZTV-iI-zht"/>
+                            <outlet property="delegate" destination="5yU-Ko-I5N" id="N7y-k1-2IA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="BLEduino" id="c6A-pW-Ppj">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="42h-KS-7eV">
+                            <connections>
+                                <action selector="dismissModule:" destination="5yU-Ko-I5N" id="40U-uu-GJY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="97f-zI-QFC">
+                            <connections>
+                                <action selector="updateBleduinoName:" destination="5yU-Ko-I5N" id="pZy-gE-AHz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bleduinoName" destination="cFB-OB-p7b" id="YpN-ow-lau"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uud-n9-dcI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1551" y="987"/>
         </scene>
         <!--Game Controller View Controller-->
         <scene sceneID="bvZ-NF-LF2">
@@ -241,6 +299,7 @@
                             <items>
                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="pLT-Ur-cG6"/>
                                 <barButtonItem title="Reset all pins" id="qXL-iu-o9a">
+                                    <color key="tintColor" red="0.074509803920000006" green="0.57647058819999997" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
                                         <action selector="resetAllPins:" destination="mEA-Nz-hUf" id="hxC-qh-W4e"/>
                                     </connections>
@@ -372,6 +431,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Sync" id="a1M-Qk-gX0">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="sendData:" destination="mEA-Nz-hUf" id="Xmw-RL-cId"/>
                             </connections>
@@ -810,11 +870,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-75" minValue="-100" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="4no-71-Jbe">
-                                                    <rect key="frame" x="18" y="7" width="194" height="31"/>
+                                                    <rect key="frame" x="18" y="7" width="200" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-75dBm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-nI-fpF">
-                                                    <rect key="frame" x="231" y="11" width="71" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-100 dBm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-nI-fpF">
+                                                    <rect key="frame" x="224" y="11" width="76" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -1988,6 +2048,10 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <size key="customSize" width="120" height="120"/>
+                                <connections>
+                                    <outlet property="moduleIcon" destination="CFO-lB-6qv" id="USL-7R-eyP"/>
+                                    <outlet property="moduleName" destination="Sw9-GP-HqY" id="c1n-2H-H6C"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProximityModuleCell" id="976-cR-jrJ" customClass="ModuleCollectionViewCell">
                                 <rect key="frame" x="0.0" y="714" width="120" height="120"/>
@@ -2012,6 +2076,10 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <size key="customSize" width="120" height="120"/>
+                                <connections>
+                                    <outlet property="moduleIcon" destination="5Un-Wk-I6Y" id="hEh-tA-8zy"/>
+                                    <outlet property="moduleName" destination="0K9-Rm-Hru" id="mhF-QV-LpT"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ConsoleModuleCell" id="FF8-sq-CXg" customClass="ModuleCollectionViewCell">
                                 <rect key="frame" x="200" y="714" width="120" height="120"/>
@@ -2036,6 +2104,10 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <size key="customSize" width="120" height="120"/>
+                                <connections>
+                                    <outlet property="moduleIcon" destination="Kz1-X8-Kjz" id="QWg-O6-dvz"/>
+                                    <outlet property="moduleName" destination="2ke-YV-iwA" id="h9N-lp-myq"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -2123,10 +2195,10 @@
             </objects>
             <point key="canvasLocation" x="3560" y="175"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Orientation Navigation Controller-->
         <scene sceneID="iBR-3I-L2H">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zl0-67-8rR" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zl0-67-8rR" customClass="OrientationNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Lr-UV-ves">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2299,6 +2371,26 @@
                                     <outlet property="settingsNumber" destination="YUM-Pf-RE5" id="bQb-62-8mR"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProximitySettingsCell" textLabel="faB-Oq-ZQb" style="IBUITableViewCellStyleDefault" id="UTZ-X3-TR8" customClass="SettingsNumberCell">
+                                <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UTZ-X3-TR8" id="cdp-VP-9nV">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Proximity RSSI Tresholds " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="faB-Oq-ZQb">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vCo-pP-HR1" kind="push" identifier="ProximitySettingsSegue" id="AUI-2z-gJg"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -2318,6 +2410,110 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ncr-3Y-GNL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1043" y="1772"/>
+        </scene>
+        <!--ProximityRSSI Settings Controller - Proximity Settings-->
+        <scene sceneID="BXN-lW-01q">
+            <objects>
+                <tableViewController id="vCo-pP-HR1" customClass="ProximityRSSISettingsController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="jIV-TS-nbx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Immediate" footerTitle="Right next to the BLEduino." id="SJ7-oQ-8BR">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zb3-pf-CF7">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zb3-pf-CF7" id="5Ia-ge-nun">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-80" minValue="-100" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="wbd-cm-67d">
+                                                    <rect key="frame" x="18" y="7" width="200" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </slider>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-100 dBm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNj-lw-3x7">
+                                                    <rect key="frame" x="224" y="11" width="76" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="NEAR" footerTitle="In the vicinity of the BLEduino." id="9vW-AU-wgl">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JJr-P7-iiM">
+                                        <rect key="frame" x="0.0" y="238" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JJr-P7-iiM" id="ust-Is-6Dc">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-80" minValue="-100" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="ggi-cX-rRl">
+                                                    <rect key="frame" x="18" y="7" width="200" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </slider>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-100 dBm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmS-Is-ETz">
+                                                    <rect key="frame" x="224" y="11" width="76" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="FAR" footerTitle="Not so close to the BLEduino." id="K1w-Bf-GLN">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="2N4-HE-w5U">
+                                        <rect key="frame" x="0.0" y="357" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2N4-HE-w5U" id="IMi-Yz-8Mr">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-80" minValue="-100" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="tav-uk-nUq">
+                                                    <rect key="frame" x="18" y="7" width="200" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </slider>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-100 dBm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaJ-gr-amj">
+                                                    <rect key="frame" x="224" y="11" width="76" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="vCo-pP-HR1" id="LIp-hs-DDh"/>
+                            <outlet property="delegate" destination="vCo-pP-HR1" id="fSQ-JE-Gqg"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Proximity Settings" id="zDr-B1-ahU"/>
+                    <connections>
+                        <outlet property="farLabel" destination="LaJ-gr-amj" id="40E-gd-Jam"/>
+                        <outlet property="farSlider" destination="tav-uk-nUq" id="p7E-h5-dfT"/>
+                        <outlet property="immediateLabel" destination="RNj-lw-3x7" id="Luc-Tb-BSy"/>
+                        <outlet property="immediateSlider" destination="wbd-cm-67d" id="Gp1-9v-4VC"/>
+                        <outlet property="nearLabel" destination="YmS-Is-ETz" id="k7L-Ac-Iiy"/>
+                        <outlet property="nearSlider" destination="ggi-cX-rRl" id="9Pc-qw-hKm"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g1I-sh-j72" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1506" y="1772"/>
         </scene>
         <!--Orientation Navigation Controller-->
         <scene sceneID="4D7-fL-ruD">
@@ -2426,10 +2622,10 @@
             </objects>
             <point key="canvasLocation" x="3022" y="2562"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Orientation Navigation Controller-->
         <scene sceneID="eTT-Ac-LcV">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dPN-ZP-gLf" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dPN-ZP-gLf" customClass="OrientationNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0lo-SK-9ZA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2504,10 +2700,10 @@
             </objects>
             <point key="canvasLocation" x="3022" y="-2187"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Orientation Navigation Controller-->
         <scene sceneID="ktG-V3-XwU">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aF7-F5-Kr9" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aF7-F5-Kr9" customClass="OrientationNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="InS-44-eTS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2522,10 +2718,10 @@
             </objects>
             <point key="canvasLocation" x="4338" y="-2187"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Orientation Navigation Controller-->
         <scene sceneID="L08-DM-264">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ynf-yg-ZYt" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ynf-yg-ZYt" customClass="OrientationNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EKh-Ao-NHW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
