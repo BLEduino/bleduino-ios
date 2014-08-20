@@ -40,6 +40,9 @@ LeDiscoveryManagerDelegate
 //Calibration
 @property IBOutlet UIActivityIndicatorView *calibrationIndicator;
 @property IBOutlet UILabel *calibrationLabel;
+@property IBOutlet UILabel *rangeLabel;
+@property IBOutlet UILabel *rssiLabel;
+@property IBOutlet UILabel *distanceLabel;
 
 - (IBAction)addAlert:(id)sender;
 - (IBAction)calibrate:(id)sender;

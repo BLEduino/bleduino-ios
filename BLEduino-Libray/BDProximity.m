@@ -46,7 +46,7 @@
                        name:PROXIMITY_NEW_RSSI_READING object:nil];
         
         //Setup distance ranges.
-        self.immediateRSSI = -20.0;
+        self.immediateRSSI = -48.0;
         self.nearRSSI = -67;
         self.farRSSI = -90;
 
@@ -156,8 +156,9 @@
         {
             //Collect reading.
             self.currentDistance = [self calculateDistanceRange:currentRSSI];
-            NSNumber *max = [self calculateDistance:[self.rssiReadings valueForKeyPath:@"@max.self"]];
-            NSNumber *min = [self calculateDistance:[self.rssiReadings valueForKeyPath:@"@min.self"]];
+            NSNumber *min = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@max.self"]];
+            NSNumber *max = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@min.self"]];
+            //NOTE: Max RSSI value equals less loss of signal, hence minimum (closer) distance.
             
             //Is user calibrating rignt now?
             if(self.isCalibrating)[self.calibrationReadings addObject:currentRSSI];
@@ -167,6 +168,7 @@
                                            @"MaxDistance":max,
                                            @"MinDistance":min,
                                            @"RSSI":currentRSSI};
+            
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
             
@@ -196,16 +198,18 @@
         NSNumber *currentRSSI = peripheral.RSSI;
         BOOL isValidReading = [self validateReading:currentRSSI];
         
-        //Only keep 5s worth of readings.
-        if([[self.rssiReadings array] count] == 5)[self.rssiReadings dequeue];
-        [self.rssiReadings enqueue:currentRSSI];
-        
         if(isValidReading && currentRSSI != nil)
         {
-            //Collect reading.
-            self.currentDistance = [self calculateDistanceRange:currentRSSI];
-            NSNumber *max = [self calculateDistance:[self.rssiReadings valueForKeyPath:@"@max.self"]];
-            NSNumber *min = [self calculateDistance:[self.rssiReadings valueForKeyPath:@"@min.self"]];
+            //Collect reading. Only keep 5s worth of readings.
+            if([[self.rssiReadings array] count] == 5)[self.rssiReadings dequeue];
+            [self.rssiReadings enqueue:currentRSSI];
+            
+            //Setup readings for notification.
+            NSNumber *agregatedRSSI =[[self.rssiReadings array] valueForKeyPath:@"@avg.self"];
+            self.currentDistance = [self calculateDistanceRange:agregatedRSSI];
+            NSNumber *min = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@max.self"]];
+            NSNumber *max = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@min.self"]];
+            //NOTE: Max RSSI value equals less loss of signal, hence minimum (closer) distance.
             
             //Is user calibrating rignt now?
             if(self.isCalibrating)[self.calibrationReadings addObject:currentRSSI];
@@ -213,7 +217,9 @@
             //Send notification
             NSDictionary *distanceInfo = @{@"CurrentDistance":[NSNumber numberWithLong:self.currentDistance],
                                            @"MaxDistance":max,
-                                           @"MinDistance":min};
+                                           @"MinDistance":min,
+                                           @"RSSI":agregatedRSSI};
+            
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
             
@@ -235,25 +241,29 @@
 - (DistanceRange) calculateDistanceRange:(NSNumber *)aRSSI
 {
     DistanceRange distance;
-    if([aRSSI floatValue] <= self.immediateRSSI)
+    if([aRSSI floatValue] >= self.immediateRSSI)
     {
         distance = Immediate;
     }
     else if (self.measuredPower != nil &&
-             ([aRSSI floatValue] >= ([self.measuredPower floatValue] + 5.0) ||
-             [aRSSI floatValue] <= ([self.measuredPower floatValue] - 5.0)))
+             ([aRSSI floatValue] <= ([self.measuredPower floatValue] + 5.0) &&
+              [aRSSI floatValue] >= ([self.measuredPower floatValue] - 5.0)))
     {
+    /*
+     * Example: Measure power: -60, aRSSI: -61
+     * -65 <= -61 <= -55
+     */
         distance = VeryNear;
     }
-    else if([aRSSI floatValue] <= self.nearRSSI)
+    else if([aRSSI floatValue] >= self.nearRSSI)
     {
         distance = Near;
     }
-    else if([aRSSI floatValue] <= self.farRSSI)
+    else if([aRSSI floatValue] >= self.farRSSI)
     {
         distance = Far;
     }
-    else if([aRSSI floatValue] > self.farRSSI)
+    else if([aRSSI floatValue] < self.farRSSI)
     {
         distance = VeryFar;
     }
@@ -265,9 +275,15 @@
     return distance;
 }
 
+
 // Calculates distance in meters.
 - (NSNumber *)calculateDistance:(NSNumber *)aRSSI
 {
+    if(aRSSI >= self.measuredPower)
+    {
+        return [NSNumber numberWithFloat:-1];
+    }
+    
     //(Measured Power - (Current) RSSI) / (10 * Path Loss Exponent)
     float exponent = ([self.measuredPower floatValue] - [aRSSI floatValue]) / (10.0 * self.pathLoss);
     float d = pow(10.0, exponent);

@@ -53,6 +53,12 @@
     monitor.monitoredBleduino = [leManager.connectedBleduinos lastObject];
     [monitor startMonitoring];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    monitor.immediateRSSI = [defaults floatForKey:PROXIMITY_RSSI_IMMEDIATE_RANGE];
+    monitor.nearRSSI = [defaults floatForKey:PROXIMITY_RSSI_NEAR_RANGE];
+    monitor.farRSSI = [defaults floatForKey:PROXIMITY_RSSI_FAR_RANGE];
+    [defaults synchronize];
+    
     //Set tableview delegate
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -69,11 +75,21 @@
 
 - (void)distanceNotifications:(NSNotification *)notification
 {
-    if([[notification name] isEqualToString:@"NewDistanceNotification"])
+    if([[notification name] isEqualToString:PROXIMITY_NEW_DISTANCE])
     {
-        DistanceRange distance = (DistanceRange )[[notification userInfo] objectForKey:@"CurrentDistance"];
+        NSNumber *distanceNumber = (NSNumber *)[[notification userInfo] objectForKey:@"CurrentDistance"];
+        DistanceRange distance = [distanceNumber integerValue];
         [self updateDistanceIndicator:distance];
-        //FIXME: ADD RSSI, DISTANCE VALUES ON UILABELS
+        
+        //Update RSSI
+        NSInteger rssi = [(NSNumber *)[[notification userInfo] objectForKey:@"RSSI"] integerValue];
+        self.rssiLabel.text = [NSString stringWithFormat:@"RSSI: %lddBm", (long)rssi];
+        
+        //Update Distance
+        NSInteger max = [(NSNumber *)[[notification userInfo] objectForKey:@"MaxDistance"] integerValue];
+        NSInteger min = [(NSNumber *)[[notification userInfo] objectForKey:@"MinDistance"] integerValue];
+        if(max == -1)max = 1; if(min == -1)min = 0; //Correction for when distance can't be calculated.
+        self.distanceLabel.text = [NSString stringWithFormat:@"Distance: %ld-%ldm", (long)min, (long)max];
     }
 }
 
@@ -111,7 +127,7 @@
     [defaults synchronize];
     
     //Create header view.
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 227, 320, 44)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 267, 320, 44)];
     CGFloat borderWidth = 0.72f;
     headerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     headerView.layer.borderWidth = borderWidth;
@@ -134,30 +150,38 @@
 - (void)updateDistanceIndicator:(DistanceRange)range
 {
     NSString *strengthName;
+    NSString *rangeText;
     switch (range) {
         case VeryFar:
             strengthName = @"strength-1.png";
+            rangeText = @"Far";
             break;
         case Far:
             strengthName = @"strength-2.png";
+            rangeText = @"Far";
             break;
         case Near:
             strengthName = @"strength-3.png";
+            rangeText = @"Near";
             break;
         case VeryNear:
             strengthName = @"strength-4.png";
+            rangeText = @"Near";
             break;
         case Immediate:
             strengthName = @"strength-5.png";
+            rangeText = @"Immediate";
             break;
         default:
             strengthName = @"strength-0.png";
+            rangeText = @"...";
             break;
     }
     
-    //Update image.
+    //Update range indicator.
     [UIView beginAnimations:@"Update Strength Image" context:nil];
-    self.distanceIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:strengthName]];
+    self.distanceIndicator.image = [UIImage imageNamed:strengthName];
+    self.rangeLabel.text = rangeText;
     [UIView commitAnimations];
 }
 

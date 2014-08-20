@@ -73,6 +73,19 @@
     //Manager Delegate
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.delegate = self;
+
+    //Load distance alerts flag.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.distanceAlertsEnabled = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED];
+    [defaults synchronize];
+    
+    //Do we need to re-launch the proximity monitor? (In case the application was quit).
+    if(self.distanceAlertsEnabled)
+    {
+        //Proximity Monitor
+        BDProximity *monitor = [BDProximity sharedMonitor];
+        [monitor startMonitoring];
+    }
     
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -125,8 +138,8 @@
  
     //FIXME: FINISH THIS
     
-    NSNumber *rssi = [[notification userInfo] objectForKey:@"RSSI"];
-    NSNumber *range = [[notification userInfo] objectForKey:@"CurrentDistance"];
+    NSInteger rssi = [[[notification userInfo] objectForKey:@"RSSI"] integerValue];
+    NSInteger range = [[[notification userInfo] objectForKey:@"CurrentDistance"] integerValue];
     
     //Check alerts.
     for(ProximityAlert *alert in self.distanceAlerts)
@@ -135,7 +148,7 @@
         {
             if(alert.bleduinoIsCloser || alert.bleduinoIsFarther)
             {
-                if([range integerValue] == alert.distance)
+                if(range == alert.distance)
                 {
                     [self pushDistanceAlertLocalNotification:alert];
                 }
@@ -145,14 +158,14 @@
         {//RSSI Alert
             if(alert.bleduinoIsCloser)
             {
-                if([rssi integerValue] > alert.distance)
+                if(rssi > alert.distance )
                 {
                     [self pushDistanceAlertLocalNotification:alert];
                 }
             }
             if(alert.bleduinoIsFarther)
             {
-                if([rssi integerValue] < alert.distance)
+                if(rssi < alert.distance)
                 {
                     [self pushDistanceAlertLocalNotification:alert];
                 }
@@ -199,7 +212,6 @@
         }
     }
 }
-
 
 #pragma mark -
 #pragma mark - Collection View Data Source

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BDLeDiscoveryManager.h"
+#import "BDProximity.h"
 #import "BDNotificationService.h"
 #import "PowerSwitchButtonView.h"
 
@@ -18,7 +19,7 @@
     //Launch LeDiscovery manager.
     BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
     leManager.isReconnecting = NO;
-        
+    
     //Configure settings.
     //Is this the first launch ever of this application?
     //Verify if keys exists prior to this launch.
@@ -149,10 +150,16 @@
     
     if([defaults objectForKey:PROXIMITY_RSSI_IMMEDIATE_RANGE] == nil)
     {
-        [defaults setFloat:-20.0 forKey:PROXIMITY_RSSI_IMMEDIATE_RANGE];
+        [defaults setFloat:-48.0 forKey:PROXIMITY_RSSI_IMMEDIATE_RANGE];
         [defaults setFloat:-67.0 forKey:PROXIMITY_RSSI_NEAR_RANGE];
         [defaults setFloat:-90.0 forKey:PROXIMITY_RSSI_FAR_RANGE];
     }
+    
+    //Proximity Monitor
+    BDProximity *monitor = [BDProximity sharedMonitor];
+    monitor.immediateRSSI = [defaults floatForKey:PROXIMITY_RSSI_IMMEDIATE_RANGE];
+    monitor.nearRSSI = [defaults floatForKey:PROXIMITY_RSSI_NEAR_RANGE];
+    monitor.farRSSI = [defaults floatForKey:PROXIMITY_RSSI_FAR_RANGE];
     
     [defaults synchronize];
     
