@@ -286,7 +286,7 @@
         [defaults synchronize];
         
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Calibration Explanation"
-                                                        message:@"The distance displayed here is determined by the strength of the radio signal sent from the BLEduino after it has travelled through the air. Radio signals are susceptible to everything they go through (e.g. walls, doors, air, humidity), so calibration is done to have a point of reference at a given distance, and a given environment. Because of this, the distance provided here is only an estimation, and you should consider calibrating every time the testing environment changes."
+                                                        message:@"The distance displayed here is determined by the strength of the radio signal sent from the BLEduino after it has travelled through the air. Radio signals are susceptible to everything they go through (e.g. walls, doors, air, humidity), so calibration is done to have a point of reference at a given distance, and a given environment. Also known as Measured Power. Because of this, the distance provided here is only an estimation, and you should consider calibrating every time the testing environment changes."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Ok", nil];
@@ -296,7 +296,7 @@
     else
     {        
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Distance Calibration"
-                                                        message:@"Please stand 1 meter (3.3 ft) away from the BLEduino, and make sure the path between the BLEduino and the iOS device is clear. Try not to move while calibration is being completed."
+                                                        message:@"Please stand 1 meter (3.3 ft) away from the BLEduino to determine the Measured Power, and make sure the path between the BLEduino and the iOS device is clear. Try not to move while calibration is being completed."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Start", nil];
@@ -327,7 +327,7 @@
     if(alertView.tag == 75)//Calibration explanation.
     {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Distance Calibration"
-                                                        message:@"Please stand 1 meter (3.3 ft) away from the BLEduino, and make sure the path between the BLEduino and the iOS device is clear. Try not to move while calibration is being completed."
+                                                        message:@"Please stand 1 meter (3.3 ft) away from the BLEduino to determine the Measured Power, and make sure the path between the BLEduino and the iOS device is clear. Try not to move while calibration is being completed."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Start", nil];

@@ -33,6 +33,7 @@ typedef NSUInteger DistanceRange;
 @interface BDProximity : NSObject <CBPeripheralDelegate>
 @property (weak) id <ProximityDelegate> delegate;
 @property CBPeripheral *monitoredBleduino;
+@property (strong) NSNumber *measuredPower; //Calibrated RSSI.
 @property float immediateRSSI;
 @property float nearRSSI;
 @property float farRSSI;

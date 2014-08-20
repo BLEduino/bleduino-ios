@@ -68,6 +68,21 @@
     self.immediateSlider.tintColor = lightBlue;
     self.nearSlider.tintColor = lightBlue;
     self.farSlider.tintColor = lightBlue;
+    
+    //Set Footer
+    BDProximity *monitor = [BDProximity sharedMonitor];
+    NSInteger measuredPower = [monitor.measuredPower integerValue];
+    UILabel *footer = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [footer setTextAlignment:NSTextAlignmentCenter];
+    [footer setLineBreakMode:NSLineBreakByWordWrapping];
+    [footer setTextColor:lightBlue];
+    [footer setFont:[UIFont systemFontOfSize:15]];
+    footer.text = [NSString stringWithFormat:@"Meassured Power: %lddBM", (long)measuredPower];
+    self.tableView.tableFooterView = footer;
+    
+    //Setup header
+    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
+    self.tableView.tableHeaderView = header;
 }
 
 - (void)updateImmediateRSSIIndicator:(id)slider

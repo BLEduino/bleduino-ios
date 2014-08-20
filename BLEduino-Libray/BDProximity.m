@@ -22,7 +22,6 @@
 @property DistanceRange currentDistance;
 
 @property (strong) NSMutableArray *calibrationReadings;
-@property (strong) NSNumber *measuredPower; //Calibrated RSSI.
 @property BOOL isCalibrating;
 @property BOOL isMonitoring;
 @end
