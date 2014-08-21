@@ -50,8 +50,44 @@
         //Populate with data of alert to be updated.
         self.message.text = self.alert.message;
         self.distanceControl.selectedSegmentIndex = self.alert.distance;
+    }
+    
+    //If it is an update
+    if(!self.isNewAlert)
+    {
+        //Populate with data of alert to be updated.
+        self.message.text = self.alert.message;
         [self.alertWhenCloser setOn:self.alert.bleduinoIsCloser animated:NO];
         [self.alertWhenFarther setOn:self.alert.bleduinoIsFarther animated:NO];
+        
+        switch (self.alert.distance) {
+            case 4:
+                self.distanceControl.selectedSegmentIndex = 0;
+                break;
+            case 2:
+                self.distanceControl.selectedSegmentIndex = 1;
+                break;
+            case 1:
+                self.distanceControl.selectedSegmentIndex = 2;
+                break;
+            default:
+                self.distanceControl.selectedSegmentIndex = 2;
+                break;
+        }
+    }
+    
+    //First alert?
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isFirstAlert = [defaults boolForKey:PROXIMITY_FIRST_ALERT];
+    if(isFirstAlert)
+    {
+        NSString *message = @"Proximity alerts are only supported on the foreground. That is, you must have the application open for them to work.";
+        UIAlertView *firstAlert = [[UIAlertView alloc]initWithTitle:@"Proximity Alerts"
+                                                               message:message
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"Ok"
+                                                     otherButtonTitles:nil];
+        [firstAlert show];
     }
 }
 
@@ -80,20 +116,47 @@
         {
             self.alert = [[ProximityAlert alloc] init];
             self.alert.message = self.message.text;
-            self.alert.distance = self.distanceControl.selectedSegmentIndex;
             self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
             self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
             self.alert.isDistanceAlert = YES;
+            
+            switch (self.distanceControl.selectedSegmentIndex) {
+                case 0:
+                    self.alert.distance = 4;
+                    break;
+                case 1:
+                    self.alert.distance = 2;
+                    break;
+                case 2:
+                    self.alert.distance = 1;
+                    break;
+                default:
+                    self.alert.distance = 0;
+                    break;
+            }
             
             [self.delegate didCreateDistanceAlert:self.alert fromController:self];
         }
         else
         {
             self.alert.message = self.message.text;
-            self.alert.message = self.message.text;
-            self.alert.distance = self.distanceControl.selectedSegmentIndex;
             self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
             self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
+            
+            switch (self.distanceControl.selectedSegmentIndex) {
+                case 0:
+                    self.alert.distance = 4;
+                    break;
+                case 1:
+                    self.alert.distance = 2;
+                    break;
+                case 2:
+                    self.alert.distance = 1;
+                    break;
+                default:
+                    self.alert.distance = 0;
+                    break;
+            }
             
             [self.delegate didUpdateDistanceAlert:self.alert fromController:self];
         }

@@ -25,8 +25,6 @@
 @property IBOutlet UITextField *message;
 @property IBOutlet UISlider *rssiSlider;
 @property IBOutlet UILabel *rssiIndicator;
-@property IBOutlet UISwitch *alertWhenCloser;
-@property IBOutlet UISwitch *alertWhenFarther;
 
 - (IBAction)dismissModule:(id)sender;
 - (IBAction)updateRSSIAlert:(id)sender;

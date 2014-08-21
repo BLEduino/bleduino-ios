@@ -10,4 +10,9 @@
 
 @implementation ProximityAlert
 
+- (BOOL)isProximityAlertReady
+{
+    double now = CACurrentMediaTime();
+    return ((now - self.lastShow) >= 5.0);
+}
 @end

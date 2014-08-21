@@ -178,6 +178,8 @@
                         minDistance:min
                            withRSSI:currentRSSI];
         }
+        
+        [self performSelector:@selector(monitorBleduinoDistances) withObject:nil afterDelay:1];
     }
 }
 

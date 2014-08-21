@@ -16,6 +16,8 @@
 
 @interface ModulesCollectionViewController()
 @property UIColor *themeColor;
+@property NSInteger lastRSSI;
+@property DistanceRange lastRange;
 @end
 @implementation ModulesCollectionViewController
 
@@ -87,6 +89,11 @@
         [monitor startMonitoring];
     }
     
+    [self loadDistanceAlerts];
+    //Store last readings.
+    self.lastRange = 1301;
+    self.lastRSSI = 1301;
+    
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_ENABLED object:nil];
@@ -115,6 +122,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *proximityMessages = (NSArray *)[defaults objectForKey:PROXIMITY_MESSAGES];
     NSArray *proximityDistances = (NSArray *)[defaults objectForKey:PROXIMITY_DISTANCES];
+    NSArray *proximityDistancesTypes = (NSArray *)[defaults objectForKey:PROXIMITY_DISTANCES_TYPES];
     NSArray *proximityCloser = (NSArray *)[defaults objectForKey:PROXIMITY_CLOSER];
     NSArray *proximityFarther = (NSArray *)[defaults objectForKey:PROXIMITY_FARTHER];
     [defaults synchronize];
@@ -125,9 +133,10 @@
     {
         ProximityAlert *alert = [[ProximityAlert alloc] init];
         alert.message = (NSString *)[proximityMessages objectAtIndex:i];
-        alert.distance = (NSInteger)[proximityDistances objectAtIndex:i];
-        alert.bleduinoIsCloser = (BOOL)[proximityCloser objectAtIndex:i];
-        alert.bleduinoIsFarther = (BOOL)[proximityFarther objectAtIndex:i];
+        alert.distance = [(NSNumber *)[proximityDistances objectAtIndex:i] integerValue];
+        alert.isDistanceAlert = [(NSNumber *)[proximityDistancesTypes objectAtIndex:i] boolValue];
+        alert.bleduinoIsCloser = [(NSNumber *)[proximityCloser objectAtIndex:i] boolValue];
+        alert.bleduinoIsFarther = [(NSNumber *)[proximityFarther objectAtIndex:i] boolValue];
         
         [self.distanceAlerts addObject:alert];
     }
@@ -135,42 +144,71 @@
 
 - (void)verifyDistanceAlerts:(NSNotification *)notification
 {
- 
-    //FIXME: FINISH THIS
-    
-    NSInteger rssi = [[[notification userInfo] objectForKey:@"RSSI"] integerValue];
-    NSInteger range = [[[notification userInfo] objectForKey:@"CurrentDistance"] integerValue];
-    
-    //Check alerts.
-    for(ProximityAlert *alert in self.distanceAlerts)
+    //Is BLEduino connected?
+    BDProximity *monitor = [BDProximity sharedMonitor];
+    if(monitor.monitoredBleduino.state == CBPeripheralStateConnected)
     {
-        if(alert.isDistanceAlert)
+        NSInteger rssi = [[[notification userInfo] objectForKey:@"RSSI"] integerValue];
+        NSInteger range = [[[notification userInfo] objectForKey:@"CurrentDistance"] integerValue];
+        
+        //Check alerts.
+        for(ProximityAlert *alert in self.distanceAlerts)
         {
-            if(alert.bleduinoIsCloser || alert.bleduinoIsFarther)
+            if(alert.isDistanceAlert)
             {
-                if(range == alert.distance)
+                BOOL isNewDistanceRange = (range != self.lastRange);
+                if(range == alert.distance && alert.isReadyToShow && isNewDistanceRange)
                 {
-                    [self pushDistanceAlertLocalNotification:alert];
+                    //Notify if we are closer to the BLEduino?
+                    if(alert.bleduinoIsCloser)
+                    {
+                        if(range > self.lastRange)
+                        {
+                            [self pushDistanceAlertLocalNotification:alert];
+                            alert.lastShow = CACurrentMediaTime();
+                        }
+                    }
+                    
+                    //Notify if we are farther from the BLEduino?
+                    if(alert.bleduinoIsFarther)
+                    {
+                        if(range < self.lastRange)
+                        {
+                            [self pushDistanceAlertLocalNotification:alert];
+                            alert.lastShow = CACurrentMediaTime();
+                        }
+                    }
+                }
+            }
+            else
+            {//RSSI Alert
+                
+                BOOL isNewRSSIRange = !(rssi >= (self.lastRSSI - 2) && rssi <= (self.lastRSSI + 2));
+                if(isNewRSSIRange)
+                {
+                    BOOL isValidRange = (rssi >= (alert.distance - 2) && rssi <= (alert.distance + 2));
+                    if(isValidRange && alert.isReadyToShow)
+                    {
+                        [self pushDistanceAlertLocalNotification:alert];
+                        alert.lastShow = CACurrentMediaTime();
+                    }
+                    
+                    /*
+                     * Example:
+                     * Reading: -61
+                     * Alert: -63
+                     * Margin 2
+                     * -61 (-63+2) >= X >= -65 (-63-2)
+                     * X = -61
+                     * Valid range, show alert!
+                     */
                 }
             }
         }
-        else
-        {//RSSI Alert
-            if(alert.bleduinoIsCloser)
-            {
-                if(rssi > alert.distance )
-                {
-                    [self pushDistanceAlertLocalNotification:alert];
-                }
-            }
-            if(alert.bleduinoIsFarther)
-            {
-                if(rssi < alert.distance)
-                {
-                    [self pushDistanceAlertLocalNotification:alert];
-                }
-            }
-        }
+        
+        //Store last readings.
+        self.lastRange = range;
+        self.lastRSSI = rssi;
     }
 }
 
@@ -195,6 +233,7 @@
     if([name isEqualToString:PROXIMITY_DISTANCE_ALERTS_ENABLED])
     {
         self.distanceAlertsEnabled = YES;
+        [self loadDistanceAlerts];
     }
     else if([name isEqualToString:PROXIMITY_DISTANCE_ALERTS_DISABLED])
     {

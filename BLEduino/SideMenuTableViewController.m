@@ -67,6 +67,22 @@
                 navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"settingsController"]];
                 [self.sideMenuViewController hideMenuViewController];
                 break;
+            case 3:
+            {
+                //Open bleduino.cc/start
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Getting Started"
+                                                                message:@"This will open the BLEduino documentation website (in Safari). There you will find tutorials, reference guides for our BLE library, and more."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Open", nil];
+                alert.tag = 550;
+                [alert show];
+            }
+                break;
+            default:
+                navigationController.viewControllers = @[[self.storyboard instantiateViewControllerWithIdentifier:@"modulesController"]];
+                [self.sideMenuViewController hideMenuViewController];
+                break;
         }
     }
     
@@ -74,11 +90,12 @@
     else if (indexPath.section == 1)
     {
         //Open bleduino.cc
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"BLEduino Website"
-                                                        message:@"This will open the BLEduino website in Safari. There you will find more information (e.g. video, documentation, source code) about the BLEduino. You can also access our BLEduino store from there."
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"BLEduino Hardware"
+                                                        message:@"This will open the BLEduino website (in Safari). There you will find more information (e.g. video, documentation, source code) about the BLEduino. You can also access our BLEduino store from there."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Open", nil];
+        alert.tag = 450;
         [alert show];
     }
     
@@ -111,9 +128,15 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Open bleduino website in safari.
-    if(buttonIndex == 1) //Done button.
+    if(buttonIndex == 1 && alertView.tag == 450) //Open button.
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://bleduino.cc"]];
+    }
+    
+    //Open bleduino documentation website in safari.
+    else if(buttonIndex == 1 && alertView.tag == 550) //Open button.
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://bleduino.cc/start"]];
     }
 }
 

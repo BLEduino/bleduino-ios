@@ -191,13 +191,13 @@
     if(alert.isDistanceAlert)
     {
         switch (alert.distance) {
-            case 0:
+            case 4:
                 detailText = @"Immediate";
                 break;
-            case 1:
+            case 2:
                 detailText = @"Near";
                 break;
-            case 2:
+            case 1:
                 detailText = @"Far";
                 break;
             default:
@@ -481,7 +481,10 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         [self.alerts removeObjectAtIndex:indexPath.row];
+        [self storeDistanceAlerts]; //Remove from storage.
+        
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
     }
 }
 

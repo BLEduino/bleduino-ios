@@ -48,11 +48,7 @@ typedef NSUInteger FirmataCommandPinState;
 @interface BDFirmataCommandCharacteristic : NSObject
 @property FirmataCommandPinState pinState;
 @property NSInteger pinNumber;
-
 @property NSInteger pinValue;
-
-//Work-around, only for sequencer module.
-@property NSInteger rowNumber;
 
 
 /*

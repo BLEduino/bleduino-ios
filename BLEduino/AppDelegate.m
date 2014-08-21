@@ -128,7 +128,7 @@
         NSMutableArray *sequenceDelayValues = [[NSMutableArray alloc] initWithCapacity:4];
         
         //Add sequence to blink the led connected to pin 13.
-        [sequence addObjectsFromArray:@[@11, @100, @11, @100]]; //pin 13, delay, pin 13, delay
+        [sequence addObjectsFromArray:@[@13, @100, @13, @100]]; //pin 13, delay, pin 13, delay
         [sequenceStates addObjectsFromArray:@[@0, @0]]; // both state 0 i.e. digital out
         [sequenceValues addObjectsFromArray:@[@1, @0]]; // first digital out high, then digital out low
         [sequenceDelayFormats addObjectsFromArray:@[@6, @6]]; //delay in seconds format
@@ -146,6 +146,11 @@
     if([defaults objectForKey:PROXIMITY_FIRST_CALIBRATION] == nil)
     {
         [defaults setBool:YES forKey:PROXIMITY_FIRST_CALIBRATION];
+    }
+    
+    if([defaults objectForKey:PROXIMITY_FIRST_ALERT] == nil)
+    {
+        [defaults setBool:YES forKey:PROXIMITY_FIRST_ALERT];
     }
     
     if([defaults objectForKey:PROXIMITY_RSSI_IMMEDIATE_RANGE] == nil)

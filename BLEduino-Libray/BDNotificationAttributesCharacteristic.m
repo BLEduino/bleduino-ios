@@ -31,7 +31,6 @@
  */
 - (NSData *)data
 {
-//    NSString *attributesString = [NSString stringWithFormat:@"%@#%@", self.title, self.message];
     NSData *attributesData = [self.message dataUsingEncoding:NSUTF8StringEncoding];
     
     return attributesData;

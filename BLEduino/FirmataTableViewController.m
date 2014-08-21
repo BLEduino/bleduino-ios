@@ -137,61 +137,61 @@
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN13_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pin13 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:11
+                                                                                         pinNumber:13
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA0_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA0 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:12
+                                                                                         pinNumber:18
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA1_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA1 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:13
+                                                                                         pinNumber:19
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA2_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA2 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:14
+                                                                                         pinNumber:20
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA3_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA3 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:15
+                                                                                         pinNumber:21
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA4_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA4 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:16
+                                                                                         pinNumber:22
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA5_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinA5 = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:17
+                                                                                         pinNumber:23
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_MISO_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinMISO = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:18
+                                                                                         pinNumber:14
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_MOSI_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinMOSI = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:19
+                                                                                         pinNumber:16
                                                                                           pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_SCK_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommandCharacteristic *pinSCK = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                         pinNumber:20
+                                                                                         pinNumber:15
                                                                                           pinValue:value];
     
     self.commands = @[pin0, pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10, pin13,
@@ -225,13 +225,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDFirmataCommandCharacteristic *firmataCommand = [self.commands objectAtIndex:indexPath.row];
-
+    NSInteger index = indexPath.row;
+    
     //PWM State
     if(firmataCommand.pinState == FirmataCommandPinStatePWM)
     {
         FirmataPWMCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PwmStateCell" forIndexPath:indexPath];
-        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:firmataCommand.pinNumber];
-        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:firmataCommand.pinNumber
+        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:index];
+        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:index
                                                                              forPinState:firmataCommand.pinState];
         [cell.pinValue addTarget:self
                           action:@selector(pwmUpdate:)
@@ -244,8 +245,8 @@
     else if(firmataCommand.pinState == FirmataCommandPinStateAnalog)
     {
         FirmataAnalogCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AnalogStateCell" forIndexPath:indexPath];
-        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:firmataCommand.pinNumber];
-        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:firmataCommand.pinNumber
+        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:index];
+        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:index
                                                                              forPinState:firmataCommand.pinState];
         if(firmataCommand.pinValue >= 0)
         {
@@ -264,8 +265,8 @@
     if(firmataCommand.pinState == FirmataCommandPinStateOutput)
     {
         FirmataDigitalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DigitalStateCell" forIndexPath:indexPath];
-        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:firmataCommand.pinNumber];
-        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:firmataCommand.pinNumber
+        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:index];
+        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:index
                                                                              forPinState:firmataCommand.pinState];
         [cell.pinValue addTarget:self
                           action:@selector(digitalSwitchToggled:)
@@ -278,8 +279,8 @@
     else
     {
         FirmataAnalogCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AnalogStateCell" forIndexPath:indexPath];
-        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:firmataCommand.pinNumber];
-        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:firmataCommand.pinNumber
+        cell.pinNumber.text = [FirmataTableViewController firmataPinNames:index];
+        cell.pinState.attributedText = [FirmataTableViewController firmataPinTypesString:index
                                                                              forPinState:firmataCommand.pinState];
         if(firmataCommand.pinValue >= 0)
         {
@@ -450,13 +451,18 @@
 didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
                    error:(NSError *)error
 {
-    BDFirmataCommandCharacteristic *command = [self.commands objectAtIndex:firmataCommand.pinNumber];
-    if(command.pinState == firmataCommand.pinState)
+    for(BDFirmataCommandCharacteristic *command in self.commands)
     {
-        command.pinValue = firmataCommand.pinValue;
-        [self.tableView reloadData];
-    }
+        if(command.pinNumber == firmataCommand.pinNumber)
+        {
+            if(command.pinState == firmataCommand.pinState)
+            {
+                command.pinValue = firmataCommand.pinValue;
+                [self.tableView reloadData];
+            }
+        }
 
+    }
 }
 
 //Changing PIN state.
@@ -664,11 +670,11 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     [self.tableView reloadData];
 }
 
-+ (NSInteger) firmataPinTypes:(NSInteger)pinNumber
++ (NSInteger) firmataPinTypes:(NSInteger)index
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSInteger types = 0;
-    switch (pinNumber) {
+    switch (index) {
         case 0:
             types = (NSInteger)[defaults integerForKey:FIRMATA_PIN0_STATE_TYPES];
             break;
@@ -758,7 +764,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     return types;
 }
 
-+ (NSMutableAttributedString *) firmataPinTypesString:(NSInteger)pinNumber
++ (NSMutableAttributedString *) firmataPinTypesString:(NSInteger)index
                                           forPinState:(FirmataCommandPinState)state
 {
     UIColor *selection = [UIColor colorWithRed:THEME_COLOR_RED/255.0
@@ -774,7 +780,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
     NSString *rangeString;
     
     NSMutableAttributedString *types_String;
-    NSInteger types = [FirmataTableViewController firmataPinTypes:pinNumber];
+    NSInteger types = [FirmataTableViewController firmataPinTypes:index];
     switch (types) {
         case 0:
             types_String = [[NSMutableAttributedString alloc] initWithString:digital];
@@ -825,17 +831,19 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 }
 
 
-+ (NSString *) firmataPinNames:(NSInteger)pinNumber
++ (NSString *) firmataPinNames:(NSInteger)index
 {
     NSString *name;
-    if(pinNumber < 12)
+    if(index < 11)
     {
-        if(pinNumber == 11) pinNumber = pinNumber+2; //Fix for pin 13.
-        name = [NSString stringWithFormat:@"Pin %ld", (long)pinNumber];
+        name = [NSString stringWithFormat:@"Pin %ld", (long)index];
     }
     else
     {
-        switch (pinNumber) {
+        switch (index) {
+            case 11:
+                name = @"Pin 13";
+                break;
             case 12:
                 name = @"Pin A0";
                 break;

@@ -57,12 +57,24 @@
         //Populate with data of alert to be updated.
         self.message.text = self.alert.message;
         self.rssiSlider.value = self.alert.distance;
-        [self.alertWhenCloser setOn:self.alert.bleduinoIsCloser animated:NO];
-        [self.alertWhenFarther setOn:self.alert.bleduinoIsFarther animated:NO];
     }
     
     NSInteger currentDistanceValue = self.rssiSlider.value;
     self.rssiIndicator.text = [NSString stringWithFormat:@"%ld dBm", (long)currentDistanceValue];
+    
+    //First alert?
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isFirstAlert = [defaults boolForKey:PROXIMITY_FIRST_ALERT];
+    if(isFirstAlert)
+    {
+        NSString *message = @"Proximity alerts are only supported on the foreground. That is, you must have the application open for them to work.";
+        UIAlertView *firstAlert = [[UIAlertView alloc]initWithTitle:@"Proximity Alerts"
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [firstAlert show];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,8 +103,6 @@
             self.alert = [[ProximityAlert alloc] init];
             self.alert.message = self.message.text;
             self.alert.distance = self.rssiSlider.value;
-            self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
-            self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
             self.alert.isDistanceAlert = NO;
             
             [self.delegate didCreateRSSIAlert:self.alert fromController:self];
@@ -100,10 +110,7 @@
         else
         {
             self.alert.message = self.message.text;
-            self.alert.message = self.message.text;
             self.alert.distance = self.rssiSlider.value;
-            self.alert.bleduinoIsCloser = self.alertWhenCloser.isOn;
-            self.alert.bleduinoIsFarther = self.alertWhenFarther.isOn;
             
             [self.delegate didUpdateRSSIAlert:self.alert fromController:self];
         }

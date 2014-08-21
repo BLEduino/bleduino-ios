@@ -127,275 +127,28 @@
     for (NSNumber *entry in sequence)
     {
         NSInteger command = [entry intValue];
-        switch (command) {
-            case 0:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:0
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 1:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:1
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 2:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:2
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 3:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:3
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 4:
-            {
-                
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:4
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 5:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:5
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 6:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:6
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 7:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:7
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 8:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:8
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 9:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                      pinNumber:9
-                                                                                                       pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 10:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:10
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 11:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:11
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 12:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:12
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 13:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:13
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 14:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:14
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 15:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:15
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 16:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:16
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 17:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                       pinNumber:17
-                                                                                                        pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 18:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                         pinNumber:18
-                                                                                                          pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 19:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                         pinNumber:19
-                                                                                                          pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-            case 20:
-            {
-                FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
-                NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
-                NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
-                                                                                                        pinNumber:20
-                                                                                                         pinValue:value];
-                [self.sequence addObject:pin];
-                pinCounter = pinCounter + 1;
-            }break;
-                
-                //Time-delay
-            default:
-            {
-                NSInteger delayFormat = [[sequenceDelayFormats objectAtIndex:delayCounter] intValue];
-                NSInteger delayValue = [[sequenceDelayValues objectAtIndex:delayCounter] intValue];
-                delayCounter = delayCounter + 1;
-                
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:delayFormat
-                                                                                                     pinNumber:100
-                                                                                                      pinValue:delayValue];
-                [self.sequence addObject:pin];
-            }
-                break;
+        if(command <= 23)
+        {
+            FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
+            NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
+            NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
+            BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
+                                                                                                 pinNumber:command
+                                                                                                  pinValue:value];
+            [self.sequence addObject:pin];
+            pinCounter = pinCounter + 1;
         }
-
+        else
+        {
+            NSInteger delayFormat = [[sequenceDelayFormats objectAtIndex:delayCounter] intValue];
+            NSInteger delayValue = [[sequenceDelayValues objectAtIndex:delayCounter] intValue];
+            delayCounter = delayCounter + 1;
+            
+            BDFirmataCommandCharacteristic *delay = [[BDFirmataCommandCharacteristic alloc] initWithPinState:delayFormat
+                                                                                                   pinNumber:100
+                                                                                                    pinValue:delayValue];
+            [self.sequence addObject:delay];
+        }
     }
 
     [defaults synchronize];
@@ -822,7 +575,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Update PWM value.
-    if(buttonIndex == 1) //Done button.
+    if(buttonIndex == 1 && alertView.tag != 815) //Done button.
     {
         NSInteger pwmValue = [[alertView textFieldAtIndex:0].text integerValue];
         
@@ -919,9 +672,11 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
             //***********************
             else
             {
+                NSInteger pinNumber = [self pinNumber:buttonIndex];
                 BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:1
-                                                                                                     pinNumber:buttonIndex
+                                                                                                     pinNumber:pinNumber
                                                                                                       pinValue:-1];
+                
                 [self.sequence insertObject:pin atIndex:self.sequence.count];
 
             }
@@ -943,21 +698,35 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 
 - (IBAction)sendSequence:(id)sender
 {
-    //Add begin/end commands to sequence.
-    NSMutableArray *finalSequence = [NSMutableArray arrayWithArray:self.sequence];
-    [finalSequence insertObject:self.start atIndex:0];
-    [finalSequence insertObject:self.end atIndex:finalSequence.count];
-    
-    //Send command.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+    if(self.sequence.count <= 18)
     {
-        for(BDFirmataCommandCharacteristic *command in finalSequence)
+        //Add begin/end commands to sequence.
+        NSMutableArray *finalSequence = [NSMutableArray arrayWithArray:self.sequence];
+        [finalSequence insertObject:self.start atIndex:0];
+        [finalSequence insertObject:self.end atIndex:finalSequence.count];
+        
+        //Send command.
+        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        
+        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
-            BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
-            [firmataService writeFirmataCommand:command];
+            for(BDFirmataCommandCharacteristic *command in finalSequence)
+            {
+                BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+                [firmataService writeFirmataCommand:command];
+            }
         }
+    }
+    else
+    {
+        NSString *message = @"Due to limited memory on the BLEduino, the sequence must be 18 commands or less.";
+        UIAlertView *sequenceAlert = [[UIAlertView alloc]initWithTitle:@"Sequence is too long"
+                                                               message:message
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"Ok"
+                                                     otherButtonTitles:nil];
+        sequenceAlert.tag = 815;
+        [sequenceAlert show];
     }
 }
 
@@ -1011,44 +780,44 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
             types = (NSInteger)[defaults integerForKey:FIRMATA_PIN10_STATE_TYPES];
             break;
             
-        case 11:
+        case 13:
             types = (NSInteger)[defaults integerForKey:FIRMATA_PIN13_STATE_TYPES];
             break;
             
-        case 12:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA0_STATE_TYPES];
-            break;
-            
-        case 13:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA1_STATE_TYPES];
-            break;
-            
         case 14:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA2_STATE_TYPES];
-            break;
-            
-        case 15:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA3_STATE_TYPES];
-            break;
-            
-        case 16:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA4_STATE_TYPES];
-            break;
-            
-        case 17:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA5_STATE_TYPES];
-            break;
-            
-        case 18:
             types = (NSInteger)[defaults integerForKey:FIRMATA_PIN_MISO_STATE_TYPES];
             break;
-            
-        case 19:
+        
+        case 15:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PIN_SCK_STATE_TYPES];
+            break;
+        
+        case 16:
             types = (NSInteger)[defaults integerForKey:FIRMATA_PIN_MOSI_STATE_TYPES];
             break;
             
+        case 18:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA0_STATE_TYPES];
+            break;
+            
+        case 19:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA1_STATE_TYPES];
+            break;
+            
         case 20:
-            types = (NSInteger)[defaults integerForKey:FIRMATA_PIN_SCK_STATE_TYPES];
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA2_STATE_TYPES];
+            break;
+            
+        case 21:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA3_STATE_TYPES];
+            break;
+            
+        case 22:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA4_STATE_TYPES];
+            break;
+            
+        case 23:
+            types = (NSInteger)[defaults integerForKey:FIRMATA_PINA5_STATE_TYPES];
             break;
     }
     
@@ -1143,46 +912,118 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 + (NSString *) firmataPinNames:(NSInteger)pinNumber
 {
     NSString *name;
-    if(pinNumber < 12)
+    if(pinNumber < 11)
     {
-        if(pinNumber == 11) pinNumber = pinNumber+2; //Fix for pin 13.
         name = [NSString stringWithFormat:@"Pin %ld", (long)pinNumber];
     }
     else
     {
         switch (pinNumber) {
-            case 12:
-                name = @"Pin A0";
-                break;
             case 13:
-                name = @"Pin A1";
+                name = @"Pin 13";
                 break;
             case 14:
-                name = @"Pin A2";
-                break;
-            case 15:
-                name = @"Pin A3";
-                break;
-            case 16:
-                name = @"Pin A4";
-                break;
-            case 17:
-                name = @"Pin A5";
-                break;
-            case 18:
                 name = @"Pin MISO";
                 break;
-            case 19:
-                name = @"Pin MOSI";
-                break;
-            case 20:
+            case 15:
                 name = @"Pin SCK";
                 break;
-                
+            case 16:
+                name = @"Pin MOSI";
+                break;
+            case 18:
+                name = @"Pin A0";
+                break;
+            case 19:
+                name = @"Pin A1";
+                break;
+            case 20:
+                name = @"Pin A2";
+                break;
+            case 21:
+                name = @"Pin A3";
+                break;
+            case 22:
+                name = @"Pin A4";
+                break;
+            case 23:
+                name = @"Pin A5";
+                break;
         }
     }
     
     return name;
+}
+
+- (NSInteger) pinNumber:(NSInteger)selection
+{
+    NSInteger pin;
+    switch (selection) {
+        case 0:
+            pin = 0;
+            break;
+        case 1:
+            pin = 1;
+            break;
+        case 2:
+            pin = 2;
+            break;
+        case 3:
+            pin = 3;
+            break;
+        case 4:
+            pin = 4;
+            break;
+        case 5:
+            pin = 5;
+            break;
+        case 6:
+            pin = 6;
+            break;
+        case 7:
+            pin = 7;
+            break;
+        case 8:
+            pin = 8;
+            break;
+        case 9:
+            pin = 9;
+            break;
+        case 10:
+            pin = 10;
+            break;
+        case 11:
+            pin = 13;
+            break;
+        case 12:
+            pin = 18;
+            break;
+        case 13:
+            pin = 19;
+            break;
+        case 14:
+            pin = 20;
+            break;
+        case 15:
+            pin = 21;
+            break;
+        case 16:
+            pin = 22;
+            break;
+        case 17:
+            pin = 23;
+            break;
+        case 18:
+            pin = 14;
+            break;
+        case 19:
+            pin = 16;
+            break;
+        case 20:
+            pin = 15;
+            break;
+    }
+    return pin;
 }
 
 

@@ -135,8 +135,6 @@
     {
         BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:powerSwitchCommand];
-        
-//        [BDWrite writeData:powerSwitchCommand toChannel:Firmata toDevice:bleduino delegate:self];
     }
     
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",

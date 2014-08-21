@@ -11,7 +11,9 @@
 @interface ProximityAlert : NSObject
 @property NSInteger distance;
 @property NSString *message;
+@property double lastShow;
 @property BOOL isDistanceAlert;
+@property (readonly, getter = isProximityAlertReady) BOOL isReadyToShow;
 @property BOOL bleduinoIsCloser;
 @property BOOL bleduinoIsFarther;
 @end

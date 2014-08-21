@@ -93,6 +93,8 @@
 #define PROXIMITY_RSSI_FAR_RANGE @"proximity-rssi-far-range"
 #define PROXIMITY_NEW_RSSI_READING @"proximity-new-rssi-reading"
 
+#define PROXIMITY_FIRST_ALERT @"proximity-first-alert"
+
 //Global
 #define BLE_MANAGER_NOT_POWERED_ON @"ble-manager-not-powered-on"
 #define WRITE_TIME_CAP @"write-time-cap"
