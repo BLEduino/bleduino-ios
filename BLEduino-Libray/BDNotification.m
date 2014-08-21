@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDNotificationService.h"
+#import "BDNotification.h"
 #import "BDLeDiscoveryManager.h"
 
 #pragma mark -
@@ -23,18 +23,18 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDNotificationService ()
+@interface BDNotification ()
 
 @property (strong) CBUUID *notificationServiceUUID;
 @property (strong) CBUUID *notificationAttributesCharacteristicUUID;
 
 @property (weak) id <NotificationServiceDelegate> delegate;
-@property (strong) BDNotificationAttributesCharacteristic *lastSentNotification;
+@property (strong) BDNotificationAttributes *lastSentNotification;
 
 @property (strong) NSMutableOrderedSet *notifications;
 @end
 
-@implementation BDNotificationService
+@implementation BDNotification
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<NotificationServiceDelegate>)aController
@@ -61,7 +61,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 }
 
 
-+ (BDNotificationService *)sharedListener
++ (BDNotification *)sharedListener
 {
     static id sharedNotificationListener = nil;
     static dispatch_once_t onceToken;
@@ -100,7 +100,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
         {
             for(CBPeripheral *bleduino in leManager.connectedBleduinos)
             {
-                BDNotificationService *notification = [[BDNotificationService alloc] initWithPeripheral:bleduino
+                BDNotification *notification = [[BDNotification alloc] initWithPeripheral:bleduino
                                                                                                delegate:aController];
                 
                 [notification subscribeToStartReceivingNotifications];
@@ -129,7 +129,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
  */
 - (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController
 {
-    for(BDNotificationService *notification in self.notifications)
+    for(BDNotification *notification in self.notifications)
     {
         [notification dismissPeripheral];
         [notification unsubscribeToStopReiceivingNotifications];
@@ -147,7 +147,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 /****************************************************************************/
 /*				       Write notification to BLEduino                       */
 /****************************************************************************/
-- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
+- (void) writeNotification:(BDNotificationAttributes *)notification
                    withAck:(BOOL)enabled
 {
     self.lastSentNotification = notification;
@@ -157,7 +157,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
                          withAck:enabled];
 }
 
-- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification
+- (void) writeNotification:(BDNotificationAttributes *)notification
 {
     self.lastNotification = notification;
     [self writeNotification:notification withAck:NO];
@@ -217,7 +217,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 {
     if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
     {
-        self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
+        self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
         
         if(self.isListening)
         {
@@ -311,7 +311,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        self.lastNotification = [[BDNotificationAttributesCharacteristic alloc] initWithData:characteristic.value];
+        self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
         
         if(self.isListening)
         {

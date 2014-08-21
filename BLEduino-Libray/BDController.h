@@ -7,7 +7,7 @@
 //
 
 #import "BDBleService.h"
-#import "BDButtonActionCharacteristic.h"
+#import "BDButtonAction.h"
 
 #pragma mark -
 #pragma mark Controller Service UUIDs
@@ -26,26 +26,26 @@ extern NSString * const kButtonActionCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDControllerService;
+@class BDController;
 @protocol ControllerServiceDelegate <NSObject>
 @optional
-- (void)controllerService:(BDControllerService *)service
-   didReceiveButtonAction:(BDButtonActionCharacteristic *)buttonAction
+- (void)controllerService:(BDController *)service
+   didReceiveButtonAction:(BDButtonAction *)buttonAction
                     error:(NSError *)error;
 
-- (void)controllerService:(BDControllerService *)service
-     didWriteButtonAction:(BDButtonActionCharacteristic *)buttonAction
+- (void)controllerService:(BDController *)service
+     didWriteButtonAction:(BDButtonAction *)buttonAction
                     error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingButtonActionsFor:(BDControllerService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopRecivingButtonActionsFor:(BDControllerService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingButtonActionsFor:(BDController *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingButtonActionsFor:(BDController *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                          Controller Service                              */
 /****************************************************************************/
-@interface BDControllerService : BDBleService <CBPeripheralDelegate>
-@property (nonatomic, strong) BDButtonActionCharacteristic *lastButtonAction;
+@interface BDController : BDBleService <CBPeripheralDelegate>
+@property (nonatomic, strong) BDButtonAction *lastButtonAction;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<ControllerServiceDelegate>)aController;
@@ -53,8 +53,8 @@ extern NSString * const kButtonActionCharacteristicUUIDString;
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write button actions to BLEduino.
-- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction withAck:(BOOL)enabled;
-- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction;
+- (void) writeButtonAction:(BDButtonAction *)buttonAction withAck:(BOOL)enabled;
+- (void) writeButtonAction:(BDButtonAction *)buttonAction;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

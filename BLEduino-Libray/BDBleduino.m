@@ -7,7 +7,7 @@
 //
 
 #import "BDBleduino.h"
-#import "BDBleBridgeService.h"
+#import "BDBleBridge.h"
 
 @interface BDBleduino ()
 @property id delegate;
@@ -22,17 +22,17 @@
 {
     BDBleduino *write = [[BDBleduino alloc] init];
     
-    if(pipe == Firmata && [data isKindOfClass:[BDFirmataCommandCharacteristic class]])
+    if(pipe == Firmata && [data isKindOfClass:[BDFirmataCommand class]])
     {
-        BDFirmataCommandCharacteristic *command = (BDFirmataCommandCharacteristic *)data;
-        BDFirmataService *firmata = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:write];
+        BDFirmataCommand *command = (BDFirmataCommand *)data;
+        BDFirmata *firmata = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:write];
         [firmata writeFirmataCommand:command];
     }
     
     switch (pipe) {
         case Firmata:
         {
-            BDFirmataService *firmata = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:write];
+            BDFirmata *firmata = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:write];
             [firmata readFirmataCommand];
         }
             break;
@@ -74,7 +74,7 @@
     switch (pipe) {
         case Firmata:
         {
-            BDFirmataService *firmata = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:write];
+            BDFirmata *firmata = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:write];
             [firmata readFirmataCommand];
         }
             break;
@@ -118,7 +118,7 @@
     switch (pipe) {
         case Firmata:
         {
-            BDFirmataService *firmata = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:write];
+            BDFirmata *firmata = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:write];
             [firmata readFirmataCommand];
         }
             break;

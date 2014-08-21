@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDButtonActionCharacteristic.h"
+#import "BDButtonAction.h"
 
-@implementation BDButtonActionCharacteristic
+@implementation BDButtonAction
 
 /*
  * Create Button Action characteristic from NSData object.

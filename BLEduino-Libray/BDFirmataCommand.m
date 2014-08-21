@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDFirmataCommandCharacteristic.h"
+#import "BDFirmataCommand.h"
 
-@implementation BDFirmataCommandCharacteristic
+@implementation BDFirmataCommand
 
 /*
  * Create Firmata Command.
@@ -35,8 +35,8 @@
              pinNumber:(NSInteger)number
               pinValue:(NSInteger)value
 {
-    BDFirmataCommandCharacteristic *command =
-    [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
+    BDFirmataCommand *command =
+    [[BDFirmataCommand alloc] initWithPinState:state
                                                    pinNumber:number
                                                     pinValue:value];
     

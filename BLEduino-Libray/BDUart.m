@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDUartService.h"
+#import "BDUart.h"
 #import "BDLeDiscoveryManager.h"
 
 #pragma mark -
@@ -18,7 +18,7 @@ NSString * const kUARTServiceUUIDString = @"8C6BDA7A-A312-681D-025B-0032C0D16A2D
 NSString * const kRxCharacteristicUUIDString = @"8C6BABCD-A312-681D-025B-0032C0D16A2D";
 NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D16A2D";
 
-@interface BDUartService ()
+@interface BDUart ()
 
 @property (strong) CBUUID *uartServiceUUID;
 @property (strong) CBUUID *rxCharacteristicUUID;
@@ -37,7 +37,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@implementation BDUartService
+@implementation BDUart
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<UARTServiceDelegate>)aController

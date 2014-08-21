@@ -163,7 +163,7 @@
 - (void) writeMessage:(NSString *)message bleduino:(CBPeripheral *)bleduino
 {
     
-    BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+    BDUart *messageService = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
 
         BOOL lastPacket = false;
         NSInteger subsstringPointer = 0;

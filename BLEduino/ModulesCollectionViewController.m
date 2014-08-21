@@ -54,8 +54,8 @@
     [super viewDidLoad];
     
     //Set services that run in the background.
-    self.notificationService = [BDNotificationService sharedListener];
-    self.bleBridge = [BDBleBridgeService sharedBridge];
+    self.notificationService = [BDNotification sharedListener];
+    self.bleBridge = [BDBleBridge sharedBridge];
     self.proximityMonitor = [BDProximity sharedMonitor];
      
     //Set appareance.
@@ -704,7 +704,7 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                           BLE-Bridge Delegate                            */
 /****************************************************************************/
-- (void)didFailToOpenBridge:(BDBleBridgeService *)service
+- (void)didFailToOpenBridge:(BDBleBridge *)service
 {
     //Remove setup view.
     [self removeSetupView];
@@ -737,7 +737,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self.collectionView reloadData];
 }
 
-- (void)didOpenBridge:(BDBleBridgeService *)service
+- (void)didOpenBridge:(BDBleBridge *)service
 {
     NSLog(@"BLE-Bridge opened succesfully.");
     //Remove setup view.
@@ -749,7 +749,7 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                           Notification Delegate                          */
 /****************************************************************************/
-- (void)didFailToStartListening:(BDNotificationService *)service
+- (void)didFailToStartListening:(BDNotification *)service
 {
     //Remove setup view.
     [self removeSetupView];
@@ -782,7 +782,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self.collectionView reloadData];
 }
 
-- (void)didStatedListening:(BDNotificationService *)service
+- (void)didStatedListening:(BDNotification *)service
 {
     NSLog(@"Notification is listening.");
     //Remove setup view.

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleBridgeService.h"
+#import "BDBleBridge.h"
 #import "BDLeDiscoveryManager.h"
 
 #pragma mark -
@@ -24,7 +24,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDBleBridgeService ()
+@interface BDBleBridge ()
 @property (strong) CBUUID *bleBridgeServiceUUID;
 @property (strong) CBUUID *bridgeRxCharacteristicUUID;
 @property (strong) CBUUID *bridgeTxCharacteristicUUID;
@@ -39,7 +39,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 @property NSInteger deviceID;
 @end
 
-@implementation BDBleBridgeService
+@implementation BDBleBridge
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<BleBridgeServiceDelegate>)aController
@@ -60,7 +60,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     return self;
 }
 
-+ (BDBleBridgeService *)sharedBridge
++ (BDBleBridge *)sharedBridge
 {
     static id sharedBleBridge = nil;
     static dispatch_once_t onceToken;
@@ -95,7 +95,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
-            BDBleBridgeService *bridge = [[BDBleBridgeService alloc] initWithPeripheral:bleduino
+            BDBleBridge *bridge = [[BDBleBridge alloc] initWithPeripheral:bleduino
                                                                                delegate:nil
                                                                      peripheralDelegate:self];
             bridge.isOpen = YES;
@@ -120,7 +120,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
  */
 - (void)closeBridgeForDelegate:(id<BleBridgeServiceDelegate>)aController
 {
-    for(BDBleBridgeService *bridge in self.bridges)
+    for(BDBleBridge *bridge in self.bridges)
     {
         [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
                            characteristicUUID:bridge.bridgeTxCharacteristicUUID
@@ -164,7 +164,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             self.verifyDeviceIDs = [[NSMutableDictionary alloc] initWithDictionary:self.deviceIDs copyItems:YES];
             
             //Found all deviceIDs, now subscribe to recive data from all bleduinos.
-            for(BDBleBridgeService *bridge in self.bridges)
+            for(BDBleBridge *bridge in self.bridges)
             {
                 //Store deviceID on the corresponding service.
                 NSString *peripheralUUID = [bridge.peripheral.identifier UUIDString];
@@ -203,7 +203,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         [updatedPayload appendData:payload];
         
         //Find destination device.
-        for(BDBleBridgeService *bridge in self.bridges)
+        for(BDBleBridge *bridge in self.bridges)
         {
             //Found destination device. Relay message.
             if(bridge.deviceID == deviceID)

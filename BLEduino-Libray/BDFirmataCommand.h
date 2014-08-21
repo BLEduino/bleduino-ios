@@ -45,7 +45,7 @@ enum {
 };
 typedef NSUInteger FirmataCommandPinState;
 
-@interface BDFirmataCommandCharacteristic : NSObject
+@interface BDFirmataCommand : NSObject
 @property FirmataCommandPinState pinState;
 @property NSInteger pinNumber;
 @property NSInteger pinValue;

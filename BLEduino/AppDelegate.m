@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "BDLeDiscoveryManager.h"
 #import "BDProximity.h"
-#import "BDNotificationService.h"
+#import "BDNotification.h"
 #import "PowerSwitchButtonView.h"
 
 @implementation AppDelegate

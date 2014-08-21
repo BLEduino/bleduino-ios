@@ -7,7 +7,7 @@
 //
 
 #import "BDBleService.h"
-#import "BDNotificationAttributesCharacteristic.h"
+#import "BDNotificationAttributes.h"
 
 #pragma mark -
 #pragma mark Notification Service UUIDs
@@ -26,30 +26,30 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDNotificationService;
+@class BDNotification;
 @protocol NotificationServiceDelegate <NSObject>
 @optional
-- (void)didStatedListening:(BDNotificationService *)service;
-- (void)didFailToStartListening:(BDNotificationService *)service;
+- (void)didStatedListening:(BDNotification *)service;
+- (void)didFailToStartListening:(BDNotification *)service;
 
-- (void)notificationService:(BDNotificationService *)service
-     didReceiveNotification:(BDNotificationAttributesCharacteristic *)notification
+- (void)notificationService:(BDNotification *)service
+     didReceiveNotification:(BDNotificationAttributes *)notification
                       error:(NSError *)error;
 
-- (void)notificationService:(BDNotificationService *)service
-       didWriteNotification:(BDNotificationAttributesCharacteristic *)notification
+- (void)notificationService:(BDNotification *)service
+       didWriteNotification:(BDNotificationAttributes *)notification
                       error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingNotificationsFor:(BDNotificationService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopRecivingNotificationsFor:(BDNotificationService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingNotificationsFor:(BDNotification *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopRecivingNotificationsFor:(BDNotification *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                        Notification Service                              */
 /****************************************************************************/
-@interface BDNotificationService : BDBleService <CBPeripheralDelegate>
+@interface BDNotification : BDBleService <CBPeripheralDelegate>
 
-@property (nonatomic, strong) BDNotificationAttributesCharacteristic *lastNotification;
+@property (nonatomic, strong) BDNotificationAttributes *lastNotification;
 @property BOOL isListening;
 
 /*
@@ -77,14 +77,14 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 /****************************************************************************/
 /*              Access to notificication listener instance			  	    */
 /****************************************************************************/
-+ (BDNotificationService *)sharedListener;
++ (BDNotification *)sharedListener;
 
 
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write notifications to BLEduino.
-- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification withAck:(BOOL)enabled;
-- (void) writeNotification:(BDNotificationAttributesCharacteristic *)notification;
+- (void) writeNotification:(BDNotificationAttributes *)notification withAck:(BOOL)enabled;
+- (void) writeNotification:(BDNotificationAttributes *)notification;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

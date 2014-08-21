@@ -31,14 +31,14 @@
 		B7050201194F5060004E820D /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B70501FF194F5060004E820D /* add@2x.png */; };
 		B7050202194F5060004E820D /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = B7050200194F5060004E820D /* add.png */; };
 		B71B62FE185AC83700511FE0 /* FirmataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */; };
-		B72D18591826FBBF00BD1A2D /* BDVehicleMotionService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18581826FBBF00BD1A2D /* BDVehicleMotionService.m */; };
-		B72D185C1826FC4F00BD1A2D /* BDNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185B1826FC4F00BD1A2D /* BDNotificationService.m */; };
-		B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185E1826FE8100BD1A2D /* BDFirmataService.m */; };
-		B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BDBleBridgeService.m */; };
-		B72D18651826FED500BD1A2D /* BDControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* BDControllerService.m */; };
+		B72D18591826FBBF00BD1A2D /* BDVehicleMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18581826FBBF00BD1A2D /* BDVehicleMotion.m */; };
+		B72D185C1826FC4F00BD1A2D /* BDNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185B1826FC4F00BD1A2D /* BDNotification.m */; };
+		B72D185F1826FE8100BD1A2D /* BDFirmata.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185E1826FE8100BD1A2D /* BDFirmata.m */; };
+		B72D18621826FEA600BD1A2D /* BDBleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BDBleBridge.m */; };
+		B72D18651826FED500BD1A2D /* BDController.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* BDController.m */; };
 		B72E580118104B8F00745BD8 /* BDBleService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BDBleService.m */; };
 		B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B730E76A18481D9C00EF06EA /* rotate-left.png */; };
-		B73447C318305596006F76C2 /* BDButtonActionCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B73447C218305596006F76C2 /* BDButtonActionCharacteristic.m */; };
+		B73447C318305596006F76C2 /* BDButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B73447C218305596006F76C2 /* BDButtonAction.m */; };
 		B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
@@ -95,7 +95,7 @@
 		B7AE660C18431451007C45A3 /* PowerNextStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AE660B18431451007C45A3 /* PowerNextStateView.m */; };
 		B7AE661018433C56007C45A3 /* midnight-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B7AE660E18433C56007C45A3 /* midnight-bg.jpg */; };
 		B7AE661218434915007C45A3 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7AE661118434915007C45A3 /* MessageUI.framework */; };
-		B7B562F318289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.m */; };
+		B7B562F318289D7D0056C6EE /* BDThrottleYawRollPitch.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitch.m */; };
 		B7B73BF217F256B3008E6769 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF117F256B3008E6769 /* Foundation.framework */; };
 		B7B73BF417F256B3008E6769 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF317F256B3008E6769 /* CoreGraphics.framework */; };
 		B7B73BF617F256B3008E6769 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73BF517F256B3008E6769 /* UIKit.framework */; };
@@ -110,7 +110,7 @@
 		B7B73C1D17F256B3008E6769 /* BLEduinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C1C17F256B3008E6769 /* BLEduinoTests.m */; };
 		B7B73C2717F25920008E6769 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2617F25920008E6769 /* CoreBluetooth.framework */; };
 		B7B73C2917F25927008E6769 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B73C2817F25927008E6769 /* QuartzCore.framework */; };
-		B7B73C2D17F25A58008E6769 /* BDUartService.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* BDUartService.m */; };
+		B7B73C2D17F25A58008E6769 /* BDUart.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B73C2C17F25A58008E6769 /* BDUart.m */; };
 		B7BA0E2019479F2B000D81BC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E1F19479F2B000D81BC /* Default-568h@2x.png */; };
 		B7BA0E221948C20D000D81BC /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E211948C20D000D81BC /* button.png */; };
 		B7BA0E241948C4DF000D81BC /* button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B7BA0E231948C4DF000D81BC /* button-2.png */; };
@@ -129,12 +129,12 @@
 		B7DD4137185F9425006A91C5 /* FirmataAnalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4136185F9425006A91C5 /* FirmataAnalogCell.m */; };
 		B7DD413A185F944B006A91C5 /* FirmataPWMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */; };
 		B7DD413D185F9465006A91C5 /* FirmataDigitalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */; };
-		B7EB1CF01830D6010060441E /* BDNotificationAttributesCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */; };
+		B7EB1CF01830D6010060441E /* BDNotificationAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EB1CEF1830D6010060441E /* BDNotificationAttributes.m */; };
 		B7EDFDF81835A6FD002FECA0 /* PowerRelayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */; };
 		B7EDFDFB1835A788002FECA0 /* PowerSwitchButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDFA1835A788002FECA0 /* PowerSwitchButtonView.m */; };
 		B7EDFDFE1835C22E002FECA0 /* GameControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFDFD1835C22E002FECA0 /* GameControllerViewController.m */; };
 		B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EDFE001835C2A0002FECA0 /* RadioControlledViewController.m */; };
-		B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m */; };
+		B7FAC246182AEA7E00F33CE8 /* BDFirmataCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FAC245182AEA7E00F33CE8 /* BDFirmataCommand.m */; };
 		B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */; };
 		B7FF2AFE194F362D00D484B4 /* delay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FF2AFC194F362D00D484B4 /* delay@2x.png */; };
 		B7FF2AFF194F362D00D484B4 /* delay.png in Resources */ = {isa = PBXBuildFile; fileRef = B7FF2AFD194F362D00D484B4 /* delay.png */; };
@@ -191,21 +191,21 @@
 		B7050200194F5060004E820D /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		B71B62FC185AC83700511FE0 /* FirmataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataTableViewController.h; sourceTree = "<group>"; };
 		B71B62FD185AC83700511FE0 /* FirmataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataTableViewController.m; sourceTree = "<group>"; };
-		B72D18571826FBBF00BD1A2D /* BDVehicleMotionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDVehicleMotionService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B72D18581826FBBF00BD1A2D /* BDVehicleMotionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDVehicleMotionService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B72D185A1826FC4F00BD1A2D /* BDNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDNotificationService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B72D185B1826FC4F00BD1A2D /* BDNotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDNotificationService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B72D185D1826FE8100BD1A2D /* BDFirmataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDFirmataService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B72D185E1826FE8100BD1A2D /* BDFirmataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDFirmataService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B72D18601826FEA600BD1A2D /* BDBleBridgeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleBridgeService.h; sourceTree = "<group>"; };
-		B72D18611826FEA600BD1A2D /* BDBleBridgeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDBleBridgeService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B72D18631826FED500BD1A2D /* BDControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDControllerService.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B72D18641826FED500BD1A2D /* BDControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDControllerService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D18571826FBBF00BD1A2D /* BDVehicleMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDVehicleMotion.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D18581826FBBF00BD1A2D /* BDVehicleMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDVehicleMotion.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D185A1826FC4F00BD1A2D /* BDNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDNotification.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D185B1826FC4F00BD1A2D /* BDNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDNotification.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D185D1826FE8100BD1A2D /* BDFirmata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDFirmata.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D185E1826FE8100BD1A2D /* BDFirmata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDFirmata.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D18601826FEA600BD1A2D /* BDBleBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleBridge.h; sourceTree = "<group>"; };
+		B72D18611826FEA600BD1A2D /* BDBleBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDBleBridge.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B72D18631826FED500BD1A2D /* BDController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B72D18641826FED500BD1A2D /* BDController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B72E57FF18104B8F00745BD8 /* BDBleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleService.h; sourceTree = "<group>"; };
 		B72E580018104B8F00745BD8 /* BDBleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleService.m; sourceTree = "<group>"; };
 		B730E76A18481D9C00EF06EA /* rotate-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotate-left.png"; sourceTree = "<group>"; };
-		B73447C118305596006F76C2 /* BDButtonActionCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDButtonActionCharacteristic.h; sourceTree = "<group>"; };
-		B73447C218305596006F76C2 /* BDButtonActionCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDButtonActionCharacteristic.m; sourceTree = "<group>"; };
+		B73447C118305596006F76C2 /* BDButtonAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDButtonAction.h; sourceTree = "<group>"; };
+		B73447C218305596006F76C2 /* BDButtonAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDButtonAction.m; sourceTree = "<group>"; };
 		B75EC50717FA85EE000309FF /* BDLeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDLeDiscoveryManager.h; sourceTree = "<group>"; };
 		B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDLeDiscoveryManager.m; sourceTree = "<group>"; };
 		B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModulesCollectionViewController.h; path = BLEduino/ModulesCollectionViewController.h; sourceTree = "<group>"; };
@@ -277,8 +277,8 @@
 		B7AE660B18431451007C45A3 /* PowerNextStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerNextStateView.m; sourceTree = "<group>"; };
 		B7AE660E18433C56007C45A3 /* midnight-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "midnight-bg.jpg"; sourceTree = "<group>"; };
 		B7AE661118434915007C45A3 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		B7B562F118289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDThrottleYawRollPitchCharacteristic.h; sourceTree = "<group>"; };
-		B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDThrottleYawRollPitchCharacteristic.m; sourceTree = "<group>"; };
+		B7B562F118289D7D0056C6EE /* BDThrottleYawRollPitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDThrottleYawRollPitch.h; sourceTree = "<group>"; };
+		B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDThrottleYawRollPitch.m; sourceTree = "<group>"; };
 		B7B73BEE17F256B3008E6769 /* BLEduino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEduino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B73BF117F256B3008E6769 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7B73BF317F256B3008E6769 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -297,8 +297,8 @@
 		B7B73C1C17F256B3008E6769 /* BLEduinoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEduinoTests.m; sourceTree = "<group>"; };
 		B7B73C2617F25920008E6769 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B7B73C2817F25927008E6769 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		B7B73C2B17F25A58008E6769 /* BDUartService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDUartService.h; sourceTree = "<group>"; };
-		B7B73C2C17F25A58008E6769 /* BDUartService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDUartService.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B7B73C2B17F25A58008E6769 /* BDUart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDUart.h; sourceTree = "<group>"; };
+		B7B73C2C17F25A58008E6769 /* BDUart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDUart.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B7BA0E1F19479F2B000D81BC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		B7BA0E211948C20D000D81BC /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		B7BA0E231948C4DF000D81BC /* button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-2.png"; sourceTree = "<group>"; };
@@ -327,8 +327,8 @@
 		B7DD4139185F944B006A91C5 /* FirmataPWMCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataPWMCell.m; sourceTree = "<group>"; };
 		B7DD413B185F9465006A91C5 /* FirmataDigitalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmataDigitalCell.h; sourceTree = "<group>"; };
 		B7DD413C185F9465006A91C5 /* FirmataDigitalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmataDigitalCell.m; sourceTree = "<group>"; };
-		B7EB1CEE1830D6010060441E /* BDNotificationAttributesCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotificationAttributesCharacteristic.h; sourceTree = "<group>"; };
-		B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDNotificationAttributesCharacteristic.m; sourceTree = "<group>"; };
+		B7EB1CEE1830D6010060441E /* BDNotificationAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotificationAttributes.h; sourceTree = "<group>"; };
+		B7EB1CEF1830D6010060441E /* BDNotificationAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDNotificationAttributes.m; sourceTree = "<group>"; };
 		B7EDFDF61835A6FD002FECA0 /* PowerRelayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerRelayViewController.h; sourceTree = "<group>"; };
 		B7EDFDF71835A6FD002FECA0 /* PowerRelayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerRelayViewController.m; sourceTree = "<group>"; };
 		B7EDFDF91835A788002FECA0 /* PowerSwitchButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerSwitchButtonView.h; sourceTree = "<group>"; };
@@ -337,8 +337,8 @@
 		B7EDFDFD1835C22E002FECA0 /* GameControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameControllerViewController.m; sourceTree = "<group>"; };
 		B7EDFDFF1835C2A0002FECA0 /* RadioControlledViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioControlledViewController.h; sourceTree = "<group>"; };
 		B7EDFE001835C2A0002FECA0 /* RadioControlledViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioControlledViewController.m; sourceTree = "<group>"; };
-		B7FAC244182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDFirmataCommandCharacteristic.h; sourceTree = "<group>"; };
-		B7FAC245182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDFirmataCommandCharacteristic.m; sourceTree = "<group>"; };
+		B7FAC244182AEA7E00F33CE8 /* BDFirmataCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDFirmataCommand.h; sourceTree = "<group>"; };
+		B7FAC245182AEA7E00F33CE8 /* BDFirmataCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDFirmataCommand.m; sourceTree = "<group>"; };
 		B7FF2AF8194B769F00D484B4 /* SequencerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTableViewController.h; sourceTree = "<group>"; };
 		B7FF2AF9194B769F00D484B4 /* SequencerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerTableViewController.m; sourceTree = "<group>"; };
 		B7FF2AFC194F362D00D484B4 /* delay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delay@2x.png"; sourceTree = "<group>"; };
@@ -608,18 +608,18 @@
 				B72E57FF18104B8F00745BD8 /* BDBleService.h */,
 				B72E580018104B8F00745BD8 /* BDBleService.m */,
 				B7B562F418289D8F0056C6EE /* Characteristics */,
-				B7B73C2B17F25A58008E6769 /* BDUartService.h */,
-				B7B73C2C17F25A58008E6769 /* BDUartService.m */,
-				B72D18571826FBBF00BD1A2D /* BDVehicleMotionService.h */,
-				B72D18581826FBBF00BD1A2D /* BDVehicleMotionService.m */,
-				B72D185D1826FE8100BD1A2D /* BDFirmataService.h */,
-				B72D185E1826FE8100BD1A2D /* BDFirmataService.m */,
-				B72D18631826FED500BD1A2D /* BDControllerService.h */,
-				B72D18641826FED500BD1A2D /* BDControllerService.m */,
-				B72D185A1826FC4F00BD1A2D /* BDNotificationService.h */,
-				B72D185B1826FC4F00BD1A2D /* BDNotificationService.m */,
-				B72D18601826FEA600BD1A2D /* BDBleBridgeService.h */,
-				B72D18611826FEA600BD1A2D /* BDBleBridgeService.m */,
+				B7B73C2B17F25A58008E6769 /* BDUart.h */,
+				B7B73C2C17F25A58008E6769 /* BDUart.m */,
+				B72D18571826FBBF00BD1A2D /* BDVehicleMotion.h */,
+				B72D18581826FBBF00BD1A2D /* BDVehicleMotion.m */,
+				B72D185D1826FE8100BD1A2D /* BDFirmata.h */,
+				B72D185E1826FE8100BD1A2D /* BDFirmata.m */,
+				B72D18631826FED500BD1A2D /* BDController.h */,
+				B72D18641826FED500BD1A2D /* BDController.m */,
+				B72D185A1826FC4F00BD1A2D /* BDNotification.h */,
+				B72D185B1826FC4F00BD1A2D /* BDNotification.m */,
+				B72D18601826FEA600BD1A2D /* BDBleBridge.h */,
+				B72D18611826FEA600BD1A2D /* BDBleBridge.m */,
 				9702401D19A3BDFD00FC91BA /* BDProximity.h */,
 				9702401E19A3BDFD00FC91BA /* BDProximity.m */,
 			);
@@ -641,14 +641,14 @@
 		B7B562F418289D8F0056C6EE /* Characteristics */ = {
 			isa = PBXGroup;
 			children = (
-				B7B562F118289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.h */,
-				B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.m */,
-				B7FAC244182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.h */,
-				B7FAC245182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m */,
-				B73447C118305596006F76C2 /* BDButtonActionCharacteristic.h */,
-				B73447C218305596006F76C2 /* BDButtonActionCharacteristic.m */,
-				B7EB1CEE1830D6010060441E /* BDNotificationAttributesCharacteristic.h */,
-				B7EB1CEF1830D6010060441E /* BDNotificationAttributesCharacteristic.m */,
+				B7B562F118289D7D0056C6EE /* BDThrottleYawRollPitch.h */,
+				B7B562F218289D7D0056C6EE /* BDThrottleYawRollPitch.m */,
+				B7FAC244182AEA7E00F33CE8 /* BDFirmataCommand.h */,
+				B7FAC245182AEA7E00F33CE8 /* BDFirmataCommand.m */,
+				B73447C118305596006F76C2 /* BDButtonAction.h */,
+				B73447C218305596006F76C2 /* BDButtonAction.m */,
+				B7EB1CEE1830D6010060441E /* BDNotificationAttributes.h */,
+				B7EB1CEF1830D6010060441E /* BDNotificationAttributes.m */,
 			);
 			name = Characteristics;
 			sourceTree = "<group>";
@@ -1005,7 +1005,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7B73C2D17F25A58008E6769 /* BDUartService.m in Sources */,
+				B7B73C2D17F25A58008E6769 /* BDUart.m in Sources */,
 				974FA3321992B31A00951E12 /* BDQueue.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
 				9702401F19A3BDFD00FC91BA /* BDProximity.m in Sources */,
@@ -1013,27 +1013,27 @@
 				97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */,
 				9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */,
 				972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */,
-				B72D18591826FBBF00BD1A2D /* BDVehicleMotionService.m in Sources */,
-				B72D18651826FED500BD1A2D /* BDControllerService.m in Sources */,
+				B72D18591826FBBF00BD1A2D /* BDVehicleMotion.m in Sources */,
+				B72D18651826FED500BD1A2D /* BDController.m in Sources */,
 				B7A8C3941832CB69009A4577 /* BleduinoRootController.m in Sources */,
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B7D3227518456BEA008F53AE /* MFLJoystick.m in Sources */,
 				B7EDFDFB1835A788002FECA0 /* PowerSwitchButtonView.m in Sources */,
 				B72E580118104B8F00745BD8 /* BDBleService.m in Sources */,
-				B7EB1CF01830D6010060441E /* BDNotificationAttributesCharacteristic.m in Sources */,
+				B7EB1CF01830D6010060441E /* BDNotificationAttributes.m in Sources */,
 				97F09B7B1999069800FB4ED7 /* ProximityRSSISettingsController.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
 				B7D3227818456BEA008F53AE /* RESideMenu.m in Sources */,
-				B7B562F318289D7D0056C6EE /* BDThrottleYawRollPitchCharacteristic.m in Sources */,
+				B7B562F318289D7D0056C6EE /* BDThrottleYawRollPitch.m in Sources */,
 				97D79630199E65E900E47D4D /* BleduinoController.m in Sources */,
-				B72D185C1826FC4F00BD1A2D /* BDNotificationService.m in Sources */,
+				B72D185C1826FC4F00BD1A2D /* BDNotification.m in Sources */,
 				B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */,
 				B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */,
-				B73447C318305596006F76C2 /* BDButtonActionCharacteristic.m in Sources */,
+				B73447C318305596006F76C2 /* BDButtonAction.m in Sources */,
 				B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */,
 				B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */,
 				97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */,
-				B7FAC246182AEA7E00F33CE8 /* BDFirmataCommandCharacteristic.m in Sources */,
+				B7FAC246182AEA7E00F33CE8 /* BDFirmataCommand.m in Sources */,
 				B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */,
 				9779C5B21979819300302C50 /* ProximityViewController.m in Sources */,
 				B7B73BFE17F256B3008E6769 /* main.m in Sources */,
@@ -1045,8 +1045,8 @@
 				B7D3227618456BEA008F53AE /* OBShapedButton.m in Sources */,
 				9779C5B51979871800302C50 /* ProximityAlert.m in Sources */,
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
-				B72D18621826FEA600BD1A2D /* BDBleBridgeService.m in Sources */,
-				B72D185F1826FE8100BD1A2D /* BDFirmataService.m in Sources */,
+				B72D18621826FEA600BD1A2D /* BDBleBridge.m in Sources */,
+				B72D185F1826FE8100BD1A2D /* BDFirmata.m in Sources */,
 				973BD3C71994805700200D83 /* BDBleduino.m in Sources */,
 				97313CF01996E58D0000431D /* RSSIAlertController.m in Sources */,
 				972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */,

@@ -36,27 +36,27 @@ typedef NSUInteger RxTxTransmissionState;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDUartService;
+@class BDUart;
 @protocol UARTServiceDelegate <NSObject>
 @optional
-- (void)uartService:(BDUartService *)service didReceiveData:(NSData *)data error:(NSError *)error;
-- (void)uartService:(BDUartService *)service didReceiveMessage:(NSString *)message error:(NSError *)error;
+- (void)uartService:(BDUart *)service didReceiveData:(NSData *)data error:(NSError *)error;
+- (void)uartService:(BDUart *)service didReceiveMessage:(NSString *)message error:(NSError *)error;
 
-- (void)uartService:(BDUartService *)service didWriteData:(NSData *)data error:(NSError *)error;
-- (void)uartService:(BDUartService *)service didWriteMessage:(NSString *)message error:(NSError *)error;
+- (void)uartService:(BDUart *)service didWriteData:(NSData *)data error:(NSError *)error;
+- (void)uartService:(BDUart *)service didWriteMessage:(NSString *)message error:(NSError *)error;
 
-- (void)didSubscribeToReceiveDataFor:(BDUartService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveDataFor:(BDUartService *)service error:(NSError *)error;
+- (void)didSubscribeToReceiveDataFor:(BDUart *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveDataFor:(BDUart *)service error:(NSError *)error;
 
-- (void)didSubscribeToReceiveMessagesFor:(BDUartService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveMessagesFor:(BDUartService *)service error:(NSError *)error;
+- (void)didSubscribeToReceiveMessagesFor:(BDUart *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveMessagesFor:(BDUart *)service error:(NSError *)error;
 @end
 
 
 /****************************************************************************/
 /*						 UART Service                                       */
 /****************************************************************************/
-@interface BDUartService : BDBleService <CBPeripheralDelegate>
+@interface BDUart : BDBleService <CBPeripheralDelegate>
 
 @property (strong) NSString *messageSent;
 @property (strong) NSString *messageReceived;

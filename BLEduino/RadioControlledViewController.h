@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDVehicleMotionService.h"
+#import "BDVehicleMotion.h"
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
 

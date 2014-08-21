@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDFirmataService.h"
-#import "BDFirmataCommandCharacteristic.h"
+#import "BDFirmata.h"
+#import "BDFirmataCommand.h"
 
 #import "FirmataAnalogCell.h"
 #import "FirmataDigitalCell.h"
@@ -32,9 +32,9 @@ LeDiscoveryManagerDelegate
 >
 @property (weak) id <SequencerTableViewControllerDelegate> delegate;
 @property (strong) NSMutableArray *sequence;
-@property (strong) BDFirmataService *firmata;
-@property (strong) BDFirmataCommandCharacteristic *start;
-@property (strong) BDFirmataCommandCharacteristic *end;
+@property (strong) BDFirmata *firmata;
+@property (strong) BDFirmataCommand *start;
+@property (strong) BDFirmataCommand *end;
 @property IBOutlet UIBarButtonItem *edit;
 @property IBOutlet UIBarButtonItem *addCommand;
 @property IBOutlet UIBarButtonItem *addDelay;

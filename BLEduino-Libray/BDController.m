@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDControllerService.h"
+#import "BDController.h"
 
 #pragma mark -
 #pragma mark Controller Service UUIDs
@@ -21,14 +21,14 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDControllerService ()
+@interface BDController ()
 @property (strong) CBUUID *controllerServiceUUID;
 @property (strong) CBUUID *buttonActionCharacteristicUUID;
 
 @property (weak) id <ControllerServiceDelegate> delegate;
-@property (strong) BDButtonActionCharacteristic *lastSentButtonAction;
+@property (strong) BDButtonAction *lastSentButtonAction;
 @end
-@implementation BDControllerService
+@implementation BDController
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<ControllerServiceDelegate>)aController
@@ -51,7 +51,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 /****************************************************************************/
 /*				      Write button action to BLEduino                       */
 /****************************************************************************/
-- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction
+- (void) writeButtonAction:(BDButtonAction *)buttonAction
                    withAck:(BOOL)enabled
 {
     self.lastSentButtonAction = buttonAction;
@@ -61,7 +61,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
                          withAck:enabled];
 }
 
-- (void) writeButtonAction:(BDButtonActionCharacteristic *)buttonAction
+- (void) writeButtonAction:(BDButtonAction *)buttonAction
 {
     self.lastButtonAction = buttonAction;
     [self writeButtonAction:buttonAction withAck:NO];
@@ -111,7 +111,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastButtonAction = [[BDButtonActionCharacteristic alloc] initWithData:characteristic.value];
+    self.lastButtonAction = [[BDButtonAction alloc] initWithData:characteristic.value];
     if([self.delegate respondsToSelector:@selector(controllerService:didReceiveButtonAction:error:)])
     {
         [self.delegate controllerService:self

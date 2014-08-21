@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BDThrottleYawRollPitchCharacteristic : NSObject
+@interface BDThrottleYawRollPitch : NSObject
 @property  NSInteger throttle;
 @property  NSInteger pitch;
 @property  NSInteger roll;

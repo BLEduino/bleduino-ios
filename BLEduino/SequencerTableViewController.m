@@ -29,11 +29,11 @@
     self.sequence = [NSMutableArray arrayWithCapacity:10];
     
     //Begin/End sequence commands. 
-    self.start = [[BDFirmataCommandCharacteristic alloc] initWithPinState:4
+    self.start = [[BDFirmataCommand alloc] initWithPinState:4
                                                                 pinNumber:99
                                                                  pinValue:99];
     
-    self.end = [[BDFirmataCommandCharacteristic alloc] initWithPinState:5
+    self.end = [[BDFirmataCommand alloc] initWithPinState:5
                                                               pinNumber:99
                                                                pinValue:99];
     
@@ -59,7 +59,7 @@
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
     
     //Global firmata service for listening for updates.
-    self.firmata =[[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+    self.firmata =[[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
     [self.firmata subscribeToStartReceivingFirmataCommands];
     
     //Load previous state.
@@ -82,7 +82,7 @@
     NSMutableArray *sequenceDelayValues = [[NSMutableArray alloc] initWithCapacity:self.sequence.count];
     
 
-    for (BDFirmataCommandCharacteristic *command in self.sequence)
+    for (BDFirmataCommand *command in self.sequence)
     {
         [sequence addObject:[NSNumber numberWithLong:command.pinNumber]];
         
@@ -132,7 +132,7 @@
             FirmataCommandPinState state = [[sequenceStates objectAtIndex:pinCounter] intValue];
             NSInteger storedValue = [[sequenceValues objectAtIndex:pinCounter] intValue];
             NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?storedValue:-1;
-            BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:state
+            BDFirmataCommand *pin = [[BDFirmataCommand alloc] initWithPinState:state
                                                                                                  pinNumber:command
                                                                                                   pinValue:value];
             [self.sequence addObject:pin];
@@ -144,7 +144,7 @@
             NSInteger delayValue = [[sequenceDelayValues objectAtIndex:delayCounter] intValue];
             delayCounter = delayCounter + 1;
             
-            BDFirmataCommandCharacteristic *delay = [[BDFirmataCommandCharacteristic alloc] initWithPinState:delayFormat
+            BDFirmataCommand *delay = [[BDFirmataCommand alloc] initWithPinState:delayFormat
                                                                                                    pinNumber:100
                                                                                                     pinValue:delayValue];
             [self.sequence addObject:delay];
@@ -179,8 +179,8 @@
 
 - (IBAction)addDelay:(id)sender
 {
-    BDFirmataCommandCharacteristic *delay =
-    [[BDFirmataCommandCharacteristic alloc] initWithPinState:6
+    BDFirmataCommand *delay =
+    [[BDFirmataCommand alloc] initWithPinState:6
                                                    pinNumber:100
                                                     pinValue:1];
     
@@ -308,7 +308,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BDFirmataCommandCharacteristic *firmataCommand = [self.sequence objectAtIndex:indexPath.row];
+    BDFirmataCommand *firmataCommand = [self.sequence objectAtIndex:indexPath.row];
 
     //PWM State
     if(firmataCommand.pinState == FirmataCommandPinStatePWM)
@@ -397,7 +397,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Save new pin state for persistance.
-    BDFirmataCommandCharacteristic *pin = (BDFirmataCommandCharacteristic *)[self.sequence objectAtIndex:indexPath.row];
+    BDFirmataCommand *pin = (BDFirmataCommand *)[self.sequence objectAtIndex:indexPath.row];
     NSInteger pinNumber = pin.pinNumber;
 
     FirmataCommandPinState state = pin.pinState;
@@ -507,7 +507,7 @@
 //Sorting Commands
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    BDFirmataCommandCharacteristic *command = [self.sequence objectAtIndex:fromIndexPath.row];
+    BDFirmataCommand *command = [self.sequence objectAtIndex:fromIndexPath.row];
     [self.sequence removeObjectAtIndex:fromIndexPath.row];
     [self.sequence insertObject:command atIndex:toIndexPath.row];
 }
@@ -558,7 +558,7 @@
     UISwitch *digitalValue = (UISwitch *)sender;
     
     //Update firmata command.
-    BDFirmataCommandCharacteristic *digitalSwitchCommand = (BDFirmataCommandCharacteristic *)[self.sequence objectAtIndex:digitalValue.tag];
+    BDFirmataCommand *digitalSwitchCommand = (BDFirmataCommand *)[self.sequence objectAtIndex:digitalValue.tag];
     digitalSwitchCommand.pinValue = digitalValue.on;
     
     //Send command.
@@ -566,7 +566,7 @@
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+        BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:digitalSwitchCommand];
     }
 }
@@ -582,7 +582,7 @@
         if(pwmValue >= 0 && pwmValue <= 255)
         {
             //Update firmata command.
-            BDFirmataCommandCharacteristic *pwmCommand = (BDFirmataCommandCharacteristic *)[self.sequence objectAtIndex:alertView.tag];
+            BDFirmataCommand *pwmCommand = (BDFirmataCommand *)[self.sequence objectAtIndex:alertView.tag];
             pwmCommand.pinValue = pwmValue;
 
             [self.tableView reloadData];
@@ -601,12 +601,12 @@
 }
 
 //Analog and Digital-In
-- (void)  firmataService:(BDFirmataService *)service
-didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
+- (void)  firmataService:(BDFirmata *)service
+didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
                    error:(NSError *)error
 {
     //Update data to all pins that it applies to.
-    for(BDFirmataCommandCharacteristic *pin in self.sequence)
+    for(BDFirmataCommand *pin in self.sequence)
     {
         if(pin.pinNumber == firmataCommand.pinNumber &&
            pin.pinState == firmataCommand.pinState)
@@ -635,7 +635,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
             if(actionSheet.tag < 300)
             {
                 NSInteger index = (actionSheet.tag - 200);
-                BDFirmataCommandCharacteristic *pin = (BDFirmataCommandCharacteristic *)[self.sequence objectAtIndex:index];
+                BDFirmataCommand *pin = (BDFirmataCommand *)[self.sequence objectAtIndex:index];
                 NSInteger pinNumber = pin.pinNumber;
                 NSInteger types = [SequencerTableViewController firmataPinTypes:pinNumber];
         
@@ -673,7 +673,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
             else
             {
                 NSInteger pinNumber = [self pinNumber:buttonIndex];
-                BDFirmataCommandCharacteristic *pin = [[BDFirmataCommandCharacteristic alloc] initWithPinState:1
+                BDFirmataCommand *pin = [[BDFirmataCommand alloc] initWithPinState:1
                                                                                                      pinNumber:pinNumber
                                                                                                       pinValue:-1];
                 
@@ -687,7 +687,7 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
         else
         {
             NSInteger index = (actionSheet.tag - 400);
-            BDFirmataCommandCharacteristic *delay = [self.sequence objectAtIndex:index];
+            BDFirmataCommand *delay = [self.sequence objectAtIndex:index];
             delay.pinState = 6 + buttonIndex;
         }
  
@@ -710,9 +710,9 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
-            for(BDFirmataCommandCharacteristic *command in finalSequence)
+            for(BDFirmataCommand *command in finalSequence)
             {
-                BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
                 [firmataService writeFirmataCommand:command];
             }
         }

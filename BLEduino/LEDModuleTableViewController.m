@@ -335,7 +335,7 @@
     UISwitch *ledSwitch = (UISwitch *)sender;
        
     //Create firmata command.
-    BDFirmataCommandCharacteristic *ledToggleCommand = [[BDFirmataCommandCharacteristic alloc] init];
+    BDFirmataCommand *ledToggleCommand = [[BDFirmataCommand alloc] init];
     ledToggleCommand.pinNumber = ledSwitch.tag - 100;
     ledToggleCommand.pinState = FirmataCommandPinStateOutput;
     ledToggleCommand.pinValue = [[NSNumber numberWithBool:ledSwitch.on] integerValue];
@@ -345,7 +345,7 @@
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+        BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:ledToggleCommand];
     }
     

@@ -8,7 +8,7 @@
 
 #import "PowerSwitchButtonView.h"
 #import "BDLeDiscoveryManager.h"
-#import "BDFirmataService.h"
+#import "BDFirmata.h"
 
 @interface PowerSwitchButtonView ()
 @property CGPoint offset;

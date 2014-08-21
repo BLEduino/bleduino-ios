@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDFirmataService.h"
+#import "BDFirmata.h"
 
 @class LEDModuleTableViewController;
 @protocol LEDModuleTableViewControllerDelegate <NSObject>

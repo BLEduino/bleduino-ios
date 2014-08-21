@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDUartService.h"
+#import "BDUart.h"
 #import "PSPDFTextView.h"
 
 @class ConsoleTableViewController;

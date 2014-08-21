@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDControllerService.h"
+#import "BDController.h"
 #import "MFLJoystick.h"
 
 @class GameControllerViewController;

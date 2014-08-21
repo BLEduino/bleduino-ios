@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDFirmataService.h"
+#import "BDFirmata.h"
 
 
 @class FirmataTableViewController;
@@ -28,7 +28,7 @@ LeDiscoveryManagerDelegate
 @property (weak) id <FirmataTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sync;
 @property (strong) NSArray *commands;
-@property (strong) BDFirmataService *firmata;
+@property (strong) BDFirmata *firmata;
 - (IBAction)sendData:(id)sender;
 - (IBAction)resetAllPins:(id)sender;
 - (IBAction)dismissModule;

@@ -7,7 +7,7 @@
 //
 
 #import "KeyboardModuleTableViewController.h"
-#import "BDUartService.h"
+#import "BDUart.h"
 #import "BDLeDiscoveryManager.h"
 
 #pragma mark -
@@ -94,7 +94,7 @@
 - (void) writeMessage:(NSString *)message bleduino:(CBPeripheral *)bleduino
 {
     
-    BDUartService *messageService = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+    BDUart *messageService = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
     
     if(message.length > 20)
     {

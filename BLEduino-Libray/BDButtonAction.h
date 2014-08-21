@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BDButtonActionCharacteristic : NSObject
+@interface BDButtonAction : NSObject
 
 /*
  * Identifies the button.

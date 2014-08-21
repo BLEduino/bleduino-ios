@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BDFirmataService.h"
+#import "BDFirmata.h"
 enum {
     Notification = 0,
     Firmata = 1,

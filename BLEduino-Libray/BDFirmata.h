@@ -7,7 +7,7 @@
 //
 
 #import "BDBleService.h"
-#import "BDFirmataCommandCharacteristic.h"
+#import "BDFirmataCommand.h"
 
 #pragma mark -
 #pragma mark Firmata Service UUIDs
@@ -25,27 +25,27 @@ extern NSString * const kFirmataCommandCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDFirmataService;
+@class BDFirmata;
 @protocol FirmataServiceDelegate <NSObject>
 @optional
-- (void) firmataService:(BDFirmataService *)service
- didWriteFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
+- (void) firmataService:(BDFirmata *)service
+ didWriteFirmataCommand:(BDFirmataCommand *)firmataCommand
                   error:(NSError *)error;
 
-- (void) firmataService:(BDFirmataService *)service
-didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
+- (void) firmataService:(BDFirmata *)service
+didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
                   error:(NSError *)error;
 
-- (void)didSubscribeToStartReceivingFirmataCommandsFor:(BDFirmataService *)service error:(NSError *)error;
-- (void)didUnsubscribeToStopReceivingFirmataCommandsFor:(BDFirmataService *)service error:(NSError *)error;
+- (void)didSubscribeToStartReceivingFirmataCommandsFor:(BDFirmata *)service error:(NSError *)error;
+- (void)didUnsubscribeToStopReceivingFirmataCommandsFor:(BDFirmata *)service error:(NSError *)error;
 @end
 
 /****************************************************************************/
 /*                          Firmata Service                                 */
 /****************************************************************************/
-@interface BDFirmataService : BDBleService <CBPeripheralDelegate>
-@property (nonatomic, strong) BDFirmataCommandCharacteristic *lastSentFirmataCommand;
-@property (nonatomic, strong) BDFirmataCommandCharacteristic *lastReceivedFirmataCommand;
+@interface BDFirmata : BDBleService <CBPeripheralDelegate>
+@property (nonatomic, strong) BDFirmataCommand *lastSentFirmataCommand;
+@property (nonatomic, strong) BDFirmataCommand *lastReceivedFirmataCommand;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<FirmataServiceDelegate>)aController;
@@ -53,8 +53,8 @@ didReceiveFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Write firmata command to BLEduino.
-- (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand withAck:(BOOL)enabled;
-- (void) writeFirmataCommand:(BDFirmataCommandCharacteristic *)firmataCommand;
+- (void) writeFirmataCommand:(BDFirmataCommand *)firmataCommand withAck:(BOOL)enabled;
+- (void) writeFirmataCommand:(BDFirmataCommand *)firmataCommand;
 
 #pragma mark -
 #pragma mark Reading from BLEduino

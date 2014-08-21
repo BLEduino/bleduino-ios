@@ -74,7 +74,7 @@
     
     for(CBPeripheral *bleduino in manager.connectedBleduinos)
     {
-        BDUartService *newConsole = [[BDUartService alloc] initWithPeripheral:bleduino delegate:self];
+        BDUart *newConsole = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
         [newConsole subscribeToStartReceivingMessages];
         [self.consoleHub addObject:newConsole];
     }
@@ -179,7 +179,7 @@
     entry.isBLEduino = NO;
     
     //Send data to BLEduinos.
-    for(BDUartService *console in self.consoleHub)
+    for(BDUart *console in self.consoleHub)
     {
         [console writeMessage:entry.text];
     }
@@ -198,7 +198,7 @@
 }
 
 //Receive data.
-- (void)uartService:(BDUartService *)service didReceiveMessage:(NSString *)message error:(NSError *)error
+- (void)uartService:(BDUart *)service didReceiveMessage:(NSString *)message error:(NSError *)error
 {
     ConsoleEntries *entry = [[ConsoleEntries alloc] init];
     entry.text = message;
@@ -256,7 +256,7 @@
 /****************************************************************************/
 /*                            Subscribe Delegate                            */
 /****************************************************************************/
-- (void) didSubscribeToReceiveMessagesFor:(BDUartService *)service error:(NSError *)error
+- (void) didSubscribeToReceiveMessagesFor:(BDUart *)service error:(NSError *)error
 {
     NSLog(@"Subscribed to UART service from Console.");
 }

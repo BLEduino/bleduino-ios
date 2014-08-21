@@ -8,13 +8,13 @@
 
 #import "RadioControlledViewController.h"
 #import "BDLeDiscoveryManager.h"
-#import "BDVehicleMotionService.h"
-#import "BDThrottleYawRollPitchCharacteristic.h"
+#import "BDVehicleMotion.h"
+#import "BDThrottleYawRollPitch.h"
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
 
 @interface RadioControlledViewController ()
-@property (strong) BDThrottleYawRollPitchCharacteristic *lastThrottleYawUpdate;
+@property (strong) BDThrottleYawRollPitch *lastThrottleYawUpdate;
 @property (weak) IBOutlet VerticalJoystickControlView *vJoystick;
 @property (weak) IBOutlet HorizontalJoystickControlView *hJoystick;
 
@@ -84,7 +84,7 @@
     
     [self.view addSubview:dismissButton];
     
-    self.lastThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+    self.lastThrottleYawUpdate = [[BDThrottleYawRollPitch alloc] init];
     self.lastThrottleYawUpdate.throttle = 15; //0 speed.
     self.lastThrottleYawUpdate.yaw = 15; //0 turn.
 }
@@ -165,7 +165,7 @@
 - (void)horizontalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    BDThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+    BDThrottleYawRollPitch *newThrottleYawUpdate = [[BDThrottleYawRollPitch alloc] init];
     newThrottleYawUpdate.throttle = self.lastThrottleYawUpdate.throttle;
     newThrottleYawUpdate.yaw = position.x;
     self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
@@ -175,7 +175,7 @@
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BDVehicleMotionService *motionService = [[BDVehicleMotionService alloc] initWithPeripheral:bleduino
+        BDVehicleMotion *motionService = [[BDVehicleMotion alloc] initWithPeripheral:bleduino
                                                                                       delegate:self];
         [motionService writeMotionUpdate:newThrottleYawUpdate];
     }
@@ -190,7 +190,7 @@
 - (void)verticalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    BDThrottleYawRollPitchCharacteristic *newThrottleYawUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] init];
+    BDThrottleYawRollPitch *newThrottleYawUpdate = [[BDThrottleYawRollPitch alloc] init];
     newThrottleYawUpdate.throttle = position.y;
     newThrottleYawUpdate.yaw = self.lastThrottleYawUpdate.yaw;
     self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
@@ -200,7 +200,7 @@
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BDVehicleMotionService *motionService = [[BDVehicleMotionService alloc] initWithPeripheral:bleduino
+        BDVehicleMotion *motionService = [[BDVehicleMotion alloc] initWithPeripheral:bleduino
                                                                                       delegate:self];
         [motionService writeMotionUpdate:newThrottleYawUpdate];
     }

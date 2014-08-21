@@ -7,12 +7,12 @@
 //
 
 #import "BDLeDiscoveryManager.h"
-#import "BDUartService.h"
-#import "BDVehicleMotionService.h"
-#import "BDNotificationService.h"
-#import "BDFirmataService.h"
-#import "BDControllerService.h"
-#import "BDBleBridgeService.h"
+#import "BDUart.h"
+#import "BDVehicleMotion.h"
+#import "BDNotification.h"
+#import "BDFirmata.h"
+#import "BDController.h"
+#import "BDBleBridge.h"
 
 @interface BDLeDiscoveryManager ()
 @property CBCentralManager *centralManager;

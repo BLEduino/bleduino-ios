@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDVehicleMotionService.h"
+#import "BDVehicleMotion.h"
 
 #pragma mark -
 #pragma mark - Vehicle Motion Service UUIDs
@@ -21,16 +21,16 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDVehicleMotionService ()
+@interface BDVehicleMotion ()
 
 @property (strong) CBUUID *vehicleMotionServiceUUID;
 @property (strong) CBUUID *throttleYawRollPitchCharacteristicUUID;
 
 @property (weak) id <VehicleMotionServiceDelegate> delegate;
-@property (strong) BDThrottleYawRollPitchCharacteristic *lastMotion;
+@property (strong) BDThrottleYawRollPitch *lastMotion;
 @end
 
-@implementation BDVehicleMotionService
+@implementation BDVehicleMotion
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<VehicleMotionServiceDelegate>)aController
@@ -53,7 +53,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 /****************************************************************************/
 /*				      Write motion update to BLEduino                       */
 /****************************************************************************/
-- (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion
+- (void) writeMotionUpdate:(BDThrottleYawRollPitch *)motion
                    withAck:(BOOL)enabled
 {
     self.lastMotion = motion;
@@ -63,7 +63,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
                          withAck:enabled];
 }
 
-- (void) writeMotionUpdate:(BDThrottleYawRollPitchCharacteristic *)motion
+- (void) writeMotionUpdate:(BDThrottleYawRollPitch *)motion
 {
     [self writeMotionUpdate:motion withAck:NO];
 }
@@ -112,7 +112,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastMotionUpdate = [[BDThrottleYawRollPitchCharacteristic alloc] initWithData:characteristic.value];
+    self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
     if([self.delegate respondsToSelector:@selector(vehicleMotionService:didReceiveMotion:error:)])
     {
         [self.delegate vehicleMotionService:self

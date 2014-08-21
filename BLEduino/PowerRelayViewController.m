@@ -12,7 +12,7 @@
 #import "BDBleduino.h"
 
 @interface PowerRelayViewController ()
-@property (strong) BDFirmataCommandCharacteristic *lastPowerSwitchCommand;
+@property (strong) BDFirmataCommand *lastPowerSwitchCommand;
 @property (weak) IBOutlet PowerSwitchButtonView *powerSwitch;
 @property (weak) IBOutlet PowerNextStateView *otherStateIsOn;
 @property (weak) IBOutlet PowerNextStateView *otherStateIsOff;
@@ -122,7 +122,7 @@
     self.isLastPowerRelayStateON = state;
     
     //Create firmata command.
-    BDFirmataCommandCharacteristic *powerSwitchCommand = [[BDFirmataCommandCharacteristic alloc] init];
+    BDFirmataCommand *powerSwitchCommand = [[BDFirmataCommand alloc] init];
     powerSwitchCommand.pinState = FirmataCommandPinStateOutput;
     powerSwitchCommand.pinValue = (state)?255:0; //255 > High, 0 > Low
     powerSwitchCommand.pinNumber = _pinNumber;
@@ -133,7 +133,7 @@
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
-        BDFirmataService *firmataService = [[BDFirmataService alloc] initWithPeripheral:bleduino delegate:self];
+        BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
         [firmataService writeFirmataCommand:powerSwitchCommand];
     }
     

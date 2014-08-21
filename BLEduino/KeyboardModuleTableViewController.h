@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BDLeDiscoveryManager.h"
-#import "BDUartService.h"
+#import "BDUart.h"
 
 @class KeyboardModuleTableViewController;
 @protocol KeyboardModuleTableViewControllerDelegate <NSObject>
