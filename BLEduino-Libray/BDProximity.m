@@ -199,15 +199,14 @@
         NSNumber *currentRSSI = peripheral.RSSI;
         BOOL isValidReading = [self validateReading:currentRSSI];
         
+        //Only keep 5s worth of readings.
+        if([[self.rssiReadings array] count] == 5)[self.rssiReadings dequeue];
+        [self.rssiReadings enqueue:currentRSSI];
+        
         if(isValidReading && currentRSSI != nil)
         {
-            //Collect reading. Only keep 5s worth of readings.
-            if([[self.rssiReadings array] count] == 5)[self.rssiReadings dequeue];
-            [self.rssiReadings enqueue:currentRSSI];
-            
-            //Setup readings for notification.
-            NSNumber *agregatedRSSI =[[self.rssiReadings array] valueForKeyPath:@"@avg.self"];
-            self.currentDistance = [self calculateDistanceRange:agregatedRSSI];
+            //Collect reading.
+            self.currentDistance = [self calculateDistanceRange:currentRSSI];
             NSNumber *min = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@max.self"]];
             NSNumber *max = [self calculateDistance:[[self.rssiReadings array] valueForKeyPath:@"@min.self"]];
             //NOTE: Max RSSI value equals less loss of signal, hence minimum (closer) distance.
@@ -219,7 +218,7 @@
             NSDictionary *distanceInfo = @{@"CurrentDistance":[NSNumber numberWithLong:self.currentDistance],
                                            @"MaxDistance":max,
                                            @"MinDistance":min,
-                                           @"RSSI":agregatedRSSI};
+                                           @"RSSI":currentRSSI};
             
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
@@ -231,6 +230,8 @@
                         minDistance:min
                            withRSSI:currentRSSI];
         }
+        
+        [self performSelector:@selector(monitorBleduinoDistances) withObject:nil afterDelay:1];
     }
 }
 

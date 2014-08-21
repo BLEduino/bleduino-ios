@@ -209,7 +209,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 

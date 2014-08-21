@@ -64,6 +64,13 @@
     }
 }
 
++ (void) writeData:(id)data
+              pipe:(BlePipe)pipe
+            device:(CBPeripheral *)bleduino
+{
+    [self writeData:data pipe:pipe device:bleduino delegate:nil];
+}
+
 + (instancetype) readDataPipe:(BlePipe)pipe
                        device:(CBPeripheral *)bleduino
                      delegate:(id)delegate

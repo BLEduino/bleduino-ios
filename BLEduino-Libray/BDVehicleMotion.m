@@ -43,6 +43,11 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
         
         self.vehicleMotionServiceUUID = [CBUUID UUIDWithString:kVehicleMotionServiceUUIDString];
         self.throttleYawRollPitchCharacteristicUUID = [CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_VEHICLE_MOTION object:nil];
+        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_VEHICLE_MOTION object:nil];
+        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_VEHICLE_MOTION object:nil];
     }
     
     return self;
@@ -101,43 +106,132 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastMotionUpdate = self.lastMotion;
-    if([self.delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
     {
-        [self.delegate vehicleMotionService:self
-                             didWriteMotion:self.lastMotionUpdate
-                                      error:error];
+        self.lastMotionUpdate = self.lastMotion;
+        if([self.delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
+        {
+            [self.delegate vehicleMotionService:self
+                                 didWriteMotion:self.lastMotionUpdate
+                                          error:error];
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
-    if([self.delegate respondsToSelector:@selector(vehicleMotionService:didReceiveMotion:error:)])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
     {
-        [self.delegate vehicleMotionService:self
-                           didReceiveMotion:self.lastMotionUpdate
-                                      error:error];
+        self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
+        if([self.delegate respondsToSelector:@selector(vehicleMotionService:didReceiveMotion:error:)])
+        {
+            [self.delegate vehicleMotionService:self
+                               didReceiveMotion:self.lastMotionUpdate
+                                          error:error];
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if(characteristic.isNotifying)
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
     {
-        if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingMotionUpdatesFor:error:)])
+        if(characteristic.isNotifying)
         {
-            [self.delegate didSubscribeToStartReceivingMotionUpdatesFor:self error:error];
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingMotionUpdatesFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingMotionUpdatesFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingMotionUpdatesFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopRecivingMotionUpdatesFor:self error:error];
+            }
         }
     }
     else
     {
-        if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingMotionUpdatesFor:error:)])
+        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+    }
+}
+
+#pragma mark -
+#pragma mark - Peripheral Delegate Gateways
+/****************************************************************************/
+/*				       Peripheral Delegate Gateways                         */
+/****************************************************************************/
+- (void)didWriteValue:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        self.lastMotionUpdate = self.lastMotion;
+        if([self.delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
         {
-            [self.delegate didUnsubscribeToStopRecivingMotionUpdatesFor:self error:error];
+            [self.delegate vehicleMotionService:self
+                                 didWriteMotion:self.lastMotionUpdate
+                                          error:error];
         }
     }
 }
 
+- (void)didUpdateValue:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
+        if([self.delegate respondsToSelector:@selector(vehicleMotionService:didReceiveMotion:error:)])
+        {
+            [self.delegate vehicleMotionService:self
+                               didReceiveMotion:self.lastMotionUpdate
+                                          error:error];
+        }
+    }
+}
+
+- (void)didNotifyUpdate:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        if(characteristic.isNotifying)
+        {
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingMotionUpdatesFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingMotionUpdatesFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopRecivingMotionUpdatesFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopRecivingMotionUpdatesFor:self error:error];
+            }
+        }
+    }
+}
 
 @end

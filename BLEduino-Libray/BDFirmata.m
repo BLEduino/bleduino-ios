@@ -38,6 +38,11 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
         
         self.firmataServiceUUID = [CBUUID UUIDWithString:kFirmataServiceUUIDString];
         self.firmataCommandCharacteristicUUID = [CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_FIRMATA object:nil];
+        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_FIRMATA object:nil];
+        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_FIRMATA object:nil];
     }
     
     return self;
@@ -95,38 +100,125 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastSentFirmataCommand = self.lastSentCommand;
-    if([self.delegate respondsToSelector:@selector(firmataService:didWriteFirmataCommand:error:)])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
     {
-        [self.delegate firmataService:self didWriteFirmataCommand:self.lastSentFirmataCommand error:error];
+        self.lastSentFirmataCommand = self.lastSentCommand;
+        if([self.delegate respondsToSelector:@selector(firmataService:didWriteFirmataCommand:error:)])
+        {
+            [self.delegate firmataService:self didWriteFirmataCommand:self.lastSentFirmataCommand error:error];
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    self.lastReceivedFirmataCommand = [[BDFirmataCommand alloc] initWithData:characteristic.value];
-    if([self.delegate respondsToSelector:@selector(firmataService:didReceiveFirmataCommand:error:)])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
     {
-        [self.delegate firmataService:self didReceiveFirmataCommand:self.lastReceivedFirmataCommand error:error];
+        self.lastReceivedFirmataCommand = [[BDFirmataCommand alloc] initWithData:characteristic.value];
+        if([self.delegate respondsToSelector:@selector(firmataService:didReceiveFirmataCommand:error:)])
+        {
+            [self.delegate firmataService:self didReceiveFirmataCommand:self.lastReceivedFirmataCommand error:error];
+        }
+    }
+    else
+    {
+        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if(characteristic.isNotifying)
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
     {
-        if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingFirmataCommandsFor:error:)])
+        if(characteristic.isNotifying)
         {
-            [self.delegate didSubscribeToStartReceivingFirmataCommandsFor:self error:error];
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingFirmataCommandsFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingFirmataCommandsFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopReceivingFirmataCommandsFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopReceivingFirmataCommandsFor:self error:error];
+            }
         }
     }
     else
     {
-        if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopReceivingFirmataCommandsFor:error:)])
+        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+    }
+}
+
+#pragma mark -
+#pragma mark - Peripheral Delegate Gateways
+/****************************************************************************/
+/*				       Peripheral Delegate Gateways                         */
+/****************************************************************************/
+- (void)didWriteValue:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        self.lastSentFirmataCommand = self.lastSentCommand;
+        if([self.delegate respondsToSelector:@selector(firmataService:didWriteFirmataCommand:error:)])
         {
-            [self.delegate didUnsubscribeToStopReceivingFirmataCommandsFor:self error:error];
+            [self.delegate firmataService:self didWriteFirmataCommand:self.lastSentFirmataCommand error:error];
         }
     }
 }
+
+- (void)didUpdateValue:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        self.lastReceivedFirmataCommand = [[BDFirmataCommand alloc] initWithData:characteristic.value];
+        if([self.delegate respondsToSelector:@selector(firmataService:didReceiveFirmataCommand:error:)])
+        {
+            [self.delegate firmataService:self didReceiveFirmataCommand:self.lastReceivedFirmataCommand error:error];
+        }
+    }
+}
+
+- (void)didNotifyUpdate:(NSNotification *)notification
+{
+    NSDictionary *payload = notification.userInfo;
+    CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
+    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
+    NSError *error = [payload objectForKey:@"Error"];
+    
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        if(characteristic.isNotifying)
+        {
+            if([self.delegate respondsToSelector:@selector(didSubscribeToStartReceivingFirmataCommandsFor:error:)])
+            {
+                [self.delegate didSubscribeToStartReceivingFirmataCommandsFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToStopReceivingFirmataCommandsFor:error:)])
+            {
+                [self.delegate didUnsubscribeToStopReceivingFirmataCommandsFor:self error:error];
+            }
+        }
+    }
+}
+
 
 @end

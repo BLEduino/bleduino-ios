@@ -26,6 +26,10 @@ typedef NSUInteger BlePipe;
             device:(CBPeripheral *)bleduino
           delegate:(id)delegate;
 
++ (void) writeData:(id)data
+              pipe:(BlePipe)pipe
+            device:(CBPeripheral *)bleduino;
+
 + (instancetype) readDataPipe:(BlePipe)pipe
                        device:(CBPeripheral *)bleduino
                      delegate:(id)delegate;

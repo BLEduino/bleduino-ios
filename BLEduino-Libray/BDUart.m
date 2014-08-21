@@ -204,7 +204,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString ]])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kTxCharacteristicUUIDString]])
     {
         if(characteristic.isNotifying)
         {

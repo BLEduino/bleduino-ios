@@ -71,128 +71,129 @@
     FirmataCommandPinState state = [defaults integerForKey:FIRMATA_PIN0_STATE];
     NSInteger value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin0 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                          pinNumber:0
-                                                                                           pinValue:value];
+                                                              pinNumber:0
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN1_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin1 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                          pinNumber:1
-                                                                                           pinValue:value];
+                                                              pinNumber:1
+                                                               pinValue:value];
  
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN2_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin2 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:2
-                                                                                          pinValue:value];
+                                                              pinNumber:2
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN3_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin3 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:3
-                                                                                          pinValue:value];
+                                                              pinNumber:3
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN4_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin4 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                          pinNumber:4
-                                                                                           pinValue:value];
+                                                              pinNumber:4
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN5_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin5 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:5
-                                                                                          pinValue:value];
+                                                              pinNumber:5
+                                                               pinValue:value];
 
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN6_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin6 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:6
-                                                                                          pinValue:value];
+                                                              pinNumber:6
+                                                               pinValue:value];
 
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN7_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin7 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:7
-                                                                                          pinValue:value];
+                                                              pinNumber:7
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN8_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin8 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:8
-                                                                                          pinValue:value];
+                                                              pinNumber:8
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN9_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin9 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:9
-                                                                                          pinValue:value];
+                                                              pinNumber:9
+                                                               pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN10_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin10 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:10
-                                                                                          pinValue:value];
+                                                               pinNumber:10
+                                                                pinValue:value];
+    
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN13_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pin13 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:13
-                                                                                          pinValue:value];
+                                                               pinNumber:13
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA0_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA0 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:18
-                                                                                          pinValue:value];
+                                                               pinNumber:18
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA1_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA1 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:19
-                                                                                          pinValue:value];
+                                                               pinNumber:19
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA2_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA2 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:20
-                                                                                          pinValue:value];
+                                                               pinNumber:20
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA3_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA3 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:21
-                                                                                          pinValue:value];
+                                                               pinNumber:21
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA4_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA4 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:22
-                                                                                          pinValue:value];
+                                                               pinNumber:22
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PINA5_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinA5 = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:23
-                                                                                          pinValue:value];
+                                                               pinNumber:23
+                                                                pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_MISO_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinMISO = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:14
-                                                                                          pinValue:value];
+                                                                 pinNumber:14
+                                                                  pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_MOSI_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinMOSI = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:16
-                                                                                          pinValue:value];
+                                                                 pinNumber:16
+                                                                  pinValue:value];
     
     state = (NSUInteger)[defaults integerForKey:FIRMATA_PIN_SCK_STATE];
     value = (state == FirmataCommandPinStatePWM || state == FirmataCommandPinStateOutput)?0:-1;
     BDFirmataCommand *pinSCK = [[BDFirmataCommand alloc] initWithPinState:state
-                                                                                         pinNumber:15
-                                                                                          pinValue:value];
+                                                                pinNumber:15
+                                                                 pinValue:value];
     
     self.commands = @[pin0, pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10, pin13,
                       pinA0, pinA1, pinA2, pinA3, pinA4, pinA5, pinMISO, pinMOSI, pinSCK];
