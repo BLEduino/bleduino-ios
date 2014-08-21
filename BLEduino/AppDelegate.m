@@ -16,10 +16,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Launch LeDiscovery manager.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    leManager.isReconnecting = NO;
-    
     //Configure settings.
     //Is this the first launch ever of this application?
     //Verify if keys exists prior to this launch.
@@ -31,6 +27,10 @@
         double timeCap = 60.0;
         [defaults setDouble:timeCap forKey:WRITE_TIME_CAP];
     }
+    
+    //Launch LeDiscovery manager.
+    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    leManager.isReconnecting = NO;
     
     //Scanning and connection
     if([defaults objectForKey:SETTINGS_SCAN_ONLY_BLEDUINO] == nil ||

@@ -45,7 +45,7 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
             [defaults synchronize];
-            
+                        
             BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
             BDQueue *bleCommands = manager.bleCommands;
 
