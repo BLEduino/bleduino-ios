@@ -43,7 +43,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<BleBridgeServiceDelegate>)aController
-       peripheralDelegate:(id<CBPeripheralDelegate>)delegate;
+       peripheralDelegate:(id<CBPeripheralDelegate>)delegate
 {
     self = [super init];
     if (self) {
@@ -56,15 +56,6 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         self.bridgeTxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString];
         self.deviceIDCharacteristicUUID = [CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString];
         
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_DEVICE_ID object:nil];
-        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_RX object:nil];
-
-        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_BLE_BRIDGE_DEVICE_ID object:nil];
-        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_BLE_BRIDGE_TX object:nil];
-
-        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID object:nil];
-        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX object:nil];
     }
     
     return self;
@@ -93,6 +84,16 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     //Open bridge only if there is not one already opened.
     if(!self.isOpen)
     {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_DEVICE_ID object:nil];
+        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_RX object:nil];
+        
+        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_BLE_BRIDGE_DEVICE_ID object:nil];
+        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_BLE_BRIDGE_TX object:nil];
+        
+        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID object:nil];
+        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX object:nil];
+        
         self.delegate = aController;
         self.isOpen = YES; //bridge is open.
         BDLeManager *leManager = [BDLeManager sharedLeManager];
@@ -106,8 +107,8 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
             BDBleBridge *bridge = [[BDBleBridge alloc] initWithPeripheral:bleduino
-                                                                               delegate:nil
-                                                                     peripheralDelegate:self];
+                                                                 delegate:nil
+                                                       peripheralDelegate:self];
             bridge.isOpen = YES;
             
             [self.bridges addObject:bridge];
@@ -132,6 +133,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 {
     for(BDBleBridge *bridge in self.bridges)
     {
+        [bridge dismissPeripheral];
         [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
                            characteristicUUID:bridge.bridgeTxCharacteristicUUID
                                   notifyValue:NO];
@@ -271,7 +273,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 
 - (void)didBridgeOpen
 {
-    if(!self.bridgedOpenedSuccesfuly)
+    if(!self.bridgedOpenedSuccesfuly && self.isOpen)
     {
         [self.delegate didFailToOpenBridge:self];
     }
@@ -302,8 +304,8 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
-    {
+//    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+//    {
         //Did get unique device ID?
         if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]] &&
            [self.deviceIDs objectForKey:[peripheral.identifier UUIDString]] == nil)
@@ -377,7 +379,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
                 }
             }
         }
-    }
+//    }
 }
 
 - (void)didNotifyUpdate:(NSNotification *)notification
@@ -386,28 +388,25 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
+
+    NSArray *peripheralUUIDs = [self.verifyDeviceIDs allKeys];
     
-    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    //Did subscribed to unique Bridges TXs?
+    if([peripheralUUIDs containsObject:[peripheral.identifier UUIDString]] &&
+       [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]] &&
+       characteristic.isNotifying)
     {
-        NSArray *peripheralUUIDs = [self.verifyDeviceIDs allKeys];
+        //Remove peripheral.
+        [self.verifyDeviceIDs removeObjectForKey:[peripheral.identifier UUIDString]];
+        self.totalBridges = self.totalBridges - 1;
         
-        //Did subscribed to unique Bridges TXs?
-        if([peripheralUUIDs containsObject:[peripheral.identifier UUIDString]] &&
-           [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]] &&
-           characteristic.isNotifying)
+        //Did bridge opened succesfuly?
+        if(self.totalBridges == 0)
         {
-            //Remove peripheral.
-            [self.verifyDeviceIDs removeObjectForKey:[peripheral.identifier UUIDString]];
-            self.totalBridges = self.totalBridges - 1;
-            
-            //Did bridge opened succesfuly?
-            if(self.totalBridges == 0)
+            self.bridgedOpenedSuccesfuly = YES;
+            if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
             {
-                self.bridgedOpenedSuccesfuly = YES;
-                if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
-                {
-                    [self.delegate didOpenBridge:self];
-                }
+                [self.delegate didOpenBridge:self];
             }
         }
     }

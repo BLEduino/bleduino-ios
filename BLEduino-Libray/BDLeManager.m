@@ -36,16 +36,15 @@
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
         
         //Ble commands storage.
-        self.bleCommands = [BDQueue queue];
+        _bleCommands = [BDQueue queue];
+        
+        //Placeholder to receive delegate callbacks from BLEduinos.
+        _bleduinoDelegate = [[BDObject alloc] init];
         
         //Create and launch queue for executing ble-commands.
         dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         dispatch_async(bleQueue, ^{
-            
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
-            [defaults synchronize];
-                        
+                                    
             BDLeManager *manager = [BDLeManager sharedLeManager];
             BDQueue *bleCommands = manager.bleCommands;
 
@@ -58,7 +57,7 @@
                     if(command)command(); //Run ble command.
                     
                     //Sleep
-                    [NSThread sleepForTimeInterval:timeCap/1000.0];
+                    [NSThread sleepForTimeInterval:60.0/1000.0];
                 }
                 @catch (NSException *exception)
                 {
@@ -218,6 +217,14 @@
     [self.centralManager cancelPeripheralConnection:bleduino];
 }
 
+- (void)becomeBleduinoDelegate
+{
+    for(CBPeripheral *bleduino in self.connectedBleduinos)
+    {
+        bleduino.delegate = _bleduinoDelegate;
+    }
+}
+
 //Central Manager Delegate
 #pragma mark -
 #pragma mark CM - Discovery Delegate.
@@ -292,7 +299,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     });
     
     //Did BLEduino got disconnected unxpectedly?
-    if(error && self.isReconnecting)
+    if(error && self.isReconnectingEnabled)
     {
         [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.1];
     }

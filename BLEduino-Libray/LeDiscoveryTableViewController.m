@@ -47,7 +47,8 @@
     leManager.delegate = self;
     
     //Setup model
-    self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
+    NSOrderedSet *connected = leManager.connectedBleduinos;
+    self.connectedBleduinos = [[NSMutableOrderedSet alloc] initWithOrderedSet:connected];
     self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
     self.foundWatchdog = [[NSMutableDictionary alloc] init];
     
@@ -114,6 +115,7 @@
 
 - (void)autoScanForBleDevices
 {
+    NSMutableOrderedSet *toBeRemoved = [[NSMutableOrderedSet alloc] initWithCapacity:self.foundBleduinos.count];
     for(CBPeripheral *bleduino in self.foundBleduinos)
     {
         NSNumber *storedTimestamp = [self.foundWatchdog objectForKey:[bleduino.identifier UUIDString]];
@@ -126,10 +128,13 @@
         
         if((gone) > 6.0)
         {
-            [self.foundBleduinos removeObject:bleduino];
-            [self.tableView reloadData];
+            [toBeRemoved insertObject:bleduino atIndex:0];
         }
     }
+    
+    //Remove all founded bleduinos that have been gone too long.
+    [self.foundBleduinos removeObjectsInArray:[toBeRemoved array]];
+    [self.tableView reloadData];
     
     BDLeManager *leManager = [BDLeManager sharedLeManager];
     [leManager startScanning];
@@ -243,17 +248,20 @@
         
         CBPeripheral *bleduino = [self.foundBleduinos objectAtIndex:indexPath.row];
         BDLeManager *leManager = [BDLeManager sharedLeManager];
-        NSLog(@"Time1: %f", CACurrentMediaTime());
         [leManager connectBleduino:bleduino];
-        [self performSelector:@selector(cancelPendingConnection:) withObject:bleduino afterDelay:0.5];
+        [self performSelector:@selector(cancelPendingConnection:) withObject:bleduino afterDelay:5];
     }
 }
 
 - (void)cancelPendingConnection:(CBPeripheral *)bleduino
 {
     NSLog(@"Connection timeout.");
-    if(bleduino.state != CBPeripheralStateConnected)
+    UIView *theView = [self.tableView superview];
+    UIView *interrogationView = [theView viewWithTag:1320];
+    
+    if(bleduino.state != CBPeripheralStateConnected && interrogationView)
     {
+        NSLog(@"Connection timeout happening.");
         [self.foundBleduinos removeObject:bleduino];
         
         BDLeManager *leManager = [BDLeManager sharedLeManager];
@@ -394,8 +402,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 //Connected to BLEduino and BLE devices.
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
-    NSLog(@"Time2: %f", CACurrentMediaTime());
-
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
     

@@ -14,7 +14,7 @@
 /****************************************************************************/
 extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B-0032C0D16A2D"
 
-@interface BDObject : NSObject
+@interface BDObject : NSObject <CBPeripheralDelegate>
 {
     @protected CBPeripheral *_servicePeripheral;
 }

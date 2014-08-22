@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BDQueue.h"
+#import "BDObject.h"
 
 @protocol LeDiscoveryManagerDelegate <NSObject>
 //Discovering BLEduino.
@@ -37,14 +38,20 @@
 
 @interface BDLeManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (weak) id <LeDiscoveryManagerDelegate> delegate;
-@property BDQueue *bleCommands;
-@property BOOL isReconnecting; //Enable re-connect to bleduinos when disconnected unexpectedly. 
+
+/****************************************************************************/
+/*					 Bleduino Manager Settings                              */
+/****************************************************************************/
+@property (readonly) BDQueue *bleCommands;
+@property (readonly) BDObject *bleduinoDelegate;
+@property BOOL isOnlyBleduinoDelegate;
+
+//Enable, so the manager re-connects to bleduinos when disconnected unexpectedly.
+@property BOOL isReconnectingEnabled;
+
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/
-
-//PENDING: Stretched goal.
-//Add support to persist devices.
 @property (strong) NSMutableOrderedSet *foundBleduinos;
 @property (strong) NSMutableOrderedSet *connectedBleduinos;
 @property (strong) NSMutableOrderedSet *reConnectBleduinos;
@@ -72,6 +79,7 @@
 - (void) stopScanning;
 - (void) connectBleduino:(CBPeripheral *)bleduino;
 - (void) disconnectBleduino:(CBPeripheral *)bleduino;
+- (void) becomeBleduinoDelegate;
 
 /****************************************************************************/
 /*				       Access to LeDiscovery instance			     	    */

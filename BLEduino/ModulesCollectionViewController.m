@@ -335,7 +335,7 @@
     }
     else if ([cellIdentifier isEqualToString:@"BleBridgeModuleCell"])
     {
-        NSString *imageName = (self.notificationService.isListening)?@"bridge-s.png":@"bridge.png";
+        NSString *imageName = (self.bleBridge.isOpen)?@"bridge-s.png":@"bridge.png";
         [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
     
@@ -400,6 +400,10 @@
             {
                 [self.notificationService stopListeningWithDelegate:self];
                 
+                BDLeManager *manager = [BDLeManager sharedLeManager];
+                [manager becomeBleduinoDelegate];
+                
+                
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications.png"] forState:UIControlStateNormal];
@@ -421,6 +425,9 @@
             {
                 [self.bleBridge closeBridgeForDelegate:self];
                 
+                BDLeManager *manager = [BDLeManager sharedLeManager];
+                [manager becomeBleduinoDelegate];
+                
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge.png"] forState:UIControlStateNormal];
@@ -429,7 +436,7 @@
             {
                 [self presentSetupViewWithMessage:@"Opening BLE bridge..."];
                 [self.bleBridge openBridgeForDelegate:self];
-                
+            
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s.png"] forState:UIControlStateNormal];
@@ -607,26 +614,46 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 - (void)sequencerTableViewControllerDismissed:(SequencerTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)firmataTableViewControllerDismissed:(FirmataTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)lcdModuleTableViewControllerDismissed:(LCDTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -634,6 +661,10 @@ referenceSizeForFooterInSection:(NSInteger)section
 
 - (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -641,21 +672,37 @@ referenceSizeForFooterInSection:(NSInteger)section
 
 - (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)proximityControllerDismissed:(ProximityViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)consoleControllerDismissed:(ConsoleTableViewController *)controller
 {
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    [manager becomeBleduinoDelegate];
+    [manager setDelegate:self];
+
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 

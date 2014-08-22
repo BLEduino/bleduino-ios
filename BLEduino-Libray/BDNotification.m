@@ -48,13 +48,24 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
         self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
         self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
         
-        if(aPeripheral)
-        {
-            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-            [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_NOTIFICATION object:nil];
-            [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_NOTIFICATION object:nil];
-            [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_NOTIFICATION object:nil];
-        }
+    }
+    
+    return self;
+}
+
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<NotificationServiceDelegate>)aController
+       peripheralDelegate:(id<CBPeripheralDelegate>)delegate
+{
+    self = [super init];
+    if (self) {
+        _servicePeripheral = [aPeripheral copy];
+        _servicePeripheral.delegate = delegate;
+		self.delegate = aController;
+        
+        self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
+        self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
+        
     }
     
     return self;
@@ -91,6 +102,11 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     //Start listening only if there is not another notification (service) already listening.
     if(!self.isListening)
     {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_NOTIFICATION object:nil];
+        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_NOTIFICATION object:nil];
+        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_NOTIFICATION object:nil];
+        
         self.delegate = aController;
         self.isListening = YES; //Notifications started listening.
         BDLeManager *leManager = [BDLeManager sharedLeManager];
@@ -101,7 +117,8 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
             for(CBPeripheral *bleduino in leManager.connectedBleduinos)
             {
                 BDNotification *notification = [[BDNotification alloc] initWithPeripheral:bleduino
-                                                                                               delegate:aController];
+                                                                                 delegate:aController
+                                                                       peripheralDelegate:self];
                 
                 [notification subscribeToStartReceivingNotifications];
                 notification.isListening = YES;
@@ -309,36 +326,33 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
+    
+    if(self.isListening)
     {
-        self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.soundName = UILocalNotificationDefaultSoundName;
+        notification.alertBody = self.lastNotification.message;
+        notification.alertAction = nil;
         
-        if(self.isListening)
+        //Is application on the foreground?
+        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
         {
-            UILocalNotification *notification = [[UILocalNotification alloc] init];
-            notification.soundName = UILocalNotificationDefaultSoundName;
-            notification.alertBody = self.lastNotification.message;
-            notification.alertAction = nil;
-            
-            //Is application on the foreground?
-            if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-            {
-                //Application is on the foreground, store notification attributes to present alert view.
-                notification.userInfo = @{@"message": self.lastNotification.message,
-                                          @"service": kNotificationAttributesCharacteristicUUIDString};
-            }
-            
-            //Present notification.
-            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+            //Application is on the foreground, store notification attributes to present alert view.
+            notification.userInfo = @{@"message": self.lastNotification.message,
+                                      @"service": kNotificationAttributesCharacteristicUUIDString};
         }
-        else
+        
+        //Present notification.
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
         {
-            if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
-            {
-                [self.delegate notificationService:self
-                            didReceiveNotification:self.lastNotification
-                                             error:error];
-            }
+            [self.delegate notificationService:self
+                        didReceiveNotification:self.lastNotification
+                                         error:error];
         }
     }
 }
