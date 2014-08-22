@@ -7,7 +7,7 @@
 //
 
 #import "PowerSwitchButtonView.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDFirmata.h"
 
 @interface PowerSwitchButtonView ()

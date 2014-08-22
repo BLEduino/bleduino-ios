@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDProximity.h"
 #import "BDNotification.h"
 #import "PowerSwitchButtonView.h"
@@ -29,7 +29,7 @@
     }
     
     //Launch LeDiscovery manager.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.isReconnecting = NO;
     
     //Scanning and connection

@@ -110,7 +110,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
     }
     else
     {
-        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -126,7 +126,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -151,7 +151,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

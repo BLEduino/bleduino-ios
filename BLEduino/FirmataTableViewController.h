@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDFirmata.h"
 
 

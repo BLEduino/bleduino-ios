@@ -36,10 +36,10 @@
 		B72D185F1826FE8100BD1A2D /* BDFirmata.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D185E1826FE8100BD1A2D /* BDFirmata.m */; };
 		B72D18621826FEA600BD1A2D /* BDBleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18611826FEA600BD1A2D /* BDBleBridge.m */; };
 		B72D18651826FED500BD1A2D /* BDController.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D18641826FED500BD1A2D /* BDController.m */; };
-		B72E580118104B8F00745BD8 /* BDBleService.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BDBleService.m */; };
+		B72E580118104B8F00745BD8 /* BDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B72E580018104B8F00745BD8 /* BDObject.m */; };
 		B730E76B18481D9C00EF06EA /* rotate-left.png in Resources */ = {isa = PBXBuildFile; fileRef = B730E76A18481D9C00EF06EA /* rotate-left.png */; };
 		B73447C318305596006F76C2 /* BDButtonAction.m in Sources */ = {isa = PBXBuildFile; fileRef = B73447C218305596006F76C2 /* BDButtonAction.m */; };
-		B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */; };
+		B75EC50917FA85EE000309FF /* BDLeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50817FA85EE000309FF /* BDLeManager.m */; };
 		B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */; };
 		B75EC54917FB7AF7000309FF /* KeyboardModuleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75EC54817FB7AF7000309FF /* KeyboardModuleTableViewController.m */; };
 		B765076B1841EA9400ACE0A2 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B765076A1841EA9400ACE0A2 /* SettingsTableViewController.m */; };
@@ -201,13 +201,13 @@
 		B72D18611826FEA600BD1A2D /* BDBleBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDBleBridge.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B72D18631826FED500BD1A2D /* BDController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BDController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B72D18641826FED500BD1A2D /* BDController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BDController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B72E57FF18104B8F00745BD8 /* BDBleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleService.h; sourceTree = "<group>"; };
-		B72E580018104B8F00745BD8 /* BDBleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleService.m; sourceTree = "<group>"; };
+		B72E57FF18104B8F00745BD8 /* BDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDObject.h; sourceTree = "<group>"; };
+		B72E580018104B8F00745BD8 /* BDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDObject.m; sourceTree = "<group>"; };
 		B730E76A18481D9C00EF06EA /* rotate-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotate-left.png"; sourceTree = "<group>"; };
 		B73447C118305596006F76C2 /* BDButtonAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDButtonAction.h; sourceTree = "<group>"; };
 		B73447C218305596006F76C2 /* BDButtonAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDButtonAction.m; sourceTree = "<group>"; };
-		B75EC50717FA85EE000309FF /* BDLeDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDLeDiscoveryManager.h; sourceTree = "<group>"; };
-		B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDLeDiscoveryManager.m; sourceTree = "<group>"; };
+		B75EC50717FA85EE000309FF /* BDLeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDLeManager.h; sourceTree = "<group>"; };
+		B75EC50817FA85EE000309FF /* BDLeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDLeManager.m; sourceTree = "<group>"; };
 		B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModulesCollectionViewController.h; path = BLEduino/ModulesCollectionViewController.h; sourceTree = "<group>"; };
 		B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModulesCollectionViewController.m; path = BLEduino/ModulesCollectionViewController.m; sourceTree = "<group>"; };
 		B75EC51217FB3F6D000309FF /* ModuleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuleCollectionViewCell.h; path = BLEduino/ModuleCollectionViewCell.h; sourceTree = "<group>"; };
@@ -605,8 +605,8 @@
 		B7B3F82617FF5FAC00DCDAF5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				B72E57FF18104B8F00745BD8 /* BDBleService.h */,
-				B72E580018104B8F00745BD8 /* BDBleService.m */,
+				B72E57FF18104B8F00745BD8 /* BDObject.h */,
+				B72E580018104B8F00745BD8 /* BDObject.m */,
 				B7B562F418289D8F0056C6EE /* Characteristics */,
 				B7B73C2B17F25A58008E6769 /* BDUart.h */,
 				B7B73C2C17F25A58008E6769 /* BDUart.m */,
@@ -736,8 +736,8 @@
 			isa = PBXGroup;
 			children = (
 				B7B3F82617FF5FAC00DCDAF5 /* Services */,
-				B75EC50717FA85EE000309FF /* BDLeDiscoveryManager.h */,
-				B75EC50817FA85EE000309FF /* BDLeDiscoveryManager.m */,
+				B75EC50717FA85EE000309FF /* BDLeManager.h */,
+				B75EC50817FA85EE000309FF /* BDLeManager.m */,
 				974FA3301992B31A00951E12 /* BDQueue.h */,
 				974FA3311992B31A00951E12 /* BDQueue.m */,
 				973BD3C51994805700200D83 /* BDBleduino.h */,
@@ -1019,7 +1019,7 @@
 				B7B73C0217F256B3008E6769 /* AppDelegate.m in Sources */,
 				B7D3227518456BEA008F53AE /* MFLJoystick.m in Sources */,
 				B7EDFDFB1835A788002FECA0 /* PowerSwitchButtonView.m in Sources */,
-				B72E580118104B8F00745BD8 /* BDBleService.m in Sources */,
+				B72E580118104B8F00745BD8 /* BDObject.m in Sources */,
 				B7EB1CF01830D6010060441E /* BDNotificationAttributes.m in Sources */,
 				97F09B7B1999069800FB4ED7 /* ProximityRSSISettingsController.m in Sources */,
 				B75EC50F17FB39CD000309FF /* ModulesCollectionViewController.m in Sources */,
@@ -1028,7 +1028,7 @@
 				97D79630199E65E900E47D4D /* BleduinoController.m in Sources */,
 				B72D185C1826FC4F00BD1A2D /* BDNotification.m in Sources */,
 				B7A8C3851832C5EE009A4577 /* SideMenuTableViewController.m in Sources */,
-				B75EC50917FA85EE000309FF /* BDLeDiscoveryManager.m in Sources */,
+				B75EC50917FA85EE000309FF /* BDLeManager.m in Sources */,
 				B73447C318305596006F76C2 /* BDButtonAction.m in Sources */,
 				B7BEFC2B18332E7600EA6E78 /* LEDModuleTableViewController.m in Sources */,
 				B7FF2AFA194B769F00D484B4 /* SequencerTableViewController.m in Sources */,
@@ -1194,7 +1194,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
@@ -1211,7 +1211,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BLEduino/BLEduino-Prefix.pch";
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";

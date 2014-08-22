@@ -12,13 +12,13 @@
 
 @protocol LeDiscoveryManagerDelegate <NSObject>
 //Discovering BLEduino.
-@required
+@optional//@required
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI;
 @optional
 - (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI;
 
 //Connecting to BLEduino.
-@required
+@optional//@required
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino;
 - (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
 @optional
@@ -35,7 +35,7 @@
 
 @end
 
-@interface BDLeDiscoveryManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface BDLeManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (weak) id <LeDiscoveryManagerDelegate> delegate;
 @property BDQueue *bleCommands;
 @property BOOL isReconnecting; //Enable re-connect to bleduinos when disconnected unexpectedly. 

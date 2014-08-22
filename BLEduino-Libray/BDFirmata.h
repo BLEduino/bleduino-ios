@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleService.h"
+#import "BDObject.h"
 #import "BDFirmataCommand.h"
 
 #pragma mark -
@@ -43,7 +43,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
 /****************************************************************************/
 /*                          Firmata Service                                 */
 /****************************************************************************/
-@interface BDFirmata : BDBleService <CBPeripheralDelegate>
+@interface BDFirmata : BDObject <CBPeripheralDelegate>
 @property (nonatomic, strong) BDFirmataCommand *lastSentFirmataCommand;
 @property (nonatomic, strong) BDFirmataCommand *lastReceivedFirmataCommand;
 

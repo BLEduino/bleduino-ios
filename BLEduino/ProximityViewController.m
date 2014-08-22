@@ -45,7 +45,7 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     
     //Proximity Monitor

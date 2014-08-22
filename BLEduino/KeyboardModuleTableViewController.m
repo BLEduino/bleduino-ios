@@ -8,7 +8,7 @@
 
 #import "KeyboardModuleTableViewController.h"
 #import "BDUart.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark Setup
@@ -46,7 +46,7 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
 }
 
@@ -66,7 +66,7 @@
 {
     if([text isEqualToString:@"\n"])
     {
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
             [self writeMessage:self.messageView.text bleduino:bleduino];

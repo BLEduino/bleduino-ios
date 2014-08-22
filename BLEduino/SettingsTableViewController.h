@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 @interface SettingsTableViewController : UITableViewController
 <

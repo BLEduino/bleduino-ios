@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleService.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDObject.h"
+#import "BDLeManager.h"
 #import "BDUart.h"
 #import "BDVehicleMotion.h"
 #import "BDNotification.h"
@@ -20,7 +20,7 @@
 /****************************************************************************/
 NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D16A2D";
 
-@implementation BDBleService
+@implementation BDObject
 @synthesize peripheral = _servicePeripheral;
 
 /*
@@ -44,9 +44,9 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     return self;
 }
 
-+ (instancetype)serviceWithBleduino:(CBPeripheral *)bleduino
++ (instancetype)initWithBleduino:(CBPeripheral *)bleduino
 {
-    BDBleService *service = [[BDBleService alloc] initWithPeripheral:bleduino];
+    BDObject *service = [[BDObject alloc] initWithPeripheral:bleduino];
     return service;
 }
 
@@ -89,7 +89,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                             };
                         
                         //Store ble command on execution queue.
-                        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                        BDLeManager *manager = [BDLeManager sharedLeManager];
                         [manager.bleCommands enqueue:command];
                         
                     }
@@ -106,7 +106,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                         };
                         
                         //Store ble command on execution queue.
-                        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                        BDLeManager *manager = [BDLeManager sharedLeManager];
                         [manager.bleCommands enqueue:command];
                     }
 
@@ -147,7 +147,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
                     };
                     
                     //Store ble command on execution queue.
-                    BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+                    BDLeManager *manager = [BDLeManager sharedLeManager];
                     [manager.bleCommands enqueue:command];
                 }
             }

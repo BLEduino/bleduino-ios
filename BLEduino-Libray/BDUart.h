@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BDBleService.h"
+#import "BDObject.h"
 
 #pragma mark -
 #pragma mark UART Service UUIDs
@@ -56,7 +56,7 @@ typedef NSUInteger RxTxTransmissionState;
 /****************************************************************************/
 /*						 UART Service                                       */
 /****************************************************************************/
-@interface BDUart : BDBleService <CBPeripheralDelegate>
+@interface BDUart : BDObject <CBPeripheralDelegate>
 
 @property (strong) NSString *messageSent;
 @property (strong) NSString *messageReceived;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DistanceAlertController.h"
 #import "RSSIAlertController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 @class ProximityViewController;
 @protocol ProximityViewControllerDelegate <NSObject>

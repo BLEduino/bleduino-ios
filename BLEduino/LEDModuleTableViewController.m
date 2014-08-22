@@ -7,7 +7,7 @@
 //
 
 #import "LEDModuleTableViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 @implementation LEDModuleTableViewController
 {
@@ -68,7 +68,7 @@
     self.navigationController.navigationBar.translucent = NO;
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     
     /****************************************************************************/
@@ -341,7 +341,7 @@
     ledToggleCommand.pinValue = [[NSNumber numberWithBool:ledSwitch.on] integerValue];
     
     //Send command.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {

@@ -7,12 +7,12 @@
 //
 
 #import "LeDiscoveryTableViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "RESideMenu.h"
 #import "BleduinoController.h"
 
 @interface LeDiscoveryTableViewController ()
-
+@property NSMutableDictionary *foundWatchdog;
 @end
 
 @implementation LeDiscoveryTableViewController
@@ -43,8 +43,13 @@
     [super viewDidLoad];
     
     //Setup LeDiscovery manager.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
+    
+    //Setup model
+    self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
+    self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
+    self.foundWatchdog = [[NSMutableDictionary alloc] init];
     
     //Start scanning for BLE devices.
     [self scanForBleDevices:self];
@@ -101,20 +106,50 @@
     UIApplication* app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
     
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     [leManager startScanning];
     
-//    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
+    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:3];
+}
+
+- (void)autoScanForBleDevices
+{
+    for(CBPeripheral *bleduino in self.foundBleduinos)
+    {
+        NSNumber *storedTimestamp = [self.foundWatchdog objectForKey:[bleduino.identifier UUIDString]];
+        double timestamp = [storedTimestamp doubleValue];
+        
+        //If it has not been found in the last 5 seconds, remove it.
+        double now = CACurrentMediaTime();
+        double gone = now - timestamp;
+        NSLog(@"This bleduino %@\n has been gone for %f seconds", [bleduino.identifier UUIDString], gone);
+        
+        if((gone) > 6.0)
+        {
+            [self.foundBleduinos removeObject:bleduino];
+            [self.tableView reloadData];
+        }
+    }
     
-    [self.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:3.5];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
+    [leManager startScanning];
+    
+    [self performSelector:@selector(stopScanForBleDevices:) withObject:self afterDelay:5];
 }
 
 - (void)stopScanForBleDevices:(id)sender
 {
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     [leManager stopScanning];
     
     [self.refreshControl endRefreshing];
+    [self autoScanForBleDevices];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
+    [leManager stopScanning];
     
     //Hide network activity indicator.
     UIApplication* app = [UIApplication sharedApplication];
@@ -144,13 +179,11 @@
     
     if(section == 0)
     {//Connected Peripherals
-        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
-        rows = manager.connectedBleduinos.count;
+        rows = self.connectedBleduinos.count;
     }
     else
     {//Found Peripherals
-        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
-        rows = manager.foundBleduinos.count;
+        rows = self.foundBleduinos.count;
     }
     return rows;
 }
@@ -170,19 +203,17 @@
     static NSString *CellIdentifier = @"BlePeripheralCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-    
     //Connected Peripherals
     if(indexPath.section == 0)
     {
-        CBPeripheral *connectedBleduino = [leManager.connectedBleduinos objectAtIndex:indexPath.row];
+        CBPeripheral *connectedBleduino = [self.connectedBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = (connectedBleduino.name)?connectedBleduino.name:@"BLE Peripheral";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     //Found Peripherals
     else
     {
-        CBPeripheral *foundBleduino = [leManager.foundBleduinos objectAtIndex:indexPath.row];
+        CBPeripheral *foundBleduino = [self.foundBleduinos objectAtIndex:indexPath.row];
         cell.textLabel.text = (foundBleduino.name)?foundBleduino.name:@"BLE Peripheral";
         cell.accessoryType = UITableViewCellAccessoryNone;
 
@@ -209,8 +240,24 @@
     else
     {
         [self presentBleduinoInterrogationView];
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
-        [leManager connectBleduino:leManager.foundBleduinos[indexPath.row]];
+        
+        CBPeripheral *bleduino = [self.foundBleduinos objectAtIndex:indexPath.row];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
+        NSLog(@"Time1: %f", CACurrentMediaTime());
+        [leManager connectBleduino:bleduino];
+        [self performSelector:@selector(cancelPendingConnection:) withObject:bleduino afterDelay:0.5];
+    }
+}
+
+- (void)cancelPendingConnection:(CBPeripheral *)bleduino
+{
+    NSLog(@"Connection timeout.");
+    if(bleduino.state != CBPeripheralStateConnected)
+    {
+        [self.foundBleduinos removeObject:bleduino];
+        
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
+        [leManager.delegate didFailToConnectToBleduino:bleduino error:nil];
     }
 }
 
@@ -218,7 +265,7 @@
 {
     if([segue.identifier isEqualToString:@"BleduinoSegue"])
     {
-        BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *manager = [BDLeManager sharedLeManager];
         NSInteger index = self.tableView.indexPathForSelectedRow.row;
         
         BleduinoController *controller = (BleduinoController *)segue.destinationViewController;
@@ -285,7 +332,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete && indexPath.section == 0)
     {
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         [leManager disconnectBleduino:leManager.connectedBleduinos[indexPath.row]];
     }
 }
@@ -325,7 +372,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 /****************************************************************************/
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI
 {
+    NSNumber *timestamp = [NSNumber numberWithDouble:CACurrentMediaTime()];
+    [self.foundWatchdog setObject:timestamp forKey:[bleduino.identifier UUIDString]];
+
+    [self.foundBleduinos insertObject:bleduino atIndex:0];
     [self.tableView reloadData];
+
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
     NSLog(@"Discovered peripheral: %@", name);
@@ -342,9 +394,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 //Connected to BLEduino and BLE devices.
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino
 {
+    NSLog(@"Time2: %f", CACurrentMediaTime());
+
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
     
+    [self.foundBleduinos removeObject:bleduino];
+    [self.connectedBleduinos insertObject:bleduino atIndex:0];
     [self.tableView reloadData];
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
@@ -384,6 +440,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
     
+    [self.connectedBleduinos removeObject:bleduino];
     [self.tableView reloadData];
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
@@ -423,12 +480,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Remove Bleduino interrogation view.
     [self removeBleduinoInterrogationView];
+    [self.tableView reloadData];
     
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
     NSLog(@"Faild to connect to peripheral: %@", name);
     
 
-    NSString *message = [NSString stringWithFormat:@"The BLE device '%@' failed to connect to the BLEduino Max ## app.", name];
+    NSString *message = [NSString stringWithFormat:@"The BLE device '%@' failed to connect to the BLEduino app.", name];
     
     //Push local notification.
     UILocalNotification *notification = [[UILocalNotification alloc] init];

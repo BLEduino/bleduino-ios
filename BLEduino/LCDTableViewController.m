@@ -7,7 +7,7 @@
 //
 
 #import "LCDTableViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark Setup
@@ -53,7 +53,7 @@
     self.charCountView.text = [NSString stringWithFormat:@"%ld", (long)self.totalAvailableChars];
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
 
     
@@ -106,7 +106,7 @@
     {
         if(self.messageView.text.length <= self.totalAvailableChars)
         {
-            BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+            BDLeManager *leManager = [BDLeManager sharedLeManager];
             
             for(CBPeripheral *bleduino in leManager.connectedBleduinos)
             {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleService.h"
+#import "BDObject.h"
 #import "BDNotificationAttributes.h"
 
 #pragma mark -
@@ -47,7 +47,7 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 /****************************************************************************/
 /*                        Notification Service                              */
 /****************************************************************************/
-@interface BDNotification : BDBleService <CBPeripheralDelegate>
+@interface BDNotification : BDObject <CBPeripheralDelegate>
 
 @property (nonatomic, strong) BDNotificationAttributes *lastNotification;
 @property BOOL isListening;

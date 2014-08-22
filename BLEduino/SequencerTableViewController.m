@@ -54,7 +54,7 @@
     self.addCommand.tintColor = lightBlue;
     self.addDelay.tintColor = lightBlue;
     
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
     
@@ -562,7 +562,7 @@
     digitalSwitchCommand.pinValue = digitalValue.on;
     
     //Send command.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -706,7 +706,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         [finalSequence insertObject:self.end atIndex:finalSequence.count];
         
         //Send command.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {

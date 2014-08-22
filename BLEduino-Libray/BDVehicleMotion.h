@@ -7,7 +7,7 @@
 //
 
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BDBleService.h"
+#import "BDObject.h"
 #import "BDThrottleYawRollPitch.h"
 
 #pragma mark -
@@ -45,7 +45,7 @@ extern NSString * const kThrottleYawRollPitchCharacteristicUUIDString;
 /****************************************************************************/
 /*                      Vehicle Motion Service                              */
 /****************************************************************************/
-@interface BDVehicleMotion : BDBleService <CBPeripheralDelegate>
+@interface BDVehicleMotion : BDObject <CBPeripheralDelegate>
 @property (nonatomic, strong) BDThrottleYawRollPitch *lastMotionUpdate;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral

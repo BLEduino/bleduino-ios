@@ -7,7 +7,7 @@
 //
 
 #import "FirmataTableViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDFirmataCommand.h"
 
 #import "FirmataAnalogCell.h"
@@ -46,7 +46,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
     leManager.delegate = self;
     
@@ -396,7 +396,7 @@
     if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
     {
         //Send command.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
@@ -423,7 +423,7 @@
             if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
             {
                 //Send command.
-                BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+                BDLeManager *leManager = [BDLeManager sharedLeManager];
                 
                 for(CBPeripheral *bleduino in leManager.connectedBleduinos)
                 {
@@ -596,7 +596,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
         {
             //Send command.
-            BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+            BDLeManager *leManager = [BDLeManager sharedLeManager];
             
             for(CBPeripheral *bleduino in leManager.connectedBleduinos)
             {
@@ -613,7 +613,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
     if(self.sync.isEnabled)
     {
         //Send command.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {

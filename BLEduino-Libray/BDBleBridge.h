@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleService.h"
+#import "BDObject.h"
 
 #pragma mark -
 #pragma mark BLE Bridge Service UUIDs
@@ -36,7 +36,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 - (void)didFailToOpenBridge:(BDBleBridge *)service;
 @end
 
-@interface BDBleBridge : BDBleService <CBPeripheralDelegate>
+@interface BDBleBridge : BDObject <CBPeripheralDelegate>
 @property BOOL isOpen;
 
 /*

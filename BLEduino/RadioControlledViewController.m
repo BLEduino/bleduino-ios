@@ -7,7 +7,7 @@
 //
 
 #import "RadioControlledViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDVehicleMotion.h"
 #import "BDThrottleYawRollPitch.h"
 #import "VerticalJoystickControlView.h"
@@ -50,7 +50,7 @@
      object:[UIDevice currentDevice]];
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     
     //What's initial orientation?
@@ -171,7 +171,7 @@
     self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -196,7 +196,7 @@
     self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {

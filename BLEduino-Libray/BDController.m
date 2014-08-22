@@ -117,7 +117,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
     }
     else
     {
-        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -135,7 +135,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 
 }
@@ -161,7 +161,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "BDNotification.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark Notification Service UUIDs
@@ -93,7 +93,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     {
         self.delegate = aController;
         self.isListening = YES; //Notifications started listening.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
         
         if(leManager.connectedBleduinos.count > 0)
@@ -209,7 +209,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
     else
     {
-        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -249,7 +249,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -274,7 +274,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

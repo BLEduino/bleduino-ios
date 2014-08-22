@@ -11,7 +11,7 @@
 #import "ModuleCollectionViewCell.h"
 #import "RESideMenu.h"
 #import "ProximityAlert.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "ProximityViewController.h"
 
 @interface ModulesCollectionViewController()
@@ -73,7 +73,7 @@
     self.themeColor = lightBlue;
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
 
     //Load distance alerts flag.

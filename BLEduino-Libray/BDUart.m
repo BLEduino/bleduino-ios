@@ -7,7 +7,7 @@
 //
 
 #import "BDUart.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark - UART Service UUIDs
@@ -170,7 +170,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
     }
     else
     {
-        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -197,7 +197,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 
 }
@@ -244,7 +244,7 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

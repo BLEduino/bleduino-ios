@@ -7,7 +7,7 @@
 //
 
 #import "PowerRelayViewController.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "PowerNextStateView.h"
 #import "BDBleduino.h"
 
@@ -56,7 +56,7 @@
     [[UIScreen mainScreen] applicationFrame];
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     
 }
@@ -129,7 +129,7 @@
     _lastPowerSwitchCommand = powerSwitchCommand;
 
     //Send command.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {

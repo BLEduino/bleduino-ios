@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 //Modules
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "LCDTableViewController.h"
 #import "KeyboardModuleTableViewController.h"
 #import "GameControllerViewController.h"

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleService.h"
+#import "BDObject.h"
 #import "BDButtonAction.h"
 
 #pragma mark -
@@ -44,7 +44,7 @@ extern NSString * const kButtonActionCharacteristicUUIDString;
 /****************************************************************************/
 /*                          Controller Service                              */
 /****************************************************************************/
-@interface BDController : BDBleService <CBPeripheralDelegate>
+@interface BDController : BDObject <CBPeripheralDelegate>
 @property (nonatomic, strong) BDButtonAction *lastButtonAction;
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral

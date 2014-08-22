@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BleduinoController.h"
 
 /****************************************************************************/
@@ -25,8 +25,8 @@ LeDiscoveryManagerDelegate,
 BleduinoControllerDelegate,
 UIAlertViewDelegate
 >
-@property (strong, nonatomic) NSArray *connectedBleduinos;
-@property (strong, nonatomic) NSArray *foundBleduinos;
+@property (strong, nonatomic) NSMutableOrderedSet *connectedBleduinos;
+@property (strong, nonatomic) NSMutableOrderedSet *foundBleduinos;
 - (IBAction)showMenu;
 - (void)showStatusBar;
 @end

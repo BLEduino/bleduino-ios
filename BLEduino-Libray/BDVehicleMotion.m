@@ -118,7 +118,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
     }
     else
     {
-        [BDBleService peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -136,7 +136,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -161,7 +161,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

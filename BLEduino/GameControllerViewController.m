@@ -8,7 +8,7 @@
 
 #import "GameControllerViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDController.h"
 #import "BDButtonAction.h"
 #import "OBShapedButton.h"
@@ -70,7 +70,7 @@
      object:[UIDevice currentDevice]];
     
     //Manager Delegate
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
     
     //What's initial orientation?
@@ -224,7 +224,7 @@
         hJoystickUpdate.buttonID = 1;
         
         //Send joystick action.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
@@ -296,7 +296,7 @@
     yButtonUpdate.buttonID = 2;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -316,7 +316,7 @@
     xButtonUpdate.buttonID = 3;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -336,7 +336,7 @@
     aButtonUpdate.buttonID = 4;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -356,7 +356,7 @@
     bButtonUpdate.buttonID = 5;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -400,7 +400,7 @@
     startButtonUpdate.buttonID = 6;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
@@ -420,7 +420,7 @@
     selectButtonUpdate.buttonID = 7;
     
     //Send button action.
-    BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {

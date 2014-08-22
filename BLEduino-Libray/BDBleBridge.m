@@ -7,7 +7,7 @@
 //
 
 #import "BDBleBridge.h"
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark BLE Bridge Service UUIDs
@@ -95,7 +95,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     {
         self.delegate = aController;
         self.isOpen = YES; //bridge is open.
-        BDLeDiscoveryManager *leManager = [BDLeDiscoveryManager sharedLeManager];
+        BDLeManager *leManager = [BDLeManager sharedLeManager];
         self.totalBridges = leManager.connectedBleduinos.count;
         self.totalIDs = self.totalBridges;
         
@@ -231,7 +231,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
 }
 
@@ -265,7 +265,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     }
     else
     {
-        [BDBleService peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
+        [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
     }
 }
 

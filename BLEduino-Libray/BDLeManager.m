@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDLeDiscoveryManager.h"
+#import "BDLeManager.h"
 #import "BDUart.h"
 #import "BDVehicleMotion.h"
 #import "BDNotification.h"
@@ -14,11 +14,11 @@
 #import "BDController.h"
 #import "BDBleBridge.h"
 
-@interface BDLeDiscoveryManager ()
+@interface BDLeManager ()
 @property CBCentralManager *centralManager;
 @end
 
-@implementation BDLeDiscoveryManager
+@implementation BDLeManager
 
 #pragma mark -
 #pragma mark Access to Central Manager
@@ -46,7 +46,7 @@
             double timeCap = [defaults doubleForKey:WRITE_TIME_CAP];
             [defaults synchronize];
                         
-            BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+            BDLeManager *manager = [BDLeManager sharedLeManager];
             BDQueue *bleCommands = manager.bleCommands;
 
             while(1)
@@ -74,7 +74,7 @@
 }
 
 
-+ (BDLeDiscoveryManager *)sharedLeManager
++ (BDLeManager *)sharedLeManager
 {
     static id sharedManager = nil;
     static dispatch_once_t onceToken;
@@ -146,13 +146,11 @@
 
 - (void) startScanningForBleduinos
 {
-    [self stopScanning];
     if(self.centralManager.state == CBCentralManagerStatePoweredOn)
     {
         //Scan for BLEduino service.
         [self.foundBleduinos removeAllObjects];
-        [self.delegate didDiscoverBleduino:nil withRSSI:nil];
-        
+
         NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
         [self.centralManager scanForPeripheralsWithServices:services options:nil];
     }
@@ -166,8 +164,6 @@
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center postNotificationName:BLE_MANAGER_NOT_POWERED_ON object:self];
     }
-    
-//    [self caca];
 }
 
 - (void) startScanningForBleduinosWithTimeout:(NSTimeInterval)timeout
@@ -239,7 +235,7 @@
     {
         //Store device.
         [self.foundBleduinos insertObject:peripheral atIndex:0];
-        
+                
         if(self.scanOnlyForBLEduinos)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -259,11 +255,6 @@
             });
         }
     }
-}
-
-- (void)caca
-{
-    [self performSelector:@selector(startScanningForBleduinos) withObject:nil afterDelay:5];
 }
 
 #pragma mark -

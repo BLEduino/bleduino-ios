@@ -66,7 +66,7 @@
 - (void)setupConsole
 {
     //Set manager and service
-    BDLeDiscoveryManager *manager = [BDLeDiscoveryManager sharedLeManager];
+    BDLeManager *manager = [BDLeManager sharedLeManager];
     manager.delegate = self;
     
     //Setup console hub.

@@ -182,7 +182,7 @@
     CBUUID *bridge = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
     CBUUID *bridgeRx = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
     
-    BDBleService *gap = [BDBleService serviceWithBleduino:bleduino];
+    BDObject *gap = [BDObject initWithBleduino:bleduino];
     [gap writeDataToServiceUUID:bridge characteristicUUID:bridgeRx data:updateData withAck:NO];
 }
 
