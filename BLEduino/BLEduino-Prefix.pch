@@ -12,6 +12,7 @@
 #define SETTINGS_SCAN_ONLY_BLEDUINO @"OnlyBleduinos"
 #define SETTINGS_NOTIFY_CONNECT @"NotifyConnect"
 #define SETTINGS_NOTIFY_DISCONNECT @"NotifyDisconnect"
+#define SETTINGS_CONNECTION_REMINDER @"Connection-Reminder-Alert"
 
 //Modules.
 #define SETTINGS_LCD_TOTAL_CHARS @"LCD-TotalChars"

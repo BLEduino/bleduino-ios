@@ -22,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="517" y="988"/>
         </scene>
-        <!--Le Discovery Table View Controller - BLE Manager-->
+        <!--Le Discovery Table View Controller - Connection Manager-->
         <scene sceneID="GaQ-hY-tCj">
             <objects>
                 <tableViewController storyboardIdentifier="bleController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lrn-Ad-314" customClass="LeDiscoveryTableViewController" sceneMemberID="viewController">
@@ -55,7 +55,7 @@
                             <outlet property="delegate" destination="lrn-Ad-314" id="aFO-ef-PTw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="BLE Manager" id="uMh-6T-kyW">
+                    <navigationItem key="navigationItem" title="Connection Manager" id="uMh-6T-kyW">
                         <barButtonItem key="leftBarButtonItem" image="menu.png" id="Wgo-rp-5DI">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>

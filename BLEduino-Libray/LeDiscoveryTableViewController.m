@@ -13,6 +13,7 @@
 
 @interface LeDiscoveryTableViewController ()
 @property NSMutableDictionary *foundWatchdog;
+@property BOOL showedBleReminder;
 @end
 
 @implementation LeDiscoveryTableViewController
@@ -41,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.showedBleReminder = NO;
     
     //Setup LeDiscovery manager.
     BDLeManager *leManager = [BDLeManager sharedLeManager];
@@ -79,26 +82,34 @@
 
 - (void)didFailToAttemptScannigForBleduinos:(CBCentralManagerState)sharedManagerSate
 {
-    NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
-    UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
-                                                                  message:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:nil
-                                                        otherButtonTitles:@"Ok", nil];
-    
-    [bleNotificationAlert show];
+    if(!self.showedBleReminder)
+    {
+        self.showedBleReminder = YES;
+        NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
+        UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
+                                                                      message:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:nil
+                                                            otherButtonTitles:@"Ok", nil];
+        
+        [bleNotificationAlert show];
+    }
 }
 
 - (void)didFailToAttemptConnectionToBleduino:(CBCentralManagerState)sharedManagerSate
 {
-    NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
-    UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
-                                                                  message:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:nil
-                                                        otherButtonTitles:@"Ok", nil];
-    
-    [bleNotificationAlert show];
+    if(!self.showedBleReminder)
+    {
+        self.showedBleReminder = YES;
+        NSString *message = @"Turn On Bluetooth to allow the \"BLEduino\" app to scan and connect to BLEduino devices.";
+        UIAlertView *bleNotificationAlert = [[UIAlertView alloc]initWithTitle:message
+                                                                      message:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:nil
+                                                            otherButtonTitles:@"Ok", nil];
+        
+        [bleNotificationAlert show];
+    }
 }
 
 - (void)scanForBleDevices:(id)sender

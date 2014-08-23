@@ -29,6 +29,7 @@
 <
 UICollectionViewDelegateFlowLayout,
 CBPeripheralDelegate,
+UIAlertViewDelegate,
 LCDTableViewControllerDelegate,
 KeyboardModuleTableViewControllerDelegate,
 GameControllerViewControllerDelegate,

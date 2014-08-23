@@ -414,10 +414,10 @@
 		B75EC51517FB415F000309FF /* ModulesConrtoller */ = {
 			isa = PBXGroup;
 			children = (
-				B75EC51217FB3F6D000309FF /* ModuleCollectionViewCell.h */,
-				B7D3227B18456DC4008F53AE /* ModuleCollectionViewCell.m */,
 				B75EC50D17FB39CD000309FF /* ModulesCollectionViewController.h */,
 				B75EC50E17FB39CD000309FF /* ModulesCollectionViewController.m */,
+				B75EC51217FB3F6D000309FF /* ModuleCollectionViewCell.h */,
+				B7D3227B18456DC4008F53AE /* ModuleCollectionViewCell.m */,
 			);
 			name = ModulesConrtoller;
 			path = ..;
@@ -1196,7 +1196,7 @@
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
+				PROVISIONING_PROFILE = "1aa123f2-3b06-4b6c-b89d-7682e2f7004e";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1213,7 +1213,7 @@
 				INFOPLIST_FILE = "BLEduino/BLEduino-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C38BBC2A-B4EA-49A6-8752-E60DF4E5C42C";
+				PROVISIONING_PROFILE = "1aa123f2-3b06-4b6c-b89d-7682e2f7004e";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Libraries\"/**";
 				WRAPPER_EXTENSION = app;
 			};

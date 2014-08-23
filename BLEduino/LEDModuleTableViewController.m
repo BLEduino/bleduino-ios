@@ -332,11 +332,13 @@
 
 - (void)ledSwitchToggled:(id)sender
 {
+    //Get pin number
     UISwitch *ledSwitch = (UISwitch *)sender;
-       
+    NSInteger pinNumber = [self pinNumber:(ledSwitch.tag - 100)];
+    
     //Create firmata command.
     BDFirmataCommand *ledToggleCommand = [[BDFirmataCommand alloc] init];
-    ledToggleCommand.pinNumber = ledSwitch.tag - 100;
+    ledToggleCommand.pinNumber = pinNumber;
     ledToggleCommand.pinState = FirmataCommandPinStateOutput;
     ledToggleCommand.pinValue = [[NSNumber numberWithBool:ledSwitch.on] integerValue];
     
@@ -352,6 +354,78 @@
     NSLog(@"LED %ld was turned %ld",
           (long)ledSwitch.tag - 99, [[NSNumber numberWithBool:ledSwitch.on] longValue]);
 }
+
+- (NSInteger) pinNumber:(NSInteger)selection
+{
+    NSInteger pin;
+    switch (selection) {
+        case 0:
+            pin = 0;
+            break;
+        case 1:
+            pin = 1;
+            break;
+        case 2:
+            pin = 2;
+            break;
+        case 3:
+            pin = 3;
+            break;
+        case 4:
+            pin = 4;
+            break;
+        case 5:
+            pin = 5;
+            break;
+        case 6:
+            pin = 6;
+            break;
+        case 7:
+            pin = 7;
+            break;
+        case 8:
+            pin = 8;
+            break;
+        case 9:
+            pin = 9;
+            break;
+        case 10:
+            pin = 10;
+            break;
+        case 11:
+            pin = 13;
+            break;
+        case 12:
+            pin = 18;
+            break;
+        case 13:
+            pin = 19;
+            break;
+        case 14:
+            pin = 20;
+            break;
+        case 15:
+            pin = 21;
+            break;
+        case 16:
+            pin = 22;
+            break;
+        case 17:
+            pin = 23;
+            break;
+        case 18:
+            pin = 14;
+            break;
+        case 19:
+            pin = 16;
+            break;
+        case 20:
+            pin = 15;
+            break;
+    }
+    return pin;
+}
+
 
 #pragma mark -
 #pragma mark - LeManager Delegate

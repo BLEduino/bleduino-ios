@@ -351,8 +351,35 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger module = indexPath.item;
+    BDLeManager *manager = [BDLeManager sharedLeManager];
+    BOOL isConnected  = manager.connectedBleduinos.count;
     
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL isConnectionReminderEnabled = [prefs boolForKey:SETTINGS_CONNECTION_REMINDER];
+
+    if(isConnected || !isConnectionReminderEnabled)
+    {
+        [self presentModule:indexPath];
+    }
+    else
+    {
+        if(isConnectionReminderEnabled)
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Connection Manager"
+                                                            message:@"You are not connected to any BLEduino."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Dismiss"
+                                                  otherButtonTitles:@"Connect", nil];
+            alert.tag = indexPath.item;
+            [alert show];
+        }
+    }
+}
+
+- (void)presentModule:(NSIndexPath *)indexPath
+{
+    NSInteger module = indexPath.item;
+
     switch (module) {
         case 0:
             [self performSegueWithIdentifier:@"LCDModuleSegue" sender:self];
@@ -405,7 +432,7 @@
                 
                 
                 //Update icon.
-                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications.png"] forState:UIControlStateNormal];
             }
             else
@@ -414,7 +441,7 @@
                 [self.notificationService startListeningWithDelegate:self];
                 
                 //Update icon.
-                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications-s.png"] forState:UIControlStateNormal];
             }
             break;
@@ -429,20 +456,33 @@
                 [manager becomeBleduinoDelegate];
                 
                 //Update icon.
-                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge.png"] forState:UIControlStateNormal];
             }
             else
             {
                 [self presentSetupViewWithMessage:@"Opening BLE bridge..."];
                 [self.bleBridge openBridgeForDelegate:self];
-            
+                
                 //Update icon.
-                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+                ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"bridge-s.png"] forState:UIControlStateNormal];
             }
             break;
+            
+    }
+}
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == alertView.cancelButtonIndex)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:alertView.tag inSection:0];
+        [self presentModule:indexPath];
+    }
+    else
+    {
+        [self showMenu];
     }
 }
 

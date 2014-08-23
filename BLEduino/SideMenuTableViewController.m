@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
     
-    _titles = @[@"Modules", @"BLE Manager", @"Settings", @"Tutorials", @"BLEduino Hardware", @"Kytelabs"];
+    _titles = @[@"Modules", @"Connection Manager", @"Settings", @"  Tutorials", @"BLEduino Hardware", @"Kytelabs"];
     _images = @[@"modules.png", @"manager.png", @"settings.png", @"tutorials.png", @"hardware.png", @"contact.png"];
     
     self.tableView = ({
@@ -106,7 +106,7 @@
         {
             MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
             controller.mailComposeDelegate = self;
-            [controller setSubject:@"Hello Kytelabs from BLEduino App"];
+            [controller setSubject:@"[BLEduino App] Hello Kytelabs!"];
             [controller setToRecipients:@[@"help@bleduino.cc"]];
             if(controller) [self presentViewController:controller
                                               animated:YES
@@ -208,11 +208,11 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.highlightedTextColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:95/255.0 alpha:1.0];
         
-        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.highlightedTextColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:95/255.0 alpha:1.0];
         cell.selectedBackgroundView = [[UIView alloc] init];
@@ -221,8 +221,29 @@
     //Configure cell.
     switch (indexPath.section) {
         case 0:
+        {
             cell.textLabel.text = _titles[indexPath.row];
             cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+            
+            //Show total connected devices
+            if(indexPath.row == 1)
+            {
+                BDLeManager *manager = [BDLeManager sharedLeManager];
+                NSInteger totalBleduinos = manager.connectedBleduinos.count;
+                
+                if(totalBleduinos)
+                {
+                    NSString *message = (totalBleduinos >1)?@"%ld bleduino":@"%ld bleduino";
+                    cell.detailTextLabel.text = [NSString stringWithFormat:message, (long)totalBleduinos];
+
+                }
+                else
+                {
+                    cell.detailTextLabel.text = @"No bleduinos";
+                }
+
+            }
+        }
             break;
         case 1:
             cell.textLabel.text = _titles[4];
@@ -249,6 +270,7 @@
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 {
     NSLog(@"willShowMenuViewController");
+    [self.tableView reloadData];
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController

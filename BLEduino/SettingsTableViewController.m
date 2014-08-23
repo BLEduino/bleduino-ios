@@ -75,7 +75,9 @@
         if(actionSheet.tag == 100)
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setInteger:buttonIndex forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
+            NSInteger pinNumber = [self pinNumber:buttonIndex];
+            
+            [defaults setInteger:pinNumber forKey:SETTINGS_POWERRELAY_PIN_NUMBER];
             [defaults synchronize];
         }
         else if(actionSheet.tag == 101)
@@ -87,14 +89,6 @@
             [defaults setInteger:powerSwitchColor forKey:SETTINGS_POWERRELAY_STATUS_COLOR];
             [defaults synchronize];
         }
-        else if(actionSheet.tag == 102)
-        {
-            BOOL isDistanceFormatFeet = ![[NSNumber numberWithLong:buttonIndex] boolValue];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:isDistanceFormatFeet forKey:SETTINGS_PROXIMITY_DISTANCE_FORMAT_FT];
-            [defaults synchronize];
-        }
-        
         //Update the data.
         [self.tableView reloadData];
     }
@@ -112,15 +106,20 @@
             [defaults setBool:settingsSwitch.on forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
             break;
             
-        //Notify on Connect
+        //Enable/Disable Connection Reminder
         case 200:
+            [defaults setBool:settingsSwitch.on forKey:SETTINGS_CONNECTION_REMINDER];
+            break;
+            
+        //Notify on Connect
+        case 201:
             [defaults setBool:settingsSwitch.on forKey:SETTINGS_NOTIFY_CONNECT];
          break;
-
+ 
         //Notify on disconnect
-        case 201:
+        case 202:
             [defaults setBool:settingsSwitch.on forKey:SETTINGS_NOTIFY_DISCONNECT];
-        break;
+            break;
     }
     
     [defaults synchronize];
@@ -179,10 +178,22 @@
         if(indexPath.row == 0)
         {
             //Configure cell
-            cell.settingDescription.text = @"Notify on Connect";
+            cell.settingDescription.text = @"Connection Reminder Alert";
 
             //Configure switch
             cell.settingsStatus.tag = 200;
+            cell.settingsStatus.on = [prefs boolForKey:SETTINGS_CONNECTION_REMINDER];
+            [cell.settingsStatus addTarget:self
+                                    action:@selector(settingsSwitchToggled:)
+                          forControlEvents:UIControlEventTouchUpInside];
+        }
+        else if(indexPath.row == 1)
+        {
+            //Configure cell
+            cell.settingDescription.text = @"Notify on Connect";
+            
+            //Configure switch
+            cell.settingsStatus.tag = 201;
             cell.settingsStatus.on = [prefs integerForKey:SETTINGS_NOTIFY_CONNECT];
             [cell.settingsStatus addTarget:self
                                     action:@selector(settingsSwitchToggled:)
@@ -192,9 +203,9 @@
         {
             //Configure cell
             cell.settingDescription.text = @"Notify on Disconnect";
-
+            
             //Configure switch
-            cell.settingsStatus.tag = 201;
+            cell.settingsStatus.tag = 202;
             cell.settingsStatus.on = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
             [cell.settingsStatus addTarget:self
                                     action:@selector(settingsSwitchToggled:)
@@ -315,7 +326,7 @@
             rows = 1;
             break;
         case 1:
-            rows = 2;
+            rows = 3;
             break;
         case 2:
             rows = 4;
@@ -409,6 +420,78 @@
     
     return name;
 }
+
+- (NSInteger) pinNumber:(NSInteger)selection
+{
+    NSInteger pin;
+    switch (selection) {
+        case 0:
+            pin = 0;
+            break;
+        case 1:
+            pin = 1;
+            break;
+        case 2:
+            pin = 2;
+            break;
+        case 3:
+            pin = 3;
+            break;
+        case 4:
+            pin = 4;
+            break;
+        case 5:
+            pin = 5;
+            break;
+        case 6:
+            pin = 6;
+            break;
+        case 7:
+            pin = 7;
+            break;
+        case 8:
+            pin = 8;
+            break;
+        case 9:
+            pin = 9;
+            break;
+        case 10:
+            pin = 10;
+            break;
+        case 11:
+            pin = 13;
+            break;
+        case 12:
+            pin = 18;
+            break;
+        case 13:
+            pin = 19;
+            break;
+        case 14:
+            pin = 20;
+            break;
+        case 15:
+            pin = 21;
+            break;
+        case 16:
+            pin = 22;
+            break;
+        case 17:
+            pin = 23;
+            break;
+        case 18:
+            pin = 14;
+            break;
+        case 19:
+            pin = 16;
+            break;
+        case 20:
+            pin = 15;
+            break;
+    }
+    return pin;
+}
+
 
 #pragma mark -
 #pragma mark - LeManager Delegate

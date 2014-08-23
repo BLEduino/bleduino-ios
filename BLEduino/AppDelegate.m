@@ -37,7 +37,8 @@
         [defaults setBool:YES forKey:SETTINGS_SCAN_ONLY_BLEDUINO];
         [defaults setBool:YES forKey:SETTINGS_NOTIFY_DISCONNECT];
         [defaults setBool:NO forKey:SETTINGS_NOTIFY_CONNECT];
-    }
+        [defaults setBool:YES forKey:SETTINGS_CONNECTION_REMINDER];
+}
     
     //Modules
     if([defaults objectForKey:SETTINGS_LCD_TOTAL_CHARS] == nil ||
