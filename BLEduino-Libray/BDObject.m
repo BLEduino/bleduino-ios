@@ -13,7 +13,7 @@
 #import "BDNotification.h"
 #import "BDFirmata.h"
 #import "BDController.h"
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 
 /****************************************************************************/
 /*                            BLEduino Service				     			*/

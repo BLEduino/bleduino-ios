@@ -2,7 +2,7 @@
 //  BDProximity.m
 //  BLEduino
 //
-//  Created by Ramon Gonzalez Rodriguez on 8/19/14.
+//  Created by Ramon Gonzalez on 8/19/14.
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 

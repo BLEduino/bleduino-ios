@@ -20,6 +20,11 @@
 - (id) initWithData:(NSData *)motionData;
 
 /*
+ * Create Throttle-Yaw-Roll-Pitch.
+ */
++ (instancetype)motion;
+
+/*
  * Converts Throttle-Yaw-Roll-Pitch characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data;

@@ -20,6 +20,11 @@
 - (id) initWithData:(NSData *)attributesData;
 
 /*
+ * Create Notification Attributes. 
+ */
++ (instancetype)attributes;
+
+/*
  * Converts Notification Attributes characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data;

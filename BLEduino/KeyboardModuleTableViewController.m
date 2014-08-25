@@ -7,8 +7,9 @@
 //
 
 #import "KeyboardModuleTableViewController.h"
-#import "BDUart.h"
 #import "BDLeManager.h"
+#import "BDUart.h"
+#import "BDBleduino.h"
 
 #pragma mark -
 #pragma mark Setup
@@ -48,6 +49,7 @@
     //Manager Delegate
     BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.delegate = self;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,9 +95,8 @@
  */
 - (void) writeMessage:(NSString *)message bleduino:(CBPeripheral *)bleduino
 {
-    
     BDUart *messageService = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
-    
+   
     if(message.length > 20)
     {
         BOOL lastPacket = false;

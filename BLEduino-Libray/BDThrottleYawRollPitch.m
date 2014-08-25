@@ -10,6 +10,15 @@
 
 @implementation BDThrottleYawRollPitch
 
+
+/*
+ * Create Throttle-Yaw-Roll-Pitch.
+ */
++ (instancetype)motion
+{
+    return [[BDThrottleYawRollPitch alloc] init];
+}
+
 /*
  * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.
  */

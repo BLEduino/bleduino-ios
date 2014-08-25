@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kytelabs. All rights reserved.
 //
 
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 #import "BDLeManager.h"
 
 #pragma mark -
@@ -24,7 +24,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDBleBridge ()
+@interface BDBridge ()
 @property (strong) CBUUID *bleBridgeServiceUUID;
 @property (strong) CBUUID *bridgeRxCharacteristicUUID;
 @property (strong) CBUUID *bridgeTxCharacteristicUUID;
@@ -39,7 +39,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 @property NSInteger deviceID;
 @end
 
-@implementation BDBleBridge
+@implementation BDBridge
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<BleBridgeServiceDelegate>)aController
@@ -61,7 +61,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     return self;
 }
 
-+ (BDBleBridge *)sharedBridge
++ (BDBridge *)sharedBridge
 {
     static id sharedBleBridge = nil;
     static dispatch_once_t onceToken;
@@ -106,7 +106,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         
         for(CBPeripheral *bleduino in leManager.connectedBleduinos)
         {
-            BDBleBridge *bridge = [[BDBleBridge alloc] initWithPeripheral:bleduino
+            BDBridge *bridge = [[BDBridge alloc] initWithPeripheral:bleduino
                                                                  delegate:nil
                                                        peripheralDelegate:self];
             bridge.isOpen = YES;
@@ -131,7 +131,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
  */
 - (void)closeBridgeForDelegate:(id<BleBridgeServiceDelegate>)aController
 {
-    for(BDBleBridge *bridge in self.bridges)
+    for(BDBridge *bridge in self.bridges)
     {
         [bridge dismissPeripheral];
         [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
@@ -179,7 +179,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
                 self.verifyDeviceIDs = [[NSMutableDictionary alloc] initWithDictionary:self.deviceIDs copyItems:YES];
                 
                 //Found all deviceIDs, now subscribe to recive data from all bleduinos.
-                for(BDBleBridge *bridge in self.bridges)
+                for(BDBridge *bridge in self.bridges)
                 {
                     //Store deviceID on the corresponding service.
                     NSString *peripheralUUID = [bridge.peripheral.identifier UUIDString];
@@ -218,7 +218,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             [updatedPayload appendData:payload];
             
             //Find destination device.
-            for(BDBleBridge *bridge in self.bridges)
+            for(BDBridge *bridge in self.bridges)
             {
                 //Found destination device. Relay message.
                 if(bridge.deviceID == deviceID)
@@ -328,7 +328,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
                 self.verifyDeviceIDs = [[NSMutableDictionary alloc] initWithDictionary:self.deviceIDs copyItems:YES];
                 
                 //Found all deviceIDs, now subscribe to recive data from all bleduinos.
-                for(BDBleBridge *bridge in self.bridges)
+                for(BDBridge *bridge in self.bridges)
                 {
                     //Store deviceID on the corresponding service.
                     NSString *peripheralUUID = [bridge.peripheral.identifier UUIDString];
@@ -367,7 +367,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
             [updatedPayload appendData:payload];
             
             //Find destination device.
-            for(BDBleBridge *bridge in self.bridges)
+            for(BDBridge *bridge in self.bridges)
             {
                 //Found destination device. Relay message.
                 if(bridge.deviceID == deviceID)

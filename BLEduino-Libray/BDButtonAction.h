@@ -34,12 +34,17 @@
 @property NSInteger buttonValue;
 
 /*
- * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.
+ * Create button action characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)buttonActionData;
 
 /*
- * Converts Throttle-Yaw-Roll-Pitch characteristic to an NSData object to send data to a peripheral.
+ * Create button action.
+ */
++ (instancetype)action;
+
+/*
+ * Converts button action characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data;
 @end

@@ -291,7 +291,7 @@
 - (void)ySendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *yButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *yButtonUpdate = [BDButtonAction action];
     yButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     yButtonUpdate.buttonID = 2;
     
@@ -301,7 +301,7 @@
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
     {
         BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
+                                                                       delegate:self];
         [gameController writeButtonAction:yButtonUpdate];
     }
     

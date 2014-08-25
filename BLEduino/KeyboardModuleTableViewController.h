@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BDLeManager.h"
 #import "BDUart.h"
+#import "BDBleduino.h"
 
 @class KeyboardModuleTableViewController;
 @protocol KeyboardModuleTableViewControllerDelegate <NSObject>

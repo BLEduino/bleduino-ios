@@ -30,13 +30,13 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDBleBridge;
+@class BDBridge;
 @protocol BleBridgeServiceDelegate <NSObject>
-- (void)didOpenBridge:(BDBleBridge *)service;
-- (void)didFailToOpenBridge:(BDBleBridge *)service;
+- (void)didOpenBridge:(BDBridge *)service;
+- (void)didFailToOpenBridge:(BDBridge *)service;
 @end
 
-@interface BDBleBridge : BDObject <CBPeripheralDelegate>
+@interface BDBridge : BDObject <CBPeripheralDelegate>
 @property BOOL isOpen;
 
 /*
@@ -61,6 +61,6 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 /****************************************************************************/
 /*				       Access to Ble Bridge instance			     	    */
 /****************************************************************************/
-+ (BDBleBridge *)sharedBridge;
++ (BDBridge *)sharedBridge;
 
 @end

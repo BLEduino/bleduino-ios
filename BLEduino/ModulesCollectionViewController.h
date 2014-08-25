@@ -17,7 +17,7 @@
 #import "PowerRelayViewController.h"
 #import "LEDModuleTableViewController.h"
 #import "BDNotification.h"
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 #import "FirmataTableViewController.h"
 #import "SequencerTableViewController.h"
 #import "ProximityViewController.h"
@@ -48,7 +48,7 @@ BleBridgeServiceDelegate
 @property (nonatomic, strong) NSArray *modulesImages;
 
 //Services that run in the background.
-@property (strong) BDBleBridge *bleBridge;
+@property (strong) BDBridge *bleBridge;
 @property (strong) BDNotification *notificationService;
 @property (strong) BDProximity *proximityMonitor;
 
