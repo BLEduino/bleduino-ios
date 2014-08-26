@@ -41,6 +41,10 @@
         //Placeholder to receive delegate callbacks from BLEduinos.
         _bleduinoDelegate = [[BDObject alloc] init];
         
+        //Auto-reconnect is disabled by default.
+        self.isReconnectingEnabled = NO;
+        //PENDING: Auto-reconnection requires to re-subscribe to characteristics.
+        
         //Create and launch queue for executing ble-commands.
         dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         dispatch_async(bleQueue, ^{
@@ -301,7 +305,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     //Did BLEduino got disconnected unxpectedly?
     if(error && self.isReconnectingEnabled)
     {
-        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.1];
+        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.25];
     }
 }
 
