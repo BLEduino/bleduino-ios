@@ -43,7 +43,11 @@
         self.controller = [[BDController alloc] initWithPeripheral:bleduino delegate:self];
         self.motion     = [[BDVehicleMotion alloc] initWithPeripheral:bleduino delegate:self];
         self.uart       = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
+        
+        //Setup Proximity
         self.proximity  = [BDProximity sharedMonitor];
+        [self.proximity setMonitoredBleduino:_bleduino];
+        [self.proximity setDelegate:self];
         
         BDLeManager *manager = [BDLeManager sharedLeManager];
         manager.isOnlyBleduinoDelegate = YES;
@@ -219,6 +223,61 @@
     }
 }
 
+#pragma mark -
+#pragma mark - Proximity
+/****************************************************************************/
+/*                         Monitor Proximity                                */
+/****************************************************************************/
+- (void) startMonitoringProximity
+{
+    [self.proximity startMonitoring];
+}
+- (void) stopMonitoringProximity
+{
+    [self.proximity stopMonitoring];
+}
+
+- (void) startProximityCalibration
+{
+    [self.proximity startCalibration];
+}
+
+//RSSI values, and Path Loss Exponent (PLE)
+- (void)writeImmediateRSSI:(float)immediateRSSI
+{
+    self.proximity.immediateRSSI = immediateRSSI;
+}
+
+- (void)writeNearRSSI:(float)nearRSSI
+{
+    self.proximity.nearRSSI = nearRSSI;
+}
+
+- (void)writeFarRSSI:(float)farRSSI
+{
+    self.proximity.farRSSI = farRSSI;
+}
+
+- (float)readImmediateRSSI
+{
+    return self.proximity.immediateRSSI;
+}
+
+- (float)readNearRSSI
+{
+    return self.proximity.nearRSSI;
+}
+
+- (float)readFarRSSI
+{
+     return self.proximity.farRSSI;
+}
+
+#pragma mark -
+#pragma mark - GAP Device Name
+/****************************************************************************/
+/*                           GAP Device Name                                */
+/****************************************************************************/
 
 /*
  * This method allows the user to update the BLEduino's (GAP) name Over-The-Air (OTA).
@@ -404,6 +463,27 @@
                didSubscribe:UART
                      notify:NO
                       error:error];
+}
+
+#pragma mark -
+#pragma mark - Proximity Delegate
+/****************************************************************************/
+/*				            Proximity Delegate                              */
+/****************************************************************************/
+- (void)bleduino:(CBPeripheral *)bleduino didUpdateValueForRange:(DistanceRange)range
+     maxDistance:(NSNumber *)max
+     minDistance:(NSNumber *)min
+        withRSSI:(NSNumber *)RSSI
+{
+    [self bleduino:_bleduino didUpdateValueForRange:range
+       maxDistance:max
+       minDistance:min
+          withRSSI:RSSI];
+}
+
+- (void)bleduino:(CBPeripheral *)bleduino didFinishCalibration:(NSNumber *)measuredPower
+{
+    [self bleduino:_bleduino didFinishCalibration:measuredPower];
 }
 
 @end

@@ -49,10 +49,17 @@ typedef NSUInteger BlePipe;
             notify:(BOOL)notify
              error:(NSError *)error;
 
+- (void)bleduino:(CBPeripheral *)bleduino
+didUpdateValueForRange:(DistanceRange)range
+     maxDistance:(NSNumber *)max
+     minDistance:(NSNumber *)min
+        withRSSI:(NSNumber *)RSSI;
+
 @optional
 - (void) bleduino:(CBPeripheral *)bleduino
    didFailToWrite:(id)data;
 
+- (void)bleduino:(CBPeripheral *)bleduino didFinishCalibration:(NSNumber *)measuredPower;
 @end
 
 /****************************************************************************/
@@ -63,10 +70,18 @@ typedef NSUInteger BlePipe;
 FirmataServiceDelegate,
 ControllerServiceDelegate,
 VehicleMotionServiceDelegate,
-UARTServiceDelegate
+UARTServiceDelegate,
+ProximityDelegate
 >
 
 @property (readonly, strong) CBPeripheral *bleduino;
+
+//Proximity
+@property (strong) NSNumber *measuredPower; //Calibrated RSSI.
+@property (getter=readImmediateRSSI, setter=writeImmediateRSSI:) float immediateRSSI;
+@property (getter=readNearRSSI, setter=writeNearRSSI:) float nearRSSI;
+@property (getter=readFarRSSI, setter=writeFarRSSI:) float farRSSI;
+@property (getter=readPathLoss) float pathLoss; //Path Loss Exponent.
 
 
 + (instancetype)bleduino:(CBPeripheral *)bleduino
@@ -95,6 +110,15 @@ UARTServiceDelegate
 
 - (void) subscribe:(BlePipe)pipe
             notify:(BOOL)notify;
+
+#pragma mark -
+#pragma mark Proximity
+//Proximity
+- (void) startMonitoringProximity;
+
+- (void) stopMonitoringProximity;
+
+- (void) startProximityCalibration;
 
 #pragma mark -
 #pragma mark Configure BLEduino
