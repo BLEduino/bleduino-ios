@@ -42,8 +42,11 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = self;
 		self.delegate = aController;
+        
+        //Should this object be the peripheral's delagate, or are we using the global delegate?
+        BDLeManager *manager = [BDLeManager sharedLeManager];
+        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = self;
         
         self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
         self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];

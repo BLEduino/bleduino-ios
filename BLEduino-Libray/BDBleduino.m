@@ -224,47 +224,11 @@
     }
 }
 
-#pragma mark -
-#pragma mark - BLE Bridge
-/****************************************************************************/
-/*                          Open BLE bridge                                 */
-/****************************************************************************/
 
 /*
- * The following methods allows developer to create/destory a BLE bridge, which allows
- * in turn (connected) BLEduinos to communicate with each other via the iOS device.
- */
-- (void) openBridge
-{
-    [self.bridge openBridgeForDelegate:self];
-}
-- (void) closeBridge
-{
-    [self.bridge closeBridgeForDelegate:self];
-}
-
-#pragma mark -
-#pragma mark - Notification Listener
-/****************************************************************************/
-/*                          Start Listening                                 */
-/****************************************************************************/
-
-/*
- * The following methods allows developer to create/destory a notifications listener,
- * which listens for notifications from any (connected) BLEduino.
- */
-- (void) startListening
-{
-    [self.notification startListeningWithDelegate:self];
-}
-- (void) stopListening
-{
-    [self.notification stopListeningWithDelegate:self];
-}
-
-/*
- * Work-around for updating the bleduino's name (via BLE-Bridge), because iOS
- * blocks the GAP characteristic for updating the device name.
+ * This method allows the user to update the BLEduino's (GAP) name Over-The-Air (OTA).
+ * It's done with a work-around (via BLE-Bridge), because iOS blocks the GAP characteristic 
+ * for updating the device name.
  */
 + (void) updateBleduinoName:(CBPeripheral *)bleduino name:(NSString *)name
 {
@@ -446,30 +410,5 @@
                      notify:NO
                       error:error];
 }
-
-//BLE Bridge
-- (void)didOpenBridge:(BDBridge *)service
-{
-    
-}
-
-- (void)didFailToOpenBridge:(BDBridge *)service
-{
-    
-}
-
-//Notification
-- (void)didStatedListening:(BDNotification *)service
-{
-    
-}
-
--(void)didFailToStartListening:(BDNotification *)service
-{
-    
-}
-
-
-
 
 @end

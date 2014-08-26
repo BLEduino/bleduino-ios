@@ -7,6 +7,7 @@
 //
 
 #import "BDVehicleMotion.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark - Vehicle Motion Service UUIDs
@@ -27,7 +28,6 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 @property (strong) CBUUID *throttleYawRollPitchCharacteristicUUID;
 
 @property (weak) id <VehicleMotionServiceDelegate> delegate;
-@property (strong) BDThrottleYawRollPitch *lastMotion;
 @end
 
 @implementation BDVehicleMotion
@@ -38,8 +38,11 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = self;
 		self.delegate = aController;
+        
+        //Should this object be the peripheral's delagate, or are we using the global delegate?
+        BDLeManager *manager = [BDLeManager sharedLeManager];
+        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = self;
         
         self.vehicleMotionServiceUUID = [CBUUID UUIDWithString:kVehicleMotionServiceUUIDString];
         self.throttleYawRollPitchCharacteristicUUID = [CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString];
@@ -61,7 +64,6 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 - (void) writeMotionUpdate:(BDThrottleYawRollPitch *)motion
                    withAck:(BOOL)enabled
 {
-    self.lastMotion = motion;
     [self writeDataToServiceUUID:self.vehicleMotionServiceUUID
               characteristicUUID:self.throttleYawRollPitchCharacteristicUUID
                             data:[motion data]
@@ -70,6 +72,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 
 - (void) writeMotionUpdate:(BDThrottleYawRollPitch *)motion
 {
+    self.lastMotionUpdate = motion;
     [self writeMotionUpdate:motion withAck:NO];
 }
 
@@ -108,7 +111,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
 {
     if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kThrottleYawRollPitchCharacteristicUUIDString]])
     {
-        self.lastMotionUpdate = self.lastMotion;
+        self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
         {
             [self.delegate vehicleMotionService:self
@@ -179,7 +182,7 @@ NSString * const kThrottleYawRollPitchCharacteristicUUIDString = @"8C6B9806-A312
     
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        self.lastMotionUpdate = self.lastMotion;
+        self.lastMotionUpdate = [[BDThrottleYawRollPitch alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(vehicleMotionService:didWriteMotion:error:)])
         {
             [self.delegate vehicleMotionService:self

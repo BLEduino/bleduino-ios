@@ -42,7 +42,7 @@ ProximityViewControllerDelegate,
 ConsoleTableViewControllerDelegate,
 NotificationServiceDelegate,
 LeDiscoveryManagerDelegate,
-BleBridgeServiceDelegate
+BridgeDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;

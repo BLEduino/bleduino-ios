@@ -7,23 +7,7 @@
 //
 
 #import "BDObject.h"
-
-#pragma mark -
-#pragma mark BLE Bridge Service UUIDs
-/****************************************************************************/
-/*						Service & Characteristics							*/
-/****************************************************************************/
-extern NSString * const kBleBridgeServiceUUIDString;
-//8C6BB1EB-A312-681D-025B-0032C0D16A2D  BLE Bridge Service
-
-extern NSString * const kBridgeRxCharacteristicUUIDString;
-//8C6B5778-A312-681D-025B-0032C0D16A2D  Bridge Read (Rx) Characteristic
-
-extern NSString * const kBridgeTxCharacteristicUUIDString;
-//8C6B454B-A312-681D-025B-0032C0D16A2D  Bridge Write (Tx) Characteristic
-
-extern NSString * const kDeviceIDCharacteristicUUIDString;
-//8C6BD1D0-A312-681D-025B-0032C0D16A2D  Device ID Characteristic
+#import "BDBleBridgeService.h"
 
 #pragma mark -
 #pragma mark Notification Service Protocol
@@ -31,9 +15,12 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 /*								Protocol									*/
 /****************************************************************************/
 @class BDBridge;
-@protocol BleBridgeServiceDelegate <NSObject>
+@protocol BridgeDelegate <NSObject>
+@required
 - (void)didOpenBridge:(BDBridge *)service;
 - (void)didFailToOpenBridge:(BDBridge *)service;
+@optional
+- (void)didFailToKeepBridgeOpen:(BDBridge *)service;
 @end
 
 @interface BDBridge : BDObject <CBPeripheralDelegate>
@@ -47,7 +34,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-- (void)openBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
+- (void)openBridgeForDelegate:(id <BridgeDelegate>)aController;
 
 /*
  *  @method                 closeBridge
@@ -56,7 +43,7 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)closeBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
+- (void)closeBridgeForDelegate:(id <BridgeDelegate>)aController;
 
 /****************************************************************************/
 /*				       Access to Ble Bridge instance			     	    */

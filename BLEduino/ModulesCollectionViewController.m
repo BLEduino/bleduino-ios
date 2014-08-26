@@ -55,7 +55,7 @@
     
     //Set services that run in the background.
     self.notificationService = [BDNotification sharedListener];
-    self.bleBridge = [BDBridge sharedBridge];
+    self.bleBridge = [BDBridge sharedBridge];    
     self.proximityMonitor = [BDProximity sharedMonitor];
      
     //Set appareance.
