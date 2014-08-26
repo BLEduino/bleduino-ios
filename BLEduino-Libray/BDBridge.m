@@ -34,7 +34,7 @@
         
         //Should this object be the peripheral's delagate, or are we using the global delegate?
         BDLeManager *manager = [BDLeManager sharedLeManager];
-        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = delegate;
+        if(!manager.isOnlyBleduinoDelegate)_servicePeripheral.delegate = delegate;
         
         self.bleBridgeServiceUUID = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
         self.bridgeRxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
@@ -338,7 +338,7 @@
     NSError *error = [payload objectForKey:@"Error"];
     
     NSArray *identifiers = [self.deviceIDs allKeys];
-    if([identifiers containsObject:peripheral.identifier])
+    if([identifiers containsObject:[peripheral.identifier UUIDString]])
     {
         if(error)
         {
@@ -442,7 +442,7 @@
     NSError *error = [payload objectForKey:@"Error"];
 
     NSArray *identifiers = [self.deviceIDs allKeys];
-    if([identifiers containsObject:peripheral.identifier])
+    if([identifiers containsObject:[peripheral.identifier UUIDString]])
     {
         if(error)
         {

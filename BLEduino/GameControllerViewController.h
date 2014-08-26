@@ -19,8 +19,7 @@
 @interface GameControllerViewController : UIViewController
 <
 ControllerServiceDelegate,
-JoystickDelegate,
-LeDiscoveryManagerDelegate
+JoystickDelegate
 >
 @property (weak) id <GameControllerViewControllerDelegate> delegate;
 @property CGPoint lastPosition;

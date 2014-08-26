@@ -27,8 +27,7 @@
 FirmataServiceDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
-UITextFieldDelegate,
-LeDiscoveryManagerDelegate
+UITextFieldDelegate
 >
 @property (weak) id <SequencerTableViewControllerDelegate> delegate;
 @property (strong) NSMutableArray *sequence;

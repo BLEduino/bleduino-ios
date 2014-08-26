@@ -22,8 +22,7 @@
 FirmataServiceDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
-UITextFieldDelegate,
-LeDiscoveryManagerDelegate
+UITextFieldDelegate
 >
 @property (weak) id <FirmataTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sync;

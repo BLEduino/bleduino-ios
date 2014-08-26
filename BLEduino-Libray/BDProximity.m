@@ -294,4 +294,28 @@
     return distance;
 }
 
+#pragma mark -
+#pragma mark - Peripheral Delegate
+/****************************************************************************/
+/*				            Peripheral Delegate                             */
+/****************************************************************************/
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];	
+}
+
+
 @end

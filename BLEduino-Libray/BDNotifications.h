@@ -35,7 +35,7 @@
  *                          data the iOS device then pushes a local notification.
  *
  */
-- (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController;
+- (void)startListeningWithDelegate:(id<NotificationsDelegate>)aController;
 /*
  *  @method                 stopListening
  *

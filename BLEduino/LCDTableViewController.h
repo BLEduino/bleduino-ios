@@ -19,8 +19,7 @@
 @interface LCDTableViewController : UITableViewController
 <
 UITextViewDelegate,
-UARTServiceDelegate,
-LeDiscoveryManagerDelegate
+UARTServiceDelegate
 >
 @property (weak) IBOutlet UITextView *messageView;
 @property (weak) IBOutlet UILabel *charCountView;

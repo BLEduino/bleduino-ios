@@ -72,10 +72,6 @@
     
     self.themeColor = lightBlue;
     
-    //Manager Delegate
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.delegate = self;
-
     //Load distance alerts flag.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.distanceAlertsEnabled = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED];
@@ -96,6 +92,7 @@
     
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didDisconnectFromBleduino:) name:BLE_MANANGER_BLEDUINO_DISCONNECTED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_ENABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_DISABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE_ALERTS object:nil];
@@ -656,7 +653,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -665,7 +661,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -674,7 +669,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -683,7 +677,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -692,7 +685,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
@@ -703,8 +695,7 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
+    
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -714,7 +705,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -723,7 +713,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -732,7 +721,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -741,8 +729,7 @@ referenceSizeForFooterInSection:(NSInteger)section
 {
     BDLeManager *manager = [BDLeManager sharedLeManager];
     [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
+    
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -753,8 +740,11 @@ referenceSizeForFooterInSection:(NSInteger)section
 /*                            LeManager Delegate                            */
 /****************************************************************************/
 //Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+- (void) didDisconnectFromBleduino:(NSNotification *)notification
 {
+    NSDictionary *payload = notification.userInfo;
+    CBPeripheral *bleduino = [payload objectForKey:@"Bleduino"];
+    
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
     NSLog(@"Disconnected from peripheral: %@", name);
     
@@ -869,7 +859,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self.collectionView reloadData];
 }
 
-- (void)didStatedListening:(BDNotification *)service
+- (void)didStartListening:(BDNotification *)service
 {
     NSLog(@"Notification is listening.");
     //Remove setup view.

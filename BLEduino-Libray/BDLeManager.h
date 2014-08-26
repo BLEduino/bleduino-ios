@@ -13,13 +13,13 @@
 
 @protocol LeDiscoveryManagerDelegate <NSObject>
 //Discovering BLEduino.
-@optional//@required
+@required
 - (void) didDiscoverBleduino:(CBPeripheral *)bleduino withRSSI:(NSNumber *)RSSI;
 @optional
 - (void) didDiscoverBleDevice:(CBPeripheral *)bleDevice withRSSI:(NSNumber *)RSSI;
 
 //Connecting to BLEduino.
-@optional//@required
+@required
 - (void) didConnectToBleduino:(CBPeripheral *)bleduino;
 - (void) didFailToConnectToBleduino:(CBPeripheral *)bleduino error:(NSError *)error;
 @optional

@@ -22,8 +22,7 @@
 CBPeripheralDelegate,
 FirmataServiceDelegate,
 PowerSwitchButtonViewDelegate,
-PowerNextStateViewDelegate,
-LeDiscoveryManagerDelegate
+PowerNextStateViewDelegate
 >
 @property (weak) id <PowerRelayViewControllerDelegate> delegate;
 @property BOOL isLastPowerRelayStateON;

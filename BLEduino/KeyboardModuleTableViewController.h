@@ -19,8 +19,7 @@
 @interface KeyboardModuleTableViewController : UITableViewController
 <
 UITextViewDelegate,
-UARTServiceDelegate,
-LeDiscoveryManagerDelegate
+UARTServiceDelegate
 >
 @property (weak) IBOutlet UITextView *messageView;
 @property (weak) id <KeyboardModuleTableViewControllerDelegate> delegate;

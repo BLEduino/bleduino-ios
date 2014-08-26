@@ -23,8 +23,7 @@ UITableViewDataSource,
 UIAlertViewDelegate,
 UIActionSheetDelegate,
 DistanceAlertControllerDelegate,
-RSSIAlertControllerDelegate,
-LeDiscoveryManagerDelegate
+RSSIAlertControllerDelegate
 >
 @property (weak) id <ProximityViewControllerDelegate> delegate;
 @property IBOutlet UITableView *tableView;

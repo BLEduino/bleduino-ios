@@ -28,10 +28,7 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 /****************************************************************************/
 @class BDNotification;
 @protocol NotificationServiceDelegate <NSObject>
-@optional
-- (void)didStatedListening:(BDNotification *)service;
-- (void)didFailToStartListening:(BDNotification *)service;
-
+@required
 - (void)notificationService:(BDNotification *)service
      didReceiveNotification:(BDNotificationAttributes *)notification
                       error:(NSError *)error;
@@ -50,34 +47,12 @@ extern NSString * const kNotificationAttributesCharacteristicUUIDString;
 @interface BDNotification : BDObject <CBPeripheralDelegate>
 
 @property (nonatomic, strong) BDNotificationAttributes *lastNotification;
-@property BOOL isListening;
-
-/*
- *  @method                 startListening
- *
- *  @discussion             This method subscribes the iOS device to the Notification service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
- *                          data the iOS device then pushes a local notification.
- *
- */
-- (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController;
-/*
- *  @method                 stopListening
- *
- *  @discussion             This method unsubscribes the iOS device from the Notification service for
- *                          all connected BLEduinos. That is, stops listening altogether.
- *
- */
-- (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController;
-
-
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
-                 delegate:(id<NotificationServiceDelegate>)aController;
 
 /****************************************************************************/
 /*              Access to notificication listener instance			  	    */
 /****************************************************************************/
-+ (BDNotification *)sharedListener;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<NotificationServiceDelegate>)aController;
 
 
 #pragma mark -

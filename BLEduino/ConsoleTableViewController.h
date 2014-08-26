@@ -20,8 +20,7 @@
 <
 UITextFieldDelegate,
 UITextViewDelegate,
-UARTServiceDelegate,
-LeDiscoveryManagerDelegate
+UARTServiceDelegate
 >
 @property (weak) id <ConsoleTableViewControllerDelegate> delegate;
 @property CGFloat keyboardHeight;

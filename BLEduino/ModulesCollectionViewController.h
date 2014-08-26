@@ -40,9 +40,8 @@ FirmataTableViewControllerDelegate,
 SequencerTableViewControllerDelegate,
 ProximityViewControllerDelegate,
 ConsoleTableViewControllerDelegate,
-NotificationServiceDelegate,
-LeDiscoveryManagerDelegate,
-BridgeDelegate
+BridgeDelegate,
+NotificationsDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;

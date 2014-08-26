@@ -45,6 +45,9 @@
         self.isReconnectingEnabled = NO;
         //PENDING: Auto-reconnection requires to re-subscribe to characteristics.
         
+        //Become delegate for all peripherals
+        self.isOnlyBleduinoDelegate = NO;
+        
         //Create and launch queue for executing ble-commands.
         dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         dispatch_async(bleQueue, ^{
@@ -300,6 +303,12 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         {
             [self.delegate didDisconnectFromBleduino:peripheral error:error];
         }
+        
+        //Send notification.
+        NSDictionary *info = @{@"Bleduino":peripheral, @"Error":error};
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANANGER_BLEDUINO_DISCONNECTED object:self userInfo:info];
+        
     });
     
     //Did BLEduino got disconnected unxpectedly?
@@ -554,12 +563,23 @@ didRetrievePeripherals:(NSArray *)peripherals
         [self.foundBleduinos removeObject:peripheral];
         [self.connectedBleduinos insertObject:peripheral atIndex:0];
         
+        //Become delegate?
+        if(self.isOnlyBleduinoDelegate)
+        {
+            peripheral.delegate = self.bleduinoDelegate;
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             if([self.delegate respondsToSelector:@selector(didConnectToBleduino:)])
             {
                 [self.delegate didConnectToBleduino:peripheral];
             }
         });
+        
+        //Send notification.
+        NSDictionary *info = @{@"Bleduino":peripheral, @"Error":error};
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANANGER_BLEDUINO_CONNECTED object:self userInfo:info];
     }
 }
 

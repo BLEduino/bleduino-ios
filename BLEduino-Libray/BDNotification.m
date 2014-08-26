@@ -30,8 +30,6 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 
 @property (weak) id <NotificationServiceDelegate> delegate;
 @property (strong) BDNotificationAttributes *lastSentNotification;
-
-@property (strong) NSMutableOrderedSet *notifications;
 @end
 
 @implementation BDNotification
@@ -54,112 +52,6 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     }
     
     return self;
-}
-
-- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
-                 delegate:(id<NotificationServiceDelegate>)aController
-       peripheralDelegate:(id<CBPeripheralDelegate>)delegate
-{
-    self = [super init];
-    if (self) {
-        _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = delegate;
-		self.delegate = aController;
-        
-        self.notificationServiceUUID = [CBUUID UUIDWithString:kNotificationServiceUUIDString];
-        self.notificationAttributesCharacteristicUUID = [CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString];
-        
-    }
-    
-    return self;
-}
-
-
-+ (BDNotification *)sharedListener
-{
-    static id sharedNotificationListener = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedNotificationListener = [[[self class] alloc] init];
-    });
-    return sharedNotificationListener;
-}
-
-
-#pragma mark -
-#pragma mark - Listening Methods
-/****************************************************************************/
-/*				       Write notification to BLEduino                       */
-/****************************************************************************/
-
-/*
- *  @method                 startListening
- *
- *  @discussion             This method subscribes the iOS device to the Notification service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
- *                          data the iOS device then pushes a local notification.
- *
- */
-- (void)startListeningWithDelegate:(id<NotificationServiceDelegate>)aController
-{
-    //Start listening only if there is not another notification (service) already listening.
-    if(!self.isListening)
-    {
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_NOTIFICATION object:nil];
-        [center addObserver:self selector:@selector(didUpdateValue:) name:CHARACTERISTIC_UPDATE_NOTIFICATION object:nil];
-        [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_NOTIFICATION object:nil];
-        
-        self.delegate = aController;
-        self.isListening = YES; //Notifications started listening.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        self.notifications = [[NSMutableOrderedSet alloc] initWithCapacity:leManager.connectedBleduinos.count];
-        
-        if(leManager.connectedBleduinos.count > 0)
-        {
-            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-            {
-                BDNotification *notification = [[BDNotification alloc] initWithPeripheral:bleduino
-                                                                                 delegate:aController
-                                                                       peripheralDelegate:self];
-                
-                [notification subscribeToStartReceivingNotifications];
-                notification.isListening = YES;
-                [self.notifications addObject:notification];
-            }
-            
-            NSLog(@"Notifications: Started listening.");
-            [self.delegate didStatedListening:self];
-        }
-        else
-        {
-            NSLog(@"Notifications: Unable to start listening.");
-            [self.delegate didFailToStartListening:self];
-        }
-
-    }
-}
-
-/*
- *  @method                 stopListening
- *
- *  @discussion             This method unsubscribes the iOS device from the Notification service for
- *                          all connected BLEduinos. That is, stops listening altogether.
- *
- */
-- (void)stopListeningWithDelegate:(id<NotificationServiceDelegate>)aController
-{
-    for(BDNotification *notification in self.notifications)
-    {
-        [notification dismissPeripheral];
-        [notification unsubscribeToStopReiceivingNotifications];
-    }
- 
-    //Remove all BLEduinos.
-    [self.notifications removeAllObjects];
-    
-    self.isListening = NO;
-    NSLog(@"Notifications: Stopped listening.");
 }
 
 #pragma mark -
@@ -239,32 +131,11 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     {
         self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
         
-        if(self.isListening)
+        if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
         {
-            UILocalNotification *notification = [[UILocalNotification alloc] init];
-            notification.soundName = UILocalNotificationDefaultSoundName;
-            notification.alertBody = self.lastNotification.message;
-            notification.alertAction = nil;
-            
-            //Is application on the foreground?
-            if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-            {
-                //Application is on the foreground, store notification attributes to present alert view.
-                notification.userInfo = @{@"message": self.lastNotification.message,
-                                          @"service": kNotificationAttributesCharacteristicUUIDString};
-            }
-            
-            //Present notification.
-            [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-        }
-        else
-        {
-            if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
-            {
-                [self.delegate notificationService:self
-                            didReceiveNotification:self.lastNotification
-                                             error:error];
-            }
+            [self.delegate notificationService:self
+                        didReceiveNotification:self.lastNotification
+                                         error:error];
         }
     }
     else
@@ -330,32 +201,11 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
     
     self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
     
-    if(self.isListening)
+    if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
     {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = self.lastNotification.message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"message": self.lastNotification.message,
-                                      @"service": kNotificationAttributesCharacteristicUUIDString};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-    else
-    {
-        if([self.delegate respondsToSelector:@selector(notificationService:didReceiveNotification:error:)])
-        {
-            [self.delegate notificationService:self
-                        didReceiveNotification:self.lastNotification
-                                         error:error];
-        }
+        [self.delegate notificationService:self
+                    didReceiveNotification:self.lastNotification
+                                     error:error];
     }
 }
 

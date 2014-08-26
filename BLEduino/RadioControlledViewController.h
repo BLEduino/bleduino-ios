@@ -21,8 +21,7 @@
 <
 VehicleMotionServiceDelegate,
 VerticalJoystickControlViewDelegate,
-HorizontalJoystickControlViewDelegate,
-LeDiscoveryManagerDelegate
+HorizontalJoystickControlViewDelegate
 >
 @property (weak) id <RadioControlledViewControllerDelegate> delegate;
 

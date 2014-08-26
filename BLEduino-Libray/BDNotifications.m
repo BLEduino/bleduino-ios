@@ -211,7 +211,7 @@
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if([self.bleduinos containsObject:peripheral.identifier] && error == nil)
+    if([self.bleduinos containsObject:peripheral] && error == nil)
     {
         NSString *message = [[BDNotificationAttributes alloc] initWithData:characteristic.value].message;
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
@@ -239,7 +239,7 @@
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-    if([self.bleduinos containsObject:peripheral.identifier] && error == nil)
+    if([self.bleduinos containsObject:peripheral] && error == nil)
     {
         if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
         {
@@ -254,7 +254,5 @@
         }
     }
 }
-
-
 
 @end
