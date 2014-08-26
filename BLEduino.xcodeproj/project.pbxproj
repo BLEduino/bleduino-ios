@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		9702401F19A3BDFD00FC91BA /* BDProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9702401E19A3BDFD00FC91BA /* BDProximity.m */; };
 		9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9713717919805F8C00E1B53D /* ConsoleCell.m */; };
-		971CE42419AB93C800D27DDB /* BDBleBridgeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 971CE42319AB93C800D27DDB /* BDBleBridgeService.m */; };
+		971CE42419AB93C800D27DDB /* BDBleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 971CE42319AB93C800D27DDB /* BDBleBridge.m */; };
 		972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA450197DBB2600CEEC18 /* PSPDFTextView.m */; };
 		972DA454197ECC2D00CEEC18 /* ConsoleEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 972DA453197ECC2D00CEEC18 /* ConsoleEntries.m */; };
 		97313CF01996E58D0000431D /* RSSIAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97313CEF1996E58D0000431D /* RSSIAlertController.m */; };
 		973BD3C71994805700200D83 /* BDBleduino.m in Sources */ = {isa = PBXBuildFile; fileRef = 973BD3C61994805700200D83 /* BDBleduino.m */; };
+		973D69F319AC5BA600415929 /* BDNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D69F219AC5BA600415929 /* BDNotifications.m */; };
 		974FA32F1990888100951E12 /* ConsoleNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */; };
 		974FA3321992B31A00951E12 /* BDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 974FA3311992B31A00951E12 /* BDQueue.m */; };
 		9779C5B21979819300302C50 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B11979819300302C50 /* ProximityViewController.m */; };
@@ -156,8 +157,8 @@
 		9702401E19A3BDFD00FC91BA /* BDProximity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDProximity.m; sourceTree = "<group>"; };
 		9713717819805F8C00E1B53D /* ConsoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCell.h; sourceTree = "<group>"; };
 		9713717919805F8C00E1B53D /* ConsoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleCell.m; sourceTree = "<group>"; };
-		971CE42219AB93C800D27DDB /* BDBleBridgeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleBridgeService.h; sourceTree = "<group>"; };
-		971CE42319AB93C800D27DDB /* BDBleBridgeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleBridgeService.m; sourceTree = "<group>"; };
+		971CE42219AB93C800D27DDB /* BDBleBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleBridge.h; sourceTree = "<group>"; };
+		971CE42319AB93C800D27DDB /* BDBleBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleBridge.m; sourceTree = "<group>"; };
 		972DA44F197DBB2600CEEC18 /* PSPDFTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPDFTextView.h; sourceTree = "<group>"; };
 		972DA450197DBB2600CEEC18 /* PSPDFTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPDFTextView.m; sourceTree = "<group>"; };
 		972DA452197ECC2D00CEEC18 /* ConsoleEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleEntries.h; sourceTree = "<group>"; };
@@ -166,6 +167,8 @@
 		97313CEF1996E58D0000431D /* RSSIAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSIAlertController.m; sourceTree = "<group>"; };
 		973BD3C51994805700200D83 /* BDBleduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDBleduino.h; sourceTree = "<group>"; };
 		973BD3C61994805700200D83 /* BDBleduino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDBleduino.m; sourceTree = "<group>"; };
+		973D69F119AC5BA600415929 /* BDNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotifications.h; sourceTree = "<group>"; };
+		973D69F219AC5BA600415929 /* BDNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDNotifications.m; sourceTree = "<group>"; };
 		974FA32D1990888100951E12 /* ConsoleNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleNavigationViewController.h; sourceTree = "<group>"; };
 		974FA32E1990888100951E12 /* ConsoleNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleNavigationViewController.m; sourceTree = "<group>"; };
 		974FA3301992B31A00951E12 /* BDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDQueue.h; sourceTree = "<group>"; };
@@ -623,8 +626,10 @@
 				B72D18611826FEA600BD1A2D /* BDBridge.m */,
 				9702401D19A3BDFD00FC91BA /* BDProximity.h */,
 				9702401E19A3BDFD00FC91BA /* BDProximity.m */,
-				971CE42219AB93C800D27DDB /* BDBleBridgeService.h */,
-				971CE42319AB93C800D27DDB /* BDBleBridgeService.m */,
+				971CE42219AB93C800D27DDB /* BDBleBridge.h */,
+				971CE42319AB93C800D27DDB /* BDBleBridge.m */,
+				973D69F119AC5BA600415929 /* BDNotifications.h */,
+				973D69F219AC5BA600415929 /* BDNotifications.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1013,6 +1018,7 @@
 				B7B73C2D17F25A58008E6769 /* BDUart.m in Sources */,
 				974FA3321992B31A00951E12 /* BDQueue.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
+				973D69F319AC5BA600415929 /* BDNotifications.m in Sources */,
 				9702401F19A3BDFD00FC91BA /* BDProximity.m in Sources */,
 				9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */,
 				97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */,
@@ -1052,7 +1058,7 @@
 				B7EDFE011835C2A0002FECA0 /* RadioControlledViewController.m in Sources */,
 				B72D18621826FEA600BD1A2D /* BDBridge.m in Sources */,
 				B72D185F1826FE8100BD1A2D /* BDFirmata.m in Sources */,
-				971CE42419AB93C800D27DDB /* BDBleBridgeService.m in Sources */,
+				971CE42419AB93C800D27DDB /* BDBleBridge.m in Sources */,
 				973BD3C71994805700200D83 /* BDBleduino.m in Sources */,
 				97313CF01996E58D0000431D /* RSSIAlertController.m in Sources */,
 				972DA451197DBB2600CEEC18 /* PSPDFTextView.m in Sources */,

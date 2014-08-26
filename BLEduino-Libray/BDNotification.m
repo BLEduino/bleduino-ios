@@ -219,7 +219,7 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 {
     if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kNotificationAttributesCharacteristicUUIDString]])
     {
-        self.lastNotification = self.lastSentNotification;
+        self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(notificationService:didWriteNotification:error:)])
         {
             [self.delegate notificationService:self
@@ -326,7 +326,6 @@ NSString * const kNotificationAttributesCharacteristicUUIDString = @"8C6B1618-A3
 {
     NSDictionary *payload = notification.userInfo;
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
-    CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
     self.lastNotification = [[BDNotificationAttributes alloc] initWithData:characteristic.value];

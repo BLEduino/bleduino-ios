@@ -7,7 +7,7 @@
 //
 
 #import "BDObject.h"
-#import "BDBleBridgeService.h"
+#import "BDBleBridge.h"
 
 #pragma mark -
 #pragma mark Notification Service Protocol
@@ -23,7 +23,7 @@
 - (void)didFailToKeepBridgeOpen:(BDBridge *)service;
 @end
 
-@interface BDBridge : BDObject <CBPeripheralDelegate>
+@interface BDBridge : NSObject <CBPeripheralDelegate>
 @property BOOL isOpen;
 
 /*
@@ -34,7 +34,7 @@
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-- (void)openBridgeForDelegate:(id <BridgeDelegate>)aController;
+- (void)openBridgeWithDelegate:(id <BridgeDelegate>)aController;
 
 /*
  *  @method                 closeBridge
@@ -43,7 +43,7 @@
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)closeBridgeForDelegate:(id <BridgeDelegate>)aController;
+- (void)closeBridge;
 
 /****************************************************************************/
 /*				       Access to Ble Bridge instance			     	    */

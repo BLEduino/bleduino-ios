@@ -14,12 +14,15 @@
 #import "BDUart.h"
 #import "BDBridge.h"
 #import "BDNotification.h"
+#import "BDProximity.h"
 
 enum BlePipe {
     Firmata = 0,
     UART = 1,
     Controller = 2,
-    VehicleMotion = 3
+    VehicleMotion = 3,
+    Bridge = 4,
+    Notification = 5
 };
 typedef NSUInteger BlePipe;
 
@@ -60,8 +63,7 @@ typedef NSUInteger BlePipe;
 FirmataServiceDelegate,
 ControllerServiceDelegate,
 VehicleMotionServiceDelegate,
-UARTServiceDelegate,
-NotificationServiceDelegate
+UARTServiceDelegate
 >
 
 @property (readonly, strong) CBPeripheral *bleduino;
@@ -74,6 +76,10 @@ NotificationServiceDelegate
  * The following methods allows developer to write/read/subscribe to:
  * Firmata, Controller, Vehicle Motion, and UART.
  */
+
+#pragma mark -
+#pragma mark Writing to BLEduino
+// Writing data to BLEduino.
 + (void) writeValue:(id)data;
 
 + (void) writeValue:(id)data bleduino:(CBPeripheral *)bleduino;
@@ -82,11 +88,17 @@ NotificationServiceDelegate
 
 - (void) writeValue:(id)data;
 
+#pragma mark -
+#pragma mark Reading from BLEduino
+// Read/Receive data from BLEduino.
 - (void) readValue:(BlePipe)pipe;
 
 - (void) subscribe:(BlePipe)pipe
             notify:(BOOL)notify;
 
+#pragma mark -
+#pragma mark Configure BLEduino
+//Configure the BLEduino
 + (void) updateBleduinoName:(CBPeripheral *)bleduino
                        name:(NSString *)name;
 

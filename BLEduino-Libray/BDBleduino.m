@@ -17,10 +17,8 @@
 @property (strong) BDController *controller;
 @property (strong) BDVehicleMotion *motion;
 @property (strong) BDUart *uart;
+@property (strong) BDProximity *proximity;
 
-//Background services
-@property (strong) BDBridge *bridge;
-@property (strong) BDNotification *notification;
 @end
 
 @implementation BDBleduino
@@ -45,10 +43,7 @@
         self.controller = [[BDController alloc] initWithPeripheral:bleduino delegate:self];
         self.motion     = [[BDVehicleMotion alloc] initWithPeripheral:bleduino delegate:self];
         self.uart       = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
-        
-        //Background services.
-        self.bridge = [BDBridge sharedBridge];
-        self.notification = [BDNotification sharedListener];
+        self.proximity  = [BDProximity sharedMonitor];
         
         BDLeManager *manager = [BDLeManager sharedLeManager];
         manager.isOnlyBleduinoDelegate = YES;
@@ -248,7 +243,7 @@
     CBUUID *bridge = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
     CBUUID *bridgeRx = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
     
-    BDObject *gap = [BDObject initWithBleduino:bleduino];
+    BDObject *gap = [BDObject initializeWithBleduino:bleduino];
     [gap writeDataToServiceUUID:bridge characteristicUUID:bridgeRx data:updateData withAck:NO];
 }
 

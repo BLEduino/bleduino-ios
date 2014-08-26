@@ -44,7 +44,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     return self;
 }
 
-+ (instancetype)initWithBleduino:(CBPeripheral *)bleduino
++ (instancetype)initializeWithBleduino:(CBPeripheral *)bleduino
 {
     BDObject *service = [[BDObject alloc] initWithPeripheral:bleduino];
     return service;

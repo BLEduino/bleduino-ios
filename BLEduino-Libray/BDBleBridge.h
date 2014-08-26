@@ -30,19 +30,19 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 /****************************************************************************/
 /*								Protocol									*/
 /****************************************************************************/
-@class BDBleBridgeService;
+@class BDBleBridge;
 @protocol BleBridgeServiceDelegate <NSObject>
 
-- (void)bridgeService:(BDBleBridgeService *)service didReceiveDeviceID:(NSInteger)deviceID error:(NSError *)error;
-- (void)bridgeService:(BDBleBridgeService *)service didReceiveData:(NSData *)data error:(NSError *)error;
-- (void)bridgeService:(BDBleBridgeService *)service didWriteData:(NSData *)data error:(NSError *)error;
-- (void)bridgeService:(BDBleBridgeService *)service didWriteDeviceID:(NSInteger)deviceID error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didReceiveDeviceID:(NSInteger)deviceID error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didReceiveData:(NSData *)data error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didWriteData:(NSData *)data error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didWriteDeviceID:(NSInteger)deviceID error:(NSError *)error;
 
-- (void)didSubscribeToReceiveBridgeMessagesFor:(BDBleBridgeService *)service error:(NSError *)error;
-- (void)didUnsubscribeToReceiveBridgeMessagesFor:(BDBleBridgeService *)service error:(NSError *)error;
+- (void)didSubscribeToReceiveBridgeMessagesFor:(BDBleBridge *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveBridgeMessagesFor:(BDBleBridge *)service error:(NSError *)error;
 
 @end
-@interface BDBleBridgeService : BDObject <CBPeripheralDelegate>
+@interface BDBleBridge : BDObject <CBPeripheralDelegate>
 
 @property (strong) NSData *dataSent;
 @property (strong) NSData *dataReceived;

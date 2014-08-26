@@ -54,7 +54,7 @@
     [super viewDidLoad];
     
     //Set services that run in the background.
-    self.notificationService = [BDNotification sharedListener];
+    self.notifications = [BDNotifications sharedListener];
     self.bleBridge = [BDBridge sharedBridge];    
     self.proximityMonitor = [BDProximity sharedMonitor];
      
@@ -330,7 +330,7 @@
     //Set images for notifications and ble-bridge.
     if([cellIdentifier isEqualToString:@"NotificationsModuleCell"])
     {
-        NSString *imageName = (self.notificationService.isListening)?@"notifications-s.png":@"notifications.png";
+        NSString *imageName = (self.notifications.isListening)?@"notifications-s.png":@"notifications.png";
         [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
     else if ([cellIdentifier isEqualToString:@"BleBridgeModuleCell"])
@@ -423,9 +423,9 @@
             
         case 10:
             //Toggle notification service.
-            if(self.notificationService.isListening)
+            if(self.notifications.isListening)
             {
-                [self.notificationService stopListeningWithDelegate:self];
+                [self.notifications stopListening];
                 
                 BDLeManager *manager = [BDLeManager sharedLeManager];
                 [manager becomeBleduinoDelegate];
@@ -438,7 +438,7 @@
             else
             {
                 [self presentSetupViewWithMessage:@"Starting listener..."];
-                [self.notificationService startListeningWithDelegate:self];
+                [self.notifications startListeningWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -450,7 +450,7 @@
             //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
-                [self.bleBridge closeBridgeForDelegate:self];
+                [self.bleBridge closeBridge];
                 
                 BDLeManager *manager = [BDLeManager sharedLeManager];
                 [manager becomeBleduinoDelegate];
@@ -462,7 +462,7 @@
             else
             {
                 [self presentSetupViewWithMessage:@"Opening BLE bridge..."];
-                [self.bleBridge openBridgeForDelegate:self];
+                [self.bleBridge openBridgeWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -797,7 +797,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self removeSetupView];
     
     //Something went wrong, close the bridge.
-    [self.bleBridge closeBridgeForDelegate:self];
+    [self.bleBridge closeBridge];
     
     //Present notification.
     NSString *message = @"The BLEduino app was unable to open a ble-bridge.";
@@ -842,7 +842,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self removeSetupView];
     
     //Something went wrong, close the bridge.
-    [self.notificationService stopListeningWithDelegate:self];
+    [self.notifications stopListening];
     
     //Present notification.
     NSString *message = @"The BLEduino app was unable to start listening for notifications.";

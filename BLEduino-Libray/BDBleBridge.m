@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
-#import "BDBleBridgeService.h"
+#import "BDBleBridge.h"
 #import "BDLeManager.h"
 
 #pragma mark -
@@ -24,7 +24,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 /****************************************************************************/
 /*								Setup										*/
 /****************************************************************************/
-@interface BDBleBridgeService ()
+@interface BDBleBridge ()
 @property (strong) CBUUID *bleBridgeServiceUUID;
 @property (strong) CBUUID *bridgeRxCharacteristicUUID;
 @property (strong) CBUUID *bridgeTxCharacteristicUUID;
@@ -32,7 +32,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 @property (weak) id <BleBridgeServiceDelegate> delegate;
 @end
 
-@implementation BDBleBridgeService
+@implementation BDBleBridge
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<BleBridgeServiceDelegate>)aController

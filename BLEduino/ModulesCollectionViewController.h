@@ -22,7 +22,7 @@
 #import "SequencerTableViewController.h"
 #import "ProximityViewController.h"
 #import "ConsoleTableViewController.h"
-#import "BDNotification.h"
+#import "BDNotifications.h"
 #import "BDProximity.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
@@ -49,7 +49,7 @@ BridgeDelegate
 
 //Services that run in the background.
 @property (strong) BDBridge *bleBridge;
-@property (strong) BDNotification *notificationService;
+@property (strong) BDNotifications *notifications;
 @property (strong) BDProximity *proximityMonitor;
 
 //Proximity

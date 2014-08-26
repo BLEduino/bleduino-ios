@@ -8,21 +8,14 @@
 
 #import "BDBridge.h"
 #import "BDLeManager.h"
-#import "BDBleBridgeService.h"
-
-#pragma mark -
-#pragma mark BLE Bridge Service UUIDs
+#import "BDBleBridge.h"
 
 #pragma mark -
 #pragma mark - Private Class
 /****************************************************************************/
 /*								Bridge										*/
 /****************************************************************************/
-@class Bridge;
-@protocol BridgeObjDelegate <NSObject>
-@end
-
-@interface Bridge : BDObject <CBPeripheralDelegate>
+@interface Bridge : BDObject
 @property (strong) CBUUID *bleBridgeServiceUUID;
 @property (strong) CBUUID *bridgeRxCharacteristicUUID;
 @property (strong) CBUUID *bridgeTxCharacteristicUUID;
@@ -102,7 +95,7 @@
  *                          data the iOS device then relays the data to the corresponsing BLEduino.
  *
  */
-- (void)openBridgeForDelegate:(id<BridgeDelegate>)aController
+- (void)openBridgeWithDelegate:(id<BridgeDelegate>)aController
 {
     //Open bridge only if there is not one already opened.
     if(!self.isOpen)
@@ -141,7 +134,7 @@
  *                          all connected BLEduinos. That is, stops listening altogether.
  *
  */
-- (void)closeBridgeForDelegate:(id<BridgeDelegate>)aController
+- (void)closeBridge
 {
     for(Bridge *bridge in self.bridges)
     {
@@ -164,12 +157,17 @@
 /****************************************************************************/
 /*				            Peripheral Delegate                             */
 /****************************************************************************/
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+}
+
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     if(error && ([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]] ||
                  [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]]))
     {
-        [self closeBridgeForDelegate:nil];
+        [self closeBridge];
         if(self.bridgedOpenedSuccesfuly)
         {
             if([self.delegate respondsToSelector:@selector(didFailToKeepBridgeOpen:)])
@@ -273,7 +271,7 @@
 {
     if(error && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
     {
-        [self closeBridgeForDelegate:nil];
+        [self closeBridge];
         if(self.bridgedOpenedSuccesfuly)
         {
             if([self.delegate respondsToSelector:@selector(didFailToKeepBridgeOpen:)])
@@ -344,7 +342,7 @@
     {
         if(error)
         {
-            [self closeBridgeForDelegate:nil];
+            [self closeBridge];
             if(self.bridgedOpenedSuccesfuly)
             {
                 if([self.delegate respondsToSelector:@selector(didFailToKeepBridgeOpen:)])
@@ -448,7 +446,7 @@
     {
         if(error)
         {
-            [self closeBridgeForDelegate:nil];
+            [self closeBridge];
             if(self.bridgedOpenedSuccesfuly)
             {
                 if([self.delegate respondsToSelector:@selector(didFailToKeepBridgeOpen:)])
