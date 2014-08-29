@@ -39,14 +39,14 @@
 //Present admin (side) navigation menu.
 - (IBAction)showMenu
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.sideMenuViewController presentMenuViewController];
 }
 
 //Show status bar after hiding the admin (side) nagivation menu.
 - (void)showStatusBar
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidLoad
@@ -694,9 +694,9 @@ referenceSizeForFooterInSection:(NSInteger)section
     [manager becomeBleduinoDelegate];
     [manager setDelegate:self];
 
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-    }];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+
 }
 
 - (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller
@@ -705,9 +705,9 @@ referenceSizeForFooterInSection:(NSInteger)section
     [manager becomeBleduinoDelegate];
     [manager setDelegate:self];
 
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-    }];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+
 }
 
 - (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller

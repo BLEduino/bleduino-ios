@@ -16,6 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //Show status bar
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
     //Launch BLEduino manager.
     BDLeManager *leManager = [BDLeManager sharedLeManager];
     leManager.isReconnectingEnabled = NO;

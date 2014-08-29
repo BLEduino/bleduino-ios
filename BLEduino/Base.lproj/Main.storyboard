@@ -93,7 +93,7 @@
                                                     <rect key="frame" x="20" y="9" width="280" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1756,7 +1756,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2w-Zq-ScE">
-                                            <rect key="frame" x="30" y="41" width="60" height="38"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="lcd.png"/>
                                         </button>
@@ -1785,7 +1785,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaR-zw-uro">
-                                            <rect key="frame" x="30" y="36" width="60" height="47"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="keyboard.png"/>
                                         </button>
@@ -1814,7 +1814,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dra-DK-Hf0">
-                                            <rect key="frame" x="30" y="36" width="60" height="47"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="controller.png"/>
                                         </button>
@@ -1843,7 +1843,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eur-K8-d5D">
-                                            <rect key="frame" x="30" y="29" width="60" height="53"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="car.png"/>
                                         </button>
@@ -1872,7 +1872,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIp-ih-TFv">
-                                            <rect key="frame" x="30" y="36" width="60" height="47"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="power.png"/>
                                         </button>
@@ -1901,7 +1901,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0A7-f9-cNV">
-                                            <rect key="frame" x="41" y="23" width="38" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="led.png"/>
                                         </button>
@@ -1930,7 +1930,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f5F-4j-G8v">
-                                            <rect key="frame" x="30" y="32" width="60" height="56"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="notifications.png"/>
                                         </button>
@@ -1959,7 +1959,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwZ-Dn-VXn">
-                                            <rect key="frame" x="30" y="23" width="60" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="bridge.png"/>
                                         </button>
@@ -1988,9 +1988,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uPP-Fb-iqr">
-                                            <rect key="frame" x="30" y="23" width="60" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="bridge.png"/>
+                                            <state key="normal" image="firmata.png"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2016,9 +2016,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFO-lB-6qv">
-                                            <rect key="frame" x="30" y="23" width="60" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="bridge.png"/>
+                                            <state key="normal" image="sequencer.png"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2044,9 +2044,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Un-Wk-I6Y">
-                                            <rect key="frame" x="30" y="23" width="60" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="bridge.png"/>
+                                            <state key="normal" image="proximity.png"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2072,9 +2072,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kz1-X8-Kjz">
-                                            <rect key="frame" x="30" y="23" width="60" height="60"/>
+                                            <rect key="frame" x="13" y="12" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="bridge.png"/>
+                                            <state key="normal" image="console.png"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2120,7 +2120,7 @@
         <scene sceneID="ezj-Qc-sTh">
             <objects>
                 <tableViewController id="i0s-Fv-d64" customClass="KeyboardModuleTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="VRR-VX-k2i">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="VRR-VX-k2i">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2231,7 +2231,7 @@
         <scene sceneID="Wke-z5-ll9">
             <objects>
                 <tableViewController id="ci3-1T-pcj" userLabel="LCD Module" customClass="LCDTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="LCDModuleCell" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EK2-Zo-cu2">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="LCDModuleCell" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EK2-Zo-cu2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2719,22 +2719,26 @@
         <image name="arrow-right.png" width="14" height="28"/>
         <image name="arrow-up.png" width="28" height="14"/>
         <image name="blue-x.png" width="250" height="250"/>
-        <image name="bridge.png" width="120" height="120"/>
+        <image name="bridge.png" width="190" height="190"/>
         <image name="button.png" width="102" height="62"/>
-        <image name="car.png" width="120" height="107"/>
-        <image name="controller.png" width="120" height="94"/>
+        <image name="car.png" width="190" height="190"/>
+        <image name="console.png" width="190" height="190"/>
+        <image name="controller.png" width="190" height="190"/>
         <image name="delay.png" width="22" height="22"/>
+        <image name="firmata.png" width="190" height="190"/>
         <image name="green-y.png" width="250" height="250"/>
         <image name="joystick-bg.png" width="270" height="270"/>
         <image name="joystick-neutral.png" width="180" height="180"/>
-        <image name="keyboard.png" width="120" height="94"/>
-        <image name="lcd.png" width="120" height="76"/>
+        <image name="keyboard.png" width="190" height="190"/>
+        <image name="lcd.png" width="190" height="190"/>
         <image name="led-small.png" width="18" height="28"/>
-        <image name="led.png" width="77" height="120"/>
+        <image name="led.png" width="190" height="190"/>
         <image name="menu.png" width="28" height="22"/>
-        <image name="notifications.png" width="120" height="112"/>
-        <image name="power.png" width="120" height="94"/>
+        <image name="notifications.png" width="190" height="190"/>
+        <image name="power.png" width="190" height="190"/>
+        <image name="proximity.png" width="190" height="190"/>
         <image name="red-a.png" width="250" height="250"/>
+        <image name="sequencer.png" width="190" height="190"/>
         <image name="strength-0.png" width="560" height="380"/>
         <image name="yellow-b.png" width="250" height="250"/>
     </resources>

@@ -29,14 +29,14 @@
 
 - (IBAction)showMenu
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.sideMenuViewController presentMenuViewController];
 }
 
 //Show status bar after hiding the admin (side) nagivation menu.
 - (void)showStatusBar
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidLoad
