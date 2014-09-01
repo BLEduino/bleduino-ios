@@ -222,7 +222,6 @@
 {
     if(error != nil && pipe == UART)
     {
-
         ConsoleEntries *entry = [[ConsoleEntries alloc] init];
         entry.text = [NSString stringWithUTF8String:[data bytes]];
         entry.time = [NSDate date];

@@ -292,14 +292,7 @@
     yButtonUpdate.buttonID = 2;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                       delegate:self];
-        [gameController writeButtonAction:yButtonUpdate];
-    }
+    [BDBleduino writeValue:yButtonUpdate];
     
     NSLog(@"GameController, sent button *Y* action update, state: %i", selected);
 }
@@ -307,19 +300,12 @@
 - (void)xSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *xButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *xButtonUpdate = [BDButtonAction action];
     xButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     xButtonUpdate.buttonID = 3;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
-        [gameController writeButtonAction:xButtonUpdate];
-    }
+    [BDBleduino writeValue:xButtonUpdate];
     
     NSLog(@"GameController, sent button *X* action update, state: %i", selected);
 }
@@ -327,19 +313,12 @@
 - (void)aSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *aButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *aButtonUpdate = [BDButtonAction action];
     aButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     aButtonUpdate.buttonID = 4;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                     delegate:self];
-        [gameController writeButtonAction:aButtonUpdate];
-    }
+    [BDBleduino writeValue:aButtonUpdate];
     
     NSLog(@"GameController, sent button *A* action update, state: %i", selected);
 }
@@ -347,19 +326,13 @@
 - (void)bSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *bButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *bButtonUpdate = [BDButtonAction action];
     bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     bButtonUpdate.buttonID = 5;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
+    [BDBleduino writeValue:bButtonUpdate];
     
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
-        [gameController writeButtonAction:bButtonUpdate];
-    }
     
     NSLog(@"GameController, sent button *B* action update, state: %i", selected);
 }

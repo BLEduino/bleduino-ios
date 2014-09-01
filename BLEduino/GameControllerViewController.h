@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BDLeManager.h"
 #import "BDController.h"
+#import "BDBleduino.h"
 #import "MFLJoystick.h"
 
 @class GameControllerViewController;
