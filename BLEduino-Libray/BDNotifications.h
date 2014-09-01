@@ -30,8 +30,8 @@
 /*
  *  @method                 startListening
  *
- *  @discussion             This method subscribes the iOS device to the Notification service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
+ *  @discussion             This method subscribes the iOS device to the Notification service for each
+ *                          connected BLEduino. Then listens to incoming data, upon reciving
  *                          data the iOS device then pushes a local notification.
  *
  */
@@ -40,7 +40,7 @@
  *  @method                 stopListening
  *
  *  @discussion             This method unsubscribes the iOS device from the Notification service for
- *                          all connected BLEduinos. That is, stops listening altogether.
+ *                          each connected BLEduinos. That is, it stops listening altogether.
  *
  */
 - (void)stopListening;

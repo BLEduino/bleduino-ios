@@ -488,6 +488,9 @@
         case 20:
             pin = 15;
             break;
+        default:
+            pin = 13;
+            break;
     }
     return pin;
 }

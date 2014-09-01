@@ -20,7 +20,18 @@
 - (id) initWithData:(NSData *)motionData;
 
 /*
- * Create Throttle-Yaw-Roll-Pitch.
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
  */
 + (instancetype)motion;
 

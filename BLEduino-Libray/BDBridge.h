@@ -29,9 +29,13 @@
 /*
  *  @method                 openBridge
  *
- *  @discussion             This method subscribes the iOS device to the BLE Bridge service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
- *                          data the iOS device then relays the data to the corresponsing BLEduino.
+ *  @param aController      The controller that will serve as the delegate for the BDBrige oject. This delegate
+ *                          will get notified when and if the ble bridge was opened successful.
+ *
+ *  @discussion             This method subscribes the iOS device to the BLE Bridge service 
+ *                          (Bridge Tx and Bridge RX Characteristic) for each connected BLEduinos. 
+ *                          Then listens to incoming data, upon reciving data the iOS device then
+ *                          relays the data to the corresponsing BLEduino.
  *
  */
 - (void)openBridgeWithDelegate:(id <BridgeDelegate>)aController;
@@ -39,8 +43,8 @@
 /*
  *  @method                 closeBridge
  *
- *  @discussion             This method unsubscribes the iOS device from the BLE Bridge service for
- *                          all connected BLEduinos. That is, stops listening altogether.
+ *  @discussion             This method unsubscribes the iOS device from the BDBridge service for
+ *                          each connected BLEduino. That is, stops listening altogether.
  *
  */
 - (void)closeBridge;

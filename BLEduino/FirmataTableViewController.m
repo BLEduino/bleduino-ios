@@ -50,8 +50,8 @@
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
     
     //Global firmata service for listening for updates.
-    self.firmata =[[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-    [self.firmata subscribeToStartReceivingFirmataCommands];
+    self.firmata =[BDBleduino bleduino:bleduino delegate:self];
+    [self.firmata subscribe:Firmata notify:YES];
     
     //Load previous state.
     [self setPreviousState];
@@ -388,19 +388,13 @@
     UISwitch *digitalValue = (UISwitch *)sender;
     
     //Update firmata command.
-    BDFirmataCommand *digitalSwitchCommand = (BDFirmataCommand *)[self.commands objectAtIndex:digitalValue.tag];
-    digitalSwitchCommand.pinValue = digitalValue.on;
+    BDFirmataCommand *digitalSwitch = (BDFirmataCommand *)[self.commands objectAtIndex:digitalValue.tag];
+    digitalSwitch.pinValue = digitalValue.on;
     
     if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
     {
-        //Send command.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-        {
-            BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-            [firmataService writeFirmataCommand:digitalSwitchCommand];
-        }
+        //Send commands.
+        [BDBleduino writeValue:digitalSwitch];
     }
 }
 
@@ -420,14 +414,7 @@
             
             if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
             {
-                //Send command.
-                BDLeManager *leManager = [BDLeManager sharedLeManager];
-                
-                for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-                {
-                    BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                    [firmataService writeFirmataCommand:pwmCommand];
-                }
+                [BDBleduino writeValue:pwmCommand];
             }
             
             [self.tableView reloadData];
@@ -593,14 +580,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         
         if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
         {
-            //Send command.
-            BDLeManager *leManager = [BDLeManager sharedLeManager];
-            
-            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-            {
-                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                [firmataService writeFirmataCommand:pin];
-            }
+            [BDBleduino writeValue:pin];
         }
         [self.tableView reloadData];
     }
@@ -610,17 +590,11 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
 {
     if(self.sync.isEnabled)
     {
-        //Send command.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        //Send commands.
+        for(BDFirmataCommand *command in self.commands)
         {
-            for(BDFirmataCommand *command in self.commands)
-            {
-                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                [firmataService writeFirmataCommand:command];
-                NSLog(@"Syncing...");
-            }
+            [BDBleduino writeValue:command];
+            NSLog(@"Syncing...");
         }
     }
 

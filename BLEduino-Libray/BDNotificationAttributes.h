@@ -20,7 +20,14 @@
 - (id) initWithData:(NSData *)attributesData;
 
 /*
- * Create Notification Attributes. 
+ *  @method                 attributes
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see @property           startScanningForBleduinos
+ *
  */
 + (instancetype)attributes;
 

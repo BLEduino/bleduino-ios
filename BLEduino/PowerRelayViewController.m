@@ -117,19 +117,18 @@
     self.isLastPowerRelayStateON = state;
     
     //Create firmata command.
-    BDFirmataCommand *powerSwitchCommand = [[BDFirmataCommand alloc] init];
-    powerSwitchCommand.pinState = FirmataCommandPinStateOutput;
-    powerSwitchCommand.pinValue = (state)?255:0; //255 > High, 0 > Low
-    powerSwitchCommand.pinNumber = _pinNumber;
-    _lastPowerSwitchCommand = powerSwitchCommand;
+    BDFirmataCommand *switchUpdate = [BDFirmataCommand command];
+    switchUpdate.pinState = FirmataCommandPinStateOutput;
+    switchUpdate.pinValue = (state)?255:0; //255 > High, 0 > Low
+    switchUpdate.pinNumber = _pinNumber;
+    _lastPowerSwitchCommand = switchUpdate;
 
     //Send command.
     BDLeManager *leManager = [BDLeManager sharedLeManager];
     
     for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-        [firmataService writeFirmataCommand:powerSwitchCommand];
+    {        
+        [BDBleduino writeValue:switchUpdate bleduino:bleduino];
     }
     
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",

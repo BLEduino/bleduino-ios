@@ -20,9 +20,7 @@ enum BlePipe {
     Firmata = 0,
     UART = 1,
     Controller = 2,
-    VehicleMotion = 3,
-    Bridge = 4,
-    Notification = 5
+    VehicleMotion = 3
 };
 typedef NSUInteger BlePipe;
 
@@ -33,22 +31,79 @@ typedef NSUInteger BlePipe;
 /****************************************************************************/
 @class BDBleduino;
 @protocol BleduinoDelegate <NSObject>
-@required
+@optional
+
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void) bleduino:(CBPeripheral *)bleduino
-    didUpdateValue:(id)data
+    didWriteValue:(id)data
              pipe:(BlePipe)pipe
             error:(NSError *)error;
 
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void) bleduino:(CBPeripheral *)bleduino
-     didWriteValue:(id)data
+   didUpdateValue:(id)data
              pipe:(BlePipe)pipe
             error:(NSError *)error;
 
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void)  bleduino:(CBPeripheral *)bleduino
       didSubscribe:(BlePipe)pipe
             notify:(BOOL)notify
              error:(NSError *)error;
 
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void)bleduino:(CBPeripheral *)bleduino
 didUpdateValueForRange:(DistanceRange)range
      maxDistance:(NSNumber *)max
@@ -56,9 +111,38 @@ didUpdateValueForRange:(DistanceRange)range
         withRSSI:(NSNumber *)RSSI;
 
 @optional
+
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void) bleduino:(CBPeripheral *)bleduino
    didFailToWrite:(id)data;
 
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
 - (void)bleduino:(CBPeripheral *)bleduino didFinishCalibration:(NSNumber *)measuredPower;
 @end
 
@@ -84,6 +168,17 @@ ProximityDelegate
 @property (getter=readPathLoss) float pathLoss; //Path Loss Exponent.
 
 
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 + (instancetype)bleduino:(CBPeripheral *)bleduino
                 delegate:(id<BleduinoDelegate>)delegate;
 
@@ -95,34 +190,149 @@ ProximityDelegate
 #pragma mark -
 #pragma mark Writing to BLEduino
 // Writing data to BLEduino.
+
+/*
+ *  @method                 writeValue:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 + (void) writeValue:(id)data;
 
+/*
+ *  @method                 writeValue:bleduino:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 + (void) writeValue:(id)data bleduino:(CBPeripheral *)bleduino;
 
+/*
+ *  @method                 writeValue:withAck:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) writeValue:(id)data withAck:(BOOL)enabled;
 
+/*
+ *  @method                 writeValue:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) writeValue:(id)data;
 
 #pragma mark -
 #pragma mark Reading from BLEduino
 // Read/Receive data from BLEduino.
+
+/*
+ *  @method                 readValue:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) readValue:(BlePipe)pipe;
 
+
+/*
+ *  @method                 subscribe:notify:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) subscribe:(BlePipe)pipe
             notify:(BOOL)notify;
 
 #pragma mark -
 #pragma mark Proximity
 //Proximity
+
+/*
+ *  @method                 startMonitoringProximity
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) startMonitoringProximity;
 
+/*
+ *  @method                 stopMonitoringProximity
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) stopMonitoringProximity;
 
+/*
+ *  @method                 startProximityCalibration
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 - (void) startProximityCalibration;
 
 #pragma mark -
 #pragma mark Configure BLEduino
 //Configure the BLEduino
+
+/*
+ *  @method                 updateBleduinoName:name:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ */
 + (void) updateBleduinoName:(CBPeripheral *)bleduino
                        name:(NSString *)name;
 

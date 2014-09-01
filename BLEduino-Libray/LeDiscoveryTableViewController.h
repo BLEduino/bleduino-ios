@@ -21,7 +21,7 @@ extern NSString * const kTxCharacteristicUUIDString;       //8C6B1010-A312-681D-
 
 @interface LeDiscoveryTableViewController : UITableViewController
 <
-LeDiscoveryManagerDelegate,
+LeManagerDelegate,
 BleduinoControllerDelegate,
 UIAlertViewDelegate
 >
