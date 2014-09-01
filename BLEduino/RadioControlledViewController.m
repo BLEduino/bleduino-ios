@@ -161,21 +161,14 @@
 - (void)horizontalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    BDThrottleYawRollPitch *newThrottleYawUpdate = [[BDThrottleYawRollPitch alloc] init];
-    newThrottleYawUpdate.throttle = self.lastThrottleYawUpdate.throttle;
-    newThrottleYawUpdate.yaw = position.x;
-    self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
+    BDThrottleYawRollPitch *motionUpdate = [BDThrottleYawRollPitch motion];
+    motionUpdate.throttle = self.lastThrottleYawUpdate.throttle;
+    motionUpdate.yaw = position.x;
+    self.lastThrottleYawUpdate = motionUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDVehicleMotion *motionService = [[BDVehicleMotion alloc] initWithPeripheral:bleduino
-                                                                                      delegate:self];
-        [motionService writeMotionUpdate:newThrottleYawUpdate];
-    }
-    
+    [BDBleduino writeValue:motionUpdate];
+
     NSLog(@"Sent ThrottleYaw update, yaw: %ld, throttle: %ld",
           (long)_lastThrottleYawUpdate.yaw, (long)_lastThrottleYawUpdate.throttle);
 }
@@ -186,20 +179,13 @@
 - (void)verticalJoystickDidUpdate:(CGPoint)position
 {
     //Create ThrottleYawRollPitchCharacteristic update.
-    BDThrottleYawRollPitch *newThrottleYawUpdate = [[BDThrottleYawRollPitch alloc] init];
-    newThrottleYawUpdate.throttle = position.y;
-    newThrottleYawUpdate.yaw = self.lastThrottleYawUpdate.yaw;
-    self.lastThrottleYawUpdate = newThrottleYawUpdate; //Update last instance.
+    BDThrottleYawRollPitch *motionUpdate = [BDThrottleYawRollPitch motion];
+    motionUpdate.throttle = position.y;
+    motionUpdate.yaw = self.lastThrottleYawUpdate.yaw;
+    self.lastThrottleYawUpdate = motionUpdate; //Update last instance.
     
     //Send ThrottleYaw update.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDVehicleMotion *motionService = [[BDVehicleMotion alloc] initWithPeripheral:bleduino
-                                                                                      delegate:self];
-        [motionService writeMotionUpdate:newThrottleYawUpdate];
-    }
+    [BDBleduino writeValue:motionUpdate];
     
     NSLog(@"Sent ThrottleYaw update, throttle: %ld, yaw: %ld,",
           (long)_lastThrottleYawUpdate.throttle, (long)_lastThrottleYawUpdate.yaw);

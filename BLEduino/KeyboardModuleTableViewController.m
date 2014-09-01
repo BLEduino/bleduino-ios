@@ -63,11 +63,7 @@
 {
     if([text isEqualToString:@"\n"])
     {
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-        {
-            [self writeMessage:self.messageView.text bleduino:bleduino];
-        }
+        [self writeMessage:self.messageView.text];
 
         //Clear text view.
         [textView setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -88,10 +84,8 @@
  * decision on how to best use it for the Keyboard module.
  *
  */
-- (void) writeMessage:(NSString *)message bleduino:(CBPeripheral *)bleduino
+- (void) writeMessage:(NSString *)message
 {
-    BDUart *messageService = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
-   
     if(message.length > 20)
     {
         BOOL lastPacket = false;
@@ -113,7 +107,7 @@
             NSData *dataSubset = [messageData subdataWithRange:dataRange];
             
             //Write (part of) message.
-            [messageService writeData:dataSubset];
+            [BDBleduino writeValue:dataSubset];
             
             NSLog(@"\nWrote date from: %ld to: %ld, of %ld characters. \nSubstring: |%@| \nData length: %ld\nData: %@\n\n",
                   (long)subsstringPointer,
@@ -129,7 +123,7 @@
     }
     else
     {
-        [messageService writeMessage:message];
+        [BDBleduino writeValue:message];
     }
 }
 
