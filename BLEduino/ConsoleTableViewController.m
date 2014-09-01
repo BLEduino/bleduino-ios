@@ -73,9 +73,10 @@
     
     for(CBPeripheral *bleduino in manager.connectedBleduinos)
     {
-        BDUart *newConsole = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
-        [newConsole subscribeToStartReceivingMessages];
-        [self.consoleHub addObject:newConsole];
+        BDBleduino *console = [BDBleduino bleduino:bleduino delegate:self];
+        [console subscribe:UART notify:YES];
+        
+        [self.consoleHub addObject:console];
     }
 }
 
@@ -178,9 +179,9 @@
     entry.isBLEduino = NO;
     
     //Send data to BLEduinos.
-    for(BDUart *console in self.consoleHub)
+    for(BDBleduino *console in self.consoleHub)
     {
-        [console writeMessage:entry.text];
+        [console writeValue:entry.text];
     }
     
     //Add entry to model and tableview.
@@ -211,6 +212,30 @@
     
     //Scroll to make last entry visible.
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+}
+
+//Receive data.
+- (void)bleduino:(CBPeripheral *)bleduino
+  didUpdateValue:(id)data
+            pipe:(BlePipe)pipe
+           error:(NSError *)error
+{
+    if(error != nil && pipe == UART)
+    {
+
+        ConsoleEntries *entry = [[ConsoleEntries alloc] init];
+        entry.text = [NSString stringWithUTF8String:[data bytes]];
+        entry.time = [NSDate date];
+        entry.isBLEduino = YES;
+        
+        //Add entry to model and tableview.
+        [self.entries insertObject:entry atIndex:self.entries.count];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.entries.count-1 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        
+        //Scroll to make last entry visible.
+        [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+    }
 }
 
 - (IBAction)dismissModule:(id)sender
@@ -258,6 +283,17 @@
 - (void) didSubscribeToReceiveMessagesFor:(BDUart *)service error:(NSError *)error
 {
     NSLog(@"Subscribed to UART service from Console.");
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino
+     didSubscribe:(BlePipe)pipe
+           notify:(BOOL)notify
+            error:(NSError *)error
+{
+    if(pipe == UART)
+    {
+        NSLog(@"Subscribed to UART service from Console.");
+    }
 }
 
 @end

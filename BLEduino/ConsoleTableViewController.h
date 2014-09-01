@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BDLeManager.h"
 #import "BDUart.h"
+#import "BDBleduino.h"
 #import "PSPDFTextView.h"
 
 @class ConsoleTableViewController;
@@ -20,7 +21,8 @@
 <
 UITextFieldDelegate,
 UITextViewDelegate,
-UARTServiceDelegate
+UARTServiceDelegate,
+BleduinoDelegate
 >
 @property (weak) id <ConsoleTableViewControllerDelegate> delegate;
 @property CGFloat keyboardHeight;

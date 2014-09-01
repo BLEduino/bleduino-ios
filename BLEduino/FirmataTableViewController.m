@@ -451,6 +451,32 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
     }
 }
 
+//Analog and Digital-In
+ - (void) bleduino:(CBPeripheral *)bleduino
+    didUpdateValue:(id)data
+              pipe:(BlePipe)pipe
+             error:(NSError *)error
+{
+    if(error != nil && pipe == Firmata)
+    {
+        BDFirmataCommand *firmataCommand = (BDFirmataCommand *)data;
+        
+        for(BDFirmataCommand *command in self.commands)
+        {
+            if(command.pinNumber == firmataCommand.pinNumber)
+            {
+                if(command.pinState == firmataCommand.pinState)
+                {
+                    //Update value.
+                    command.pinValue = firmataCommand.pinValue;
+                    [self.tableView reloadData];
+                }
+            }
+            
+        }
+    }
+}
+
 //Changing PIN state.
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
