@@ -50,7 +50,6 @@
         [self.proximity setDelegate:self];
         
         BDLeManager *manager = [BDLeManager sharedLeManager];
-        manager.isOnlyBleduinoDelegate = YES;
         self.bleduino.delegate = manager.bleduinoDelegate;
     }
     return self;

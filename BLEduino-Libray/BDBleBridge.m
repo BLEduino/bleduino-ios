@@ -233,7 +233,7 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
-   
+    
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
         if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString ]])

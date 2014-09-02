@@ -46,7 +46,7 @@
         //PENDING: Auto-reconnection requires to re-subscribe to characteristics.
         
         //Become delegate for all peripherals
-        self.isOnlyBleduinoDelegate = NO;
+        self.isOnlyBleduinoDelegate = YES;
         
         //Scan only for BLEduinos?
         self.scanOnlyForBLEduinos = YES;
@@ -308,7 +308,9 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         }
         
         //Send notification.
-        NSDictionary *info = @{@"Bleduino":peripheral, @"Error":error};
+        NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:@{@"Bleduino":peripheral}];
+        if(error)[info setValue:error forKey:@"Error"];
+        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center postNotificationName:BLE_MANANGER_BLEDUINO_DISCONNECTED object:self userInfo:info];
         
@@ -580,7 +582,9 @@ didRetrievePeripherals:(NSArray *)peripherals
         });
         
         //Send notification.
-        NSDictionary *info = @{@"Bleduino":peripheral, @"Error":error};
+        NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:@{@"Bleduino":peripheral}];
+        if(error)[info setValue:error forKey:@"Error"];
+        
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center postNotificationName:BLE_MANANGER_BLEDUINO_CONNECTED object:self userInfo:info];
     }

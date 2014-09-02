@@ -440,7 +440,7 @@
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
-
+    
     NSArray *identifiers = [self.deviceIDs allKeys];
     if([identifiers containsObject:[peripheral.identifier UUIDString]])
     {

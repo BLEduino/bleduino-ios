@@ -220,7 +220,7 @@
             pipe:(BlePipe)pipe
            error:(NSError *)error
 {
-    if(error != nil && pipe == UART)
+    if(error == nil && pipe == UART)
     {
         ConsoleEntries *entry = [[ConsoleEntries alloc] init];
         entry.text = [NSString stringWithUTF8String:[data bytes]];

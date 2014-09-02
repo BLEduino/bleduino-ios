@@ -41,7 +41,10 @@ SequencerTableViewControllerDelegate,
 ProximityViewControllerDelegate,
 ConsoleTableViewControllerDelegate,
 BridgeDelegate,
-NotificationsDelegate
+NotificationsDelegate,
+
+//FIXME: REMOVE ONLY TEMP FOR TEST
+BleduinoDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;
@@ -54,6 +57,9 @@ NotificationsDelegate
 //Proximity
 @property (strong) NSMutableArray *distanceAlerts;
 @property BOOL distanceAlertsEnabled;
+
+//FIXME: REMOVE ONLY TEMP FOR TEST
+@property BDBleduino *firmata;
 
 - (IBAction)showMenu;
 - (void)showStatusBar;

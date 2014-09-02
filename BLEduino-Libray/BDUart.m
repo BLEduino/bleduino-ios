@@ -157,17 +157,21 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
         {
             self.textTransmission = NO;
             self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
+            {
+                [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
+            }
         }
         else
         {
             self.dataSent = characteristic.value;
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didWriteData:error:)])
+            {
+                [self.delegate uartService:self didWriteData:self.dataSent error:error];
+            }
         }
-        
-        if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
-        {
-            [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
-        }
-
     }
     else
     {
@@ -182,16 +186,22 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
         if(self.textSubscription)
         {
             self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
+            {
+                [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+            }
         }
         else
         {
             self.dataReceived = characteristic.value;
+            
+            if([self.delegate respondsToSelector:@selector(uartService:didReceiveData:error:)])
+            {
+                [self.delegate uartService:self didReceiveData:self.dataReceived error:error];
+            }
         }
-        
-        if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
-        {
-            [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
-        }
+
     }
     else
     {
@@ -266,15 +276,20 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             {
                 self.textTransmission = NO;
                 self.messageSent = [NSString stringWithUTF8String:[characteristic.value bytes]];
+                
+                if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
+                {
+                    [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
+                }
             }
             else
             {
                 self.dataSent = characteristic.value;
-            }
-            
-            if([self.delegate respondsToSelector:@selector(uartService:didWriteMessage:error:)])
-            {
-                [self.delegate uartService:self didWriteMessage:self.messageSent error:error];
+                
+                if([self.delegate respondsToSelector:@selector(uartService:didWriteData:error:)])
+                {
+                    [self.delegate uartService:self didWriteData:self.dataSent error:error];
+                }
             }
         }
     }
@@ -295,15 +310,20 @@ NSString * const kTxCharacteristicUUIDString = @"8C6B1010-A312-681D-025B-0032C0D
             if(self.textSubscription)
             {
                 self.messageReceived = [NSString stringWithUTF8String:[characteristic.value bytes]];
+                
+                if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
+                {
+                    [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+                }
             }
             else
             {
                 self.dataReceived = characteristic.value;
-            }
-            
-            if([self.delegate respondsToSelector:@selector(uartService:didReceiveMessage:error:)])
-            {
-                [self.delegate uartService:self didReceiveMessage:self.messageReceived error:error];
+                
+                if([self.delegate respondsToSelector:@selector(uartService:didReceiveData:error:)])
+                {
+                    [self.delegate uartService:self didReceiveData:self.dataReceived error:error];
+                }
             }
         }
     }

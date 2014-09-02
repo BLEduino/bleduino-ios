@@ -165,6 +165,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     BDLeManager *leManager = [BDLeManager sharedLeManager];
+    leManager.delegate = nil;
     [leManager stopScanning];
     
     //Hide network activity indicator.

@@ -97,6 +97,32 @@
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_DISABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE_ALERTS object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE object:nil];
+    
+}
+
+//FIXME: REMOVE ONLY TEMP FOR TEST
+- (void)bleduino:(CBPeripheral *)bleduino
+  didUpdateValue:(id)data
+            pipe:(BlePipe)pipe
+           error:(NSError *)error
+{
+    if(pipe == Firmata)
+    {
+        BDFirmataCommand *command = (BDFirmataCommand *)data;
+        NSLog(@"Firmata update, pin: %ld, state: %ld, value: %ld",
+              (long)command.pinNumber,
+              (long)command.pinState,
+              (long)command.pinValue);
+    }
+}
+
+//FIXME: REMOVE ONLY TEMP FOR TEST
+- (void)bleduino:(CBPeripheral *)bleduino didUpdateValueForRange:(DistanceRange)range
+     maxDistance:(NSNumber *)max
+     minDistance:(NSNumber *)min
+        withRSSI:(NSNumber *)RSSI
+{
+    NSLog(@"Proximity update, Range: %ld, RSSI: %ld", (long)range, (long)[RSSI integerValue]);
 }
 
 - (void)didReceiveMemoryWarning
@@ -424,10 +450,6 @@
             {
                 [self.notifications stopListening];
                 
-                BDLeManager *manager = [BDLeManager sharedLeManager];
-                [manager becomeBleduinoDelegate];
-                
-                
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                 [cell.moduleIcon setImage:[UIImage imageNamed:@"notifications.png"] forState:UIControlStateNormal];
@@ -448,9 +470,6 @@
             if(self.bleBridge.isOpen)
             {
                 [self.bleBridge closeBridge];
-                
-                BDLeManager *manager = [BDLeManager sharedLeManager];
-                [manager becomeBleduinoDelegate];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -651,41 +670,32 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 - (void)sequencerTableViewControllerDismissed:(SequencerTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)firmataTableViewControllerDismissed:(FirmataTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)lcdModuleTableViewControllerDismissed:(LCDTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    //FIXME: REMOVE ONLY TEMP FOR TEST
+    CBPeripheral *bleduino = [[[BDLeManager sharedLeManager] connectedBleduinos] lastObject];
+    self.firmata = [BDBleduino bleduino:bleduino delegate:self];
+    [self.firmata subscribe:Firmata notify:YES];
+    [self.firmata startMonitoringProximity];
 }
 
 - (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -693,9 +703,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 
 - (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    
     [controller dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -703,33 +710,21 @@ referenceSizeForFooterInSection:(NSInteger)section
 
 - (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)proximityControllerDismissed:(ProximityViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)consoleControllerDismissed:(ConsoleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
