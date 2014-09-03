@@ -11,6 +11,7 @@
 #import "BDLeManager.h"
 #import "BDFirmata.h"
 #import "BDFirmataCommand.h"
+#import "BDBleduino.h"
 
 #import "FirmataAnalogCell.h"
 #import "FirmataDigitalCell.h"
@@ -25,13 +26,14 @@
 @interface SequencerTableViewController : UITableViewController
 <
 FirmataServiceDelegate,
+BleduinoDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
 UITextFieldDelegate
 >
 @property (weak) id <SequencerTableViewControllerDelegate> delegate;
 @property (strong) NSMutableArray *sequence;
-@property (strong) BDFirmata *firmata;
+@property (strong) BDBleduino *firmata;
 @property (strong) BDFirmataCommand *start;
 @property (strong) BDFirmataCommand *end;
 @property IBOutlet UIBarButtonItem *edit;

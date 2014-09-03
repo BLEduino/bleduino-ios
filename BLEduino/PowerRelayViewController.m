@@ -124,12 +124,7 @@
     _lastPowerSwitchCommand = switchUpdate;
 
     //Send command.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {        
-        [BDBleduino writeValue:switchUpdate bleduino:bleduino];
-    }
+    [BDBleduino writeValue:switchUpdate];
     
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",
           (long)_lastPowerSwitchCommand.pinValue,

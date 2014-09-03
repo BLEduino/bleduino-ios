@@ -100,31 +100,6 @@
     
 }
 
-//FIXME: REMOVE ONLY TEMP FOR TEST
-- (void)bleduino:(CBPeripheral *)bleduino
-  didUpdateValue:(id)data
-            pipe:(BlePipe)pipe
-           error:(NSError *)error
-{
-    if(pipe == Firmata)
-    {
-        BDFirmataCommand *command = (BDFirmataCommand *)data;
-        NSLog(@"Firmata update, pin: %ld, state: %ld, value: %ld",
-              (long)command.pinNumber,
-              (long)command.pinState,
-              (long)command.pinValue);
-    }
-}
-
-//FIXME: REMOVE ONLY TEMP FOR TEST
-- (void)bleduino:(CBPeripheral *)bleduino didUpdateValueForRange:(DistanceRange)range
-     maxDistance:(NSNumber *)max
-     minDistance:(NSNumber *)min
-        withRSSI:(NSNumber *)RSSI
-{
-    NSLog(@"Proximity update, Range: %ld, RSSI: %ld", (long)range, (long)[RSSI integerValue]);
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -686,12 +661,6 @@ referenceSizeForFooterInSection:(NSInteger)section
 - (void)keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    //FIXME: REMOVE ONLY TEMP FOR TEST
-    CBPeripheral *bleduino = [[[BDLeManager sharedLeManager] connectedBleduinos] lastObject];
-    self.firmata = [BDBleduino bleduino:bleduino delegate:self];
-    [self.firmata subscribe:Firmata notify:YES];
-    [self.firmata startMonitoringProximity];
 }
 
 - (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller

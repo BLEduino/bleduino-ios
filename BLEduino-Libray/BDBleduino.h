@@ -31,7 +31,7 @@ typedef NSUInteger BlePipe;
 /****************************************************************************/
 @class BDBleduino;
 @protocol BleduinoDelegate <NSObject>
-@optional
+@required
 
 /*
  *  @method                 bleduino:delegate:
@@ -90,6 +90,8 @@ typedef NSUInteger BlePipe;
             notify:(BOOL)notify
              error:(NSError *)error;
 
+@optional
+
 /*
  *  @method                 bleduino:delegate:
  *
@@ -109,8 +111,6 @@ didUpdateValueForRange:(DistanceRange)range
      maxDistance:(NSNumber *)max
      minDistance:(NSNumber *)min
         withRSSI:(NSNumber *)RSSI;
-
-@optional
 
 /*
  *  @method                 bleduino:delegate:

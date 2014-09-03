@@ -474,15 +474,22 @@
      minDistance:(NSNumber *)min
         withRSSI:(NSNumber *)RSSI
 {
-    [self bleduino:_bleduino didUpdateValueForRange:range
-       maxDistance:max
-       minDistance:min
-          withRSSI:RSSI];
+    if([self.delegate respondsToSelector:@selector(bleduino:didUpdateValueForRange:maxDistance:minDistance:withRSSI:)])
+    {
+        [self.delegate bleduino:_bleduino
+         didUpdateValueForRange:range
+                    maxDistance:max
+                    minDistance:min
+                       withRSSI:RSSI];
+    }
 }
 
 - (void)bleduino:(CBPeripheral *)bleduino didFinishCalibration:(NSNumber *)measuredPower
 {
-    [self bleduino:_bleduino didFinishCalibration:measuredPower];
+    if([self.delegate respondsToSelector:@selector(bleduino:didFinishCalibration:)])
+    {
+        [self.delegate bleduino:_bleduino didFinishCalibration:measuredPower];
+    }
 }
 
 @end

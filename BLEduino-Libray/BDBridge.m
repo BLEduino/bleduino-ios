@@ -125,7 +125,7 @@
             [bridge readDataFromServiceUUID:bridge.bleBridgeServiceUUID characteristicUUID:bridge.deviceIDCharacteristicUUID];
         }
         
-//        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
+        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
         NSLog(@"BLE-Bridge: bridge is open.");
     }
 }

@@ -451,6 +451,14 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
     }
 }
 
+- (void) bleduino:(CBPeripheral *)bleduino didWriteValue:(id)data pipe:(BlePipe)pipe error:(NSError *)error
+{
+    if(pipe == Firmata)
+    {
+        NSLog(@"Did write to Firmata service.");
+    }
+}
+
 //Analog and Digital-In
  - (void) bleduino:(CBPeripheral *)bleduino
     didUpdateValue:(id)data
@@ -474,6 +482,14 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
             }
             
         }
+    }
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino didSubscribe:(BlePipe)pipe notify:(BOOL)notify error:(NSError *)error
+{
+    if(pipe == Firmata)
+    {
+        NSLog(@"Did subscribe to Firmata service.");
     }
 }
 

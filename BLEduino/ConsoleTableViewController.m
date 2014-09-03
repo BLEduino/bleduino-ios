@@ -295,4 +295,15 @@
     }
 }
 
+- (void) bleduino:(CBPeripheral *)bleduino
+    didWriteValue:(id)data
+             pipe:(BlePipe)pipe
+            error:(NSError *)error
+{
+    if(pipe == UART)
+    {
+        NSLog(@"Did write to UART service from Console.");
+    }
+}
+
 @end
