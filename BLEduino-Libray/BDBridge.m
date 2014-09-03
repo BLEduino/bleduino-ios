@@ -58,6 +58,7 @@
 @property BOOL bridgedOpenedSuccesfuly;
 @property NSInteger totalBridges;
 @property NSInteger totalIDs;
+@property BOOL isOpening;
 
 @property (weak) id <BridgeDelegate> delegate;
 @end
@@ -83,6 +84,8 @@
         
         [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID object:nil];
         [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX object:nil];
+        
+        self.isOpen = self.isOpening = NO;
     }
     return self;
 }
@@ -98,9 +101,9 @@
 - (void)openBridgeWithDelegate:(id<BridgeDelegate>)aController
 {
     //Open bridge only if there is not one already opened.
-    if(!self.isOpen)
+    if(!self.isOpen && !self.isOpening)
     {
-        self.isOpen = YES; //bridge is open.
+        self.isOpening = YES;
         self.delegate = aController;
         
         BDLeManager *leManager = [BDLeManager sharedLeManager];
@@ -122,7 +125,7 @@
             [bridge readDataFromServiceUUID:bridge.bleBridgeServiceUUID characteristicUUID:bridge.deviceIDCharacteristicUUID];
         }
         
-        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
+//        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
         NSLog(@"BLE-Bridge: bridge is open.");
     }
 }
@@ -303,6 +306,9 @@
                 if(self.totalBridges == 0)
                 {
                     self.bridgedOpenedSuccesfuly = YES;
+                    self.isOpening = NO;
+                    self.isOpen = YES;
+                    
                     if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
                     {
                         [self.delegate didOpenBridge:self];
@@ -338,7 +344,7 @@
     NSError *error = [payload objectForKey:@"Error"];
     
     NSArray *identifiers = [self.deviceIDs allKeys];
-    if([identifiers containsObject:[peripheral.identifier UUIDString]])
+    if([identifiers containsObject:[peripheral.identifier UUIDString]] || self.isOpening)
     {
         if(error)
         {
@@ -442,7 +448,7 @@
     NSError *error = [payload objectForKey:@"Error"];
     
     NSArray *identifiers = [self.deviceIDs allKeys];
-    if([identifiers containsObject:[peripheral.identifier UUIDString]])
+    if([identifiers containsObject:[peripheral.identifier UUIDString]] || self.isOpening)
     {
         if(error)
         {
@@ -476,6 +482,9 @@
                 if(self.totalBridges == 0)
                 {
                     self.bridgedOpenedSuccesfuly = YES;
+                    self.isOpening = NO;
+                    self.isOpen = YES;
+                    
                     if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
                     {
                         [self.delegate didOpenBridge:self];
