@@ -144,7 +144,7 @@
 /****************************************************************************/
 /*					 Access to the devices and services                     */
 /****************************************************************************/
-@property (strong) NSMutableOrderedSet *foundBleduinos;
+@property (strong) NSMutableOrderedSet *discoveredBleduinos;
 @property (strong) NSMutableOrderedSet *connectedBleduinos;
 @property (strong) NSMutableOrderedSet *reConnectBleduinos;
 @property NSInteger totalServices;

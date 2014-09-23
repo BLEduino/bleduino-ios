@@ -180,8 +180,8 @@
 {
     BDFirmataCommand *delay =
     [[BDFirmataCommand alloc] initWithPinState:6
-                                                   pinNumber:100
-                                                    pinValue:1];
+                                     pinNumber:100
+                                      pinValue:1];
     
     [self.sequence addObject:delay];
     [self.tableView reloadData];
@@ -701,8 +701,8 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
             {
                 NSInteger pinNumber = [self pinNumber:buttonIndex];
                 BDFirmataCommand *pin = [[BDFirmataCommand alloc] initWithPinState:1
-                                                                                                     pinNumber:pinNumber
-                                                                                                      pinValue:-1];
+                                                                         pinNumber:pinNumber
+                                                                          pinValue:-1];
                 
                 [self.sequence insertObject:pin atIndex:self.sequence.count];
 

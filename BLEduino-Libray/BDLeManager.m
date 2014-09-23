@@ -32,7 +32,7 @@
         self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:options];
         
         //Peripheral storage.
-        self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
+        self.discoveredBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
         
         //Ble commands storage.
@@ -96,7 +96,8 @@
 - (void)dismiss
 {
     //Destroy all stored devices and services.
-    self.foundBleduinos = self.connectedBleduinos = nil;
+    [self.discoveredBleduinos removeAllObjects];
+    [self.connectedBleduinos removeAllObjects];
 }
 
 - (BOOL)getScanOnlyForBLEduinos
@@ -158,7 +159,7 @@
     if(self.centralManager.state == CBCentralManagerStatePoweredOn)
     {
         //Scan for BLEduino service.
-        [self.foundBleduinos removeAllObjects];
+        [self.discoveredBleduinos removeAllObjects];
 
         NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
         [self.centralManager scanForPeripheralsWithServices:services options:nil];
@@ -251,7 +252,7 @@
     if(![self.connectedBleduinos containsObject:peripheral])
     {
         //Store device.
-        [self.foundBleduinos insertObject:peripheral atIndex:0];
+        [self.discoveredBleduinos insertObject:peripheral atIndex:0];
                 
         if(self.scanOnlyForBLEduinos)
         {
@@ -565,7 +566,7 @@ didRetrievePeripherals:(NSArray *)peripherals
     if(self.totalServices == 0)
     {
         //Move peripheral to connected devices.
-        [self.foundBleduinos removeObject:peripheral];
+        [self.discoveredBleduinos removeObject:peripheral];
         [self.connectedBleduinos insertObject:peripheral atIndex:0];
         
         //Become delegate?
