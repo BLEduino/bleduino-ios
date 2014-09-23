@@ -19,7 +19,7 @@ extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B
     @protected CBPeripheral *_servicePeripheral;
 }
 
-@property (readonly) CBPeripheral *peripheral;
+@property (readonly, strong) CBPeripheral *peripheral;
 
 /*
  * Destroy reference to peripheral device.
@@ -96,5 +96,5 @@ extern NSString * const kBLEduinoServiceUUIDString;    //8C6B2013-A312-681D-025B
              error:(NSError *)error;
 
 
-+ (instancetype)initWithBleduino:(CBPeripheral *)bleduino;
++ (instancetype)initializeWithBleduino:(CBPeripheral *)bleduino;
 @end

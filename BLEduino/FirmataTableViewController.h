@@ -10,7 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "BDLeManager.h"
 #import "BDFirmata.h"
-
+#import "BDBleduino.h"
 
 @class FirmataTableViewController;
 @protocol FirmataTableViewControllerDelegate <NSObject>
@@ -20,15 +20,15 @@
 @interface FirmataTableViewController : UITableViewController
 <
 FirmataServiceDelegate,
+BleduinoDelegate,
 UIActionSheetDelegate,
 UIAlertViewDelegate,
-UITextFieldDelegate,
-LeDiscoveryManagerDelegate
+UITextFieldDelegate
 >
 @property (weak) id <FirmataTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sync;
 @property (strong) NSArray *commands;
-@property (strong) BDFirmata *firmata;
+@property (strong) BDBleduino *firmata;
 - (IBAction)sendData:(id)sender;
 - (IBAction)resetAllPins:(id)sender;
 - (IBAction)dismissModule;

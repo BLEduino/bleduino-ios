@@ -48,15 +48,13 @@
     
     BDLeManager *leManager = [BDLeManager sharedLeManager];
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
-    leManager.delegate = self;
     
     //Global firmata service for listening for updates.
-    self.firmata =[[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-    [self.firmata subscribeToStartReceivingFirmataCommands];
+    self.firmata =[BDBleduino bleduino:bleduino delegate:self];
+    [self.firmata subscribe:Firmata notify:YES];
     
     //Load previous state.
     [self setPreviousState];
-    
 }
 
 - (IBAction)dismissModule
@@ -390,19 +388,13 @@
     UISwitch *digitalValue = (UISwitch *)sender;
     
     //Update firmata command.
-    BDFirmataCommand *digitalSwitchCommand = (BDFirmataCommand *)[self.commands objectAtIndex:digitalValue.tag];
-    digitalSwitchCommand.pinValue = digitalValue.on;
+    BDFirmataCommand *digitalSwitch = (BDFirmataCommand *)[self.commands objectAtIndex:digitalValue.tag];
+    digitalSwitch.pinValue = digitalValue.on;
     
     if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
     {
-        //Send command.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-        {
-            BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-            [firmataService writeFirmataCommand:digitalSwitchCommand];
-        }
+        //Send commands.
+        [BDBleduino writeValue:digitalSwitch];
     }
 }
 
@@ -422,14 +414,7 @@
             
             if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
             {
-                //Send command.
-                BDLeManager *leManager = [BDLeManager sharedLeManager];
-                
-                for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-                {
-                    BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                    [firmataService writeFirmataCommand:pwmCommand];
-                }
+                [BDBleduino writeValue:pwmCommand];
             }
             
             [self.tableView reloadData];
@@ -463,6 +448,48 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
             }
         }
 
+    }
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino didWriteValue:(id)data pipe:(BlePipe)pipe error:(NSError *)error
+{
+    if(pipe == Firmata)
+    {
+        NSLog(@"Did write to Firmata service.");
+    }
+}
+
+//Analog and Digital-In
+ - (void) bleduino:(CBPeripheral *)bleduino
+    didUpdateValue:(id)data
+              pipe:(BlePipe)pipe
+             error:(NSError *)error
+{
+    if(error != nil && pipe == Firmata)
+    {
+        BDFirmataCommand *firmataCommand = (BDFirmataCommand *)data;
+        
+        for(BDFirmataCommand *command in self.commands)
+        {
+            if(command.pinNumber == firmataCommand.pinNumber)
+            {
+                if(command.pinState == firmataCommand.pinState)
+                {
+                    //Update value.
+                    command.pinValue = firmataCommand.pinValue;
+                    [self.tableView reloadData];
+                }
+            }
+            
+        }
+    }
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino didSubscribe:(BlePipe)pipe notify:(BOOL)notify error:(NSError *)error
+{
+    if(pipe == Firmata)
+    {
+        NSLog(@"Did subscribe to Firmata service.");
     }
 }
 
@@ -595,14 +622,7 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         
         if(!self.sync.isEnabled) //If Sync is disabled, i.e. sync has begun
         {
-            //Send command.
-            BDLeManager *leManager = [BDLeManager sharedLeManager];
-            
-            for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-            {
-                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                [firmataService writeFirmataCommand:pin];
-            }
+            [BDBleduino writeValue:pin];
         }
         [self.tableView reloadData];
     }
@@ -612,17 +632,11 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
 {
     if(self.sync.isEnabled)
     {
-        //Send command.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        //Send commands.
+        for(BDFirmataCommand *command in self.commands)
         {
-            for(BDFirmataCommand *command in self.commands)
-            {
-                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                [firmataService writeFirmataCommand:command];
-                NSLog(@"Syncing...");
-            }
+            [BDBleduino writeValue:command];
+            NSLog(@"Syncing...");
         }
     }
 
@@ -877,45 +891,6 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
     }
     
     return name;
-}
-
-#pragma mark -
-#pragma mark - LeManager Delegate
-/****************************************************************************/
-/*                            LeManager Delegate                            */
-/****************************************************************************/
-//Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
-{
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Disconnected from peripheral: %@", name);
-    
-    //Verify if notify setting is enabled.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
-    
-    if(notifyDisconnect)
-    {
-        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-        
-        //Push local notification.
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : @"BLEduino",
-                                      @"message": message,
-                                      @"disconnect": @"disconnect"};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
 }
 
 @end

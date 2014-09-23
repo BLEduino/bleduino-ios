@@ -17,12 +17,12 @@
 #import "PowerRelayViewController.h"
 #import "LEDModuleTableViewController.h"
 #import "BDNotification.h"
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 #import "FirmataTableViewController.h"
 #import "SequencerTableViewController.h"
 #import "ProximityViewController.h"
 #import "ConsoleTableViewController.h"
-#import "BDNotification.h"
+#import "BDNotifications.h"
 #import "BDProximity.h"
 
 @interface ModulesCollectionViewController : UICollectionViewController
@@ -40,16 +40,15 @@ FirmataTableViewControllerDelegate,
 SequencerTableViewControllerDelegate,
 ProximityViewControllerDelegate,
 ConsoleTableViewControllerDelegate,
-NotificationServiceDelegate,
-LeDiscoveryManagerDelegate,
-BleBridgeServiceDelegate
+BridgeDelegate,
+NotificationsDelegate
 >
 @property (nonatomic, strong) NSArray *modules;
 @property (nonatomic, strong) NSArray *modulesImages;
 
 //Services that run in the background.
-@property (strong) BDBleBridge *bleBridge;
-@property (strong) BDNotification *notificationService;
+@property (strong) BDBridge *bleBridge;
+@property (strong) BDNotifications *notifications;
 @property (strong) BDProximity *proximityMonitor;
 
 //Proximity

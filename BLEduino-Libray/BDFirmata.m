@@ -8,6 +8,7 @@
 
 #import "BDFirmata.h"
 #import "BDFirmataCommand.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark - Firmata Service UUIDs
@@ -22,7 +23,6 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 @property (strong) CBUUID *firmataCommandCharacteristicUUID;
 
 @property (weak) id <FirmataServiceDelegate> delegate;
-@property (strong) BDFirmataCommand *lastSentCommand;
 @end
 
 @implementation BDFirmata
@@ -33,8 +33,11 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = self;
 		self.delegate = aController;
+        
+        //Should this object be the peripheral's delagate, or are we using the global delegate?
+        BDLeManager *manager = [BDLeManager sharedLeManager];
+        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = self;
         
         self.firmataServiceUUID = [CBUUID UUIDWithString:kFirmataServiceUUIDString];
         self.firmataCommandCharacteristicUUID = [CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString];
@@ -55,7 +58,6 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 /****************************************************************************/
 - (void) writeFirmataCommand:(BDFirmataCommand *)firmataCommand withAck:(BOOL)enabled
 {
-    self.lastSentCommand = firmataCommand;
     [self writeDataToServiceUUID:self.firmataServiceUUID
               characteristicUUID:self.firmataCommandCharacteristicUUID
                             data:[firmataCommand data]
@@ -64,6 +66,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 
 - (void) writeFirmataCommand:(BDFirmataCommand *)firmataCommand
 {
+    self.lastSentFirmataCommand = firmataCommand;
     [self writeFirmataCommand:firmataCommand withAck:NO];
 }
 
@@ -102,7 +105,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
 {
     if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kFirmataCommandCharacteristicUUIDString]])
     {
-        self.lastSentFirmataCommand = self.lastSentCommand;
+        self.lastReceivedFirmataCommand = [[BDFirmataCommand alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(firmataService:didWriteFirmataCommand:error:)])
         {
             [self.delegate firmataService:self didWriteFirmataCommand:self.lastSentFirmataCommand error:error];
@@ -169,7 +172,7 @@ NSString * const kFirmataCommandCharacteristicUUIDString = @"8C6B2551-A312-681D-
     
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        self.lastSentFirmataCommand = self.lastSentCommand;
+        self.lastReceivedFirmataCommand = [[BDFirmataCommand alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(firmataService:didWriteFirmataCommand:error:)])
         {
             [self.delegate firmataService:self didWriteFirmataCommand:self.lastSentFirmataCommand error:error];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BDLeManager.h"
 #import "BDVehicleMotion.h"
+#import "BDBleduino.h"
 #import "VerticalJoystickControlView.h"
 #import "HorizontalJoystickControlView.h"
 
@@ -21,8 +22,7 @@
 <
 VehicleMotionServiceDelegate,
 VerticalJoystickControlViewDelegate,
-HorizontalJoystickControlViewDelegate,
-LeDiscoveryManagerDelegate
+HorizontalJoystickControlViewDelegate
 >
 @property (weak) id <RadioControlledViewControllerDelegate> delegate;
 

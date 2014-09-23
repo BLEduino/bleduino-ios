@@ -34,12 +34,28 @@
 @property NSInteger buttonValue;
 
 /*
- * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.
+ * Create button action characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)buttonActionData;
 
 /*
- * Converts Throttle-Yaw-Roll-Pitch characteristic to an NSData object to send data to a peripheral.
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
++ (instancetype)action;
+
+/*
+ * Converts button action characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data;
 @end

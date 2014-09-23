@@ -22,7 +22,6 @@
     
     //Launch BLEduino manager.
     BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.isReconnectingEnabled = NO;
     
     //Configure settings.
     //Is this the first launch ever of this application?

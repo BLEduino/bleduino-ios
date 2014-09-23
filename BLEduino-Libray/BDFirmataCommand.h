@@ -8,28 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-//PIN NUMBER LOOKUP TABLE
-//FIRMATA_PIN0 = 0
-//FIRMATA_PIN1 = 1
-//FIRMATA_PIN2 = 2
-//FIRMATA_PIN3 = 3
-//FIRMATA_PIN4 = 4
-//FIRMATA_PIN5 = 5
-//FIRMATA_PIN6 = 6
-//FIRMATA_PIN7 = 7
-//FIRMATA_PIN8 = 8
-//FIRMATA_PIN9 = 9
-//FIRMATA_PIN10 = 10
-//FIRMATA_PIN13 = 11
-//FIRMATA_PINA0 = 12
-//FIRMATA_PINA1 = 13
-//FIRMATA_PINA2 = 14
-//FIRMATA_PINA3 = 15
-//FIRMATA_PINA4 = 16
-//FIRMATA_PINA5 = 17
-//FIRMATA_PIN_MISO = 18
-//FIRMATA_PIN_MOSI = 19
-//FIRMATA_PIN_SCK = 20
+/*
+ 
+ ## Pin Numbers
+ 
+ Pin numbers are set according to the [pin definition for Arduino.]
+ (https://github.com/BLEduino/bleduino-firmware/blob/master/hardware/BLEduino/variants/BLEduino/pins_arduino.h/ )
+ 
+ */
+
 
 enum {
     FirmataCommandPinStateOutput = 0,
@@ -64,6 +51,22 @@ typedef NSUInteger FirmataCommandPinState;
 + (id) commandPinState:(FirmataCommandPinState)state
              pinNumber:(NSInteger)number
               pinValue:(NSInteger)value;
+
+/*
+ *  @method                 bleduino:delegate:
+ *
+ *  @param bleudino         UUID for Service to write.
+ *  @param delegate         UUID for Characteristic to write.
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see                    startScanningForBleduinos
+ *  @see                    startScanningForBleDevices
+ *
+ */
++ (instancetype)command;
 
 /*
  * Create Firmata Command characteristic from NSData object.

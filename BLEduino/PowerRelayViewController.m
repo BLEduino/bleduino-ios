@@ -54,11 +54,6 @@
     self.navigationController.navigationBar.translucent = NO;
     
     [[UIScreen mainScreen] applicationFrame];
-    
-    //Manager Delegate
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.delegate = self;
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,20 +117,14 @@
     self.isLastPowerRelayStateON = state;
     
     //Create firmata command.
-    BDFirmataCommand *powerSwitchCommand = [[BDFirmataCommand alloc] init];
-    powerSwitchCommand.pinState = FirmataCommandPinStateOutput;
-    powerSwitchCommand.pinValue = (state)?255:0; //255 > High, 0 > Low
-    powerSwitchCommand.pinNumber = _pinNumber;
-    _lastPowerSwitchCommand = powerSwitchCommand;
+    BDFirmataCommand *switchUpdate = [BDFirmataCommand command];
+    switchUpdate.pinState = FirmataCommandPinStateOutput;
+    switchUpdate.pinValue = (state)?255:0; //255 > High, 0 > Low
+    switchUpdate.pinNumber = _pinNumber;
+    _lastPowerSwitchCommand = switchUpdate;
 
     //Send command.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-        [firmataService writeFirmataCommand:powerSwitchCommand];
-    }
+    [BDBleduino writeValue:switchUpdate];
     
     NSLog(@"Sent PowerRelay update, PinValue: %ld, PinNumber: %ld, PinState: %ld",
           (long)_lastPowerSwitchCommand.pinValue,
@@ -150,45 +139,6 @@
     //Update switch view i.e. move it, and then send firmata command.
     [self updatePowerSwitchViewWithStateOn:state];
     [self powerSwitchDidUpdateWithStateOn:state];
-}
-
-#pragma mark -
-#pragma mark - LeManager Delegate
-/****************************************************************************/
-/*                            LeManager Delegate                            */
-/****************************************************************************/
-//Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
-{
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Disconnected from peripheral: %@", name);
-    
-    //Verify if notify setting is enabled.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
-    
-    if(notifyDisconnect)
-    {
-        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-
-        //Push local notification.
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : @"BLEduino",
-                                      @"message": message,
-                                      @"disconnect": @"disconnect"};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
 }
 
 @end

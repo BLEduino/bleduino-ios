@@ -13,7 +13,7 @@
 #import "BDNotification.h"
 #import "BDFirmata.h"
 #import "BDController.h"
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 
 /****************************************************************************/
 /*                            BLEduino Service				     			*/
@@ -44,7 +44,7 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     return self;
 }
 
-+ (instancetype)initWithBleduino:(CBPeripheral *)bleduino
++ (instancetype)initializeWithBleduino:(CBPeripheral *)bleduino
 {
     BDObject *service = [[BDObject alloc] initWithPeripheral:bleduino];
     return service;
@@ -228,8 +228,9 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     }
     
     //Setup payload.
-    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
-    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    NSDictionary *updateDictionary = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    NSMutableDictionary *update = [NSMutableDictionary dictionaryWithDictionary:updateDictionary];
+    if(error)[update setValue:error forKey:@"Error"];
     
     //Attach payload and senf notification.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -271,8 +272,9 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     }
     
     //Setup payload.
-    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
-    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    NSDictionary *updateDictionary = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    NSMutableDictionary *update = [NSMutableDictionary dictionaryWithDictionary:updateDictionary];
+    if(error)[update setValue:error forKey:@"Error"];
     
     //Attach payload and senf notification.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -310,8 +312,9 @@ NSString * const kBLEduinoServiceUUIDString = @"8C6B2013-A312-681D-025B-0032C0D1
     }
     
     //Setup payload.
-    NSDictionary *update = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
-    if(error)[update setValuesForKeysWithDictionary:@{ @"Error":error}]; //Only if error is not nil.
+    NSDictionary *updateDictionary = @{@"Peripheral": bleduino, @"Characteristic": characteristic};
+    NSMutableDictionary *update = [NSMutableDictionary dictionaryWithDictionary:updateDictionary];
+    if(error)[update setValue:error forKey:@"Error"];
     
     //Attach payload and senf notification.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];

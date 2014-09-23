@@ -11,6 +11,7 @@
 #import "BDFirmata.h"
 #import "PowerSwitchButtonView.h"
 #import "PowerNextStateView.h"
+#import "BDBleduino.h"
 
 @class PowerRelayViewController;
 @protocol PowerRelayViewControllerDelegate <NSObject>
@@ -22,8 +23,7 @@
 CBPeripheralDelegate,
 FirmataServiceDelegate,
 PowerSwitchButtonViewDelegate,
-PowerNextStateViewDelegate,
-LeDiscoveryManagerDelegate
+PowerNextStateViewDelegate
 >
 @property (weak) id <PowerRelayViewControllerDelegate> delegate;
 @property BOOL isLastPowerRelayStateON;

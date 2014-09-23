@@ -233,7 +233,7 @@
                 
                 if(totalBleduinos)
                 {
-                    NSString *message = (totalBleduinos >1)?@"%ld bleduino":@"%ld bleduino";
+                    NSString *message = (totalBleduinos >1)?@"%ld bleduinos":@"%ld bleduino";
                     cell.detailTextLabel.text = [NSString stringWithFormat:message, (long)totalBleduinos];
 
                 }

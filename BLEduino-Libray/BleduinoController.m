@@ -47,12 +47,12 @@
 {
     if(self.bleduinoName.text.length <= 18)
     {
-        NSString *trimmedString = [self.bleduinoName.text stringByTrimmingCharactersInSet:
+        NSString *trimmedName = [self.bleduinoName.text stringByTrimmingCharactersInSet:
                                    [NSCharacterSet whitespaceCharacterSet]];
         
-        if(trimmedString.length > 0)
+        if(trimmedName.length > 0)
         {
-            [BDBleduino updateDeviceName:self.bleduino name:trimmedString];
+            [BDBleduino updateBleduinoName:self.bleduino name:trimmedName];
         }
         
         [self.delegate didUpateBleduino:self.bleduino controller:self];
@@ -86,7 +86,7 @@
         
         if(trimmedString.length > 0)
         {
-            [BDBleduino updateDeviceName:self.bleduino name:trimmedString];
+            [BDBleduino updateBleduinoName:self.bleduino name:trimmedString];
         }
         
         [self.delegate didUpateBleduino:self.bleduino controller:self];

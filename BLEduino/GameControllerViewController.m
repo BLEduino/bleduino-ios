@@ -69,10 +69,6 @@
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
     
-    //Manager Delegate
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.delegate = self;
-    
     //What's initial orientation?
     UIDeviceOrientation currentOrientation = [[UIDevice currentDevice] orientation];
     BOOL isLandscape = (currentOrientation == UIDeviceOrientationLandscapeLeft);
@@ -291,19 +287,12 @@
 - (void)ySendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *yButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *yButtonUpdate = [BDButtonAction action];
     yButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     yButtonUpdate.buttonID = 2;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
-        [gameController writeButtonAction:yButtonUpdate];
-    }
+    [BDBleduino writeValue:yButtonUpdate];
     
     NSLog(@"GameController, sent button *Y* action update, state: %i", selected);
 }
@@ -311,19 +300,12 @@
 - (void)xSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *xButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *xButtonUpdate = [BDButtonAction action];
     xButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     xButtonUpdate.buttonID = 3;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
-        [gameController writeButtonAction:xButtonUpdate];
-    }
+    [BDBleduino writeValue:xButtonUpdate];
     
     NSLog(@"GameController, sent button *X* action update, state: %i", selected);
 }
@@ -331,19 +313,12 @@
 - (void)aSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *aButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *aButtonUpdate = [BDButtonAction action];
     aButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     aButtonUpdate.buttonID = 4;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                     delegate:self];
-        [gameController writeButtonAction:aButtonUpdate];
-    }
+    [BDBleduino writeValue:aButtonUpdate];
     
     NSLog(@"GameController, sent button *A* action update, state: %i", selected);
 }
@@ -351,19 +326,13 @@
 - (void)bSendUpdateWithStateSelected:(BOOL)selected
 {
     //Create button action.
-    BDButtonAction *bButtonUpdate = [[BDButtonAction alloc] init];
+    BDButtonAction *bButtonUpdate = [BDButtonAction action];
     bButtonUpdate.buttonStatus = [[NSNumber numberWithBool:selected] integerValue];
     bButtonUpdate.buttonID = 5;
     
     //Send button action.
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
+    [BDBleduino writeValue:bButtonUpdate];
     
-    for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-    {
-        BDController *gameController = [[BDController alloc] initWithPeripheral:bleduino
-                                                                                 delegate:self];
-        [gameController writeButtonAction:bButtonUpdate];
-    }
     
     NSLog(@"GameController, sent button *B* action update, state: %i", selected);
 }
@@ -430,45 +399,6 @@
     }
     
     NSLog(@"GameController, sent button *Select* action update");
-}
-
-#pragma mark -
-#pragma mark - LeManager Delegate
-/****************************************************************************/
-/*                            LeManager Delegate                            */
-/****************************************************************************/
-//Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
-{
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Disconnected from peripheral: %@", name);
-    
-    //Verify if notify setting is enabled.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
-    
-    if(notifyDisconnect)
-    {
-        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-
-        //Push local notification.
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : @"BLEduino",
-                                      @"message": message,
-                                      @"disconnect": @"disconnect"};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
 }
 
 @end

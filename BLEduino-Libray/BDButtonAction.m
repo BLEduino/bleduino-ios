@@ -11,6 +11,14 @@
 @implementation BDButtonAction
 
 /*
+ * Create Button Action.
+ */
++ (instancetype)action
+{
+    return [[BDButtonAction alloc] init];
+}
+
+/*
  * Create Button Action characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)buttonActionData

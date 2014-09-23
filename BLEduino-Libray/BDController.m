@@ -7,6 +7,7 @@
 //
 
 #import "BDController.h"
+#import "BDLeManager.h"
 
 #pragma mark -
 #pragma mark Controller Service UUIDs
@@ -26,7 +27,6 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 @property (strong) CBUUID *buttonActionCharacteristicUUID;
 
 @property (weak) id <ControllerServiceDelegate> delegate;
-@property (strong) BDButtonAction *lastSentButtonAction;
 @end
 @implementation BDController
 
@@ -36,8 +36,11 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = self;
 		self.delegate = aController;
+        
+        //Should this object be the peripheral's delagate, or are we using the global delegate?
+        BDLeManager *manager = [BDLeManager sharedLeManager];
+        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = self;
         
         self.controllerServiceUUID = [CBUUID UUIDWithString:kControllerServiceUUIDString];
         self.buttonActionCharacteristicUUID = [CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString];
@@ -59,7 +62,6 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 - (void) writeButtonAction:(BDButtonAction *)buttonAction
                    withAck:(BOOL)enabled
 {
-    self.lastSentButtonAction = buttonAction;
     [self writeDataToServiceUUID:self.controllerServiceUUID
               characteristicUUID:self.buttonActionCharacteristicUUID
                             data:[buttonAction data]
@@ -107,7 +109,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
 {
     if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kButtonActionCharacteristicUUIDString]])
     {
-        self.lastButtonAction = self.lastSentButtonAction;
+        self.lastButtonAction = [[BDButtonAction alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(controllerService:didWriteButtonAction:error:)])
         {
             [self.delegate controllerService:self
@@ -179,7 +181,7 @@ NSString * const kButtonActionCharacteristicUUIDString = @"8C6BD00D-A312-681D-02
     
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        self.lastButtonAction = self.lastSentButtonAction;
+        self.lastButtonAction = [[BDButtonAction alloc] initWithData:characteristic.value];
         if([self.delegate respondsToSelector:@selector(controllerService:didWriteButtonAction:error:)])
         {
             [self.delegate controllerService:self

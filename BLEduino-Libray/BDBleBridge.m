@@ -1,9 +1,9 @@
 //
-//  BleBridgeService.m
+//  BDBleBridgeService.m
 //  BLEduino
 //
-//  Created by Ramon Gonzalez on 11/3/13.
-//  Copyright (c) 2013 Kytelabs. All rights reserved.
+//  Created by Ramon Gonzalez on 8/25/14.
+//  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
 #import "BDBleBridge.h"
@@ -29,61 +29,28 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
 @property (strong) CBUUID *bridgeRxCharacteristicUUID;
 @property (strong) CBUUID *bridgeTxCharacteristicUUID;
 @property (strong) CBUUID *deviceIDCharacteristicUUID;
-@property (strong) NSMutableOrderedSet *bridges;
-@property (strong) NSMutableDictionary *deviceIDs;
-@property (strong) NSMutableDictionary *verifyDeviceIDs;
 @property (weak) id <BleBridgeServiceDelegate> delegate;
-@property BOOL bridgedOpenedSuccesfuly;
-@property NSInteger totalBridges;
-@property NSInteger totalIDs;
-@property NSInteger deviceID;
 @end
 
 @implementation BDBleBridge
 
 - (id) initWithPeripheral:(CBPeripheral *)aPeripheral
                  delegate:(id<BleBridgeServiceDelegate>)aController
-       peripheralDelegate:(id<CBPeripheralDelegate>)delegate
 {
     self = [super init];
     if (self) {
         _servicePeripheral = [aPeripheral copy];
-        _servicePeripheral.delegate = delegate;
 		self.delegate = aController;
+        
+        //Should this object be the peripheral's delagate, or are we using the global delegate?
+        BDLeManager *manager = [BDLeManager sharedLeManager];
+        if(!manager.isOnlyBleduinoDelegate) _servicePeripheral.delegate = self;
         
         self.bleBridgeServiceUUID = [CBUUID UUIDWithString:kBleBridgeServiceUUIDString];
         self.bridgeRxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString];
         self.bridgeTxCharacteristicUUID = [CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString];
         self.deviceIDCharacteristicUUID = [CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString];
         
-    }
-    
-    return self;
-}
-
-+ (BDBleBridge *)sharedBridge
-{
-    static id sharedBleBridge = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedBleBridge = [[[self class] alloc] init];
-    });
-    return sharedBleBridge;
-}
-
-/*
- *  @method                 openBridge
- *
- *  @discussion             This method subscribes the iOS device to the BLE Bridge service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
- *                          data the iOS device then relays the data to the corresponsing BLEduino.
- *
- */
-- (void)openBridgeForDelegate:(id<BleBridgeServiceDelegate>)aController
-{
-    //Open bridge only if there is not one already opened.
-    if(!self.isOpen)
-    {
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_DEVICE_ID object:nil];
         [center addObserver:self selector:@selector(didWriteValue:) name:CHARACTERISTIC_WRITE_ACK_BLE_BRIDGE_RX object:nil];
@@ -93,175 +60,142 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
         
         [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_DEVICE_ID object:nil];
         [center addObserver:self selector:@selector(didNotifyUpdate:) name:CHARACTERISTIC_NOTIFY_BLE_BRIDGE_TX object:nil];
-        
-        self.delegate = aController;
-        self.isOpen = YES; //bridge is open.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        self.totalBridges = leManager.connectedBleduinos.count;
-        self.totalIDs = self.totalBridges;
-        
-        //Setup bridges and device IDs.
-        self.bridges = [[NSMutableOrderedSet alloc] initWithCapacity:self.totalBridges];
-        self.deviceIDs = [[NSMutableDictionary alloc] initWithCapacity:self.totalBridges];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
-        {
-            BDBleBridge *bridge = [[BDBleBridge alloc] initWithPeripheral:bleduino
-                                                                 delegate:nil
-                                                       peripheralDelegate:self];
-            bridge.isOpen = YES;
-            
-            [self.bridges addObject:bridge];
-            
-            //Read the deviceID.
-            [bridge readDataFromServiceUUID:bridge.bleBridgeServiceUUID characteristicUUID:bridge.deviceIDCharacteristicUUID];
-        }
-        
-        [self performSelector:@selector(didBridgeOpen) withObject:nil afterDelay:5];
-        NSLog(@"BLE-Bridge: bridge is open.");
     }
+    return self;
 }
 
-/*
- *  @method                 closeBridge
- *
- *  @discussion             This method unsubscribes the iOS device from the BLE Bridge service for
- *                          all connected BLEduinos. That is, stops listening altogether.
- *
- */
-- (void)closeBridgeForDelegate:(id<BleBridgeServiceDelegate>)aController
+#pragma mark -
+#pragma mark Writing to BLEduino
+// Writing data to BLEduino.
+- (void) writeDeviceID:(NSInteger)deviceID withAck:(BOOL)enabled;
 {
-    for(BDBleBridge *bridge in self.bridges)
-    {
-        [bridge dismissPeripheral];
-        [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
-                           characteristicUUID:bridge.bridgeTxCharacteristicUUID
-                                  notifyValue:NO];
-    }
+    Byte deviceIdByte = (self.deviceID >> (0)) & 0xff;
+    NSMutableData *deviceIdData = [NSMutableData dataWithBytes:&deviceIdByte length:sizeof(deviceIdByte)];
     
-    //Remove all BLEduinos.
-    [self.bridges removeAllObjects];
-    
-    self.isOpen = NO;
-    self.bridgedOpenedSuccesfuly = NO;
-    
-    NSLog(@"BLE-Bridge: bridge is closed.");
+    [self writeDataToServiceUUID:self.bleBridgeServiceUUID
+              characteristicUUID:self.deviceIDCharacteristicUUID
+                            data:deviceIdData
+                         withAck:enabled];
 }
 
-#pragma mark Peripheral Delegate
+- (void) writeDeviceID:(NSInteger)deviceID
+{
+    self.deviceID = deviceID;
+    [self writeDeviceID:deviceID withAck:NO];
+}
+
+- (void) writeData:(NSData *)data withAck:(BOOL)enabled
+{
+    [self writeDataToServiceUUID:self.bleBridgeServiceUUID
+              characteristicUUID:self.bridgeRxCharacteristicUUID
+                            data:data
+                         withAck:enabled];
+}
+
+- (void) writeData:(NSData *)data
+{
+    self.dataSent = data;
+    [self writeData:data withAck:NO];
+}
+
+#pragma mark -
+#pragma mark Reading from BLEduino
+// Read/Receiving data from BLEduino.
+- (void) readDeviceID
+{
+    [self readDataFromServiceUUID:self.bleBridgeServiceUUID
+               characteristicUUID:self.deviceIDCharacteristicUUID];
+}
+
+- (void) readData
+{
+    [self readDataFromServiceUUID:self.bleBridgeServiceUUID
+               characteristicUUID:self.bridgeTxCharacteristicUUID];
+}
+
+- (void) subscribeToStartReceivingBridgeData
+{
+    [self setNotificationForServiceUUID:self.bleBridgeServiceUUID
+                     characteristicUUID:self.bridgeTxCharacteristicUUID
+                            notifyValue:YES];
+}
+
+- (void) unsubscribeToStopReiceivingBridgeData
+{
+    [self setNotificationForServiceUUID:self.bleBridgeServiceUUID
+                     characteristicUUID:self.bridgeTxCharacteristicUUID
+                            notifyValue:NO];
+}
+
+#pragma mark -
+#pragma mark - Peripheral Delegate
 /****************************************************************************/
 /*				            Peripheral Delegate                             */
 /****************************************************************************/
+
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeRxCharacteristicUUIDString ]])
+    {
+        if([self.delegate respondsToSelector:@selector(bridgeService:didWriteData:error:)])
+        {
+            [self.delegate bridgeService:self didWriteData:characteristic.value error:error];
+        }
+    }
+    else
+    {
+        [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+    }
+}
+
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]] ||
-       [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString ]])
     {
-        //Did get unique device ID?
-        if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]] &&
-           [self.deviceIDs objectForKey:[peripheral.identifier UUIDString]] == nil)
+        self.dataReceived = characteristic.value;
+        if([self.delegate respondsToSelector:@selector(bridgeService:didReceiveData:error:)])
         {
-            //Convert deviceID data to integer.
-            Byte *deviceIDByte = (Byte*)malloc(1);
-            NSRange deviceIDRange = NSMakeRange(0, 1);
-            [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
-            NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
-            int deviceID = *(int*)([deviceIDData bytes]);
-            free(deviceIDByte);
-            
-            //Store deviceID
-            [self.deviceIDs setObject:[NSNumber numberWithInt:deviceID] forKey:[peripheral.identifier UUIDString]];
-            self.totalIDs = self.totalIDs - 1;
-            
-            //Do we have the device ID for all bleduinos?
-            if(self.totalIDs == 0)
-            {
-                self.verifyDeviceIDs = [[NSMutableDictionary alloc] initWithDictionary:self.deviceIDs copyItems:YES];
-                
-                //Found all deviceIDs, now subscribe to recive data from all bleduinos.
-                for(BDBleBridge *bridge in self.bridges)
-                {
-                    //Store deviceID on the corresponding service.
-                    NSString *peripheralUUID = [bridge.peripheral.identifier UUIDString];
-                    bridge.deviceID = [((NSNumber *)[self.deviceIDs objectForKey:peripheralUUID]) integerValue];
-                    
-                    [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
-                                       characteristicUUID:bridge.bridgeTxCharacteristicUUID
-                                              notifyValue:YES];
-                }
-            }
+            [self.delegate bridgeService:self didReceiveData:characteristic.value error:error];
         }
-        else
+    }
+    else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString ]])
+    {
+        //Get deviceID
+        Byte *deviceIdByte = (Byte*)malloc(1);
+        NSRange deviceIdRange = NSMakeRange(0, 1);
+        [characteristic.value getBytes:deviceIdByte range:deviceIdRange];
+        NSData *deviceIdData = [[NSData alloc] initWithBytes:deviceIdByte length:1];
+        self.deviceID = *(int*)([deviceIdData bytes]);
+        free(deviceIdByte);
+        
+        if([self.delegate respondsToSelector:@selector(bridgeService:didReceiveDeviceID:error:)])
         {
-            //Find deviceID for destination device.
-            Byte *deviceIDByte = (Byte*)malloc(1);
-            NSRange deviceIDRange = NSMakeRange(0, 1);
-            [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
-            NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
-            int deviceID = *(int*)([deviceIDData bytes]);
-            free(deviceIDByte);
-            
-            NSLog(@"Total Bytes: %ld", (long)[characteristic.value length]);
-            
-            //Update payload with the sender's deviceID.
-            NSMutableData *updatedPayload = [[NSMutableData alloc] initWithCapacity:characteristic.value.length];
-            
-            //Collect and store the sender's deviceID.
-            NSInteger senderDeviceID = [((NSNumber *)[self.deviceIDs objectForKey:[peripheral.identifier UUIDString]]) integerValue];
-            Byte senderDeviceIDByte = (senderDeviceID >> (0)) & 0xff;
-            NSMutableData *senderDeviceIDData = [NSMutableData dataWithBytes:&senderDeviceIDByte length:sizeof(senderDeviceIDByte)];
-            [updatedPayload appendData:senderDeviceIDData];
-            
-            //Complete payload.
-            NSUInteger payloadLength = characteristic.value.length - 1;
-            NSData *payload = [characteristic.value subdataWithRange:NSMakeRange(1, payloadLength)];
-            [updatedPayload appendData:payload];
-            
-            //Find destination device.
-            for(BDBleBridge *bridge in self.bridges)
-            {
-                //Found destination device. Relay message.
-                if(bridge.deviceID == deviceID)
-                {
-                    [bridge writeDataToServiceUUID:bridge.bleBridgeServiceUUID
-                                characteristicUUID:bridge.bridgeRxCharacteristicUUID
-                                              data:updatedPayload
-                                           withAck:NO];
-                }
-            }
+            [self.delegate bridgeService:self didReceiveDeviceID:self.deviceID error:error];
         }
     }
     else
     {
         [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
     }
+    
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
-             error:(NSError *)error
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]] ||
-       [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
+    if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]])
     {
-        NSArray *peripheralUUIDs = [self.verifyDeviceIDs allKeys];
-        
-        //Did subscribed to unique Bridges TXs?
-        if([peripheralUUIDs containsObject:[peripheral.identifier UUIDString]] &&
-           [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]] &&
-           characteristic.isNotifying)
+        if(characteristic.isNotifying)
         {
-            //Remove peripheral.
-            [self.verifyDeviceIDs removeObjectForKey:[peripheral.identifier UUIDString]];
-            self.totalBridges = self.totalBridges - 1;
-            
-            //Did bridge opened succesfuly?
-            if(self.totalBridges == 0)
+            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveBridgeMessagesFor:error:)])
             {
-                self.bridgedOpenedSuccesfuly = YES;
-                if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
-                {
-                    [self.delegate didOpenBridge:self];
-                }
+                [self.delegate didSubscribeToReceiveBridgeMessagesFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToReceiveBridgeMessagesFor:error:)])
+            {
+                [self.delegate didUnsubscribeToReceiveBridgeMessagesFor:self error:error];
             }
         }
     }
@@ -271,13 +205,6 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     }
 }
 
-- (void)didBridgeOpen
-{
-    if(!self.bridgedOpenedSuccesfuly && self.isOpen)
-    {
-        [self.delegate didFailToOpenBridge:self];
-    }
-}
 
 #pragma mark -
 #pragma mark - Peripheral Delegate Gateways
@@ -293,7 +220,10 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     
     if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        //...
+        if([self.delegate respondsToSelector:@selector(bridgeService:didWriteData:error:)])
+        {
+            [self.delegate bridgeService:self didWriteData:characteristic.value error:error];
+        }
     }
 }
 
@@ -304,82 +234,33 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
     
-//    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
-//    {
-        //Did get unique device ID?
-        if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString]] &&
-           [self.deviceIDs objectForKey:[peripheral.identifier UUIDString]] == nil)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
+    {
+        if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString ]])
         {
-            //Convert deviceID data to integer.
-            Byte *deviceIDByte = (Byte*)malloc(1);
-            NSRange deviceIDRange = NSMakeRange(0, 1);
-            [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
-            NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
-            int deviceID = *(int*)([deviceIDData bytes]);
-            free(deviceIDByte);
-            
-            //Store deviceID
-            [self.deviceIDs setObject:[NSNumber numberWithInt:deviceID] forKey:[peripheral.identifier UUIDString]];
-            self.totalIDs = self.totalIDs - 1;
-            
-            //Do we have the device ID for all bleduinos?
-            if(self.totalIDs == 0)
+            self.dataReceived = characteristic.value;
+            if([self.delegate respondsToSelector:@selector(bridgeService:didReceiveData:error:)])
             {
-                self.verifyDeviceIDs = [[NSMutableDictionary alloc] initWithDictionary:self.deviceIDs copyItems:YES];
-                
-                //Found all deviceIDs, now subscribe to recive data from all bleduinos.
-                for(BDBleBridge *bridge in self.bridges)
-                {
-                    //Store deviceID on the corresponding service.
-                    NSString *peripheralUUID = [bridge.peripheral.identifier UUIDString];
-                    bridge.deviceID = [((NSNumber *)[self.deviceIDs objectForKey:peripheralUUID]) integerValue];
-                    
-                    [bridge setNotificationForServiceUUID:bridge.bleBridgeServiceUUID
-                                       characteristicUUID:bridge.bridgeTxCharacteristicUUID
-                                              notifyValue:YES];
-                }
+                [self.delegate bridgeService:self didReceiveData:characteristic.value error:error];
             }
         }
-        else
+        else if([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDeviceIDCharacteristicUUIDString ]])
         {
-            //Find deviceID for destination device.
-            Byte *deviceIDByte = (Byte*)malloc(1);
-            NSRange deviceIDRange = NSMakeRange(0, 1);
-            [characteristic.value getBytes:deviceIDByte range:deviceIDRange];
-            NSData *deviceIDData = [[NSData alloc] initWithBytes:deviceIDByte length:1];
-            int deviceID = *(int*)([deviceIDData bytes]);
-            free(deviceIDByte);
+            //Get deviceID
+            Byte *deviceIdByte = (Byte*)malloc(1);
+            NSRange deviceIdRange = NSMakeRange(0, 1);
+            [characteristic.value getBytes:deviceIdByte range:deviceIdRange];
+            NSData *deviceIdData = [[NSData alloc] initWithBytes:deviceIdByte length:1];
+            self.deviceID = *(int*)([deviceIdData bytes]);
+            free(deviceIdByte);
             
-            NSLog(@"Total Bytes: %ld", (long)[characteristic.value length]);
-            
-            //Update payload with the sender's deviceID.
-            NSMutableData *updatedPayload = [[NSMutableData alloc] initWithCapacity:characteristic.value.length];
-            
-            //Collect and store the sender's deviceID.
-            NSInteger senderDeviceID = [((NSNumber *)[self.deviceIDs objectForKey:[peripheral.identifier UUIDString]]) integerValue];
-            Byte senderDeviceIDByte = (senderDeviceID >> (0)) & 0xff;
-            NSMutableData *senderDeviceIDData = [NSMutableData dataWithBytes:&senderDeviceIDByte length:sizeof(senderDeviceIDByte)];
-            [updatedPayload appendData:senderDeviceIDData];
-            
-            //Complete payload.
-            NSUInteger payloadLength = characteristic.value.length - 1;
-            NSData *payload = [characteristic.value subdataWithRange:NSMakeRange(1, payloadLength)];
-            [updatedPayload appendData:payload];
-            
-            //Find destination device.
-            for(BDBleBridge *bridge in self.bridges)
+            if([self.delegate respondsToSelector:@selector(bridgeService:didReceiveDeviceID:error:)])
             {
-                //Found destination device. Relay message.
-                if(bridge.deviceID == deviceID)
-                {
-                    [bridge writeDataToServiceUUID:bridge.bleBridgeServiceUUID
-                                characteristicUUID:bridge.bridgeRxCharacteristicUUID
-                                              data:updatedPayload
-                                           withAck:NO];
-                }
+                [self.delegate bridgeService:self didReceiveDeviceID:self.deviceID error:error];
             }
         }
-//    }
+    }
+
 }
 
 - (void)didNotifyUpdate:(NSNotification *)notification
@@ -388,28 +269,23 @@ NSString * const kDeviceIDCharacteristicUUIDString = @"8C6BD1D0-A312-681D-025B-0
     CBCharacteristic *characteristic = [payload objectForKey:@"Characteristic"];
     CBPeripheral *peripheral = [payload objectForKey:@"Peripheral"];
     NSError *error = [payload objectForKey:@"Error"];
-
-    NSArray *peripheralUUIDs = [self.verifyDeviceIDs allKeys];
     
-    //Did subscribed to unique Bridges TXs?
-    if([peripheralUUIDs containsObject:[peripheral.identifier UUIDString]] &&
-       [characteristic.UUID isEqual:[CBUUID UUIDWithString:kBridgeTxCharacteristicUUIDString]] &&
-       characteristic.isNotifying)
+    if([peripheral.identifier isEqual:_servicePeripheral.identifier])
     {
-        //Remove peripheral.
-        [self.verifyDeviceIDs removeObjectForKey:[peripheral.identifier UUIDString]];
-        self.totalBridges = self.totalBridges - 1;
-        
-        //Did bridge opened succesfuly?
-        if(self.totalBridges == 0)
+        if(characteristic.isNotifying)
         {
-            self.bridgedOpenedSuccesfuly = YES;
-            if([self.delegate respondsToSelector:@selector(didOpenBridge:)])
+            if([self.delegate respondsToSelector:@selector(didSubscribeToReceiveBridgeMessagesFor:error:)])
             {
-                [self.delegate didOpenBridge:self];
+                [self.delegate didSubscribeToReceiveBridgeMessagesFor:self error:error];
+            }
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(didUnsubscribeToReceiveBridgeMessagesFor:error:)])
+            {
+                [self.delegate didUnsubscribeToReceiveBridgeMessagesFor:self error:error];
             }
         }
     }
 }
-
 @end

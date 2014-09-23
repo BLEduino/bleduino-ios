@@ -1,9 +1,9 @@
 //
-//  BleBridgeService.h
+//  BDBleBridgeService.h
 //  BLEduino
 //
-//  Created by Ramon Gonzalez on 11/3/13.
-//  Copyright (c) 2013 Kytelabs. All rights reserved.
+//  Created by Ramon Gonzalez on 8/25/14.
+//  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
 #import "BDObject.h"
@@ -32,35 +32,39 @@ extern NSString * const kDeviceIDCharacteristicUUIDString;
 /****************************************************************************/
 @class BDBleBridge;
 @protocol BleBridgeServiceDelegate <NSObject>
-- (void)didOpenBridge:(BDBleBridge *)service;
-- (void)didFailToOpenBridge:(BDBleBridge *)service;
+
+- (void)bridgeService:(BDBleBridge *)service didReceiveDeviceID:(NSInteger)deviceID error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didReceiveData:(NSData *)data error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didWriteData:(NSData *)data error:(NSError *)error;
+- (void)bridgeService:(BDBleBridge *)service didWriteDeviceID:(NSInteger)deviceID error:(NSError *)error;
+
+- (void)didSubscribeToReceiveBridgeMessagesFor:(BDBleBridge *)service error:(NSError *)error;
+- (void)didUnsubscribeToReceiveBridgeMessagesFor:(BDBleBridge *)service error:(NSError *)error;
+
 @end
-
 @interface BDBleBridge : BDObject <CBPeripheralDelegate>
-@property BOOL isOpen;
 
-/*
- *  @method                 openBridge
- *
- *  @discussion             This method subscribes the iOS device to the BLE Bridge service for
- *                          all connected BLEduinos. Then listens to incoming data, upon reciving
- *                          data the iOS device then relays the data to the corresponsing BLEduino.
- *
- */
-- (void)openBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
+@property (strong) NSData *dataSent;
+@property (strong) NSData *dataReceived;
+@property NSInteger deviceID;
 
-/*
- *  @method                 closeBridge
- *
- *  @discussion             This method unsubscribes the iOS device from the BLE Bridge service for
- *                          all connected BLEduinos. That is, stops listening altogether.
- *
- */
-- (void)closeBridgeForDelegate:(id <BleBridgeServiceDelegate>)aController;
+- (id) initWithPeripheral:(CBPeripheral *)aPeripheral
+                 delegate:(id<BleBridgeServiceDelegate>)aController;
 
-/****************************************************************************/
-/*				       Access to Ble Bridge instance			     	    */
-/****************************************************************************/
-+ (BDBleBridge *)sharedBridge;
+#pragma mark -
+#pragma mark Writing to BLEduino
+// Writing data to BLEduino.
+- (void) writeDeviceID:(NSInteger)deviceID withAck:(BOOL)enabled;
+- (void) writeDeviceID:(NSInteger)deviceID;
 
+- (void) writeData:(NSData *)data withAck:(BOOL)enabled;
+- (void) writeData:(NSData *)data;
+
+#pragma mark -
+#pragma mark Reading from BLEduino
+// Read/Receive data from BLEduino.
+- (void) readDeviceID;
+- (void) readData;
+- (void) subscribeToStartReceivingBridgeData;
+- (void) unsubscribeToStopReiceivingBridgeData;
 @end

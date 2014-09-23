@@ -54,8 +54,8 @@
     [super viewDidLoad];
     
     //Set services that run in the background.
-    self.notificationService = [BDNotification sharedListener];
-    self.bleBridge = [BDBleBridge sharedBridge];
+    self.notifications = [BDNotifications sharedListener];
+    self.bleBridge = [BDBridge sharedBridge];    
     self.proximityMonitor = [BDProximity sharedMonitor];
      
     //Set appareance.
@@ -72,10 +72,6 @@
     
     self.themeColor = lightBlue;
     
-    //Manager Delegate
-    BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.delegate = self;
-
     //Load distance alerts flag.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.distanceAlertsEnabled = [defaults boolForKey:SETTINGS_PROXIMITY_DISTANCE_ALERT_ENABLED];
@@ -96,10 +92,12 @@
     
     //Set notifications to monitor Alerts Enabled control, and distance calibration.
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didDisconnectFromBleduino:) name:BLE_MANANGER_BLEDUINO_DISCONNECTED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_ENABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_DISTANCE_ALERTS_DISABLED object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE_ALERTS object:nil];
     [center addObserver:self selector:@selector(distanceAlertNotification:) name:PROXIMITY_NEW_DISTANCE object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -330,7 +328,7 @@
     //Set images for notifications and ble-bridge.
     if([cellIdentifier isEqualToString:@"NotificationsModuleCell"])
     {
-        NSString *imageName = (self.notificationService.isListening)?@"notifications-s.png":@"notifications.png";
+        NSString *imageName = (self.notifications.isListening)?@"notifications-s.png":@"notifications.png";
         [moduleCell.moduleIcon setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
     else if ([cellIdentifier isEqualToString:@"BleBridgeModuleCell"])
@@ -423,13 +421,9 @@
             
         case 10:
             //Toggle notification service.
-            if(self.notificationService.isListening)
+            if(self.notifications.isListening)
             {
-                [self.notificationService stopListeningWithDelegate:self];
-                
-                BDLeManager *manager = [BDLeManager sharedLeManager];
-                [manager becomeBleduinoDelegate];
-                
+                [self.notifications stopListening];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -438,7 +432,7 @@
             else
             {
                 [self presentSetupViewWithMessage:@"Starting listener..."];
-                [self.notificationService startListeningWithDelegate:self];
+                [self.notifications startListeningWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -450,10 +444,7 @@
             //Toggle BLE bridge service.
             if(self.bleBridge.isOpen)
             {
-                [self.bleBridge closeBridgeForDelegate:self];
-                
-                BDLeManager *manager = [BDLeManager sharedLeManager];
-                [manager becomeBleduinoDelegate];
+                [self.bleBridge closeBridge];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -462,7 +453,7 @@
             else
             {
                 [self presentSetupViewWithMessage:@"Opening BLE bridge..."];
-                [self.bleBridge openBridgeForDelegate:self];
+                [self.bleBridge openBridgeWithDelegate:self];
                 
                 //Update icon.
                 ModuleCollectionViewCell *cell = (ModuleCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -654,95 +645,56 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 - (void)sequencerTableViewControllerDismissed:(SequencerTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)firmataTableViewControllerDismissed:(FirmataTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)lcdModuleTableViewControllerDismissed:(LCDTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)keyboardModuleTableViewControllerDismissed:(KeyboardModuleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)gameControllerModuleViewControllerDismissed:(GameControllerViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }];
 }
 
 - (void)radioControlledModuleViewControllerDismissed:(RadioControlledViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
 
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }];
 }
 
 - (void)powerRelayModulViewControllerDismissed:(PowerRelayViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)proximityControllerDismissed:(ProximityViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)consoleControllerDismissed:(ConsoleTableViewController *)controller
 {
-    BDLeManager *manager = [BDLeManager sharedLeManager];
-    [manager becomeBleduinoDelegate];
-    [manager setDelegate:self];
-
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -753,8 +705,11 @@ referenceSizeForFooterInSection:(NSInteger)section
 /*                            LeManager Delegate                            */
 /****************************************************************************/
 //Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+- (void) didDisconnectFromBleduino:(NSNotification *)notification
 {
+    NSDictionary *payload = notification.userInfo;
+    CBPeripheral *bleduino = [payload objectForKey:@"Bleduino"];
+    
     NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
     NSLog(@"Disconnected from peripheral: %@", name);
     
@@ -791,13 +746,13 @@ referenceSizeForFooterInSection:(NSInteger)section
 /****************************************************************************/
 /*                           BLE-Bridge Delegate                            */
 /****************************************************************************/
-- (void)didFailToOpenBridge:(BDBleBridge *)service
+- (void)didFailToOpenBridge:(BDBridge *)service
 {
     //Remove setup view.
     [self removeSetupView];
     
     //Something went wrong, close the bridge.
-    [self.bleBridge closeBridgeForDelegate:self];
+    [self.bleBridge closeBridge];
     
     //Present notification.
     NSString *message = @"The BLEduino app was unable to open a ble-bridge.";
@@ -824,7 +779,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self.collectionView reloadData];
 }
 
-- (void)didOpenBridge:(BDBleBridge *)service
+- (void)didOpenBridge:(BDBridge *)service
 {
     NSLog(@"BLE-Bridge opened succesfully.");
     //Remove setup view.
@@ -842,7 +797,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self removeSetupView];
     
     //Something went wrong, close the bridge.
-    [self.notificationService stopListeningWithDelegate:self];
+    [self.notifications stopListening];
     
     //Present notification.
     NSString *message = @"The BLEduino app was unable to start listening for notifications.";
@@ -869,7 +824,7 @@ referenceSizeForFooterInSection:(NSInteger)section
     [self.collectionView reloadData];
 }
 
-- (void)didStatedListening:(BDNotification *)service
+- (void)didStartListening:(BDNotification *)service
 {
     NSLog(@"Notification is listening.");
     //Remove setup view.

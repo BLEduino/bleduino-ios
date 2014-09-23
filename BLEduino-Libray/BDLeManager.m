@@ -12,7 +12,7 @@
 #import "BDNotification.h"
 #import "BDFirmata.h"
 #import "BDController.h"
-#import "BDBleBridge.h"
+#import "BDBridge.h"
 
 @interface BDLeManager ()
 @property CBCentralManager *centralManager;
@@ -32,7 +32,7 @@
         self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:options];
         
         //Peripheral storage.
-        self.foundBleduinos = [[NSMutableOrderedSet alloc] init];
+        self.discoveredBleduinos = [[NSMutableOrderedSet alloc] init];
         self.connectedBleduinos = [[NSMutableOrderedSet alloc] init];
         
         //Ble commands storage.
@@ -40,6 +40,16 @@
         
         //Placeholder to receive delegate callbacks from BLEduinos.
         _bleduinoDelegate = [[BDObject alloc] init];
+        
+        //Auto-reconnect is disabled by default.
+        self.isReconnectingEnabled = NO;
+        //PENDING: Auto-reconnection requires to re-subscribe to characteristics.
+        
+        //Become delegate for all peripherals
+        self.isOnlyBleduinoDelegate = YES;
+        
+        //Scan only for BLEduinos?
+        self.scanOnlyForBLEduinos = YES;
         
         //Create and launch queue for executing ble-commands.
         dispatch_queue_t bleQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
@@ -86,7 +96,8 @@
 - (void)dismiss
 {
     //Destroy all stored devices and services.
-    self.foundBleduinos = self.connectedBleduinos = nil;
+    [self.discoveredBleduinos removeAllObjects];
+    [self.connectedBleduinos removeAllObjects];
 }
 
 - (BOOL)getScanOnlyForBLEduinos
@@ -148,7 +159,7 @@
     if(self.centralManager.state == CBCentralManagerStatePoweredOn)
     {
         //Scan for BLEduino service.
-        [self.foundBleduinos removeAllObjects];
+        [self.discoveredBleduinos removeAllObjects];
 
         NSArray *services = @[[CBUUID UUIDWithString:kBLEduinoServiceUUIDString]];
         [self.centralManager scanForPeripheralsWithServices:services options:nil];
@@ -241,7 +252,7 @@
     if(![self.connectedBleduinos containsObject:peripheral])
     {
         //Store device.
-        [self.foundBleduinos insertObject:peripheral atIndex:0];
+        [self.discoveredBleduinos insertObject:peripheral atIndex:0];
                 
         if(self.scanOnlyForBLEduinos)
         {
@@ -296,12 +307,20 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         {
             [self.delegate didDisconnectFromBleduino:peripheral error:error];
         }
+        
+        //Send notification.
+        NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:@{@"Bleduino":peripheral}];
+        if(error)[info setValue:error forKey:@"Error"];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANANGER_BLEDUINO_DISCONNECTED object:self userInfo:info];
+        
     });
     
     //Did BLEduino got disconnected unxpectedly?
     if(error && self.isReconnectingEnabled)
     {
-        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.1];
+        [self performSelector:@selector(reconnectToBleduino:) withObject:peripheral afterDelay:0.25];
     }
 }
 
@@ -547,8 +566,14 @@ didRetrievePeripherals:(NSArray *)peripherals
     if(self.totalServices == 0)
     {
         //Move peripheral to connected devices.
-        [self.foundBleduinos removeObject:peripheral];
+        [self.discoveredBleduinos removeObject:peripheral];
         [self.connectedBleduinos insertObject:peripheral atIndex:0];
+        
+        //Become delegate?
+        if(self.isOnlyBleduinoDelegate)
+        {
+            peripheral.delegate = self.bleduinoDelegate;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if([self.delegate respondsToSelector:@selector(didConnectToBleduino:)])
@@ -556,6 +581,13 @@ didRetrievePeripherals:(NSArray *)peripherals
                 [self.delegate didConnectToBleduino:peripheral];
             }
         });
+        
+        //Send notification.
+        NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:@{@"Bleduino":peripheral}];
+        if(error)[info setValue:error forKey:@"Error"];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:BLE_MANANGER_BLEDUINO_CONNECTED object:self userInfo:info];
     }
 }
 

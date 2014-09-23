@@ -20,6 +20,18 @@
 - (id) initWithData:(NSData *)attributesData;
 
 /*
+ *  @method                 attributes
+ *
+ *  @discussion             This method requests subscription for notifications and verifies that
+ *                          a specific characteristic/service is supported by the peripheral before
+ *                          requesting subscription.
+ *
+ *  @see @property           startScanningForBleduinos
+ *
+ */
++ (instancetype)attributes;
+
+/*
  * Converts Notification Attributes characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data;

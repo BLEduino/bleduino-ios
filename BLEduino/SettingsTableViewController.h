@@ -13,8 +13,7 @@
 <
 UIAlertViewDelegate,
 UITextFieldDelegate,
-UIActionSheetDelegate,
-LeDiscoveryManagerDelegate
+UIActionSheetDelegate
 >
 - (IBAction)showMenu;
 - (void)showStatusBar;

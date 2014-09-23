@@ -30,12 +30,12 @@
     
     //Begin/End sequence commands. 
     self.start = [[BDFirmataCommand alloc] initWithPinState:4
-                                                                pinNumber:99
-                                                                 pinValue:99];
+                                                  pinNumber:99
+                                                   pinValue:99];
     
     self.end = [[BDFirmataCommand alloc] initWithPinState:5
-                                                              pinNumber:99
-                                                               pinValue:99];
+                                                pinNumber:99
+                                                 pinValue:99];
     
     //Set appareance.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -55,12 +55,11 @@
     self.addDelay.tintColor = lightBlue;
     
     BDLeManager *leManager = [BDLeManager sharedLeManager];
-    leManager.delegate = self;
     CBPeripheral *bleduino = [leManager.connectedBleduinos lastObject];
     
     //Global firmata service for listening for updates.
-    self.firmata =[[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-    [self.firmata subscribeToStartReceivingFirmataCommands];
+    self.firmata =[BDBleduino bleduino:bleduino delegate:self];
+    [self.firmata subscribe:Firmata notify:YES];
     
     //Load previous state.
     [self setPreviousState];
@@ -181,8 +180,8 @@
 {
     BDFirmataCommand *delay =
     [[BDFirmataCommand alloc] initWithPinState:6
-                                                   pinNumber:100
-                                                    pinValue:1];
+                                     pinNumber:100
+                                      pinValue:1];
     
     [self.sequence addObject:delay];
     [self.tableView reloadData];
@@ -618,6 +617,34 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
     [self.tableView reloadData];
 }
 
+
+- (void) bleduino:(CBPeripheral *)bleduino didWriteValue:(id)data pipe:(BlePipe)pipe error:(NSError *)error
+{
+    NSLog(@"Did write to Firmata service");
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino didUpdateValue:(id)data pipe:(BlePipe)pipe error:(NSError *)error
+{
+    BDFirmataCommand *firmataCommand = (BDFirmataCommand *)data;
+    
+    //Update data to all pins that it applies to.
+    for(BDFirmataCommand *pin in self.sequence)
+    {
+        if(pin.pinNumber == firmataCommand.pinNumber &&
+           pin.pinState == firmataCommand.pinState)
+        {
+            pin.pinValue = firmataCommand.pinValue;
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void) bleduino:(CBPeripheral *)bleduino didSubscribe:(BlePipe)pipe notify:(BOOL)notify error:(NSError *)error
+{
+    NSLog(@"Did subscribe to Firmata service");
+}
+
 //Changing PIN state.
 //Sequence is stored in full (pin values and states, time delays, and their order) before user leaves this module.
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -674,8 +701,8 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
             {
                 NSInteger pinNumber = [self pinNumber:buttonIndex];
                 BDFirmataCommand *pin = [[BDFirmataCommand alloc] initWithPinState:1
-                                                                                                     pinNumber:pinNumber
-                                                                                                      pinValue:-1];
+                                                                         pinNumber:pinNumber
+                                                                          pinValue:-1];
                 
                 [self.sequence insertObject:pin atIndex:self.sequence.count];
 
@@ -706,15 +733,9 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         [finalSequence insertObject:self.end atIndex:finalSequence.count];
         
         //Send command.
-        BDLeManager *leManager = [BDLeManager sharedLeManager];
-        
-        for(CBPeripheral *bleduino in leManager.connectedBleduinos)
+        for(BDFirmataCommand *command in finalSequence)
         {
-            for(BDFirmataCommand *command in finalSequence)
-            {
-                BDFirmata *firmataService = [[BDFirmata alloc] initWithPeripheral:bleduino delegate:self];
-                [firmataService writeFirmataCommand:command];
-            }
+            [BDBleduino writeValue:command];
         }
     }
     else
@@ -1022,50 +1043,10 @@ didReceiveFirmataCommand:(BDFirmataCommand *)firmataCommand
         case 20:
             pin = 15;
             break;
+        default:
+            pin = 13;
     }
     return pin;
 }
-
-
-#pragma mark -
-#pragma mark - LeManager Delegate
-/****************************************************************************/
-/*                            LeManager Delegate                            */
-/****************************************************************************/
-//Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
-{
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Disconnected from peripheral: %@", name);
-    
-    //Verify if notify setting is enabled.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
-    
-    if(notifyDisconnect)
-    {
-        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-
-        //Push local notification.
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : @"BLEduino",
-                                      @"message": message,
-                                      @"disconnect": @"disconnect"};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-}
-
 
 @end

@@ -98,6 +98,8 @@
 
 //Global
 #define BLE_MANAGER_NOT_POWERED_ON @"ble-manager-not-powered-on"
+#define BLE_MANANGER_BLEDUINO_DISCONNECTED @"ble-manager-bleduino-disconected"
+#define BLE_MANANGER_BLEDUINO_CONNECTED @"ble-manager-bleduino-conected"
 #define WRITE_TIME_CAP @"write-time-cap"
 
 #define CHARACTERISTIC_UPDATE_UART @"characteristic-update-uart"

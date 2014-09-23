@@ -165,6 +165,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     BDLeManager *leManager = [BDLeManager sharedLeManager];
+    leManager.delegate = nil;
     [leManager stopScanning];
     
     //Hide network activity indicator.
@@ -235,9 +236,6 @@
 
     }
     
-    //PENDING: Streatched goal. Add more context to found/connected devcies.
-    //For example, a dummy cell that displays "O found devices".
-    
     return cell;
 }
 
@@ -249,9 +247,7 @@
 {
     if(indexPath.section == 0)
     {
-        //PENDING: Stretched goal. Add more context information to discovered devcies (e.g. RSSI).
         [self performSegueWithIdentifier:@"BleduinoSegue" sender:self];
-        
     }
     else
     {

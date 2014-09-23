@@ -11,7 +11,15 @@
 @implementation BDNotificationAttributes
 
 /*
- * Create Throttle-Yaw-Roll-Pitch characteristic from NSData object.
+ * Create Notification Attributes.
+ */
++ (instancetype)attributes
+{
+    return [[BDNotificationAttributes alloc] init];
+}
+
+/*
+ * Create notification attributes characteristic from NSData object.
  */
 - (id) initWithData:(NSData *)attributesData
 {
@@ -27,7 +35,7 @@
 }
 
 /*
- * Converts Throttle-Yaw-Roll-Pitch characteristic to an NSData object to send data to a peripheral.
+ * Converts notification attributes characteristic to an NSData object to send data to a peripheral.
  */
 - (NSData *)data
 {

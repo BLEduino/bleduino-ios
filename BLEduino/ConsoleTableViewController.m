@@ -67,16 +67,16 @@
 {
     //Set manager and service
     BDLeManager *manager = [BDLeManager sharedLeManager];
-    manager.delegate = self;
     
     //Setup console hub.
     self.consoleHub = [[NSMutableArray alloc] initWithCapacity:manager.connectedBleduinos.count];
     
     for(CBPeripheral *bleduino in manager.connectedBleduinos)
     {
-        BDUart *newConsole = [[BDUart alloc] initWithPeripheral:bleduino delegate:self];
-        [newConsole subscribeToStartReceivingMessages];
-        [self.consoleHub addObject:newConsole];
+        BDBleduino *console = [BDBleduino bleduino:bleduino delegate:self];
+        [console subscribe:UART notify:YES];
+        
+        [self.consoleHub addObject:console];
     }
 }
 
@@ -179,9 +179,9 @@
     entry.isBLEduino = NO;
     
     //Send data to BLEduinos.
-    for(BDUart *console in self.consoleHub)
+    for(BDBleduino *console in self.consoleHub)
     {
-        [console writeMessage:entry.text];
+        [console writeValue:entry.text];
     }
     
     //Add entry to model and tableview.
@@ -212,6 +212,29 @@
     
     //Scroll to make last entry visible.
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+}
+
+//Receive data.
+- (void)bleduino:(CBPeripheral *)bleduino
+  didUpdateValue:(id)data
+            pipe:(BlePipe)pipe
+           error:(NSError *)error
+{
+    if(error == nil && pipe == UART)
+    {
+        ConsoleEntries *entry = [[ConsoleEntries alloc] init];
+        entry.text = [NSString stringWithUTF8String:[data bytes]];
+        entry.time = [NSDate date];
+        entry.isBLEduino = YES;
+        
+        //Add entry to model and tableview.
+        [self.entries insertObject:entry atIndex:self.entries.count];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.entries.count-1 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        
+        //Scroll to make last entry visible.
+        [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+    }
 }
 
 - (IBAction)dismissModule:(id)sender
@@ -261,42 +284,26 @@
     NSLog(@"Subscribed to UART service from Console.");
 }
 
-#pragma mark -
-#pragma mark - LeManager Delegate
-/****************************************************************************/
-/*                            LeManager Delegate                            */
-/****************************************************************************/
-//Disconnected from BLEduino and BLE devices.
-- (void) didDisconnectFromBleduino:(CBPeripheral *)bleduino error:(NSError *)error
+- (void) bleduino:(CBPeripheral *)bleduino
+     didSubscribe:(BlePipe)pipe
+           notify:(BOOL)notify
+            error:(NSError *)error
 {
-    NSString *name = ([bleduino.name isEqualToString:@""])?@"BLE Peripheral":bleduino.name;
-    NSLog(@"Disconnected from peripheral: %@", name);
-    
-    //Verify if notify setting is enabled.
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    BOOL notifyDisconnect = [prefs integerForKey:SETTINGS_NOTIFY_DISCONNECT];
-    
-    if(notifyDisconnect)
+    if(pipe == UART)
     {
-        NSString *message = [NSString stringWithFormat:@"The BLE device '%@' has disconnected from the BLEduino app.", name];
-
-        //Push local notification.
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody = message;
-        notification.alertAction = nil;
-        
-        //Is application on the foreground?
-        if([[UIApplication sharedApplication] applicationState] != UIApplicationStateBackground)
-        {
-            //Application is on the foreground, store notification attributes to present alert view.
-            notification.userInfo = @{@"title"  : @"BLEduino",
-                                      @"message": message,
-                                      @"disconnect": @"disconnect"};
-        }
-        
-        //Present notification.
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+        NSLog(@"Subscribed to UART service from Console.");
     }
 }
+
+- (void) bleduino:(CBPeripheral *)bleduino
+    didWriteValue:(id)data
+             pipe:(BlePipe)pipe
+            error:(NSError *)error
+{
+    if(pipe == UART)
+    {
+        NSLog(@"Did write to UART service from Console.");
+    }
+}
+
 @end

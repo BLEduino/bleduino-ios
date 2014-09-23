@@ -13,6 +13,14 @@
 /*
  * Create Firmata Command.
  */
++ (instancetype)command
+{
+    return [[BDFirmataCommand alloc] init];
+}
+
+/*
+ * Create Firmata Command.
+ */
 - (id) initWithPinState:(FirmataCommandPinState)state
               pinNumber:(NSInteger)number
                pinValue:(NSInteger)value
@@ -37,8 +45,8 @@
 {
     BDFirmataCommand *command =
     [[BDFirmataCommand alloc] initWithPinState:state
-                                                   pinNumber:number
-                                                    pinValue:value];
+                                     pinNumber:number
+                                      pinValue:value];
     
     return command;
 }

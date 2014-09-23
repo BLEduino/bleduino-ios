@@ -2,7 +2,7 @@
 //  BDProximity.m
 //  BLEduino
 //
-//  Created by Ramon Gonzalez Rodriguez on 8/19/14.
+//  Created by Ramon Gonzalez on 8/19/14.
 //  Copyright (c) 2014 Kytelabs. All rights reserved.
 //
 
@@ -55,6 +55,7 @@
         
         //Setup aggregated RSSI queue.
         self.rssiReadings = [[BDQueue alloc] initWithCapacity:5];
+        self.calibrationReadings = [[NSMutableArray alloc] initWithCapacity:10];
     }
     return self;
 }
@@ -116,7 +117,10 @@
     [center postNotificationName:PROXIMITY_FINISHED_CALIBRATION object:self];
     
     //Notify delegate.
-    [self.delegate bleduino:self.monitoredBleduino didFinishCalibration:self.measuredPower];
+    if([self.delegate respondsToSelector:@selector(bleduino:didFinishCalibration:)])
+    {
+        [self.delegate bleduino:self.monitoredBleduino didFinishCalibration:self.measuredPower];
+    }
 }
 
 #pragma mark -
@@ -140,7 +144,10 @@
     if(error)//Any errors?
     {
         //Notify delegate
-        [self.delegate bleduino:peripheral didFailToUpdateValueForDistanceWithError:error];
+        if([self.delegate respondsToSelector:@selector(bleduino:didFailToUpdateValueForDistanceWithError:)])
+        {
+            [self.delegate bleduino:peripheral didFailToUpdateValueForDistanceWithError:error];
+        }
     }
     else
     {
@@ -172,11 +179,14 @@
             [center postNotificationName:PROXIMITY_NEW_DISTANCE object:self userInfo:distanceInfo];
             
             //Notify delegate
-            [self.delegate bleduino:peripheral
-             didUpdateValueForRange:self.currentDistance
-                        maxDistance:max
-                        minDistance:min
-                           withRSSI:currentRSSI];
+            if([self.delegate respondsToSelector:@selector(bleduino:didUpdateValueForRange:maxDistance:minDistance:withRSSI:)])
+            {
+                [self.delegate bleduino:peripheral
+                 didUpdateValueForRange:self.currentDistance
+                            maxDistance:max
+                            minDistance:min
+                               withRSSI:currentRSSI];
+            }
         }
         
         [self performSelector:@selector(monitorBleduinoDistances) withObject:nil afterDelay:1];
@@ -293,5 +303,29 @@
     NSNumber *distance = [NSNumber numberWithFloat:d];
     return distance;
 }
+
+#pragma mark -
+#pragma mark - Peripheral Delegate
+/****************************************************************************/
+/*				            Peripheral Delegate                             */
+/****************************************************************************/
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didUpdateValueForCharacteristic:characteristic error:error];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error
+{
+    [BDObject peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];	
+}
+
 
 @end

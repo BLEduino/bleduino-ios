@@ -15,7 +15,7 @@
 - (void)ledModuleTableViewControllerDismissed:(LEDModuleTableViewController *)controller;
 @end
 
-@interface LEDModuleTableViewController : UITableViewController <FirmataServiceDelegate, LeDiscoveryManagerDelegate>
+@interface LEDModuleTableViewController : UITableViewController <FirmataServiceDelegate>
 @property (weak) id <LEDModuleTableViewControllerDelegate> delegate;
 - (IBAction)dismissModule;
 @end
