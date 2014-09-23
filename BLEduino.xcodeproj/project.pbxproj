@@ -38,6 +38,7 @@
 		9779C5B21979819300302C50 /* ProximityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B11979819300302C50 /* ProximityViewController.m */; };
 		9779C5B51979871800302C50 /* ProximityAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B41979871800302C50 /* ProximityAlert.m */; };
 		9779C5B8197995BF00302C50 /* DistanceAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9779C5B7197995BF00302C50 /* DistanceAlertController.m */; };
+		978456C019D1E0FC0092483E /* BDNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 978456BF19D1E0FC0092483E /* BDNotifications.m */; };
 		97D79630199E65E900E47D4D /* BleduinoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D7962F199E65E900E47D4D /* BleduinoController.m */; };
 		97DB51411976C7D100290859 /* TimeDelayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB51401976C7D100290859 /* TimeDelayTableViewCell.m */; };
 		97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB5143197765B700290859 /* ConsoleTableViewController.m */; };
@@ -201,6 +202,8 @@
 		9779C5B41979871800302C50 /* ProximityAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAlert.m; sourceTree = "<group>"; };
 		9779C5B6197995BF00302C50 /* DistanceAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceAlertController.h; sourceTree = "<group>"; };
 		9779C5B7197995BF00302C50 /* DistanceAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceAlertController.m; sourceTree = "<group>"; };
+		978456BE19D1E0FC0092483E /* BDNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDNotifications.h; sourceTree = "<group>"; };
+		978456BF19D1E0FC0092483E /* BDNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDNotifications.m; sourceTree = "<group>"; };
 		97D7962E199E65E900E47D4D /* BleduinoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleduinoController.h; sourceTree = "<group>"; };
 		97D7962F199E65E900E47D4D /* BleduinoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleduinoController.m; sourceTree = "<group>"; };
 		97DB513F1976C7D100290859 /* TimeDelayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayTableViewCell.h; sourceTree = "<group>"; };
@@ -645,14 +648,14 @@
 				B72D18641826FED500BD1A2D /* BDController.m */,
 				B72D185A1826FC4F00BD1A2D /* BDNotification.h */,
 				B72D185B1826FC4F00BD1A2D /* BDNotification.m */,
+				978456BE19D1E0FC0092483E /* BDNotifications.h */,
+				978456BF19D1E0FC0092483E /* BDNotifications.m */,
 				B72D18601826FEA600BD1A2D /* BDBridge.h */,
 				B72D18611826FEA600BD1A2D /* BDBridge.m */,
 				9702401D19A3BDFD00FC91BA /* BDProximity.h */,
 				9702401E19A3BDFD00FC91BA /* BDProximity.m */,
 				971CE42219AB93C800D27DDB /* BDBleBridge.h */,
 				971CE42319AB93C800D27DDB /* BDBleBridge.m */,
-				973D69F119AC5BA600415929 /* BDNotifications.h */,
-				973D69F219AC5BA600415929 /* BDNotifications.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1047,7 +1050,7 @@
 				B7B73C2D17F25A58008E6769 /* BDUart.m in Sources */,
 				974FA3321992B31A00951E12 /* BDQueue.m in Sources */,
 				B7851D4417FDFDAB00181C53 /* LeDiscoveryTableViewController.m in Sources */,
-				973D69F319AC5BA600415929 /* BDNotifications.m in Sources */,
+				978456C019D1E0FC0092483E /* BDNotifications.m in Sources */,
 				9702401F19A3BDFD00FC91BA /* BDProximity.m in Sources */,
 				9713717A19805F8C00E1B53D /* ConsoleCell.m in Sources */,
 				97DB5144197765B700290859 /* ConsoleTableViewController.m in Sources */,
